@@ -11,14 +11,6 @@ class GroupController extends Controller{
     
     public function listAction(){
         
-//         echo "<pre>SESSION";
-//         print_r($_SESSION);
-//         echo "</pre>";
-        
-//         echo "<pre>Parramttt";
-//         print_r($this->_arrParam);
-//         echo "</pre>";
-        
         //$this->_view->_title        = 'User Manager: User Group';
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->Pagination    = $this->_model->pagination(4,3);
@@ -44,12 +36,6 @@ class GroupController extends Controller{
             Session::set('status',$status);
             $this->_view->Items         = $this->_model->listItems($arrParam = $this->_arrParam['status']);
         }
-        
-//         echo "<pre>SESSION";
-//         print_r($_SESSION);
-//         echo "</pre>";
-        
-        
         
         if(isset($_GET['id'])){
             

@@ -80,7 +80,7 @@ class GroupModel extends Model
        
         $queryContent[] = "LIMIT $position,$totalItemsPerPage";
         
-        echo $queryContent = implode(" ", $queryContent);
+        $queryContent = implode(" ", $queryContent);
         
         $result = $this->listRecord($queryContent);
         return $result;
