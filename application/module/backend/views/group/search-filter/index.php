@@ -18,18 +18,18 @@ $inactiveItem = 0;
 //     $allItem++;
 // }
 
-foreach ($this->ItemsFilter as $key=>$value){
+// foreach ($this->ItemsFilter as $key=>$value){
     
-    if($value['status'] == 1){
-        $activeItem++;
-    }
+//     if($value['status'] == 1){
+//         $activeItem++;
+//     }
     
-    if($value['status'] == 0){
-        $inactiveItem++;
-    }
+//     if($value['status'] == 0){
+//         $inactiveItem++;
+//     }
     
-    $allItem++;
-}
+//     $allItem++;
+// }
 
 $buttonSubmit = Helper::cmsButton($type='submit',$class='default', $textOufit='Search');
 
@@ -63,9 +63,10 @@ $formSearch        = '<form action="" method="GET">
     							<input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="' . @$this->searchValue . '">
                                 <span class="input-group-append">
                                 	<button type="submit" class="btn btn-info">Search</button>
-                                    <a href="#" class="btn btn-danger">Clear</a>
+                                    <a href="#" class="btn btn-danger" name="clear" value="clear">Clear</a>
                                 </span>
                             </div>
+
                         </form>';
 
 ?>

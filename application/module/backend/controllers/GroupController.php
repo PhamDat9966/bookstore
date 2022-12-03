@@ -1,12 +1,23 @@
 <?php
 
 class GroupController extends Controller{
-
+    
+    public function __construct(){
+        //parent::__construct();
+        Session::ini();
+        
+    }
+    
+    
     public function listAction(){
         
-        echo "<pre>Parramttt";
-        print_r($this->_arrParam);
-        echo "</pre>";
+//         echo "<pre>SESSION";
+//         print_r($_SESSION);
+//         echo "</pre>";
+        
+//         echo "<pre>Parramttt";
+//         print_r($this->_arrParam);
+//         echo "</pre>";
         
         //$this->_view->_title        = 'User Manager: User Group';
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
@@ -15,15 +26,29 @@ class GroupController extends Controller{
         
         //$this->_view->ItemsFilter   = $this->_model->listItemsFiter();
         
+        if(isset($_GET['clear'])){
+            
+//             Session::set('search','');
+//             Session::set('status','');
+               Session::destroy();
+        }
+        
         if(isset($_GET['search'])){
             $search  = trim($_GET['search']);
+            Session::set('search',$search);
             $this->_view->searchValue       = trim($_GET['search']);;
         }
         
-//         if(isset($_GET['status'])){
-//             $this->_arrParam['status']  = trim($_GET['status']);
-//             $this->_view->Items         = $this->_model->listItems($arrParam = $this->_arrParam['status']);
-//         }
+        if(isset($_GET['status'])){
+            $status  = trim($_GET['status']);
+            Session::set('status',$status);
+            $this->_view->Items         = $this->_model->listItems($arrParam = $this->_arrParam['status']);
+        }
+        
+//         echo "<pre>SESSION";
+//         print_r($_SESSION);
+//         echo "</pre>";
+        
         
         
         if(isset($_GET['id'])){
@@ -60,6 +85,21 @@ class GroupController extends Controller{
    
     }
     
+    public function clearAction(){
+        Session::set('search','');
+        Session::set('status','');
+        
+        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
+        $this->_view->Pagination    = $this->_model->pagination(4,3);
+        
+        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFileTemplate('group-list.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('group/index', true);
+    }
+    
     public function formAction($option = null){
         
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
@@ -74,6 +114,8 @@ class GroupController extends Controller{
     {
         if(isset($_GET['id'])) $this->_model->deleteItem($_GET['id']);
         $this->redirec('backend','group','list');
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+        
     }
     
     

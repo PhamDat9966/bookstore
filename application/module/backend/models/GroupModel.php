@@ -8,7 +8,6 @@ class GroupModel extends Model
     
     public function __construct()
     {
-        
         parent::__construct();
         $this->setTable($this->_tableName);
         
@@ -55,12 +54,6 @@ class GroupModel extends Model
 
     public function listItems($arrParam,$option = null)
     {  
-        echo "<pre>listItem";
-        print_r($arrParam);
-        echo "</pre>";
-        
-        $this->saveParam .= $arrParam;
-        echo $saveParam;
         
         $pagitor = $this->pagination(4, 3);
         $position = $pagitor['position'];
@@ -72,7 +65,18 @@ class GroupModel extends Model
         $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
         $queryContent[] = "FROM `$this->_tableName`";
         
-        if(isset($arrParam['search'])) $queryContent[] = "WHERE `name` LIKE '%".$arrParam['search']."%'";
+        //if(isset($arrParam['search'])) $queryContent[] = "WHERE `name` LIKE '%".$arrParam['search']."%'";
+        
+        if(isset($_SESSION['search']) && isset($_SESSION['status'])){
+            $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
+            if($_SESSION['status']  == 'active') $queryContent[] = "AND `status`='1'";
+            if($_SESSION['status' ] == 'inactive') $queryContent[] = "AND `status`='0'";
+        }else if(isset($_SESSION['search'])){
+            $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
+        }else if(isset($_SESSION['status'])){
+            if($_SESSION['status']  == 'active') $queryContent[] = "WHERE `status`='1'";
+            if($_SESSION['status' ] == 'inactive') $queryContent[] = "WHERE `status`='0'";
+        }
        
         $queryContent[] = "LIMIT $position,$totalItemsPerPage";
         
