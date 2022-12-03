@@ -18,6 +18,7 @@ class View{
     public $_pluginsJs;
     
     public $_item;
+    public $_tag;
     
     public function __construct($moduleName){
         $this->_moduleName = $moduleName;

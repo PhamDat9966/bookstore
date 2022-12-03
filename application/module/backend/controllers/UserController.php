@@ -3,6 +3,7 @@
 class UserController extends Controller{
     
     public function listAction(){
+        $this->_view->_tag = 'user';   
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
         $this->_templateObj->setFileTemplate('user-list.php');
         $this->_templateObj->setFileConfig('template.ini');
@@ -13,6 +14,7 @@ class UserController extends Controller{
     }
     
     public function formAction(){
+        $this->_view->_tag = 'user';   
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
         $this->_templateObj->setFileTemplate('user-form.php');
         $this->_templateObj->setFileConfig('template.ini');

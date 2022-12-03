@@ -2,16 +2,14 @@
 
 class GroupController extends Controller{
     
-    public function __construct(){
+    public function __construct(){ 
         //parent::__construct();
         Session::ini();
-        
     }
-    
-    
+
     public function listAction(){
-        
-        //$this->_view->_title        = 'User Manager: User Group';
+        //$this->_view->_title        = 'User Manager: User Group';  
+        $this->_view->_tag          = 'group';    
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->Pagination    = $this->_model->pagination(4,3);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
@@ -72,6 +70,7 @@ class GroupController extends Controller{
     }
     
     public function clearAction(){
+        $this->_view->_tag          = 'group';   
         Session::set('search','');
         Session::set('status','');
         
@@ -87,7 +86,7 @@ class GroupController extends Controller{
     }
     
     public function formAction($option = null){
-        
+        $this->_view->_tag          = 'group';   
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
         $this->_templateObj->setFileTemplate('group-form.php');
         $this->_templateObj->setFileConfig('template.ini');
@@ -98,6 +97,7 @@ class GroupController extends Controller{
     
     public function deleteAction()
     {
+            
         if(isset($_GET['id'])) $this->_model->deleteItem($_GET['id']);
         $this->redirec('backend','group','list');
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;

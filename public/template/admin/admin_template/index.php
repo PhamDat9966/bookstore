@@ -17,7 +17,9 @@
     	<!-- END NAVBAR -->
     	
     	<!-- MAIN-SIDEBAR -->
-    		<?php include_once 'html/main-sidebar.php';?>
+    		<?php 
+    		      include_once 'html/main-sidebar.php';
+    		?>
     	<!-- END MAIN-SIDEBAR -->
     	
 	   <!-- CONTENT WRAPPER -->
