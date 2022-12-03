@@ -82,27 +82,40 @@ $xhtm .= '<nav class="mt-2">
                     $xhtm .= '<li class="nav-item">';
                     
                     $tagActive      = '';
-                    if($this->_tag == $tagKey) $tagActive = 'active';
-                    $xhtm .=    '<a href="'.$tagValue['href'].'" class="nav-link '.$tagActive.'">
-                                    '.$tagValue['icon'].'
-                                    <p>
-                                        '.$tagValue['name'].'    
-                                    <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                ';
-                    if(isset($tagValue['tree'])){
-                        foreach ($tagValue['tree'] as $treeKey=>$treeValue){         
-                        $xhtm .='<ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="'.$treeValue['href'].'" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>'.$treeValue['name'].'</p>
-                                        </a>
-                                    </li>
-                                </ul>'; 
+                    $iconAngleLeft  = '';
+                        if($this->_tag == $tagKey) {
+                            $tagActive      =   'active';
+                            $iconAngleLeft  =   '<i class="fas fa-angle-left right"></i>';  
                         }
-                   }
+                        if(isset($tagValue['tree'])){          
+                            $xhtm .=    '<a href="'.$tagValue['href'].'" class="nav-link '.$tagActive.'">
+                                        '.$tagValue['icon'].'
+                                        <p>
+                                            '.$tagValue['name'].'
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>';
+                            foreach ($tagValue['tree'] as $treeKey=>$treeValue){         
+                            $xhtm .='<ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="'.$treeValue['href'].'" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>'.$treeValue['name'].'</p>
+                                            </a>
+                                        </li>
+                                    </ul>'; 
+                            }
+                       }else {   
+                                $xhtm .=    '<a href="'.$tagValue['href'].'" class="nav-link '.$tagActive.'">
+                                                '.$tagValue['icon'].'
+                                                <p>
+                                                    '.$tagValue['name'].'
+                                                </p>
+                                            </a>';
+                            }
+                    
+                       $xhtm .= '   </p>
+                                </a>';
                   $xhtm .=  '</li>';
             }         
 $xhtm .= '  </ul>
