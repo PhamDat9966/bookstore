@@ -3,7 +3,7 @@
     // ======================== PATH ================================//
     define('DS'                 , DIRECTORY_SEPARATOR);
     define('ROOT_PATH'          , dirname(__FILE__));                         // Định nghĩa đường dẫn đến thư mục gốc
-    define('ROOT_URL'           , DS . 'bookstore-nop' . DS);
+    define('ROOT_URL'           , DS . 'bookstore' . DS);
     
     define('LIBRARY_PATH'       , ROOT_PATH . DS . 'libs' . DS);              // Định nghĩa đường dẫn đến thư mục thư viện
     
