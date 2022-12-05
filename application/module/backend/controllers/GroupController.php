@@ -9,13 +9,13 @@ class GroupController extends Controller{
 
     public function listAction(){
         
-        echo "<pre>listAtion";
-        print_r($_GET);
-        echo "</pre>";
+//         echo "<pre>listAtion";
+//         print_r($_GET);
+//         echo "</pre>";
         
-        echo "<pre>session";
-        print_r($_SESSION);
-        echo "</pre>";
+//         echo "<pre>session";
+//         print_r($_SESSION);
+//         echo "</pre>";
         
         //$this->_view->_title        = 'User Manager: User Group';  
 //         $this->_view->_tag          = 'group';    
@@ -25,26 +25,8 @@ class GroupController extends Controller{
         
         //$this->_view->ItemsFilter   = $this->_model->listItemsFiter();
         
-        if(@$_GET['clear'] !=''){
-            $_GET['search'] = '';
-            $_GET['filter'] = '';
-            Session::set('filter','');
-            Session::set('search','');
-        }
-        
-        if(isset($_GET['search'])){
-            $search  = trim($_GET['search']);
-            Session::set('search',$search);
-        }
-       
-        if(Session::get('search') != ''){         
-            $this->_view->searchValue   = Session::get('search'); 
-        }
-        
-        if(isset($_GET['filter'])){
-            $status  = trim($_GET['filter']);
-            Session::set('status',$status);
-            $this->_view->Items         = $this->_model->listItems(Session::get('filter'));
+        if(isset($_GET['filter']) || isset($_GET['search'])){
+            $this->filterAndSearch();
         }
         
         if(isset($_GET['id'])){
@@ -71,7 +53,7 @@ class GroupController extends Controller{
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
         
-        $this->_view->_tag          = 'group';
+        $this->_view->_tag          = 'group'; //for Sidebar
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->Pagination    = $this->_model->pagination(4,3);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
@@ -84,6 +66,45 @@ class GroupController extends Controller{
         
         $this->_view->render('group/index', true);
    
+    }
+    
+    public function filterAndSearch(){
+        
+        if(@$_GET['clear'] !=''){
+            $_GET['search'] = '';
+            Session::set('search','');
+        }
+        
+        if(@$_GET['filter'] == 'all'){
+            Session::set('filter','');
+        }
+        
+        if(isset($_GET['search'])){
+            $search  = trim($_GET['search']);
+            Session::set('search',$search);
+        }
+        
+        if(Session::get('search') != ''){
+            $this->_view->searchValue   = Session::get('search');
+        }
+        
+        if(isset($_GET['filter'])){
+            $status  = trim($_GET['filter']);
+            Session::set('status',$status);
+        }
+        
+        $this->_view->_tag          = 'group'; //for Sidebar
+        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
+        $this->_view->Pagination    = $this->_model->pagination(4,3);
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+        
+        
+        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFileTemplate('group-list.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('group/index', true);
     }
     
     public function clearAction(){

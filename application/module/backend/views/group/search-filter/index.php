@@ -35,7 +35,7 @@ $buttonSubmit = Helper::cmsButton($type='submit',$class='default', $textOufit='S
 
 //All
 $textSpanIconAll  = 'All <span class="badge badge-pill badge-light">'.$allItem.'</span>';
-$buttonAll = Helper::cmsButton($type='submit',$class='default', $textOufit = $textSpanIconAll);
+$buttonAll = Helper::cmsButton($type='submit',$class='default', $textOufit = $textSpanIconAll, $name='filter', $value='all');
 
 //Active
 //<a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
