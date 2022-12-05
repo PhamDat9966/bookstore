@@ -23,6 +23,11 @@ class Helper{
            $classButton = "class='btn btn-secondary'";
        }
        
+       //class="btn btn-danger"
+       if($class == 'danger'){
+           $classButton = "class='btn btn-danger'";
+       }
+       
        $nameAndValue = '';
        if(isset($name) && isset($value)){
            $nameAndValue = "name='$name' value='$value'";

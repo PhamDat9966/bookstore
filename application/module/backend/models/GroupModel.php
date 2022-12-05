@@ -69,8 +69,8 @@ class GroupModel extends Model
         
         if(isset($_SESSION['search']) && isset($_SESSION['status'])){
             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
-            if($_SESSION['status']  == 'active') $queryContent[] = "AND `status`='1'";
-            if($_SESSION['status' ] == 'inactive') $queryContent[] = "AND `status`='0'";
+            if($_SESSION['status']  == 'active') $queryContent[] = "AND `status`=1";
+            if($_SESSION['status' ] == 'inactive') $queryContent[] = "AND `status`=0";
         }else if(isset($_SESSION['search'])){
             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
         }else if(isset($_SESSION['status'])){

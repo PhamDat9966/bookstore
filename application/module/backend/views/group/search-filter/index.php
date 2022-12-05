@@ -40,11 +40,13 @@ $buttonAll = Helper::cmsButton($type='submit',$class='default', $textOufit = $te
 //Active
 //<a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
 $textSpanIconActive  = 'Active <span class="badge badge-pill badge-light">'.$activeItem.'</span>';
-$buttonActive    = Helper::cmsButton($type='submit',$class='secondary', $textOufit = $textSpanIconActive,$name='status',$value='active');
+$buttonActive    = Helper::cmsButton($type='submit',$class='secondary', $textOufit = $textSpanIconActive,$name='filter',$value='active');
 
 //<a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a>
 $textSpanIconInactive  = 'Inactive <span class="badge badge-pill badge-light">'.$inactiveItem.'</span>';
-$buttonInactive        = Helper::cmsButton($type='submit',$class='secondary', $textOufit = $textSpanIconInactive,$name='status',$value='inactive');
+$buttonInactive        = Helper::cmsButton($type='submit',$class='secondary', $textOufit = $textSpanIconInactive,$name='filter',$value='inactive');
+
+$buttonClear           = Helper::cmsButton($type='submit',$class='danger', $textOufit = 'Clear',$name='clear',$value='clear'); 
 
 $formFiler         = '<form action="" method="GET">
                         <input type="hidden" name="module" value="backend">
@@ -63,7 +65,7 @@ $formSearch        = '<form action="" method="GET">
     							<input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="' . @$this->searchValue . '">
                                 <span class="input-group-append">
                                 	<button type="submit" class="btn btn-info">Search</button>
-                                    <a href="#" class="btn btn-danger" name="clear" value="clear">Clear</a>
+                                    '.' '.$buttonClear.'
                                 </span>
                             </div>
 

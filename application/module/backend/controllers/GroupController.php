@@ -8,31 +8,43 @@ class GroupController extends Controller{
     }
 
     public function listAction(){
+        
+        echo "<pre>listAtion";
+        print_r($_GET);
+        echo "</pre>";
+        
+        echo "<pre>session";
+        print_r($_SESSION);
+        echo "</pre>";
+        
         //$this->_view->_title        = 'User Manager: User Group';  
-        $this->_view->_tag          = 'group';    
-        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-        $this->_view->Pagination    = $this->_model->pagination(4,3);
-        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+//         $this->_view->_tag          = 'group';    
+//         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
+//         $this->_view->Pagination    = $this->_model->pagination(4,3);
+//         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
         
         //$this->_view->ItemsFilter   = $this->_model->listItemsFiter();
         
-        if(isset($_GET['clear'])){
-            
-//             Session::set('search','');
-//             Session::set('status','');
-               Session::destroy();
+        if(@$_GET['clear'] !=''){
+            $_GET['search'] = '';
+            $_GET['filter'] = '';
+            Session::set('filter','');
+            Session::set('search','');
         }
         
         if(isset($_GET['search'])){
             $search  = trim($_GET['search']);
             Session::set('search',$search);
-            $this->_view->searchValue       = trim($_GET['search']);;
+        }
+       
+        if(Session::get('search') != ''){         
+            $this->_view->searchValue   = Session::get('search'); 
         }
         
-        if(isset($_GET['status'])){
-            $status  = trim($_GET['status']);
+        if(isset($_GET['filter'])){
+            $status  = trim($_GET['filter']);
             Session::set('status',$status);
-            $this->_view->Items         = $this->_model->listItems($arrParam = $this->_arrParam['status']);
+            $this->_view->Items         = $this->_model->listItems(Session::get('filter'));
         }
         
         if(isset($_GET['id'])){
@@ -58,6 +70,11 @@ class GroupController extends Controller{
             
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
+        
+        $this->_view->_tag          = 'group';
+        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
+        $this->_view->Pagination    = $this->_model->pagination(4,3);
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
         
               
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
