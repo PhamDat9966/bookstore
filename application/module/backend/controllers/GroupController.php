@@ -24,8 +24,9 @@ class GroupController extends Controller{
 //         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
         
         //$this->_view->ItemsFilter   = $this->_model->listItemsFiter();
+        $this->_view->_count        = $this->countAction(); 
         
-        if(isset($_GET['filter']) || isset($_GET['search'])){
+        if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear'])){
             $this->filterAndSearch();
         }
         
@@ -77,6 +78,8 @@ class GroupController extends Controller{
         
         if(@$_GET['filter'] == 'all'){
             Session::set('filter','');
+            $_GET['search'] = '';
+            Session::set('search','');
         }
         
         if(isset($_GET['search'])){
@@ -105,6 +108,21 @@ class GroupController extends Controller{
         $this->_templateObj->load();
         
         $this->_view->render('group/index', true);
+    }
+    
+    public function countAction(){
+        $count          = [];
+        
+        $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."`");
+        $count['allStatus'] = $this->_model->totalItem();
+        
+        $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE `status` = 1");
+        $count['activeStatus'] = $this->_model->totalItem();
+        
+        $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE `status` = 0");
+        $count['inActiveStatus'] = $this->_model->totalItem();
+        
+        return $count;
     }
     
     public function clearAction(){

@@ -67,13 +67,13 @@ class GroupModel extends Model
         
         //if(isset($arrParam['search'])) $queryContent[] = "WHERE `name` LIKE '%".$arrParam['search']."%'";
         
-        if(isset($_SESSION['search']) && isset($_SESSION['status'])){
+        if(!empty($_SESSION['search']) && !empty($_SESSION['status'])){
             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
             if($_SESSION['status']  == 'active') $queryContent[] = "AND `status`=1";
-            if($_SESSION['status' ] == 'inactive') $queryContent[] = "AND `status`=0";
-        }else if(isset($_SESSION['search'])){
+            if($_SESSION['status' ] == 'inactive') $queryContent[] = "AND `status`= 0";
+        }else if(!empty($_SESSION['search'])){
             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
-        }else if(isset($_SESSION['status'])){
+        }else if(!empty($_SESSION['status'])){
             if($_SESSION['status']  == 'active') $queryContent[] = "WHERE `status`='1'";
             if($_SESSION['status' ] == 'inactive') $queryContent[] = "WHERE `status`='0'";
         }
