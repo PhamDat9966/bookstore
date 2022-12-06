@@ -54,7 +54,7 @@ class GroupModel extends Model
 
     public function listItems($arrParam,$option = null)
     {  
-        
+
         $pagitor = $this->pagination(4, 3);
         $position = $pagitor['position'];
         $totalItemsPerPage = $pagitor['totalItemsPerPage'];
@@ -67,15 +67,15 @@ class GroupModel extends Model
         
         //if(isset($arrParam['search'])) $queryContent[] = "WHERE `name` LIKE '%".$arrParam['search']."%'";
         
-        if(!empty($_SESSION['search']) && !empty($_SESSION['status'])){
+        if(!empty($_SESSION['search']) && !empty($_SESSION['filter'])){
             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
-            if($_SESSION['status']  == 'active') $queryContent[] = "AND `status`=1";
-            if($_SESSION['status' ] == 'inactive') $queryContent[] = "AND `status`= 0";
+            if($_SESSION['filter']  == 'active') $queryContent[] = "AND `status`=1";
+            if($_SESSION['filter' ] == 'inactive') $queryContent[] = "AND `status`= 0";
         }else if(!empty($_SESSION['search'])){
             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
-        }else if(!empty($_SESSION['status'])){
-            if($_SESSION['status']  == 'active') $queryContent[] = "WHERE `status`='1'";
-            if($_SESSION['status' ] == 'inactive') $queryContent[] = "WHERE `status`='0'";
+        }else if(!empty($_SESSION['filter'])){
+            if($_SESSION['filter']  == 'active') $queryContent[] = "WHERE `status`='1'";
+            if($_SESSION['filter' ] == 'inactive') $queryContent[] = "WHERE `status`='0'";
         }
        
         $queryContent[] = "LIMIT $position,$totalItemsPerPage";
