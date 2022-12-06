@@ -92,7 +92,7 @@ class GroupController extends Controller{
         
         if(isset($_GET['filter'])){
             $status  = trim($_GET['filter']);
-            Session::set('status',$status);
+            Session::set('filter',$status);
         }
         
         $this->_view->_count        = $this->countAction(); 

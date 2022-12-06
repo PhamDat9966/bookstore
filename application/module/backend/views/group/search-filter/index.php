@@ -8,14 +8,25 @@ $allButtonClass         = 'default';
 $activeButtonClass      = 'secondary';
 $inactiveButtonClass    = 'secondary';
 
-if(isset($_GET['filter'])){
-    if($_GET['filter'] == 'active'){
+// echo "<pre>GEt";
+// print_r($_GET);
+// echo "</pre>";
+
+// echo "<pre>session";
+// print_r($_SESSION);
+// echo "</pre>";
+
+
+
+
+if(isset($_SESSION['filter'])){
+    if($_SESSION['filter'] == 'active'){
         $allButtonClass         = 'secondary';
         $activeButtonClass      = 'default';
         $inactiveButtonClass    = 'secondary';
     }
     
-    if($_GET['filter'] == 'inactive'){
+    if($_SESSION['filter'] == 'inactive'){
         $allButtonClass         = 'secondary';
         $activeButtonClass      = 'secondary';
         $inactiveButtonClass    = 'default';
