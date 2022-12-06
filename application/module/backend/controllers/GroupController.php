@@ -24,11 +24,12 @@ class GroupController extends Controller{
 //         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
         
         //$this->_view->ItemsFilter   = $this->_model->listItemsFiter();
-        $this->_view->_count        = $this->countAction(); 
+        
         
         if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear'])){
             $this->filterAndSearch();
         }
+        $this->_view->_count        = $this->countAction(); 
         
         if(isset($_GET['id'])){
             
@@ -78,8 +79,6 @@ class GroupController extends Controller{
         
         if(@$_GET['filter'] == 'all'){
             Session::set('filter','');
-            $_GET['search'] = '';
-            Session::set('search','');
         }
         
         if(isset($_GET['search'])){
@@ -95,6 +94,8 @@ class GroupController extends Controller{
             $status  = trim($_GET['filter']);
             Session::set('status',$status);
         }
+        
+        $this->_view->_count        = $this->countAction(); 
         
         $this->_view->_tag          = 'group'; //for Sidebar
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
@@ -113,13 +114,29 @@ class GroupController extends Controller{
     public function countAction(){
         $count          = [];
         
+        $searchQuery    = '';    
+        if(isset($_SESSION['search'])){
+            $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+            
+            $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery");
+            $count['allStatus'] = $this->_model->totalItem();
+            
+            $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 1");
+            $count['activeStatus'] = $this->_model->totalItem();
+            
+            $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 0 ");
+            $count['inActiveStatus'] = $this->_model->totalItem();
+            
+            return $count;
+        }
+        
         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."`");
         $count['allStatus'] = $this->_model->totalItem();
         
         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE `status` = 1");
         $count['activeStatus'] = $this->_model->totalItem();
         
-        $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE `status` = 0");
+        $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE  `status` = 0");
         $count['inActiveStatus'] = $this->_model->totalItem();
         
         return $count;
