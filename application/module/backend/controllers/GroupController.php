@@ -6,29 +6,28 @@ class GroupController extends Controller{
         //parent::__construct();
         Session::ini();
     }
+    
+    public function viewTemplateAction(){
+        $this->_view->_tag          = 'group'; //for Sidebar
+        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
+        $this->_view->Pagination    = $this->_model->pagination(4,3);
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;       
+        
+        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFileTemplate('group-list.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('group/index', true);
+    }
+    
 
     public function listAction(){
-        
-//         echo "<pre>listAtion";
-//         print_r($_GET);
-//         echo "</pre>";
-        
-//         echo "<pre>session";
-//         print_r($_SESSION);
-//         echo "</pre>";
-        
-        //$this->_view->_title        = 'User Manager: User Group';  
-//         $this->_view->_tag          = 'group';    
-//         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-//         $this->_view->Pagination    = $this->_model->pagination(4,3);
-//         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
-        
-        //$this->_view->ItemsFilter   = $this->_model->listItemsFiter();
-        
-        
+            
         if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear'])){
             $this->filterAndSearch();
         }
+        
         $this->_view->_count        = $this->countAction(); 
         
         if(isset($_GET['id'])){
@@ -55,19 +54,7 @@ class GroupController extends Controller{
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
         
-        $this->_view->_tag          = 'group'; //for Sidebar
-        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-        $this->_view->Pagination    = $this->_model->pagination(4,3);
-        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
-        
-              
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
-        $this->_templateObj->setFileTemplate('group-list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
-        $this->_view->render('group/index', true);
-   
+        $this->viewTemplateAction();
     }
     
     public function filterAndSearch(){
@@ -94,21 +81,7 @@ class GroupController extends Controller{
             $status  = trim($_GET['filter']);
             Session::set('filter',$status);
         }
-        
-        $this->_view->_count        = $this->countAction(); 
-        
-        $this->_view->_tag          = 'group'; //for Sidebar
-        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-        $this->_view->Pagination    = $this->_model->pagination(4,3);
-        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
-        
-        
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
-        $this->_templateObj->setFileTemplate('group-list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
-        $this->_view->render('group/index', true);
+        $this->viewTemplateAction();
     }
     
     public function countAction(){
@@ -146,16 +119,7 @@ class GroupController extends Controller{
         $this->_view->_tag          = 'group';   
         Session::set('search','');
         Session::set('status','');
-        
-        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-        $this->_view->Pagination    = $this->_model->pagination(4,3);
-        
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
-        $this->_templateObj->setFileTemplate('group-list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
-        $this->_view->render('group/index', true);
+
     }
     
     public function formAction($option = null){
