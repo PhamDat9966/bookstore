@@ -5,7 +5,7 @@ class Controller{
     protected $_model;
     protected $_templateObj;
     protected $_arrParam;
-    
+    protected $_pagination;
 // 	public function __construct(){
 // 	    echo '<h3>'.__METHOD__.'</h3>';
 // 	    $this->_arrParam = array_merge($_GET,$_POST);

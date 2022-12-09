@@ -8,17 +8,6 @@ $allButtonClass         = 'default';
 $activeButtonClass      = 'secondary';
 $inactiveButtonClass    = 'secondary';
 
-// echo "<pre>GEt";
-// print_r($_GET);
-// echo "</pre>";
-
-// echo "<pre>session";
-// print_r($_SESSION);
-// echo "</pre>";
-
-
-
-
 if(isset($_SESSION['filter'])){
     if($_SESSION['filter'] == 'active'){
         $allButtonClass         = 'secondary';

@@ -33,15 +33,18 @@ class GroupModel extends Model
         return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$Status)));
     }
     
-    public function pagination($totalItemsPerPage = 4, $pageRange = 3)
-    {
+    public function pagination($totalItems = 0,$totalItemsPerPage = 4, $pageRange = 3)
+    {   
+        //echo 'pagination: '.$totalItems;
         $resulfPagination = [];
-        $this->query("SELECT COUNT(`id`) AS totalItems FROM `$this->_tableName`");
-        $totalItems = $this->totalItem();
+//         $this->query("SELECT COUNT(`id`) AS totalItems FROM `$this->_tableName`");
+//         echo $totalItems = $this->totalItem();
+
+        
         $currentPage = (isset($_GET['page'])) ? $_GET['page'] : 1;
         $this->_cunrrentPage = $currentPage; 
         
-        $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage);
+        $paginator = new Pagination($totalItems = 3, $totalItemsPerPage, $pageRange, $currentPage);
         $paginationHTML = $paginator->showPagination();
         $position = ($currentPage - 1) * $totalItemsPerPage;
         
@@ -54,18 +57,44 @@ class GroupModel extends Model
 
     public function listItems($arrParam,$option = null)
     {  
-
-        $pagitor = $this->pagination(4, 3);
-        $position = $pagitor['position'];
-        $totalItemsPerPage = $pagitor['totalItemsPerPage'];
         
-        $queryContent = [];
-        //$queryContent[] = "SELECT `id`,`name`,`link`,`image`,`status`,`ordering`";
+        $totalItemsCount = $arrParam['count']['allStatus'];
         
+        $queryContent = [];     
         $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
         $queryContent[] = "FROM `$this->_tableName`";
         
-        //if(isset($arrParam['search'])) $queryContent[] = "WHERE `name` LIKE '%".$arrParam['search']."%'";
+        
+//         if(!empty($_SESSION['search']) && !empty($_SESSION['filter'])){
+//             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
+//             if($_SESSION['filter']  == 'active') {
+//                 $queryContent[]     =  "AND `status`=1";
+//                 $totalItems         =  $arrParam['count']['activeStatus'];
+//             }
+//             if($_SESSION['filter' ] == 'inactive') {
+//                 $queryContent[] = "AND `status`= 0";
+//                 $totalItems         =  $arrParam['count']['inActiveStatus'];
+//             }
+//         }else if(!empty($_SESSION['search'])){
+//             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
+//             $totalItems     = $arrParam['count']['allStatus'];
+//         }else if(!empty($_SESSION['filter'])){
+//             if($_SESSION['filter']  == 'active') {
+//                 $queryContent[] = "WHERE `status`='1'";
+//                 $totalItems         =  $arrParam['count']['activeStatus'];
+//             }
+//             if($_SESSION['filter' ] == 'inactive') {
+//                 $queryContent[]     = "WHERE `status`='0'";
+//                 $totalItems         =  $arrParam['count']['inActiveStatus'];
+//             }
+//         }
+        
+        
+//         echo $totalItems;
+//         $pagitor = $this->pagination($totalItems,4, 3);
+        
+        
+        
         
         if(!empty($_SESSION['search']) && !empty($_SESSION['filter'])){
             $queryContent[] = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
@@ -77,13 +106,51 @@ class GroupModel extends Model
             if($_SESSION['filter']  == 'active') $queryContent[] = "WHERE `status`='1'";
             if($_SESSION['filter' ] == 'inactive') $queryContent[] = "WHERE `status`='0'";
         }
-       
+        
+        $pagitor = $this->pagination($totalItems = $totalItemsCount, $totalItemsPerPage = 4, $pageRange = 3);
+        $position = $pagitor['position'];
+        $totalItemsPerPage = $pagitor['totalItemsPerPage'];
+        
         $queryContent[] = "LIMIT $position,$totalItemsPerPage";
         
         $queryContent = implode(" ", $queryContent);
         
         $result = $this->listRecord($queryContent);
         return $result;
+    }
+    
+    public function countItem($arrParam,$option = null)
+    {
+        $queryContent = [];
+        $queryContent[] = "SELECT COUNT(`id`) AS total";
+        $queryContent[] = "FROM `$this->_tableName`";
+        
+        $flagWhere      = false;
+        
+        if(!empty($_SESSION['search'])){
+            $queryContent[]     = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
+            $flagWhere          = true;
+        }
+        
+        $filter = '';
+        
+        if(isset($_SESSION['filter'])){
+            if($flagWhere == true){
+                if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1'; 
+                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0'; 
+            }
+            
+            if($flagWhere == false){
+                if($_SESSION['filter'] == 'active') $queryContent[]    = 'WHERE `status` = 1';
+                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'WHERE `status`= 0';
+            }
+        }
+ 
+        $queryContent = implode(" ", $queryContent);
+             
+        $result = $this->singleRecord($queryContent);
+
+        return $result['total'];
     }
     
     public function listItemId($id){

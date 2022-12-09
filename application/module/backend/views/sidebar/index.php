@@ -4,77 +4,77 @@ $adminLTELogo   = '<img src="'.$this->_urlImg .'/AdminLTELogo.png" alt="AdminLTE
 $userImage      = '<img src="'.$this->_urlImg .'/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">';
 
 $sidebar        = array(
-                        'dashboard'=>
-                        array(
-                           'name'   =>'Dashboard',   
-                            'href'  =>'index.php?module=backend&controller=dashboard&action=index',
-                            'icon'  =>'<i class="nav-icon fas fa-tachometer-alt"></i>'
-                        ),
-                        'group'=>
-                        array(
-                            'name'=>'Group',
-                            'href'=>'#',
-                            'icon'  =>'<i class="nav-icon fa fa-users"></i>',
-                            'tree'=>array(
-                                            array(
-                                                'name'=>'List',
-                                                'href'=>'index.php?module=backend&controller=group&action=list'  
-                                            ),
-                                            array(
-                                                'name'=>'Add',
-                                                'href'=>'index.php?module=backend&controller=group&action=form'
-                                            )
+                    'dashboard'=>
+                    array(
+                       'name'   =>'Dashboard',   
+                        'href'  =>'index.php?module=backend&controller=dashboard&action=index',
+                        'icon'  =>'<i class="nav-icon fas fa-tachometer-alt"></i>'
+                    ),
+                    'group'=>
+                    array(
+                        'name'=>'Group',
+                        'href'=>'#',
+                        'icon'  =>'<i class="nav-icon fa fa-users"></i>',
+                        'tree'=>array(
+                                        array(
+                                            'name'=>'List',
+                                            'href'=>'index.php?module=backend&controller=group&action=list'  
+                                        ),
+                                        array(
+                                            'name'=>'Add',
+                                            'href'=>'index.php?module=backend&controller=group&action=form'
+                                        )
+                        )
+                    ),
+                    'user'=>
+                    array(
+                        'name'=>'User',
+                        'href'=>'#',
+                        'icon'  =>'<i class="nav-icon fa fa-user"></i>',
+                        'tree'=>array(
+                            array(
+                                'name'=>'List',
+                                'href'=>'index.php?module=backend&controller=user&action=list'
+                            ),
+                            array(
+                                'name'=>'Add',
+                                'href'=>'index.php?module=backend&controller=user&action=form'
                             )
-                        ),
-                        'user'=>
-                        array(
-                            'name'=>'User',
-                            'href'=>'#',
-                            'icon'  =>'<i class="nav-icon fa fa-user"></i>',
-                            'tree'=>array(
-                                array(
-                                    'name'=>'List',
-                                    'href'=>'index.php?module=backend&controller=user&action=list'
-                                ),
-                                array(
-                                    'name'=>'Add',
-                                    'href'=>'index.php?module=backend&controller=user&action=form'
-                                )
+                        )
+                    ),
+                    'catagory'=>
+                    array(
+                        'name'=>'Catagory',
+                        'href'=>'#',
+                        'icon'  =>'<i class="<i nav-icon fa fa-tags"></i>',
+                        'tree'=>array(
+                            array(
+                                'name'=>'List',
+                                'href'=>'#'
+                            ),
+                            array(
+                                'name'=>'Add',
+                                'href'=>'#'
                             )
-                        ),
-                        'catagory'=>
-                        array(
-                            'name'=>'Catagory',
-                            'href'=>'#',
-                            'icon'  =>'<i class="<i nav-icon fa fa-tags"></i>',
-                            'tree'=>array(
-                                array(
-                                    'name'=>'List',
-                                    'href'=>'#'
-                                ),
-                                array(
-                                    'name'=>'Add',
-                                    'href'=>'#'
-                                )
+                        )
+                    ),
+                    'book'=>
+                    array(
+                        'name'=>'Book',
+                        'href'=>'#',
+                        'icon'  =>'<i class="nav-icon fa fa-book"></i>',
+                        'tree'=>array(
+                            array(
+                                'name'=>'List',
+                                'href'=>'#'
+                            ),
+                            array(
+                                'name'=>'Add',
+                                'href'=>'#'
                             )
-                        ),
-                        'book'=>
-                        array(
-                            'name'=>'Book',
-                            'href'=>'#',
-                            'icon'  =>'<i class="nav-icon fa fa-book"></i>',
-                            'tree'=>array(
-                                array(
-                                    'name'=>'List',
-                                    'href'=>'#'
-                                ),
-                                array(
-                                    'name'=>'Add',
-                                    'href'=>'#'
-                                )
-                            )
-                        ),
-                  );
+                        )
+                    ),
+              );
 $xhtm  = '';
 $xhtm .= '<nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">';

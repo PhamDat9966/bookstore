@@ -18,9 +18,14 @@ class Pagination
 		$this->pageRange			= $pageRange;
 		$this->currentPage			= $currentPage;
 		$this->totalPage			= ceil($totalItems / $totalItemsPerPage);
+	      
+// 		echo '<h3>'. __METHOD__ . '</h3>';
+// 		echo 'totalItems: '. $this->totalItems.'<br/>';
+// 		echo 'totalItemsPerPage: '. $this->totalItemsPerPage .'<br/>';
+// 		echo 'pageRange: '. $this->pageRange.'<br/>';
 	}
 
-	public function showPagination()
+	public function showPagination($link = '?module=backend&controller=group&action=list')
 	{
 		// Pagination
 		$paginationHTML = '';
@@ -30,16 +35,16 @@ class Pagination
 			$prev   =  '<li class="page-item disabled"><a class="page-link">Previous</a></li>';
 			
 			if ($this->currentPage > 1) {
-				$start  = '<li class="page-item"><a class="page-link" href="?module=backend&controller=group&action=list&page=1">Start</a></li>';
-				$prev 	= '<li class="page-item"><a class="page-link" href="?module=backend&controller=group&action=list&page=' . ($this->currentPage - 1) . '">Previous</li>';
+				$start  = '<li class="page-item"><a class="page-link" href="'.$link.'&page=1">Start</a></li>';
+				$prev 	= '<li class="page-item"><a class="page-link" href="'.$link.'&page=' . ($this->currentPage - 1) . '">Previous</li>';
 			}
 
 			$next 	= '<li class="page-item disabled"><a class="page-link">Next</a></li>';
 			$end 	= '<li class="page-item disabled"><a class="page-link">End</a></li>';
 			
 			if ($this->currentPage < $this->totalPage) {
-				$next 	= '<li class="page-item"><a class="page-link" href="?module=backend&controller=group&action=list&page=' . ($this->currentPage + 1) . '">Next</a></li>';
-				$end 	= '<li class="page-item"><a class="page-link" href="?module=backend&controller=group&action=list&page=' . $this->totalPage . '">End</a></li>';
+				$next 	= '<li class="page-item"><a class="page-link" href="'.$link.'&page=' . ($this->currentPage + 1) . '">Next</a></li>';
+				$end 	= '<li class="page-item"><a class="page-link" href="'.$link.'&page=' . $this->totalPage . '">End</a></li>';
 			}
 
 			if ($this->pageRange < $this->totalPage) {
@@ -73,7 +78,7 @@ class Pagination
 				if ($i == $this->currentPage) {
 					$listPages .= '<li class="page-item active"><a class="page-link" href="#">' . $i . '</a></li>';
 				} else {
-					$listPages .= '<li class="page-item"><a class="page-link" href="?module=backend&controller=group&action=list&page=' . $i . '">' . $i . '</a>';
+					$listPages .= '<li class="page-item"><a class="page-link" href="'.$link.'&page=' . $i . '">' . $i . '</a>';
 				}
 			}
 

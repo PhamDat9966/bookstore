@@ -8,6 +8,7 @@ class GroupController extends Controller{
     }
     
     public function viewTemplateAction(){
+        
         $this->_view->_tag          = 'group'; //for Sidebar
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->Pagination    = $this->_model->pagination(4,3);
@@ -23,12 +24,18 @@ class GroupController extends Controller{
     
 
     public function listAction(){
+        //Đếm số phần tử lọc
+//         $this->_view->_count        = $this->countAction();
+//         $this->_model->_count       = $this->_view->_count;
+        $this->_arrParam['count']       = $this->countAction();
+        
+        $count = $this->_model->countItem($this->_arrParam);
+        
+        $this->_view->_count            = $this->_arrParam['count'];
             
         if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear'])){
             $this->filterAndSearch();
-        }
-        
-        $this->_view->_count        = $this->countAction(); 
+        }    
         
         if(isset($_GET['id'])){
             
@@ -54,6 +61,7 @@ class GroupController extends Controller{
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
         
+        // Gọi view và Template
         $this->viewTemplateAction();
     }
     
@@ -112,6 +120,8 @@ class GroupController extends Controller{
         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE  `status` = 0");
         $count['inActiveStatus'] = $this->_model->totalItem();
         
+        //$this->_arrParam['count'] = $count;
+
         return $count;
     }
     
