@@ -8,7 +8,7 @@ class Pagination
 	private $totalPage;						// Tổng số trang
 	public  $currentPage			= 1;	// Trang hiện tại
 
-	public function __construct($totalItems, $totalItemsPerPage = 1, $pageRange = 3, $currentPage = 1)
+	public function __construct($totalItems, $totalItemsPerPage, $pageRange, $currentPage)
 	{
 		$this->totalItems			= $totalItems;
 		$this->totalItemsPerPage	= $totalItemsPerPage;
@@ -23,6 +23,7 @@ class Pagination
 // 		echo 'totalItems: '. $this->totalItems.'<br/>';
 // 		echo 'totalItemsPerPage: '. $this->totalItemsPerPage .'<br/>';
 // 		echo 'pageRange: '. $this->pageRange.'<br/>';
+//         echo 'currentPage: '.$this->currentPage;
 	}
 
 	public function showPagination($link = '?module=backend&controller=group&action=list')

@@ -7,32 +7,8 @@ class GroupController extends Controller{
         Session::ini();
     }
     
-    public function viewTemplateAction(){
-        
-        $this->_view->_tag          = 'group'; //for Sidebar
-        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-        $this->_view->Pagination    = $this->_model->pagination(4,3);
-        $this->_view->_currentPage  = $this->_model->_cunrrentPage;       
-        
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
-        $this->_templateObj->setFileTemplate('group-list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
-        $this->_view->render('group/index', true);
-    }
-    
-
     public function listAction(){
-        //Đếm số phần tử lọc
-//         $this->_view->_count        = $this->countAction();
-//         $this->_model->_count       = $this->_view->_count;
-        $this->_arrParam['count']       = $this->countAction();
         
-        $count = $this->_model->countItem($this->_arrParam);
-        
-        $this->_view->_count            = $this->_arrParam['count'];
-            
         if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear'])){
             $this->filterAndSearch();
         }    
@@ -42,27 +18,70 @@ class GroupController extends Controller{
             $this->_arrParam['id'] = $_GET['id'];
             
             if(isset($_GET['group_acp'])){
-                $this->_arrParam['group_acp'] = $_GET['group_acp'];
-                $this->_groupACBReturn = $this->_model->changeGroupACB($this->_arrParam);
-                
-                $this->_groupACBReturn['url'].$this->_arrParam['page'];
-                $page = $this->_arrParam['page'];
-             }
+                $this->groupACBAction();
+            }
             
             if(isset($_GET['status'])){
-
-                $this->_arrParam['status'] = $_GET['status'];
-                $this->_statusReturn = $this->_model->changeStatus($this->_arrParam);
-                
-                $this->_statusReturn['url'].$this->_arrParam['page'];
-                $page = $this->_arrParam['page'];   
+                $this->statusAction();
             }
             
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
+
+        //Paginator
+        $this->_arrParam['count']  = $this->_model->countAll();
+        $this->_view->_count       = $this->_arrParam['count'];        
+        $this->_model->_countParam = $this->_arrParam['count'];
+
+        $totalItems                = $this->_arrParam['count']['allStatus'];
+        if(isset($_SESSION['filter'])) {
+            if($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
+            if($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
+        }
         
-        // Gọi view và Template
-        $this->viewTemplateAction();
+        $currentPage               = 1;
+        $totalItemsPerPage         = 4;
+        $pageRange                 = 3;
+        
+        if(isset($_GET['page'])){
+            $currentPage           = $_GET['page']; 
+        }
+        
+        $this->_pagination                               = $this->_model->pagination($totalItems,$totalItemsPerPage,$pageRange,$currentPage);
+        $this->_model->_arrParam['position']             = $this->_pagination['position'];
+        $this->_model->_arrParam['totalItemsPerPage']    = $this->_pagination['totalItemsPerPage'];
+        
+        $this->_view->Pagination    = $this->_pagination;  
+            
+        //end Load
+        $this->_view->_tag          = 'group'; //for Sidebar
+        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
+        
+        
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+        
+        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFileTemplate('group-list.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('group/index', true);
+    }
+    
+    public function groupACBAction(){
+        $this->_arrParam['group_acp'] = $_GET['group_acp'];
+        $this->_groupACBReturn = $this->_model->changeGroupACB($this->_arrParam);
+        
+        $this->_groupACBReturn['url'].$this->_arrParam['page'];
+        $page = $this->_arrParam['page'];
+    }
+    
+    public function statusAction(){
+        $this->_arrParam['status'] = $_GET['status'];
+        $this->_statusReturn = $this->_model->changeStatus($this->_arrParam);
+        
+        $this->_statusReturn['url'].$this->_arrParam['page'];
+        $page = $this->_arrParam['page']; 
     }
     
     public function filterAndSearch(){
@@ -89,7 +108,7 @@ class GroupController extends Controller{
             $status  = trim($_GET['filter']);
             Session::set('filter',$status);
         }
-        $this->viewTemplateAction();
+        
     }
     
     public function countAction(){
