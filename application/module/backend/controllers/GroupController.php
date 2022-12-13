@@ -25,6 +25,7 @@ class GroupController extends Controller{
                 $this->statusAction();
             }
             
+            // Ẩn show các biến get của groupACB và Status           
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
 
@@ -71,9 +72,11 @@ class GroupController extends Controller{
     public function groupACBAction(){
         $this->_arrParam['group_acp'] = $_GET['group_acp'];
         $this->_groupACBReturn = $this->_model->changeGroupACB($this->_arrParam);
-        
-        $this->_groupACBReturn['url'].$this->_arrParam['page'];
-        $page = $this->_arrParam['page'];
+        // $this->_arrParam['page'] lấy từ Paginator
+        if (isset($this->_arrParam['page'])){
+            $this->_groupACBReturn['url'].$this->_arrParam['page'];
+            $page = $this->_arrParam['page'];
+        }    
     }
     
     public function statusAction(){

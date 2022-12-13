@@ -19,14 +19,16 @@ class Bootstrap{
         
     }
     
-    //  SET PARAMS
-    public function setParam(){
+    // LOAD EXISTING CONTROLLER
+    public function loadExistingController($filePath, $controllerName){
         
-        $this->_params = array_merge($_GET,$_POST);
-
-        $this->_params['module'] 		= isset($this->_params['module']) ? $this->_params['module'] : DEFAULT_MODULE;
-        $this->_params['controller'] 	= isset($this->_params['controller']) ? $this->_params['controller'] : DEFAULT_CONTROLLER;
-        $this->_params['action'] 		= isset($this->_params['action']) ? $this->_params['action'] : DEFAULT_ACTION;
+        require_once $filePath;
+        $this->_controllerOject   = new $controllerName();
+        $this->_controllerOject->loadModel($this->_params['module'],$this->_params['controller']);
+        $this->_controllerOject->setView($this->_params['module']);
+        $this->_controllerOject->setTemplate($this->_controllerOject);
+        $this->_controllerOject->setParams($this->_params);
+        
     }
     
     // CALL METHOD
@@ -40,16 +42,14 @@ class Bootstrap{
         }
     }
     
-    // LOAD EXISTING CONTROLLER
-    public function loadExistingController($filePath, $controllerName){
-            
-        require_once $filePath;
-        $this->_controllerOject   = new $controllerName();
-        $this->_controllerOject->loadModel($this->_params['module'],$this->_params['controller']);
-        $this->_controllerOject->setView($this->_params['module']);
-        $this->_controllerOject->setTemplate($this->_controllerOject);
-        $this->_controllerOject->setParams($this->_params);
-              
+    //  SET PARAMS
+    public function setParam(){
+        
+        $this->_params = array_merge($_GET,$_POST);
+
+        $this->_params['module'] 		= isset($this->_params['module']) ? $this->_params['module'] : DEFAULT_MODULE;
+        $this->_params['controller'] 	= isset($this->_params['controller']) ? $this->_params['controller'] : DEFAULT_CONTROLLER;
+        $this->_params['action'] 		= isset($this->_params['action']) ? $this->_params['action'] : DEFAULT_ACTION;
     }
     
     // LOAD DEFAULT CONTROLLER
