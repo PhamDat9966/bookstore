@@ -2,8 +2,9 @@
 
 $arrSelectBox = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
 
-$selection = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null);
-$buttonSubmit = '<button type="submit" name="submit" value="OK" class="btn btn-info">Apply</button>';
+$selection          = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null);
+//$buttonSelection    = '<button type="submit" name="submit" value="submit" class="btn btn-info">Apply</button>';
+$buttonSelection    = Helper::cmsButton($type ="submit", $class = 'default' , $textOutfit = "Apply" , $name = "bulk" , $value = "bulk");
 
 $listGroup = '';
 
@@ -77,8 +78,13 @@ if(!empty($this->Items)){
     
     <!-- List -->
     <!-- FORM GROUP -->
-   	<form action="index.php?module=backend&controller=group&action=value_new" method="post" name="group-list-form" id="group-list-form">
-
+    <!-- <form action="index.php?module=backend&controller=group&action=value_new" method="post" name="group-list-form" id="group-list-form"> -->
+	<form action="#" method="get" name="group-list-form" id="group-list-form">
+	
+		<input type="hidden" name="module" value="backend">
+        <input type="hidden" name="controller" value="group">
+        <input type="hidden" name="action" value="list">
+	
         <div class="card card-outline card-info">
             <div class="card-header">
                 <h3 class="card-title">List</h3>
@@ -102,7 +108,7 @@ if(!empty($this->Items)){
                                     echo $selection;
                                 ?>
                                 <span class="input-group-append">
-                                    <?php echo $buttonSubmit;?>
+                                    <?php echo $buttonSelection;?>
                                 </span>
                             </div>
                         </div>
@@ -127,10 +133,7 @@ if(!empty($this->Items)){
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <?php 
-                           
-                        ?>
-                        
+                                               
                         <tbody>
                         <?php 
                             echo $listGroup;

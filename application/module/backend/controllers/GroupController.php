@@ -8,11 +8,36 @@ class GroupController extends Controller{
     }
     
     public function listAction(){
+
+        //Bulk Action
+        if(isset($_GET['selectBox'])){
+
+            if(!empty($_GET['cid'])){
+
+                if($_GET['selectBox'] == 'delete'){
+                    $this->_model->deleteMultItem($this->_arrParam);                   
+                }
+                
+                if($_GET['selectBox'] == 'action'){
+                    $this->_arrParam['type'] = 1;
+                    $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+                    //URL::redirect(URL::createLink('admin', 'group', 'index'));
+                }
+                
+                if($_GET['selectBox'] == 'inactive'){
+                    $this->_arrParam['type'] = 0;
+                    $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+                    //URL::redirect(URL::createLink('admin', 'group', 'index'));
+                }
+            }
+        }
         
+        // filter and search
         if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear'])){
             $this->filterAndSearch();
         }    
         
+        // charge active, inactive groupACB and status
         if(isset($_GET['id'])){
             
             $this->_arrParam['id'] = $_GET['id'];
@@ -25,7 +50,7 @@ class GroupController extends Controller{
                 $this->statusAction();
             }
             
-            // Ẩn show các biến get của groupACB và Status           
+            // Ẩn url biến get của groupACB và Status bằng cách gọi lại liên kết          
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
 
@@ -56,9 +81,7 @@ class GroupController extends Controller{
             
         //end Load
         $this->_view->_tag          = 'group'; //for Sidebar
-        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-        
-        
+        $this->_view->Items         = $this->_model->listItems($this->_arrParam);       
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
         
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
@@ -116,7 +139,9 @@ class GroupController extends Controller{
     
     public function countAction(){
         $count          = [];
+        $queryCount     = [];
         
+        $flagWhere      = false;
         $searchQuery    = '';    
         if(isset($_SESSION['search'])){
             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
@@ -142,8 +167,25 @@ class GroupController extends Controller{
         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE  `status` = 0");
         $count['inActiveStatus'] = $this->_model->totalItem();
         
-        //$this->_arrParam['count'] = $count;
-
+        //-------------------!!!!!!!!!!!!!!!!!!!----------------------//
+//         $flagWhere      = false;
+//         if(isset($_SESSION['search'])){
+//             $queryCount[]   = "SELECT COUNT(`id`) AS totalItems"; 
+//             $queryCount[]   = "FROM `".TBL_GROUP."`";
+//             $queryCount[]   = "`name` LIKE '%".$_SESSION['search']."%'";
+//             $flagWhere  = true;
+//         }
+        
+//         if(isset($_SESSION[''])){
+            
+//         }
+        
+//         //$this->_arrParam['count'] = $count;
+//         $queryCount = implode(" ", $queryCount);
+//         $this->_model->query($queryCount);
+        
+        //------------------------------------------------------------//
+        
         return $count;
     }
     

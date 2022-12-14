@@ -9,4 +9,5 @@ $(document).ready(function(){
 	$('#submit').click(function(){
 		$('#group-list-form').submit();
 	})
+	
 })

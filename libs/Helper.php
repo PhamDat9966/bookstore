@@ -3,7 +3,8 @@ class Helper{
     
     //Button
     public static function cmsButton( $type, $class = 'default' , $textOutfit , $name = null , $value = null ){
-
+       //class: default secondary danger 
+        
        $nameButton = '';     
        if(isset($name)){
            $nameButton = "name='$name'";
@@ -27,7 +28,7 @@ class Helper{
        if($class == 'danger'){
            $classButton = "class='btn btn-danger'";
        }
-       
+
        $nameAndValue = '';
        if(isset($name) && isset($value)){
            $nameAndValue = "name='$name' value='$value'";
@@ -38,7 +39,7 @@ class Helper{
     }
     
     //A tag
-    public static function cmsButtonAtag($url,$class,$textOufit,$spanIcon){
+    public static function cmsButtonAtag($url,$class,$textOufit,$spanIcon = null){
         //<a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">8</span></a>
         
         // default class

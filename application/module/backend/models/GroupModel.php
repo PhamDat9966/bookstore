@@ -64,12 +64,37 @@ class GroupModel extends Model
        
     public function changeStatus($arrParam, $option = null){
         
-        $Status = ($arrParam['status'] == 0) ? 1 : 0 ;
-        $id       = $arrParam['id'];
-        $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
-        $this->query($query);
+        if($option['task'] == 'change-status'){
+            $status 	= $arrParam['type'];
+            if(!empty($arrParam['cid'])){
+                
+                $ids = '';
+                if(!empty($arrParam['cid'])){
+                    foreach($arrParam['cid'] as $id) {
+                        $ids .= "'" . $id . "', ";
+                    }
+                    $ids     .= "'0'";
+                }
+                
+                $query		= "UPDATE `$this->table` SET `status` = $status WHERE `id` IN ($ids)";
+                $this->query($query);
+                
+                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được thay đổi trạng thái!'));
+            }else{
+                Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muỗn thay đổi trạng thái!'));
+            }
+        }
         
-        return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$Status)));
+        if($option['task'] == null){
+            
+            $Status = ($arrParam['status'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
+            $this->query($query);
+            
+            return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$Status)));
+        }
+        
     }
     
     public function pagination($totalItems,$totalItemsPerPage,$pageRange)
@@ -175,35 +200,29 @@ class GroupModel extends Model
         $this->delete([$id]);
     }
     
-    public function deleteMultItem($checkbox,$option = null)
+    public function multActiveStatus($checkbox,$option = null){
+        echo '<h3>this is multActiveStatus</h3>';
+        die();
+    }
+    
+    public function multInactiveStatus($checkbox,$option = null){
+        echo '<h3>this is multInactiveStatus</h3>';
+        die();
+    }
+    
+    public function deleteMultItem($arrParam,$option = null)
     {
-        $folderImgTemp      = TEMPLATE_PATH . 'admin' . DS . 'main' . DS . 'admin' . DS . 'images' . DS;
-        $where    = '';
-        foreach ($checkbox as $id) {
-            $where .= " `id` = '$id' ";
-            $where .= "OR";
-        }
-        $where = rtrim($where, "OR");
-        
-        $query  = [];
-        $query[] = "SELECT `id`,`name`,`link`,`image`";
-        $query[] = "FROM `$this->_tableName`";
-        $query[] = "WHERE $where";
-        
-        $query  = implode(" ", $query);
-        
-        $item = $this->listRecord($query);
-        
-        $total = $this->delete($checkbox);
-        
-        if ($total > 0) {
-            foreach ($item as $value) {
-                $oldImg     = $value['image'];
-                $fileImg    = $folderImgTemp . $oldImg;
-                @unlink($fileImg);
+        if($option == null){
+            if(!empty($arrParam['cid'])){
+                $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
+                $query		= "DELETE FROM `$this->table` WHERE `id` IN ($ids)";
+                $this->query($query);
+                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được xóa!'));
+            }else{
+                Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muỗn xóa!'));
             }
         }
-        
+
     }
     
     public function listItemsFiter($option = null)

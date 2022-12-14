@@ -125,7 +125,7 @@ class Model{
             }
             $newWhere = implode(" ", $newWhere);
         }
-        echo $newWhere;
+        $newWhere;
         return $newWhere;
     }
     
@@ -167,7 +167,6 @@ class Model{
             }
             $newWhere .= "'0'";
         }
-        echo $newWhere;
         return $newWhere;
     }
 
