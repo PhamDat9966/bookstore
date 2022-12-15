@@ -94,8 +94,9 @@ class Helper{
         }
         //delete
         if($statusAction == 'delete'){
-            $icon   = 'fa-trash';
-            $color  = 'btn-danger';
+            $icon           = 'fa-trash';
+            $color          = 'btn-danger btn-delete';
+            
         }
         
         $xhtml = sprintf('<a href="index.php?module=%s&controller=%s&action=%s&id=%s" class="btn btn-sm %s rounded-circle"><i class="fas %s"></i></a>',$module,$controller,$action,$id,$color,$icon);
@@ -169,10 +170,18 @@ class Helper{
 	
 	// Create Icon Group ACP
 	public static function cmsGroupACP($groupAcpValue, $link, $id){
-	    $strGroupACP 	= ($groupAcpValue == 0) ? 'btn-danger' : 'btn-success';
+
+	    if($groupAcpValue == 0){
+	        $strGroupACP = 'btn-danger';
+	        $icon        =  '<i class="fas fa-minus"></i>';
+	    } else{
+	        $strGroupACP = 'btn-success';
+	        $icon        =  '<i class="fas fa-check"></i>';
+	    }
+	    
         $xhtml          ='
         <a href="'.$link.'&id='.$id.'" class="btn '.$strGroupACP.' rounded-circle btn-sm">
-            <i class="fas fa-check"></i>
+            '.$icon.'
         </a>';
 	    
 	    return $xhtml;
@@ -180,10 +189,19 @@ class Helper{
 	
 	// Create Icon Group cmsStatus
 	public static function cmsStatus($statusValue, $link, $id){
-	    $strStatus 	= ($statusValue == 0) ? 'btn-danger' : 'btn-success';
+	    //$strStatus 	= ($statusValue == 0) ? 'btn-danger' : 'btn-success';
+	    
+	    if($statusValue == 0){
+	        $strStatus = 'btn-danger';
+	        $icon        =  '<i class="fas fa-minus"></i>';
+	    } else{
+	        $strStatus = 'btn-success';
+	        $icon        =  '<i class="fas fa-check"></i>';
+	    }
+	    
 	    $xhtml          ='
         <a href="'.$link.'&id='.$id.'" class="btn '.$strStatus.' rounded-circle btn-sm">
-            <i class="fas fa-check"></i>
+            '.$icon.'
         </a>';
 	    
 	    return $xhtml;

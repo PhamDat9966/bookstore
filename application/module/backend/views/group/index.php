@@ -38,7 +38,7 @@ if(!empty($this->Items)){
         $ordering       = '<input class="text-center" type="text" name="order['.$id.']" size="5" value="'.$value['ordering'].'" class="text-area-order">';
         
         $editAction     = Helper::showItemAction('backend', 'group', 'form', $id, 'edit');
-        $deleteAction   = Helper::showItemAction('backend', 'group', 'delete', $id, 'delete');
+        $deleteAction   = Helper::showItemAction('backend', 'group', 'delete', $id, $statusAction ='delete');
         
         $listGroup         .=
         '<tr class='.$row.'>
