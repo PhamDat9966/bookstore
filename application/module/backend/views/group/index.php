@@ -2,9 +2,9 @@
 
 $arrSelectBox = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
 
-$selection          = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null);
+$selection          = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBox');
 //$buttonSelection    = '<button type="submit" name="submit" value="submit" class="btn btn-info">Apply</button>';
-$buttonSelection    = Helper::cmsButton($type ="submit", $class = 'default' , $textOutfit = "Apply" , $name = "bulk" , $value = "bulk");
+$buttonSelection    = Helper::cmsButton($type ="submit", $class = 'default' ,$textOutfit = "Apply" , $id = 'bulkApply', $name = "bulk" , $value = "bulk");
 
 $listGroup = '';
 

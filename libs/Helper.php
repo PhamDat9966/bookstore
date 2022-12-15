@@ -2,7 +2,7 @@
 class Helper{
     
     //Button
-    public static function cmsButton( $type, $class = 'default' , $textOutfit , $name = null , $value = null ){
+    public static function cmsButton( $type, $class = 'default' , $textOutfit , $id = null ,$name = null , $value = null ){
        //class: default secondary danger 
         
        $nameButton = '';     
@@ -34,7 +34,12 @@ class Helper{
            $nameAndValue = "name='$name' value='$value'";
        }
        
-       $xhtml = '<button type="'.$type.'" '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>'; 
+       $idAttr = '';
+       if(!empty($id)){
+           $idAttr = "id = '$id'";
+       }
+       
+       $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>'; 
        return $xhtml;
     }
     
@@ -71,8 +76,13 @@ class Helper{
     }
     
     // Create Selectbox
-    public static function cmsSelectbox($name, $class, $arrValue, $keySelect = 'default', $style = null){
-        $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" >';
+    public static function cmsSelectbox($name,$class, $arrValue, $keySelect = 'default', $style = null,$id = null){
+        
+        if(!empty($id)){
+            $idAttr = "id = '$id'";
+        }
+        
+        $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" '.$idAttr.'>';
         foreach($arrValue as $key => $value){
             if($key == $keySelect && is_numeric($keySelect)){
                 $xhtml .= '<option selected="selected" value = "'.$key.'">'.$value.'</option>';
