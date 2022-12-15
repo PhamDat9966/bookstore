@@ -10,4 +10,11 @@ $(document).ready(function(){
 		$('#group-list-form').submit();
 	})
 	
+	$('.btn-delete').on('click', function(e) {
+		e.preventDefault();
+		let result = confirm('Bạn chắc chắn muốn xóa dòng dữ liệu này?');
+		if(result){
+			window.location.href = $(this).attr('href');
+		}
+	})	
 })
