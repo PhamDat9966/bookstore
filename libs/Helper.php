@@ -2,7 +2,7 @@
 class Helper{
     
     //Button
-    public static function cmsButton( $type, $class = 'default' , $textOutfit , $id = null ,$name = null , $value = null ){
+    public static function cmsButton( $type, $class = 'default' , $textOutfit ,$name = null , $value = null, $id = null  ){
        //class: default secondary danger 
         
        $nameButton = '';     

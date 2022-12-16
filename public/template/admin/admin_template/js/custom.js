@@ -25,7 +25,7 @@ $(document).ready(function(){
 	    if (selected == "Bulk Action") {
 	      alert("Vui lòng chọn action cần thực thiện!");
 	    } else{
-	    	 var i = 0;
+	    	var i = 0;
 	 	    if (selected == "Delete") {
 	 	    	$('#group-list-form').find(':checkbox').each(function(){
 	 				if(this.checked == true){
