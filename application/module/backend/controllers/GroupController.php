@@ -53,6 +53,11 @@ class GroupController extends Controller{
             // Ẩn url biến get của groupACB và Status bằng cách gọi lại liên kết          
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
+        
+        //Odering
+        if(isset($_GET['order'])){
+            $this->_model->ordering($this->_arrParam);
+        }      
 
         //Paginator
         $this->_arrParam['count']  = $this->_model->countAll();

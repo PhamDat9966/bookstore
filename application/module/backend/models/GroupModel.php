@@ -225,6 +225,19 @@ class GroupModel extends Model
 
     }
     
+    public function ordering($arrParam,$option = null)
+    {
+        if($option == null){
+            if(!empty($arrParam['order'])){
+                foreach ($arrParam['order'] as $id=>$ordering){
+                    $query    = "UPDATE `$this->_tableName` SET `ordering` = $ordering WHERE `id` = '".$id."'";
+                    $this->query($query); 
+                }
+            }
+        }
+        
+    }
+    
     public function listItemsFiter($option = null)
     {
 
