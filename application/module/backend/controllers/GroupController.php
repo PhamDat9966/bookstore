@@ -126,9 +126,9 @@ class GroupController extends Controller{
             Session::set('search',$search);
         }
         
-        if(Session::get('search') != ''){
-            $this->_view->searchValue   = Session::get('search');
-        }
+//         if(Session::get('search') != ''){
+//             $this->_view->searchValue   = Session::get('search');
+//         }
         
         if(isset($_GET['filter'])){
             $status  = trim($_GET['filter']);

@@ -49,6 +49,9 @@ $formFiler         = '<form action="" method="GET">
                       </form>';
                    
 //SEARCH
+
+$this->searchValue = Session::get('search');
+
 $formSearch        = '<form action="" method="GET">
                             <input type="hidden" name="module" value="backend">
                             <input type="hidden" name="controller" value="group">
