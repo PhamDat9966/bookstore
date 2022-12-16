@@ -61,6 +61,22 @@ class Helper{
         
     }
     
+    public static function cmsMessage($message){
+        
+        $xhtml = '';
+        if($message['class'] == 'success'){
+            $xhtml = '<div class="alert alert-success alert-dismissible">
+                        '.$message['content'].'
+                    </div>';
+        }else if($message['class'] == 'error'){
+            $xhtml = '<div class="alert alert-danger alert-dismissible">
+                        '.$message['content'].'
+                    </div>';
+        }
+        return $xhtml;
+        
+    }
+    
     //show Item Status
     public static function showItemStatus($module,$controller,$action,$id,$status){
         $icon   = 'fa-check';
