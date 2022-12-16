@@ -9,6 +9,8 @@ function myAutoload($ClassName)
 
 spl_autoload_register('myAutoload');
 
+Session::ini();
+
 $bootstrap = new Bootstrap();
 $bootstrap->init();
 

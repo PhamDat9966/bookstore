@@ -59,6 +59,7 @@ class GroupModel extends Model
         $query    = "UPDATE `$this->_tableName` SET `group_acp` = $GroupACB WHERE `id` = '".$id."'";
         $this->query($query);    
         
+        Session::set('message', array('class' => 'success', 'content' => 'Trạng thái GroupACB được cập nhật'));
         return array('id'=>$id,'group_acb'=>$GroupACB,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'group_acp'=>$GroupACB)));
     }
        
@@ -67,11 +68,12 @@ class GroupModel extends Model
         if($option['task'] == 'change-status'){
             $status 	= $arrParam['type'];
             if(!empty($arrParam['cid'])){
-                
+                $i=0;
                 $ids = '';
                 if(!empty($arrParam['cid'])){
                     foreach($arrParam['cid'] as $id) {
                         $ids .= "'" . $id . "', ";
+                        $i++;
                     }
                     $ids     .= "'0'";
                 }
@@ -79,7 +81,7 @@ class GroupModel extends Model
                 $query		= "UPDATE `$this->table` SET `status` = $status WHERE `id` IN ($ids)";
                 $this->query($query);
                 
-                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được thay đổi trạng thái!'));
+                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $i . ' phần tử được thay đổi trạng thái!'));
             }else{
                 Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muỗn thay đổi trạng thái!'));
             }
@@ -92,6 +94,7 @@ class GroupModel extends Model
             $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
             $this->query($query);
             
+            Session::set('message', array('class' => 'success', 'content' => 'Trạng thái Status được cập nhật'));
             return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$Status)));
         }
         
@@ -198,6 +201,9 @@ class GroupModel extends Model
     public function deleteItem($id,$option = null)
     {
         $this->delete([$id]);
+        Session::set('message', array('class' => 'success', 'content' => 'Xóa thành công!'));
+        
+        
     }
     
     public function multActiveStatus($checkbox,$option = null){
@@ -219,7 +225,7 @@ class GroupModel extends Model
                 $this->query($query);
                 Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được xóa!'));
             }else{
-                Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muỗn xóa!'));
+                Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muốn xóa!'));
             }
         }
 

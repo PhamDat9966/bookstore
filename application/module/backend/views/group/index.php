@@ -1,4 +1,5 @@
 <?php 
+
 $this->searchValue = Session::get('search');
 
 $arrSelectBox = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
@@ -68,6 +69,9 @@ if(!empty($this->Items)){
 
 ?>
 <div class="col-12">
+	<?php 
+	   require_once 'messageBox/index.php';
+	?>
 	<?php 
         echo '<h3>'.__FILE__.'</h3>';
     ?>

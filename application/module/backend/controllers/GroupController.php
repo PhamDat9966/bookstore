@@ -4,32 +4,40 @@ class GroupController extends Controller{
     
     public function __construct(){ 
         //parent::__construct();
-        Session::ini();
     }
     
     public function listAction(){
         
+//         echo "<pre>Get";
+//         print_r($_GET);
+//         echo "</pre>";
+//         echo "<pre>Session";
+//         print_r($_SESSION);
+//         echo "</pre>";
+        
+//         echo "<pre>arrParam";
+//         print_r($this->_arrParam);
+//         echo "</pre>";
+        
         //Bulk Action
         if(isset($_GET['selectBox'])){
 
-            if(!empty($_GET['cid'])){
 
-                if($_GET['selectBox'] == 'delete'){
-                    $this->_model->deleteMultItem($this->_arrParam);                   
-                }
-                
-                if($_GET['selectBox'] == 'action'){
-                    $this->_arrParam['type'] = 1;
-                    $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-                    //URL::redirect(URL::createLink('admin', 'group', 'index'));
-                }
-                
-                if($_GET['selectBox'] == 'inactive'){
-                    $this->_arrParam['type'] = 0;
-                    $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-                    //URL::redirect(URL::createLink('admin', 'group', 'index'));
-                }
+            if($_GET['selectBox'] == 'delete'){
+                $this->_model->deleteMultItem($this->_arrParam);                   
             }
+            
+            if($_GET['selectBox'] == 'action'){
+                $this->_arrParam['type'] = 1;
+                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+            }
+            
+            if($_GET['selectBox'] == 'inactive'){
+                $this->_arrParam['type'] = 0;
+                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+                //URL::redirect(URL::createLink('admin', 'group', 'index'));
+            }
+
         }
         
         // filter and search
@@ -130,10 +138,6 @@ class GroupController extends Controller{
             $search  = trim($_GET['search']);
             Session::set('search',$search);
         }
-        
-//         if(Session::get('search') != ''){
-//             $this->_view->searchValue   = Session::get('search');
-//         }
         
         if(isset($_GET['filter'])){
             $status  = trim($_GET['filter']);
