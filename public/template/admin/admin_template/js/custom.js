@@ -1,3 +1,5 @@
+// Thiếu path
+
 $(document).ready(function(){
 	
 	$('input[name=checkall-toggle]').change(function(){
