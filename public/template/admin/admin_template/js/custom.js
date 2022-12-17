@@ -25,6 +25,7 @@ $(document).ready(function(){
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
+				  position			: 'top',
 				  confirmButtonText: 'Đồng ý',
 				  cancelButtonText: 'Hủy'
 					  
@@ -43,34 +44,49 @@ $(document).ready(function(){
 	      //alert("Vui lòng chọn action cần thực thiện!");
 	      
 	    	///////////////////////////////////////////
-		    e.preventDefault();
-	   		let timerInterval
-	   		Swal.fire({
-	   		  //title				: 'Vui lòng chọn action cần thực thiện!',
-	   	      text: 'Vui lòng chọn action cần thực thiện!',	
-	   		  timer				: 2000,
-	   		  timerProgressBar	: true,
-	   		  backdrop 			: false,
-	   		  background 		: '#fff',
-	   		  position 			: 'top-end',
-	   		  width				: '22em',
-	   		  didOpen: () => {
-	   		    Swal.showLoading()
-	   		    const b = Swal.getHtmlContainer().querySelector('b')
-	   		    timerInterval = setInterval(() => {
-	   		      b.textContent = Swal.getTimerLeft()
-	   		    }, 100)
-	   		  },
-	   		  willClose: () => {
-	   		    clearInterval(timerInterval)
-	   		  }
-	   		}).then((result) => {
-	   		  /* Read more about handling dismissals below */
-	   		  if (result.dismiss === Swal.DismissReason.timer) {
-	   		    console.log('I was closed by the timer')
-	   		  }
-	   		})
+			//		    e.preventDefault();
+			//	   		let timerInterval
+			//	   		Swal.fire({
+			//	   		  //title				: 'Vui lòng chọn action cần thực thiện!',
+			//	   	      text: 'Vui lòng chọn action cần thực thiện!',	
+			//	   		  timer				: 2000,
+			//	   		  timerProgressBar	: true,
+			//	   		  backdrop 			: false,
+			//	   		  background 		: '#fff',
+			//	   		  position 			: 'top-end',
+			//	   		  width				: '22em',
+			//	   		  didOpen: () => {
+			//	   		    Swal.showLoading()
+			//	   		    const b = Swal.getHtmlContainer().querySelector('b')
+			//	   		    timerInterval = setInterval(() => {
+			//	   		      b.textContent = Swal.getTimerLeft()
+			//	   		    }, 100)
+			//	   		  },
+			//	   		  willClose: () => {
+			//	   		    clearInterval(timerInterval)
+			//	   		  }
+			//	   		}).then((result) => {
+			//	   		  /* Read more about handling dismissals below */
+			//	   		  if (result.dismiss === Swal.DismissReason.timer) {
+			//	   		    console.log('I was closed by the timer')
+			//	   		  }
+			//	   		})
 	       /////////////////////////////////////////////
+	   		e.preventDefault();
+	   		Swal.fire({
+	     			  html: '<div class="container"><div><svg class="checkmark" viewBox="5 5 40 40"><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div><div class="textDiv">Vui lòng chọn action cần thực thiện!</div></div>',
+	     			  timer				: 2000,
+	     			  timerProgressBar	: true,
+	     			  position			: 'top-end',
+	     			  background 		: '#fff',
+	     			  backdrop 			: false,
+	     			  showConfirmButton	: false,
+	     			  customClass: {
+	     			    popup: 'swal-wide',
+	     			    icon: 'icon-class'
+	     			  }
+	     			})
+	   		
 	   		
 	    } else{
 	    	var i = 0;
@@ -101,35 +117,49 @@ $(document).ready(function(){
 	     	if(i==0){
 	     			//alert("Vui lòng chọn ít nhất 1 dòng!");
 	     		    ///////////////////////////////////////////
-	     			e.preventDefault();
-			   		let timerInterval
-			   		Swal.fire({
-			   		  //title				: 'Vui lòng chọn ít nhất 1 cần dòng!',
-			   	      icon				: 'warning',
-			   		  text				: 'Vui lòng chọn ít nhất 1 cần dòng!',
-			   		  timer				: 2000,
-			   		  timerProgressBar	: true,
-			   		  backdrop 			: false,
-			   		  background 		: '#fff',
-			   		  position 			: 'top-end',
-			   		  width				: '22em',
-			   		  didOpen: () => {
-			   		    Swal.showLoading()
-			   		    const b = Swal.getHtmlContainer().querySelector('b')
-			   		    timerInterval = setInterval(() => {
-			   		      b.textContent = Swal.getTimerLeft()
-			   		    }, 100)
-			   		  },
-			   		  willClose: () => {
-			   		    clearInterval(timerInterval)
-			   		  }
-			   		}).then((result) => {
-			   		  /* Read more about handling dismissals below */
-			   		  if (result.dismiss === Swal.DismissReason.timer) {
-			   		    console.log('I was closed by the timer')
-			   		  }
-			   		})
+//		     			e.preventDefault();
+//				   		let timerInterval
+//				   		Swal.fire({
+//				   		  //title				: 'Vui lòng chọn ít nhất 1 cần dòng!',
+//				   	      icon				: 'warning',
+//				   		  text				: 'Vui lòng chọn ít nhất 1 cần dòng!',
+//				   		  timer				: 2000,
+//				   		  timerProgressBar	: true,
+//				   		  backdrop 			: false,
+//				   		  background 		: '#fff',
+//				   		  position 			: 'top-end',
+//				   		  width				: '22em',
+//				   		  didOpen: () => {
+//				   		    Swal.showLoading()
+//				   		    const b = Swal.getHtmlContainer().querySelector('b')
+//				   		    timerInterval = setInterval(() => {
+//				   		      b.textContent = Swal.getTimerLeft()
+//				   		    }, 100)
+//				   		  },
+//				   		  willClose: () => {
+//				   		    clearInterval(timerInterval)
+//				   		  }
+//				   		}).then((result) => {
+//				   		  /* Read more about handling dismissals below */
+//				   		  if (result.dismiss === Swal.DismissReason.timer) {
+//				   		    console.log('I was closed by the timer')
+//				   		  }
+//				   		})
 			       /////////////////////////////////////////////
+	     		e.preventDefault();
+		   		Swal.fire({
+		     			  html: '<div class="container"><div><svg class="checkmark" viewBox="5 5 40 40"><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div><div class="textDiv">Vui lòng chọn ít nhất dòng một dòng dữ liệu!</div></div>',
+		     			  timer				: 2000,
+		     			  timerProgressBar	: true,
+		     			  position			: 'top-end',
+		     			  background 		: '#fff',
+		     			  backdrop 			: false,
+		     			  showConfirmButton	: false,
+		     			  customClass: {
+		     			    popup: 'swal-wide',
+		     			    icon: 'icon-class'
+		     			  }
+		     			})
 		     		
 	     	} else{
 	     		e.preventDefault();
@@ -154,3 +184,44 @@ $(document).ready(function(){
     	    
 	})		
 })
+
+
+function changeStatus(link){
+	 //e.preventDefault();
+	Swal.fire({
+		  title: 'Xác nhận?',
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor		: '#d33',
+		  position 				: 'top',
+		  confirmButtonText: 'Đồng ý',
+		  cancelButtonText: 'Hủy'
+			  
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		    window.location.href = link; 
+		  }
+		})
+}
+
+function changeGroupACP(link){
+	 //e.preventDefault();
+	Swal.fire({
+		  title: 'Xác nhận?',
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor		: '#d33',
+		  position 				: 'top',
+		  confirmButtonText: 'Đồng ý',
+		  cancelButtonText: 'Hủy'
+			  
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		    window.location.href = link; 
+		  }
+		})
+}
+
+

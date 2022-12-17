@@ -206,7 +206,7 @@ class Helper{
 	    }
 	    
         $xhtml          ='
-        <a href="'.$link.'&id='.$id.'" class="btn '.$strGroupACP.' rounded-circle btn-sm">
+        <a href="javascript:changeGroupACP(\''.$link.'\');" id="GroupACP-'.$id.'" class="btn '.$strGroupACP.' rounded-circle btn-sm">
             '.$icon.'
         </a>';
 	    
@@ -226,7 +226,7 @@ class Helper{
 	    }
 	    
 	    $xhtml          ='
-        <a href="'.$link.'&id='.$id.'" class="btn '.$strStatus.' rounded-circle btn-sm">
+        <a href="javascript:changeStatus(\''.$link.'\');" id="status-'.$id.'" class="btn '.$strStatus.' rounded-circle btn-sm oncli">
             '.$icon.'
         </a>';
 	    
