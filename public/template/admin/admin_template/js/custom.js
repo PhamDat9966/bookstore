@@ -43,40 +43,10 @@ $(document).ready(function(){
     	
     	var selected		= $("#selectBox option:selected").text();
 	    if (selected == "Bulk Action") {
-	      //alert("Vui lòng chọn action cần thực thiện!");
-	      
-	    	///////////////////////////////////////////
-			//		    e.preventDefault();
-			//	   		let timerInterval
-			//	   		Swal.fire({
-			//	   		  //title				: 'Vui lòng chọn action cần thực thiện!',
-			//	   	      text: 'Vui lòng chọn action cần thực thiện!',	
-			//	   		  timer				: 2000,
-			//	   		  timerProgressBar	: true,
-			//	   		  backdrop 			: false,
-			//	   		  background 		: '#fff',
-			//	   		  position 			: 'top-end',
-			//	   		  width				: '22em',
-			//	   		  didOpen: () => {
-			//	   		    Swal.showLoading()
-			//	   		    const b = Swal.getHtmlContainer().querySelector('b')
-			//	   		    timerInterval = setInterval(() => {
-			//	   		      b.textContent = Swal.getTimerLeft()
-			//	   		    }, 100)
-			//	   		  },
-			//	   		  willClose: () => {
-			//	   		    clearInterval(timerInterval)
-			//	   		  }
-			//	   		}).then((result) => {
-			//	   		  /* Read more about handling dismissals below */
-			//	   		  if (result.dismiss === Swal.DismissReason.timer) {
-			//	   		    console.log('I was closed by the timer')
-			//	   		  }
-			//	   		})
-	       /////////////////////////////////////////////
 	   		e.preventDefault();
 	   		Swal.fire({
-	     			  html: '<div class="container"><div><svg class="checkmark" viewBox="5 5 40 40"><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div><div class="textDiv">Vui lòng chọn action cần thực thiện!</div></div>',
+	     			  html: '<div class="container"><div><svg width="30" height="30" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M 500 0C 224 0 0 224 0 500C 0 776 224 1000 500 1000C 776 1000 1000 776 1000 500C 1000 224 776 0 500 0C 500 0 500 0 500 0M 500 25C 762 25 975 238 975 500C 975 762 762 975 500 975C 238 975 25 762 25 500C 25 238 238 25 500 25C 500 25 500 25 500 25 M 526 150C 576 150 602 175 601 224C 600 300 600 350 575 525C 570 560 560 575 525 575C 525 575 475 575 475 575C 440 575 430 560 425 525C 400 355 400 300 400 226C 400 175 425 150 475 150M 500 650C 527 650 552 661 571 679C 589 698 600 723 600 750C 600 805 555 850 500 850C 445 850 400 805 400 750C 400 723 411 698 429 679C 448 661 473 650 500 650C 500 650 500 650 500 650"/></svg></div><div class="textDiv">Vui lòng chọn action cần thực thiện!</div></div>',
+
 	     			  timer				: 2000,
 	     			  timerProgressBar	: true,
 	     			  position			: 'top-end',
@@ -88,8 +58,7 @@ $(document).ready(function(){
 	     			    icon: 'icon-class'
 	     			  }
 	     			})
-	   		
-	   		
+	   		   		
 	    } else{
 	    	var i = 0;
 	 	    if (selected == "Delete") {
@@ -117,51 +86,22 @@ $(document).ready(function(){
 	 		}
 	 	    
 	     	if(i==0){
-	     			//alert("Vui lòng chọn ít nhất 1 dòng!");
-	     		    ///////////////////////////////////////////
-//		     			e.preventDefault();
-//				   		let timerInterval
-//				   		Swal.fire({
-//				   		  //title				: 'Vui lòng chọn ít nhất 1 cần dòng!',
-//				   	      icon				: 'warning',
-//				   		  text				: 'Vui lòng chọn ít nhất 1 cần dòng!',
-//				   		  timer				: 2000,
-//				   		  timerProgressBar	: true,
-//				   		  backdrop 			: false,
-//				   		  background 		: '#fff',
-//				   		  position 			: 'top-end',
-//				   		  width				: '22em',
-//				   		  didOpen: () => {
-//				   		    Swal.showLoading()
-//				   		    const b = Swal.getHtmlContainer().querySelector('b')
-//				   		    timerInterval = setInterval(() => {
-//				   		      b.textContent = Swal.getTimerLeft()
-//				   		    }, 100)
-//				   		  },
-//				   		  willClose: () => {
-//				   		    clearInterval(timerInterval)
-//				   		  }
-//				   		}).then((result) => {
-//				   		  /* Read more about handling dismissals below */
-//				   		  if (result.dismiss === Swal.DismissReason.timer) {
-//				   		    console.log('I was closed by the timer')
-//				   		  }
-//				   		})
-			       /////////////////////////////////////////////
+
 	     		e.preventDefault();
-		   		Swal.fire({
-		     			  html: '<div class="container"><div><svg class="checkmark" viewBox="5 5 40 40"><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div><div class="textDiv">Vui lòng chọn ít nhất dòng một dòng dữ liệu!</div></div>',
-		     			  timer				: 2000,
-		     			  timerProgressBar	: true,
-		     			  position			: 'top-end',
-		     			  background 		: '#fff',
-		     			  backdrop 			: false,
-		     			  showConfirmButton	: false,
-		     			  customClass: {
-		     			    popup: 'swal-wide',
-		     			    icon: 'icon-class'
-		     			  }
-		     			})
+	     		Swal.fire({
+	     			  html: '<div class="container"><div><svg width="30" height="30" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M 500 0C 224 0 0 224 0 500C 0 776 224 1000 500 1000C 776 1000 1000 776 1000 500C 1000 224 776 0 500 0C 500 0 500 0 500 0M 500 25C 762 25 975 238 975 500C 975 762 762 975 500 975C 238 975 25 762 25 500C 25 238 238 25 500 25C 500 25 500 25 500 25 M 526 150C 576 150 602 175 601 224C 600 300 600 350 575 525C 570 560 560 575 525 575C 525 575 475 575 475 575C 440 575 430 560 425 525C 400 355 400 300 400 226C 400 175 425 150 475 150M 500 650C 527 650 552 661 571 679C 589 698 600 723 600 750C 600 805 555 850 500 850C 445 850 400 805 400 750C 400 723 411 698 429 679C 448 661 473 650 500 650C 500 650 500 650 500 650"/></svg></div><div class="textDiv">Vui lòng chọn action cần thực thiện!</div></div>',
+
+	     			  timer				: 2000,
+	     			  timerProgressBar	: true,
+	     			  position			: 'top-end',
+	     			  background 		: '#fff',
+	     			  backdrop 			: false,
+	     			  showConfirmButton	: false,
+	     			  customClass: {
+	     			    popup: 'swal-wide',
+	     			    icon: 'icon-class'
+	     			  }
+	     			})
 		     		
 	     	} else{
 	     		e.preventDefault();
