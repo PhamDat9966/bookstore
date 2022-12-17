@@ -7,3 +7,8 @@
     padding: 0.2em;
     background-color: #ffff00 !important;
 }
+
+
+.swal2-title {
+  font-size: 1.6rem !important;
+}
