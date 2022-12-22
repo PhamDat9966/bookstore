@@ -66,6 +66,9 @@ if(!empty($this->Items)){
         $i++;
     }
 }
+// <a href="index.php?module=backend&controller=group&action=form" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
+$addNewUrl    = URL::createLink('backend', 'group', 'form');
+$addNewButton = Helper::cmsButtonAtag($url = $addNewUrl, $class = 'btn btn-info', $textOufit = '<i class="fas fa-plus"></i> Add New');
 
 ?>
 <div class="col-12">
@@ -83,7 +86,6 @@ if(!empty($this->Items)){
     
     <!-- List -->
     <!-- FORM GROUP -->
-    <!-- <form action="index.php?module=backend&controller=group&action=value_new" method="post" name="group-list-form" id="group-list-form"> -->
 	<form action="#" method="get" name="group-list-form" id="group-list-form">
 	
 		<input type="hidden" name="module" value="backend">
@@ -118,7 +120,8 @@ if(!empty($this->Items)){
                             </div>
                         </div>
                         <div>
-                            <a href="index.php?module=backend&controller=group&action=form" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
+<!--                             <a href="index.php?module=backend&controller=group&action=form" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a> -->
+							<?= $addNewButton;?>
                         </div>
                     </div>
                 </div>

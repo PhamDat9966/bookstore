@@ -5,7 +5,8 @@ class GroupModel extends Model
     public $_arrParam;
     public $_saveParam = [];
     protected $_tableName = TBL_GROUP;
-    public    $_cunrrentPage      = 1;                      
+    public    $_cunrrentPage      = 1;       
+    private $_columns = array('id','name','group_acp','created','created_by','modified','modified_by','status','ordering');
     
     public function __construct()
     {
@@ -98,6 +99,17 @@ class GroupModel extends Model
             return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$Status)));
         }
         
+    }
+    
+    public function saveItem($arrParam, $option = null){
+        
+        if($option['task'] == 'add'){
+            $arrParam['form']['created']    = date('Y-m-d',time());
+            $arrParam['form']['created_by'] = 1;
+            
+            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
+            $this->insert($data);
+        }
     }
     
     public function pagination($totalItems,$totalItemsPerPage,$pageRange)

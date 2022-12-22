@@ -45,24 +45,21 @@ class Helper{
     
     //A tag
     public static function cmsButtonAtag($url,$class,$textOufit,$spanIcon = null){
+        //<a href="#" class="btn btn-info">All <span class="badge badge-pill badge-light">8</span></a>
         
-        $xhtml = '<a href="'.$url.'" class="'.$class.'">
+        // default class
+        $classAtag='btn btn-info';
+        
+        if($class=='btn-secondary'){ 
+            $classAtag='btn btn-secondary';
+        }
+        
+        $xhtml = '<a href="'.$url.'" class="'.$classAtag.'">
                         '.$textOufit.' '.$spanIcon.'
                  </a>';
-        return $xhtml;      
-    }
-    
-//     public static function cmsButtonAtag($name,$class ,$id, $link, $icon, $type = 'new'){
-//         //<button type="submit" class="btn btn-success" namne="type" value="saveAndClose" "="">Save</button>
-//         $xhtml = '';
-//         if($type == 'new'){
-//             $xhtml .= '<a class="'.$class.'" href="'.$link.'" id="'.$id.'"><span class="'.$icon.'"></span>'.$name.'</a>';
-//         }else if($type == 'submit'){
-//             $xhtml .= '<a class="'.$class.'" href="#" onclick="javascript:submitForm(\''.$link.'\');" id="'.$id.'"><span class="'.$icon.'"></span>'.$name.'</a>';
-//         }
+        return $xhtml;
         
-//         return $xhtml;
-//     }
+    }
     
     public static function cmsMessage($message){
         
@@ -95,9 +92,13 @@ class Helper{
     }
     
     // Create Selectbox
-    public static function cmsSelectbox($name,$class, $arrValue, $keySelect = 'default', $style = null,$id = null){
+    public static function cmsSelectbox($name,$class, $arrValue, $keySelect = 0, $style = null,$id = null){
         
-        $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" id="'.$id.'">';
+        if(!empty($id)){
+            $idAttr = "id = '$id'";
+        }
+        
+        $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" '.$idAttr.'>';
         foreach($arrValue as $key => $value){
             if($key == $keySelect && is_numeric($keySelect)){
                 $xhtml .= '<option selected="selected" value = "'.$key.'">'.$value.'</option>';
@@ -114,13 +115,13 @@ class Helper{
         $strRequire = '';
         if($require == true) $strRequire = '<span class="text-danger">*</span>';
         
-        $xhtml = '<label>'.$lblName.$strRequire.'</label>'.$input;
+        $xhtml = '<label>'.$lblName.''.$strRequire.'</label>'.$input.'</div>';
 
         return $xhtml;
     }
     
     // Create Row
-    public static function cmsInput($type, $name, $id, $value, $class = null, $size = null){
+    public static function cmsInput($type, $name, $id, $value, $class, $size){
         
         $xhtml = "<input type='$type' name='$name' id='$id' value='$value' class='$class' size='$size'>";
         

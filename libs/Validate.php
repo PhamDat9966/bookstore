@@ -30,11 +30,11 @@ class Validate{
 	
 	// Set error
 	public function setError($element, $message){
-		
+		$strElement = str_replace('_', ' ', $element);
 		if(array_key_exists($element, $this->errors)){
 			$this->errors[$element] .= ' - ' . $message;
 		}else{
-			$this->errors[$element] = '<b>' . ucfirst($element) . ':</b> ' . $message;
+			$this->errors[$element] = '<b>' . ucwords($strElement) . ':</b> ' . $message;
 		}
 	}
 	
@@ -70,7 +70,7 @@ class Validate{
 						$this->validateEmail($element);
 						break;
 					case 'status':
-						$this->validateStatus($element);
+					    $this->validateStatus($element, $value['options']);
 						break;
 					case 'group':
 						$this->validateGroupID($element);
@@ -138,11 +138,12 @@ class Validate{
 	}
 	
 	public function showErrors(){
+	    
 		$xhtml = '';
 		if(!empty($this->errors)){
-			$xhtml .= '<ul class="error">';
+			$xhtml .= '<ul class="list-unstyled mb-0">';
 			foreach($this->errors as $key => $value){
-				$xhtml .= '<li>'.$value.' </li>';
+				$xhtml .= '<li class="text-white">'.$value.' </li>';
 			}
 			$xhtml .=  '</ul>';
 		}
@@ -155,9 +156,10 @@ class Validate{
 	}
 	
 	// Validate Status
-	private function validateStatus($element){
-		if($this->source[$element] < 0 || $this->source[$element] > 1){
-			$this->setError($element, 'Select status');
+	private function validateStatus($element,$option){
+
+		if(in_array($this->source[$element], $option['deny']) == true){
+			$this->setError($element, 'Vui lòng chọn giá trị khác giá trị mặc định!');
 		}
 	}
 	
@@ -202,7 +204,7 @@ class Validate{
 	private function validateExistRecord($element, $options){
 		$database = $options['database'];
 
-		echo $query	  = $options['query'];
+		$query	  = $options['query'];
 		if($database->isExist($query)==false){
 			$this->setError($element, 'record is not exist');
 		}

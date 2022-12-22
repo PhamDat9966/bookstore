@@ -54,6 +54,7 @@ class Model{
     // INSERT
     public function insert($data, $type = 'single')
     {
+        echo '<h3>'. __METHOD__ . '</h3>';    
         if ($type == 'single') {
             $newQuery   = $this->createInsertSQL($data);
             $query      = "INSERT INTO `$this->table`(" . $newQuery['cols'] . ") VALUES (" . $newQuery['vals'] . ")";

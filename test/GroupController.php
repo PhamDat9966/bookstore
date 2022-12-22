@@ -9,6 +9,17 @@ class GroupController extends Controller{
     
     public function listAction(){
         
+//         echo "<pre>Get";
+//         print_r($_GET);
+//         echo "</pre>";
+//         echo "<pre>Session";
+//         print_r($_SESSION);
+//         echo "</pre>";
+        
+//         echo "<pre>arrParam";
+//         print_r($this->_arrParam);
+//         echo "</pre>";
+        
         //Bulk Action
         if(isset($_GET['selectBox'])){
 
@@ -73,7 +84,7 @@ class GroupController extends Controller{
         $pageRange                 = 3;
         
         if(isset($_GET['page'])){
-            $currentPage           = $_GET['page'];
+            $currentPage           = $_GET['page']; 
         }
         
         $this->_pagination                               = $this->_model->pagination($totalItems,$totalItemsPerPage,$pageRange,$currentPage);
@@ -83,7 +94,6 @@ class GroupController extends Controller{
         $this->_view->Pagination    = $this->_pagination;  
             
         //end Load
-        $this->_view->_title        = 'User Groups: Add';
         $this->_view->_tag          = 'group'; //for Sidebar
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);       
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
@@ -197,29 +207,9 @@ class GroupController extends Controller{
     }
     
     public function formAction($option = null){
-
-        if(@$this->_arrParam['form']['token'] > 0){
-            $validate = new Validate($this->_arrParam['form']);
-            $validate->addRule('name', 'string',array('min'=>3, 'max'=>255))
-                     ->addRule('status','status',array('deny'=>array('default')))
-                     ->addRule('group_acp','status',array('deny'=>array('default')));   
-            $validate->run();
-            $this->_arrParam['form'] = $validate->getResult();
-            
-            if($validate->isValid() == false){
-                $this->_view->errors    = $validate->showErrors();
-            } else {
-                $this->_model->saveItem($this->_arrParam,array('task'=>'add'));
-                $type = $this->_arrParam['type'];
-                if($type == 'save-close') URL::redirect(URL::createLink('backend', 'group', 'list'));
-            }
-
-        }
-        
         $this->_view->_title        = 'User Groups: Add';
         $this->_view->_tag          = 'group'; 
-        $this->_view->arrParam      = $this->_arrParam;    
-            
+        
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
         $this->_templateObj->setFileTemplate('group-form.php');
         $this->_templateObj->setFileConfig('template.ini');
