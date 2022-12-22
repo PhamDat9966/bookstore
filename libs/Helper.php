@@ -67,12 +67,14 @@ class Helper{
     public static function cmsMessage($message){
         
         $xhtml = '';
+        $btnHidden = '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color:#FFFFFF;opacity: 1;">×</button>';
         if($message['class'] == 'success'){
             $xhtml = '<div class="alert alert-success alert-dismissible">
-                        '.$message['content'].'
+                        '.$message['content'].$btnHidden.'
                     </div>';
         }else if($message['class'] == 'error'){
-            $xhtml = '<div class="alert alert-danger alert-dismissible">
+            $xhtml .= '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>';
+            $xhtml .= '<div class="alert alert-danger alert-dismissible">
                         '.$message['content'].'
                     </div>';
         }

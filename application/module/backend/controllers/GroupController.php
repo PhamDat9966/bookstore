@@ -69,7 +69,7 @@ class GroupController extends Controller{
         }
         
         $currentPage               = 1;
-        $totalItemsPerPage         = 4;
+        $totalItemsPerPage         = 5;
         $pageRange                 = 3;
         
         if(isset($_GET['page'])){
@@ -83,7 +83,7 @@ class GroupController extends Controller{
         $this->_view->Pagination    = $this->_pagination;  
             
         //end Load
-        $this->_view->_title        = 'User Groups: Add';
+        $this->_view->_title        = 'User Groups: List  Item';
         $this->_view->_tag          = 'group'; //for Sidebar
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);       
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;

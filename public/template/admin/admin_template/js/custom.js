@@ -36,10 +36,31 @@ $(document).ready(function(){
 		
 	})	
 	
+	
 	$('#bulkApply').on('click', function(e) {	
     	
     	var selected		= $("#selectBox option:selected").text();
-	    if (selected == "Bulk Action") {
+    	
+    	if (selected == "Ordering") {
+ 	    	$('#group-list-form').find(':checkbox').each(function(){
+ 	    		e.preventDefault();
+	     		Swal.fire({
+					  title				: 'Xác nhận?',
+					  icon				: 'warning',
+					  showCancelButton	: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor	: '#d33',
+					  confirmButtonText	: 'Đồng ý',
+					  cancelButtonText	: 'Hủy',
+					  position 			: 'top' 
+					  
+				      }).then((result) => {
+						  if (result.isConfirmed) {
+							  $('#group-list-form').submit();
+					      }
+			   })
+ 			});
+ 		} else if(selected == "Bulk Action") {
 	   		e.preventDefault();
 	   		Swal.fire({
 	   			      // Path warning icon for html 

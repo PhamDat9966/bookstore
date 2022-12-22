@@ -109,6 +109,7 @@ class GroupModel extends Model
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->insert($data);
+            Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
         }
     }
     
