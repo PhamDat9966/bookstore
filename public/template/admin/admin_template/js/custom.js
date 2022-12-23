@@ -4,7 +4,22 @@ function submitForm(url){
 }
 
 $(document).ready(function(){
+	// filter group ACP
+	$('#selectGroupACP').on('change', function (e) {
+		var selected		= $("#selectGroupACP option:selected").text();
+		
+		if(selected == "- Select Group ACP -"){	
+			$('#formGroupACP').submit();
+		}
+		if(selected == "Yes"){	
+			$('#formGroupACP').submit();
+		}
+		if(selected == "No"){
+			$('#formGroupACP').submit();
+		}
+	});
 	
+	// Check box
 	$('input[name=checkall-toggle]').change(function(){
 		var checkStatus = this.checked;
 		$('#group-list-form').find(':checkbox').each(function(){
@@ -36,7 +51,7 @@ $(document).ready(function(){
 		
 	})	
 	
-	
+	// Bulk Apple filter + Ordering
 	$('#bulkApply').on('click', function(e) {	
     	
     	var selected		= $("#selectBox option:selected").text();

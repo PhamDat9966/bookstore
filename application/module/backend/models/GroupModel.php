@@ -24,12 +24,14 @@ class GroupModel extends Model
         $queryContent[] = "FROM `$this->_tableName`";
         
         $flagWhere      = false;
+        if($_SESSION['filter'] == 'all') $flagWhere = false;
         
         if(!empty($_SESSION['search'])){
             $queryContent[]     = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
             $flagWhere          = true;
         }
         
+        //$flagFilterWhere = false;
         if(isset($_SESSION['filter'])){
             if($flagWhere == true){
                 if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
@@ -38,9 +40,23 @@ class GroupModel extends Model
             
             if($flagWhere == false){
                 if($_SESSION['filter'] == 'active') $queryContent[]    = 'WHERE `status` = 1';
-                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'WHERE `status`= 0';
+                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'WHERE `status`= 0';  
+                $flagWhere = true;
             }
+ 
         }
+        
+        if(isset($_SESSION['selectGroupACP'])){
+            if($flagWhere == true){
+                if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
+                if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
+            }
+            
+            if($flagWhere == false){
+                if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'WHERE `group_acp` = 1';
+                if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'WHERE `group_acp`= 0';
+            }
+        } 
         
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];

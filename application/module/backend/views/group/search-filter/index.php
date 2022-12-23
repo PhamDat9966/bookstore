@@ -67,6 +67,21 @@ $formSearch        = '<form action="" method="GET">
 
                         </form>';
 
+// filter Group ACP
+
+$selectGroupACP = 'selectGroupACP';
+if(isset($this->_arrParam['selectGroupACP'])){
+    $selectGroupACP = $this->_arrParam['selectGroupACP'];
+}
+$arrGroupACP        = ['groupACP'=>'- Select Group ACP -','0'=>'No','1'=>'Yes'];
+$selectGroupACP     = Helper::cmsSelectbox('selectGroupACP', 'form-control custom-select', $arrGroupACP , $selectGroupACP, null,$id = 'selectGroupACP');
+$formGroupACP       = '<form action="" method="GET" name="formGroupACP" id="formGroupACP">
+                            <input type="hidden" name="module" value="backend">
+                            <input type="hidden" name="controller" value="group">
+                            <input type="hidden" name="action" value="list">
+                             '.$selectGroupACP.'            
+                        </form>';
+
 ?>
 
 <div class="card card-outline card-info">
@@ -87,6 +102,13 @@ $formSearch        = '<form action="" method="GET">
 					   echo $formFiler; 
 					?>
                 </div>
+                
+                <div class="area-filter-status mb-2">
+					<?php 
+					   echo $formGroupACP ; 
+					?>
+                </div>
+                
                 <div class="area-search mb-2">
                 
 <!--                     <form action="index.php?module=backend&controller=group&action=list" method="GET"> -->

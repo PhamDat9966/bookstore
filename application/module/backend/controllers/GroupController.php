@@ -31,9 +31,14 @@ class GroupController extends Controller{
         }
         
         // filter and search
-        if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear'])){
+        if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroupACP'])){
             $this->filterAndSearch();
         }    
+        
+        // change groupACP filter
+//         if(isset($this->_arrParam['selectBox'])){
+//             $this->_model->listItems($this->_arrParam);
+//         }
         
         // charge active, inactive groupACB and status
         if(isset($_GET['id'])){
@@ -83,7 +88,7 @@ class GroupController extends Controller{
         $this->_view->Pagination    = $this->_pagination;  
             
         //end Load
-        $this->_view->_title        = 'User Groups: List  Item';
+        $this->_view->_title        = 'User Groups: List Item';
         $this->_view->_tag          = 'group'; //for Sidebar
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);       
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
@@ -133,6 +138,12 @@ class GroupController extends Controller{
         if(isset($_GET['filter'])){
             $status  = trim($_GET['filter']);
             Session::set('filter',$status);
+        }
+        
+        if(isset($_GET['selectGroupACP'])){
+            $status  = trim($_GET['selectGroupACP']);
+            Session::set('selectGroupACP',$status);
+            $this->_view->_arrParam = $this->_arrParam;
         }
         
     }
