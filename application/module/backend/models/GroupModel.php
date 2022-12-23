@@ -111,6 +111,15 @@ class GroupModel extends Model
             $this->insert($data);
             Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
         }
+        
+        if($option['task'] == 'edit'){
+            $arrParam['form']['modified']    = date('Y-m-d',time());
+            $arrParam['form']['modified_by'] = 10;
+            
+            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));     
+            $this->update($data, array(array('id',$arrParam['form']['id'])));
+            Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
+        }
     }
     
     public function pagination($totalItems,$totalItemsPerPage,$pageRange)
@@ -209,6 +218,18 @@ class GroupModel extends Model
         $result = $this->singleRecord($queryContent);
         return $result;
         
+    }
+    
+    public function infoItem($arrParam,$option = null){
+        if($option == null){
+            $queryContent   = [];
+            $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`";
+            $queryContent[] = "FROM `$this->_tableName`";
+            $queryContent[] = "WHERE `id` = '" . $arrParam['id'] . "'";
+            $queryContent = implode(" ", $queryContent);
+            $result = $this->singleRecord($queryContent);
+            return $result;
+        }
     }
     
     public function deleteItem($id,$option = null)

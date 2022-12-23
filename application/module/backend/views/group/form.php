@@ -1,12 +1,16 @@
-<?php 
+<?php
         //echo '<h3>'. __METHOD__ . '</h3>';
 //         $linkSaveClose	= URL::createLink('admin', 'group', 'form', array('type' => 'save-close'));
 //         $btnSaveClose	= Helper::cmsButton('Save & Close', 'toolbar-save', $linkSaveClose, 'icon-32-save', 'submit');
         $linkSaveClose	    = URL::createLink('backend', 'group', 'form', array('type' => 'save-close'));
-                            //cmsButtonAtag($name, $id, $link, $icon, $type = 'new')
-        $btnSaveClose       = Helper::cmsButtonAtag($name = 'Save',$class = 'btn btn-success"' ,$id = null, $link = $linkSaveClose, $icon = null, $type = 'submit');    
+        $linkCancel	        = URL::createLink('backend', 'group', 'list');
+        //cmsButtonAtag($name, $id, $link, $icon, $type = 'new')
+        //cmsButtonAtag($name,$class ,$id, $link, $icon, $type = 'new')
+        //$btnSaveClose       = Helper::cmsButtonAtag($name = 'Save',$class = 'btn btn-success' ,$id = null, $link = $linkSaveClose, $icon = null, $type = 'new');    
+        //$btnCancel          = Helper::cmsButtonAtag($name = 'Cancel',$class = 'btn btn-danger' ,$id = null, $link = $linkCancel, $icon = null, $type = 'new');
         
         $dataForm           = @$this->arrParam['form'];
+
         $inputName          = Helper::cmsInput($type = 'text', $name = 'form[name]',$id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
         $inputToken		    = Helper::cmsInput($type = 'hidden',$name = 'form[token]',$id = 'token', $value = time());
         
@@ -30,7 +34,14 @@
             					</h5>'.@$this->errors.'
 				           </div>';
         }
-      
+        
+        $inputID    = '';
+        $rowID      =   '';
+        if(isset($this->arrParam['id'])){
+            $strID            = $this->arrParam['id'];
+            $inputID          = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'readonly', $size = null);            
+            $rowID            = Helper::cmsRowForm($lblName = 'ID', ": $strID".$inputID);
+        }
 ?>
 <div class="content">
 	<div class="container-fluid">
@@ -55,11 +66,17 @@
 							<div class="form-group">
 								<?= $rowGroupACP;?>
 							</div>
+							<div class="form-group">
+								<?= $rowID;?>
+							</div>
 							<?= $inputToken;?>
 						</div>
 						<div class="card-footer">
 							<button type="submit" class="btn btn-success"  namne='type' value='saveAndClose'">Save</button>
-							<a href="group-list.php" class="btn btn-danger">Cancel</a>
+							<a href="index.php?module=backend&controller=group&action=list" class="btn btn-danger">Cancel</a>
+							<?php 
+							     //echo $btnCancel;
+							?>
 						</div>
 					</div>
 				</form>

@@ -196,7 +196,16 @@ class GroupController extends Controller{
 
     }
     
+    // ACTION : ADD & EDIT
     public function formAction($option = null){
+        
+        $this->_view->_title        = 'User Groups: Add';
+        
+        if(isset($this->_arrParam['id'])){
+            $this->_view->_title  = 'User Groups: Edit';
+            $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
+            if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'group', 'list'));
+        }
 
         if(@$this->_arrParam['form']['token'] > 0){
             $validate = new Validate($this->_arrParam['form']);
@@ -209,14 +218,15 @@ class GroupController extends Controller{
             if($validate->isValid() == false){
                 $this->_view->errors    = $validate->showErrors();
             } else {
-                $this->_model->saveItem($this->_arrParam,array('task'=>'add'));
+
+                $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');
+                $this->_model->saveItem($this->_arrParam,array('task'=>$task));
                 $type = $this->_arrParam['type'];
                 if($type == 'save-close') URL::redirect(URL::createLink('backend', 'group', 'list'));
             }
 
         }
         
-        $this->_view->_title        = 'User Groups: Add';
         $this->_view->_tag          = 'group'; 
         $this->_view->arrParam      = $this->_arrParam;    
             

@@ -60,7 +60,6 @@ class Helper{
 //         }else if($type == 'submit'){
 //             $xhtml .= '<a class="'.$class.'" href="#" onclick="javascript:submitForm(\''.$link.'\');" id="'.$id.'"><span class="'.$icon.'"></span>'.$name.'</a>';
 //         }
-        
 //         return $xhtml;
 //     }
     
@@ -115,7 +114,6 @@ class Helper{
     public static function cmsRowForm($lblName, $input, $require = FALSE){  
         $strRequire = '';
         if($require == true) $strRequire = '<span class="text-danger">*</span>';
-        
         $xhtml = '<label>'.$lblName.$strRequire.'</label>'.$input;
 
         return $xhtml;
@@ -123,8 +121,10 @@ class Helper{
     
     // Create Row
     public static function cmsInput($type, $name, $id, $value, $class = null, $size = null){
+        $strSize    = ($size == null) ? '' : "size = '$size'";
+        $strClass   = ($class == null) ? '' : "class = '$class'";
         
-        $xhtml = "<input type='$type' name='$name' id='$id' value='$value' class='$class' size='$size'>";
+        $xhtml = "<input type='$type' name='$name' id='$id' value='$value' $strClass $strSize>";
         
         return $xhtml;
     }
