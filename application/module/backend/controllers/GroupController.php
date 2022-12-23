@@ -220,9 +220,13 @@ class GroupController extends Controller{
             } else {
 
                 $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');
-                $this->_model->saveItem($this->_arrParam,array('task'=>$task));
+                $id = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
                 $type = $this->_arrParam['type'];
                 if($type == 'save-close') URL::redirect(URL::createLink('backend', 'group', 'list'));
+                //plus
+                if($type == 'save-new') URL::redirect(URL::createLink('backend', 'group', 'form'));
+                if($type == 'save') URL::redirect(URL::createLink('backend', 'group', 'form',array('id', $id)));
+                
             }
 
         }

@@ -110,6 +110,7 @@ class GroupModel extends Model
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->insert($data);
             Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
+            return $this->lastID();
         }
         
         if($option['task'] == 'edit'){
@@ -119,6 +120,7 @@ class GroupModel extends Model
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));     
             $this->update($data, array(array('id',$arrParam['form']['id'])));
             Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
+            return $arrParam['form']['id'];
         }
     }
     

@@ -1,7 +1,7 @@
 <?php
         //echo '<h3>'. __METHOD__ . '</h3>';
-//         $linkSaveClose	= URL::createLink('admin', 'group', 'form', array('type' => 'save-close'));
-//         $btnSaveClose	= Helper::cmsButton('Save & Close', 'toolbar-save', $linkSaveClose, 'icon-32-save', 'submit');
+    //         $linkSaveClose	= URL::createLink('admin', 'group', 'form', array('type' => 'save-close'));
+        //         $btnSaveClose	= Helper::cmsButton('Save & Close', 'toolbar-save', $linkSaveClose, 'icon-32-save', 'submit');
         $linkSaveClose	    = URL::createLink('backend', 'group', 'form', array('type' => 'save-close'));
         $linkCancel	        = URL::createLink('backend', 'group', 'list');
         //cmsButtonAtag($name, $id, $link, $icon, $type = 'new')
