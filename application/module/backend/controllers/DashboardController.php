@@ -1,7 +1,12 @@
 <?php
 
 class DashboardController extends Controller{
-
+    public function __construct(){
+        Session::delete('filter');
+        Session::delete('selectGroupACP');
+        Session::delete('status');
+        Session::delete('search');
+    }
     public function indexAction(){
         $this->_view->_tag = 'dashboard';   
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
