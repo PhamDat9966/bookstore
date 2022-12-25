@@ -122,10 +122,9 @@ class GroupController extends Controller{
     public function filterAndSearch(){
         
         if(@$_GET['clear'] !=''){
+            Session::delete('search');
             $_GET['search'] = '';
-            Session::set('search','');
         }
-        
         if(@$_GET['filter'] == 'all'){
             Session::set('filter','');
         }

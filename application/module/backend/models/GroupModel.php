@@ -44,6 +44,10 @@ class GroupModel extends Model
                 if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'WHERE `status`= 0';  
                 $flagfilterWhere = true;
             }
+            
+            if ($_SESSION['filter'] == 'all') {
+                $flagfilterWhere = false;
+            }
 
         }
         
