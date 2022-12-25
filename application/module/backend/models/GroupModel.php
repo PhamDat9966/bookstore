@@ -24,7 +24,6 @@ class GroupModel extends Model
         $queryContent[] = "FROM `$this->_tableName`";
         
         $flagWhere      = false;
-        if($_SESSION['filter'] == 'all') $flagWhere = false;
         
         if(!empty($_SESSION['search'])){
             $queryContent[]     = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
@@ -43,7 +42,7 @@ class GroupModel extends Model
                 if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'WHERE `status`= 0';  
                 $flagWhere = true;
             }
- 
+            if($_SESSION['filter'] == 'all') $flagWhere = false;
         }
         
         if(isset($_SESSION['selectGroupACP'])){
