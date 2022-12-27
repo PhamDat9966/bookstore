@@ -165,10 +165,11 @@ class GroupModel extends Model
     
     
     public function countAll(){
+
         $count          = [];
         
         $searchQuery    = '';
-        if(isset($_SESSION['search'])){
+        if(!empty($_SESSION['search'])){
             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
@@ -177,10 +178,75 @@ class GroupModel extends Model
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1");
             $count['activeStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 ");
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 ");       
             $count['inActiveStatus'] = $this->totalItem();
             
             return $count;
+        }
+        
+        if(!empty($_SESSION['selectGroupACP'])){
+
+            if($_SESSION['selectGroupACP'] == 1){
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = 1");
+                $count['allStatus'] = $this->totalItem();
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 1 AND `group_acp` = 1");
+                $count['activeStatus'] = $this->totalItem();
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 0 AND `group_acp` = 1");
+                $count['inActiveStatus'] = $this->totalItem();
+                
+                return $count;
+                
+            }
+            
+            if($_SESSION['selectGroupACP'] == 0){
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = 0");
+                $count['allStatus'] = $this->totalItem();
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 1 AND `group_acp` = 0");
+                $count['activeStatus'] = $this->totalItem();
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 0 AND `group_acp` = 0");
+                $count['inActiveStatus'] = $this->totalItem();
+                
+                return $count;
+            }  
+        }
+        
+        if(!empty($_SESSION['search']) && !empty($_SESSION['selectGroupACP'])){
+            
+            if($_SESSION['selectGroupACP'] == 1){
+                $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_acp` = 1");
+                $count['allStatus'] = $this->totalItem();
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1 AND `group_acp` = 1");
+                $count['activeStatus'] = $this->totalItem();
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 AND `group_acp` = 1");
+                $count['inActiveStatus'] = $this->totalItem();
+                
+                return $count;
+                
+            }
+            
+            if($_SESSION['selectGroupACP'] == 0){
+                $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_acp` = 0");
+                $count['allStatus'] = $this->totalItem();
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1 AND `group_acp` = 0");
+                $count['activeStatus'] = $this->totalItem();
+                
+                $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 AND `group_acp` = 0");
+                $count['inActiveStatus'] = $this->totalItem();
+                
+                return $count;
+            }  
         }
         
         $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."`");

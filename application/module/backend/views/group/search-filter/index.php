@@ -70,8 +70,8 @@ $formSearch        = '<form action="" method="GET">
 // filter Group ACP
 
 $selectGroupACP = 'selectGroupACP';
-if(isset($this->_arrParam['selectGroupACP'])){
-    $selectGroupACP = $this->_arrParam['selectGroupACP'];
+if(isset($_SESSION['selectGroupACP'])){
+    $selectGroupACP = $_SESSION['selectGroupACP'];
 }
 $arrGroupACP        = ['groupACP'=>'- Select Group ACP -','0'=>'No','1'=>'Yes'];
 $selectGroupACP     = Helper::cmsSelectbox('selectGroupACP', 'form-control custom-select', $arrGroupACP , $selectGroupACP, null,$id = 'selectGroupACP');
