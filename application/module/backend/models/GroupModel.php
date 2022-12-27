@@ -292,8 +292,6 @@ class GroupModel extends Model
     {
         $this->delete([$id]);
         Session::set('message', array('class' => 'success', 'content' => 'Xóa thành công!'));
-        
-        
     }
     
     public function multActiveStatus($checkbox,$option = null){
