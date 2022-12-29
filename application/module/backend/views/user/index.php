@@ -8,6 +8,14 @@ foreach ($this->groupNameData as $keyGroup=>$valueGroup){
     $selectGroup[$valueGroup['id']] = $valueGroup['name'];
 }
 
+// echo "<pre>";
+// print_r($selectGroup);
+// echo "</pre>";
+
+// echo "<pre>";
+// print_r($this);
+// echo "</pre>";
+
 if(!empty($this->Items)){
     $i=0;
     foreach ($this->Items as $key=>$value){
@@ -27,9 +35,20 @@ if(!empty($this->Items)){
            
         $nameGroup      = $value['group_name'];
         
+        $created_by     = '';
+        $modified_by    = '';
+        
         $group          = '<select class="form-control custom-select w-auto';
-        // Get seletgroup array
+        // Get seletgroup array Get $created_by value and $modified_by value
         foreach ($selectGroup as $keyselect=>$valueSelect){
+            if($value['created_by'] == $keyselect){
+                $created_by = $valueSelect;
+            }
+            
+            if($value['modified_by'] == $keyselect){
+                $modified_by = $valueSelect;
+            }
+            
             if($nameGroup == $valueSelect){
                 $group .= '<option selected="">'.$valueSelect.'</option>';
             }
@@ -42,14 +61,10 @@ if(!empty($this->Items)){
         
         //<a href="#" class="btn btn-success rounded-circle btn-sm"><i class="fas fa-check"></i></a>
         $status         = '';
-        $urlstatus      = URL::createLink('backend','group','list',array('id'=>$id,'status'=>$value['status']),$this->_currentPage);
+        $urlstatus      = URL::createLink('backend','user','list',array('id'=>$id,'status'=>$value['status']),$this->_currentPage);
         $status         = Helper::cmsStatus($value['status'], $urlstatus ,$id);
         
         //CREATED:
-        //created_by
-        $created_by     = '';
-        $created_by     = ($value['created_by'] == 1) ? 'Admin' : 'Manager';
-
         // Time create
         $arrCreatedTime = explode(' ', $value['created']);
         
@@ -57,8 +72,6 @@ if(!empty($this->Items)){
         $created       .='<i class="far fa-clock"></i>  '.$arrCreatedTime[1].' '.Helper::formatDate('d-m-Y', $arrCreatedTime[0]);
         
         //MODIFIED
-        $modified_by    = '';
-        $modified_by    = ($value['modified_by'] == 1) ? 'Admin' : 'Manager';
         
         // Time modified
         $arrModifiedTime = explode(' ', $value['created']);
@@ -368,19 +381,9 @@ if(!empty($this->Items)){
 						</div>
 					</div>
 					<div class="card-footer clearfix">
-						<ul class="pagination m-0 float-right">
-							<li class="page-item disabled"><a class="page-link" href="#"><i
-									class="fas fa-angle-double-left"></i></a></li>
-							<li class="page-item disabled"><a class="page-link" href="#"><i
-									class="fas fa-angle-left"></i></a></li>
-							<li class="page-item active"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#"><i
-									class="fas fa-angle-right"></i></a></li>
-							<li class="page-item"><a class="page-link" href="#"><i
-									class="fas fa-angle-double-right"></i></a></li>
-						</ul>
+						<div class ="pagination m-0 float-right">
+							<?php echo $this->Pagination['paginationHTML'];?>
+						</div>
 					</div>
 				</div>
 			</div>

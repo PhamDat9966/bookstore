@@ -162,7 +162,7 @@ class UserModel extends Model
         $this->_cunrrentPage = $currentPage;
         
         $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
-        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'group', 'list'));
+        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'user', 'list'));
         $position = ($currentPage - 1) * $totalItemsPerPage;
         
         $resulfPagination['position'] = $position;

@@ -63,10 +63,10 @@ class UserController extends Controller{
         $this->_model->_countParam = $this->_arrParam['count'];
 
         $totalItems                = $this->_arrParam['count']['allStatus'];
-        if(isset($_SESSION['filter'])) {
-            if($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
-            if($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
-        }
+//         if(isset($_SESSION['filter'])) {
+//             if($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
+//             if($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
+//         }
         
         $currentPage               = 1;
         $totalItemsPerPage         = 5;
