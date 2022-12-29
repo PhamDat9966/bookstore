@@ -34,12 +34,7 @@ class GroupController extends Controller{
         if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroupACP'])){
             $this->filterAndSearch();
         }    
-        
-        // change groupACP filter
-//         if(isset($this->_arrParam['selectBox'])){
-//             $this->_model->listItems($this->_arrParam);
-//         }
-        
+
         // charge active, inactive groupACB and status
         if(isset($_GET['id'])){
             
@@ -176,25 +171,6 @@ class GroupController extends Controller{
         
         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE  `status` = 0");
         $count['inActiveStatus'] = $this->_model->totalItem();
-        
-        //-------------------!!!!!!!!!!!!!!!!!!!----------------------//
-//         $flagWhere      = false;
-//         if(isset($_SESSION['search'])){
-//             $queryCount[]   = "SELECT COUNT(`id`) AS totalItems"; 
-//             $queryCount[]   = "FROM `".TBL_GROUP."`";
-//             $queryCount[]   = "`name` LIKE '%".$_SESSION['search']."%'";
-//             $flagWhere  = true;
-//         }
-        
-//         if(isset($_SESSION[''])){
-            
-//         }
-        
-//         //$this->_arrParam['count'] = $count;
-//         $queryCount = implode(" ", $queryCount);
-//         $this->_model->query($queryCount);
-        
-        //------------------------------------------------------------//
         
         return $count;
     }
