@@ -58,7 +58,7 @@ class GroupController extends Controller{
         }      
 
         //Paginator
-        $this->_arrParam['count']  = $this->_model->countAll();
+        $this->_arrParam['count']  = $this->_model->countFilterSearch();
         $this->_view->_count       = $this->_arrParam['count'];        
         $this->_model->_countParam = $this->_arrParam['count'];
 

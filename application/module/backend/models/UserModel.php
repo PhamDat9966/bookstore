@@ -20,10 +20,9 @@ class UserModel extends Model
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
         $queryContent = [];
-        $queryContent[] = "SELECT `id`,`username`,`email`,`fullname`,`password`,`created`,`created_by`,`modified`,`modified_by`,`status`,`ordering`,`group_id`";
-        $queryContent[] = "FROM `$this->_tableName`";
-        $queryContent[] = "WHERE `id` > 0";
-        
+        $queryContent[] = "SELECT `u`.`id`,`u`.`username`,`u`.`email`,`u`.`fullname`,`u`.`password`,`u`.`created`,`u`.`created_by`,`u`.`modified`,`u`.`modified_by`,`u`.`status`,`u`.`ordering`,`u`.`group_id`,`g`.`name` AS `group_name`";             
+        $queryContent[] = "FROM `$this->_tableName` AS `u`, `".TBL_GROUP."` AS `g`";
+        $queryContent[] = "WHERE `u`.`group_id` = `g`.`id`";
 //         if(!empty($_SESSION['search'])){
 //             $queryContent[]     = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
 //             $flagSearchWhere    = true;
@@ -66,6 +65,19 @@ class UserModel extends Model
         
         $queryContent = implode(" ", $queryContent);
         
+        $result = $this->listRecord($queryContent);
+        return $result;
+    }
+    
+    public function createdAndModified($arrParam, $option = null){
+        
+        $queryContent = [];
+        $queryContent[] = "SELECT `id`,`name`";
+        $queryContent[] = "FROM `".TBL_GROUP."`";
+        if($option != null){
+            $queryContent[] = "LIMIT 0,".$option."";
+        }    
+        $queryContent = implode(" ", $queryContent);
         $result = $this->listRecord($queryContent);
         return $result;
     }
@@ -160,58 +172,58 @@ class UserModel extends Model
         return $resulfPagination;
     }
     
-    public function countAll(){
+    public function countFilterSearch(){
         
         $count          = array();
         $searchQuery    = '';
         
-        if((!empty($_SESSION['search'])) && (!empty(is_numeric(@$_SESSION['selectGroupACP'])))){
-            $varGroupACP = @$_SESSION['selectGroupACP'];
+//         if((!empty($_SESSION['search'])) && (!empty(is_numeric(@$_SESSION['selectGroupACP'])))){
+//             $varGroupACP = @$_SESSION['selectGroupACP'];
             
-            $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+//             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_acp` = $varGroupACP");
-            $count['allStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_acp` = $varGroupACP");
+//             $count['allStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1 AND `group_acp` = $varGroupACP");
-            $count['activeStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1 AND `group_acp` = $varGroupACP");
+//             $count['activeStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 AND `group_acp` = $varGroupACP");
-            $count['inActiveStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 AND `group_acp` = $varGroupACP");
+//             $count['inActiveStatus'] = $this->totalItem();
             
-            return $count;
-        }
+//             return $count;
+//         }
         
-        if(!empty(is_numeric(@$_SESSION['selectGroupACP']))){
-            $varGroupACP = @$_SESSION['selectGroupACP'];
+//         if(!empty(is_numeric(@$_SESSION['selectGroupACP']))){
+//             $varGroupACP = @$_SESSION['selectGroupACP'];
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = ".$varGroupACP."");
-            $count['allStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = ".$varGroupACP."");
+//             $count['allStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 1 AND `group_acp` = ".$varGroupACP."");
-            $count['activeStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 1 AND `group_acp` = ".$varGroupACP."");
+//             $count['activeStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 0 AND `group_acp` = ".$varGroupACP."");
-            $count['inActiveStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 0 AND `group_acp` = ".$varGroupACP."");
+//             $count['inActiveStatus'] = $this->totalItem();
             
-            return $count;
+//             return $count;
             
-        }
+//         }
         
-        if(!empty($_SESSION['search'])){
-            $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+//         if(!empty($_SESSION['search'])){
+//             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
-            $count['allStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
+//             $count['allStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1");
-            $count['activeStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1");
+//             $count['activeStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 ");
-            $count['inActiveStatus'] = $this->totalItem();
+//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 ");
+//             $count['inActiveStatus'] = $this->totalItem();
             
-            return $count;
-        }
+//             return $count;
+//         }
         
         
         

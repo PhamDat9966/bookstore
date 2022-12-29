@@ -1,8 +1,13 @@
 <?php 
-// echo "<pre>";
-// print_r($this);
-// echo "</pre>";
+
 $listUser = '';
+
+//Created selectgroup Array
+$selectGroup = [];
+foreach ($this->groupNameData as $keyGroup=>$valueGroup){
+    $selectGroup[$valueGroup['id']] = $valueGroup['name'];
+}
+
 if(!empty($this->Items)){
     $i=0;
     foreach ($this->Items as $key=>$value){
@@ -19,12 +24,13 @@ if(!empty($this->Items)){
                             <b>FullName: </b>'.$fullName.'<br/>
                             <b>Email: </b>'.$email.'<br/>
                           </p>';
-        
-        $selectGroup    = array('1'=>'Admin','2'=>'Manager','3'=>'Member','4'=>'Register');
+           
+        $nameGroup      = $value['group_name'];
         
         $group          = '<select class="form-control custom-select w-auto';
+        // Get seletgroup array
         foreach ($selectGroup as $keyselect=>$valueSelect){
-            if($keyselect == $value['group_id']){
+            if($nameGroup == $valueSelect){
                 $group .= '<option selected="">'.$valueSelect.'</option>';
             }
             $group .= '<option>'.$valueSelect.'</option>';
@@ -41,33 +47,24 @@ if(!empty($this->Items)){
         
         //CREATED:
         //created_by
-        $createdby     = '';
-        foreach ($selectGroup as $keyCreateBy=>$valueCreateBy){
-            if($value['created_by'] == $keyCreateBy){
-                $createdby = $valueCreateBy;
-                break;
-            }
-        }
+        $created_by     = '';
+        $created_by     = ($value['created_by'] == 1) ? 'Admin' : 'Manager';
+
         // Time create
         $arrCreatedTime = explode(' ', $value['created']);
         
-        $created        = '<i class="far fa-user"></i>  '.$createdby.'<br/>';
+        $created        = '<i class="far fa-user"></i>  '.$created_by.'<br/>';
         $created       .='<i class="far fa-clock"></i>  '.$arrCreatedTime[1].' '.Helper::formatDate('d-m-Y', $arrCreatedTime[0]);
         
         //MODIFIED
-        $modifiedby     = '';
-        foreach ($selectGroup as $keyModifiedby =>$valueModifiedby){
-            if($value['modified_by'] == $keyModifiedby){
-                $modifiedby = $valueModifiedby;
-                break;
-            }
-        }
+        $modified_by    = '';
+        $modified_by    = ($value['modified_by'] == 1) ? 'Admin' : 'Manager';
         
         // Time modified
         $arrModifiedTime = explode(' ', $value['created']);
         
         //$modified      = Helper::formatDate('d-m-Y', $value['modified']);
-        $modified        = '<i class="far fa-user"></i>  '.$modifiedby.'<br/>';
+        $modified        = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';
         $modified       .='<i class="far fa-clock"></i>  '.$arrModifiedTime[1].' '.Helper::formatDate('d-m-Y', $arrModifiedTime[0]);
         
         $editAction     = Helper::showItemAction('backend', 'group', 'form', $id, 'edit');

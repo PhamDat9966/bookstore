@@ -8,7 +8,11 @@ class UserController extends Controller{
     }
     
     public function listAction(){
-            
+        
+        // Group
+        $setNumberGroupLimitControl  = 6;
+        $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
+        
         //Bulk Action
         if(isset($_GET['selectBox'])){
 
@@ -54,7 +58,7 @@ class UserController extends Controller{
         }      
 
         //Paginator
-        $this->_arrParam['count']  = $this->_model->countAll();
+        $this->_arrParam['count']  = $this->_model->countFilterSearch();
         $this->_view->_count       = $this->_arrParam['count'];        
         $this->_model->_countParam = $this->_arrParam['count'];
 

@@ -139,7 +139,7 @@ class GroupModel extends Model
         return $resulfPagination;
     }
     
-    public function countAll(){
+    public function countFilterSearch(){
         
         $count          = array();
         $searchQuery    = '';
