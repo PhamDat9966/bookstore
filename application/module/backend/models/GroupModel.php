@@ -22,43 +22,20 @@ class GroupModel extends Model
         $queryContent = [];
         $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
         $queryContent[] = "FROM `$this->_tableName`";
-        
-        $flagSearchWhere      = false;
-        $flagfilterWhere = false;
+        $queryContent[] = "WHERE `id` > 0";
         
         if(!empty($_SESSION['search'])){
-            $queryContent[]     = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
-            $flagSearchWhere    = true;
+            $queryContent[]     = "AND `name` LIKE '%".$_SESSION['search']."%'";
         }
         
-        //$flagFilterWhere = false;
         if(isset($_SESSION['filter'])){
-            if($flagSearchWhere  == true){
-                if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
-                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
-                $flagfilterWhere = true;
-            }
-            
-            if($flagSearchWhere  == false){
-                if($_SESSION['filter'] == 'active') $queryContent[]    = 'WHERE `status` = 1';
-                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'WHERE `status`= 0';  
-                $flagfilterWhere = true;
-            }
-            
-            if ($_SESSION['filter'] == 'all') {
-                $flagfilterWhere = false;
-            }
-
+            if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
+            if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
         }
         
         if(isset($_SESSION['selectGroupACP'])){
-            if($flagSearchWhere  == true || $flagfilterWhere == true){
-                if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
-                if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
-            }else if($flagSearchWhere  == false || $flagfilterWhere == false){
-                if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'WHERE `group_acp` = 1';
-                if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'WHERE `group_acp`= 0';
-            }
+            if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
+            if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
         } 
         
         $position           = $this->_arrParam['position'];
