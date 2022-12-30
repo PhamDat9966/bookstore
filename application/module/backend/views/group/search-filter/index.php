@@ -5,40 +5,40 @@ $allItem      = @$this->_count['allStatus'];
 $activeItem   = @$this->_count['activeStatus'];
 $inactiveItem = @$this->_count['inActiveStatus'];
 
-$allButtonClass         = 'default';
-$activeButtonClass      = 'secondary';
-$inactiveButtonClass    = 'secondary';
+$allButtonClass         = 'btn btn-info';
+$activeButtonClass      = 'btn btn-secondary';
+$inactiveButtonClass    = 'btn btn-secondary';
 
 if(isset($_SESSION['filter'])){
     if($_SESSION['filter'] == 'active'){
-        $allButtonClass         = 'secondary';
-        $activeButtonClass      = 'default';
-        $inactiveButtonClass    = 'secondary';
+        $allButtonClass         = 'btn btn-secondary';
+        $activeButtonClass      = 'btn btn-info';
+        $inactiveButtonClass    = 'btn btn-secondary';
     }
     
     if($_SESSION['filter'] == 'inactive'){
-        $allButtonClass         = 'secondary';
-        $activeButtonClass      = 'secondary';
-        $inactiveButtonClass    = 'default';
+        $allButtonClass         = 'btn btn-secondary';
+        $activeButtonClass      = 'btn btn-secondary';
+        $inactiveButtonClass    = 'btn btn-info';
     }
 }
 
-$buttonSubmit = Helper::cmsButton($type='submit',$class='default', $textOufit='Search');
+$buttonSubmit = Helper::cmsButtonSubmit($type='submit',$class='btn btn-info', $textOufit='Search');
 
 //All
 $textSpanIconAll  = 'All <span class="badge badge-pill badge-light">'.$allItem.'</span>';
-$buttonAll = Helper::cmsButton($type='submit',$class = $allButtonClass, $textOufit = $textSpanIconAll, $name='filter', $value='all');
+$buttonAll = Helper::cmsButtonSubmit($type='submit',$class = $allButtonClass, $textOufit = $textSpanIconAll, $name='filter', $value='all');
 
 //Active
 //<a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
 $textSpanIconActive  = 'Active <span class="badge badge-pill badge-light">'.$activeItem.'</span>';
-$buttonActive    = Helper::cmsButton($type='submit',$class = $activeButtonClass, $textOufit = $textSpanIconActive,$name='filter',$value='active');
+$buttonActive    = Helper::cmsButtonSubmit($type='submit',$class = $activeButtonClass, $textOufit = $textSpanIconActive,$name='filter',$value='active');
 
 //<a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a>
 $textSpanIconInactive  = 'Inactive <span class="badge badge-pill badge-light">'.$inactiveItem.'</span>';
-$buttonInactive        = Helper::cmsButton($type='submit',$clas = $inactiveButtonClass, $textOufit = $textSpanIconInactive,$name='filter',$value='inactive');
+$buttonInactive        = Helper::cmsButtonSubmit($type='submit',$clas = $inactiveButtonClass, $textOufit = $textSpanIconInactive,$name='filter',$value='inactive');
 
-$buttonClear           = Helper::cmsButton($type='submit',$class='danger', $textOufit = 'Clear',$name='clear',$value='clear'); 
+$buttonClear           = Helper::cmsButtonSubmit($type='submit',$class='btn btn-danger', $textOufit = 'Clear',$name='clear',$value='clear'); 
 
 //FILTER
 $formFiler         = '<form action="" method="GET">
@@ -120,7 +120,7 @@ $formGroupACP       = '<form action="" method="GET" name="formGroupACP" id="form
                                 <?php 
 //                                     //echo $buttonSubmit;
 //                                 ?>
-<!--                                 <a href="#" class="btn btn-danger">Clear</a> -->
+<!--                                 <a href="#" class="btn btn-btn btn-danger">Clear</a> -->
 <!--                             </span> -->
 <!--                         </div> -->
 <!--                     </form> -->

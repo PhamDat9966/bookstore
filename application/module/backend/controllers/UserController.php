@@ -8,8 +8,8 @@ class UserController extends Controller{
     }
     
     public function listAction(){
-        
-        // Group
+
+        // Group for User
         $setNumberGroupLimitControl  = 6;
         $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
         
@@ -185,17 +185,20 @@ class UserController extends Controller{
     // ACTION : ADD & EDIT
     public function formAction($option = null){
         
-        $this->_view->_title        = 'User Groups: Add';
+        $this->_view->_title        = 'User: Add';
         
         if(isset($this->_arrParam['id'])){
-            $this->_view->_title  = 'User Groups: Edit';
+            $this->_view->_title  = 'User: Edit';
             $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
-            if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'group', 'list'));
+            if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'user', 'list'));
         }
 
         if(@$this->_arrParam['form']['token'] > 0){
             $validate = new Validate($this->_arrParam['form']);
-            $validate->addRule('name', 'string',array('min'=>3, 'max'=>255))
+            $validate->addRule('username', 'string',array('min'=>3, 'max'=>255))
+                     ->addRule('password', 'string',array('min'=>3, 'max'=>255))
+                     ->addRule('email', 'email',array('min'=>3, 'max'=>255))
+                     ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
                      ->addRule('status','status',array('deny'=>array('default')))
                      ->addRule('group_acp','status',array('deny'=>array('default')));   
             $validate->run();
@@ -208,16 +211,16 @@ class UserController extends Controller{
                 $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');
                 $id = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
                 $type = $this->_arrParam['type'];
-                if($type == 'save-close') URL::redirect(URL::createLink('backend', 'group', 'list'));
+                if($type == 'save-close') URL::redirect(URL::createLink('backend', 'user', 'list'));
                 //plus
-                if($type == 'save-new') URL::redirect(URL::createLink('backend', 'group', 'form'));
-                if($type == 'save') URL::redirect(URL::createLink('backend', 'group', 'form',array('id', $id)));
+                if($type == 'save-new') URL::redirect(URL::createLink('backend', 'user', 'form'));
+                if($type == 'save') URL::redirect(URL::createLink('backend', 'user', 'form',array('id', $id)));
                 
             }
 
         }
         
-        $this->_view->_tag          = 'group'; 
+        $this->_view->_tag          = 'user'; 
         $this->_view->arrParam      = $this->_arrParam;    
             
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
@@ -225,7 +228,7 @@ class UserController extends Controller{
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();   
         
-        $this->_view->render('group/form', true);
+        $this->_view->render('user/form', true);
     }
     
     public function deleteAction()

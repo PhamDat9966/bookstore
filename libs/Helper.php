@@ -1,55 +1,13 @@
 <?php
 class Helper{
     
-    //Button
-    public static function cmsButton( $type, $class = 'default' , $textOutfit ,$name = null , $value = null, $id = null  ){
-       //class: default secondary danger 
-        
-       $nameButton = '';     
-       if(isset($name)){
-           $nameButton = "name='$name'";
-       }
-       
-       $valueButton = '';
-       if(isset($value)){
-           $valueButton = "value='$value'";
-       }
-       
-       $classButton = '';
-       if($class == 'default'){
-           $classButton = "class='btn btn-info'";
-       }
-       
-       if($class == 'secondary'){
-           $classButton = "class='btn btn-secondary'";
-       }
-       
-       //class="btn btn-danger"
-       if($class == 'danger'){
-           $classButton = "class='btn btn-danger'";
-       }
-
-       $nameAndValue = '';
-       if(isset($name) && isset($value)){
-           $nameAndValue = "name='$name' value='$value'";
-       }
-       
-       $idAttr = '';
-       if(!empty($id)){
-           $idAttr = "id = '$id'";
-       }
-       
-       $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>'; 
-       return $xhtml;
-    }
-    
     //A tag
-    public static function cmsButtonAtag($url,$class,$textOufit,$spanIcon = null){
+    public static function cmsButton($url,$class,$textOufit,$spanIcon = null){
         
         $xhtml = '<a href="'.$url.'" class="'.$class.'">
                         '.$textOufit.' '.$spanIcon.'
                  </a>';
-        return $xhtml;      
+        return $xhtml;
     }
     
 //     public static function cmsButtonAtag($name,$class ,$id, $link, $icon, $type = 'new'){
@@ -61,6 +19,90 @@ class Helper{
 //             $xhtml .= '<a class="'.$class.'" href="#" onclick="javascript:submitForm(\''.$link.'\');" id="'.$id.'"><span class="'.$icon.'"></span>'.$name.'</a>';
 //         }
 //         return $xhtml;
+//     }
+    
+    
+    //Button Input
+    public static function cmsButtonSubmit( $type, $class = 'btn btn-info' , $textOutfit ,$name = null , $value = null, $id = null  ){
+        //class: default secondary danger
+        
+        $nameButton = '';
+        if(isset($name)){
+            $nameButton = "name='$name'";
+        }
+        
+        $valueButton = '';
+        if(isset($value)){
+            $valueButton = "value='$value'";
+        }
+        
+        $classButton = '';
+        if($class == 'btn btn-info'){
+            $classButton = "class='btn btn-info'";
+        }
+        
+        if($class == 'btn btn-secondary'){
+            $classButton = "class='btn btn-secondary'";
+        }
+        
+        //class="btn btn-danger"
+        if($class == 'btn btn-danger'){
+            $classButton = "class='btn btn-danger'";
+        }
+        
+        $nameAndValue = '';
+        if(isset($name) && isset($value)){
+            $nameAndValue = "name='$name' value='$value'";
+        }
+        
+        $idAttr = '';
+        if(!empty($id)){
+            $idAttr = "id = '$id'";
+        }
+        
+        $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>';
+        return $xhtml;
+    }
+    
+//     public static function cmsButton( $type, $class = 'default' , $textOutfit ,$name = null , $value = null, $id = null  ){
+//        //class: default secondary danger 
+        
+//        $nameButton = '';     
+//        if(isset($name)){
+//            $nameButton = "name='$name'";
+//        }
+       
+//        $valueButton = '';
+//        if(isset($value)){
+//            $valueButton = "value='$value'";
+//        }
+       
+//        $classButton = '';
+//        if($class == 'default'){
+//            $classButton = "class='btn btn-info'";
+//        }
+       
+//        if($class == 'secondary'){
+//            $classButton = "class='btn btn-secondary'";
+//        }
+       
+//        //class="btn btn-danger"
+//        if($class == 'danger'){
+//            $classButton = "class='btn btn-danger'";
+//        }
+
+//        $nameAndValue = '';
+//        if(isset($name) && isset($value)){
+//            $nameAndValue = "name='$name' value='$value'";
+//        }
+       
+//        $idAttr = '';
+//        if(!empty($id)){
+//            $idAttr = "id = '$id'";
+//        }
+       
+//        $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>'; 
+//        return $xhtml;
 //     }
     
     public static function cmsMessage($message){

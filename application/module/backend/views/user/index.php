@@ -80,8 +80,8 @@ if(!empty($this->Items)){
         $modified        = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';
         $modified       .='<i class="far fa-clock"></i>  '.$arrModifiedTime[1].' '.Helper::formatDate('d-m-Y', $arrModifiedTime[0]);
         
-        $editAction     = Helper::showItemAction('backend', 'group', 'form', $id, 'edit');
-        $deleteAction   = Helper::showItemAction('backend', 'group', 'delete', $id, $statusAction ='delete');
+        $editAction     = Helper::showItemAction('backend', 'user', 'form', $id, 'edit');
+        $deleteAction   = Helper::showItemAction('backend', 'user', 'delete', $id, $statusAction ='delete');
         
         $listUser      .=
         '<tr>
@@ -105,6 +105,8 @@ if(!empty($this->Items)){
     }
 }
 
+$addNewUrl    = URL::createLink('backend', 'user', 'form');
+$addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $textOufit = '<i class="fas fa-plus"></i> Add New');
 
 ?>
 <!-- Main content -->
@@ -191,8 +193,7 @@ if(!empty($this->Items)){
 									</div>
 								</div>
 								<div>
-									<a href="user-form.php" class="btn btn-info"><i
-										class="fas fa-plus"></i> Add New</a>
+									<?php echo $addNewButton;?>
 								</div>
 							</div>
 						</div>
