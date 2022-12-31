@@ -29,13 +29,12 @@ class UserModel extends Model
         }
         
         if(isset($_SESSION['filter'])){
-                if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
-                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';     
+            if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `u`.`status`= 1';
+            if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `u`.`status`= 0';     
         }
         
-        if(isset($_SESSION['selectGroupACP'])){
-                if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
-                if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
+        if(isset($_SESSION['selectGroup'])){
+           $queryContent[]    = "AND `u`.`group_id`= '".$_SESSION['selectGroup']."'";
         }
         
         $position           = $this->_arrParam['position'];

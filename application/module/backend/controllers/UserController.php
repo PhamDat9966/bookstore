@@ -8,6 +8,10 @@ class UserController extends Controller{
     }
     
     public function listAction(){
+        
+//         echo "<pre>";
+//         print_r($_GET);
+//         echo "</pre>";
 
         // Group for User
         $setNumberGroupLimitControl  = 6;
@@ -35,7 +39,7 @@ class UserController extends Controller{
         }
         
         // filter and search
-        if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear'])){
+        if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])){
             $this->filterAndSearch();
         } 
 
@@ -63,10 +67,10 @@ class UserController extends Controller{
         $this->_model->_countParam = $this->_arrParam['count'];
 
         $totalItems                = $this->_arrParam['count']['allStatus'];
-//         if(isset($_SESSION['filter'])) {
-//             if($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
-//             if($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
-//         }
+        if(isset($_SESSION['filter'])) {
+            if($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
+            if($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
+        }
         
         $currentPage               = 1;
         $totalItemsPerPage         = 5;
@@ -134,9 +138,9 @@ class UserController extends Controller{
             Session::set('filter',$status);
         }
         
-        if(isset($_GET['selectGroupACP'])){
-            $status  = trim($_GET['selectGroupACP']);
-            Session::set('selectGroupACP',$status);
+        if(isset($_GET['selectGroup'])){
+            $status  = trim($_GET['selectGroup']);
+            Session::set('selectGroup',$status);
             $this->_view->_arrParam = $this->_arrParam;
         }
         

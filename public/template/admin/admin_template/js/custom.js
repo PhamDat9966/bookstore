@@ -200,4 +200,15 @@ function changeGroupACP(link){
 	})
 }
 
+// User
+$(document).ready(function(){
+	// filter group User
+	$('#selectGroup').on('change', function (e) {
+		//var selected		= $("#selectGroup option:selected").text();
+		//$('#formGroupACP').submit();
+		document.forms['formGroup'].submit();
+	});
+	
+})
+
 
