@@ -6,7 +6,7 @@ class UserModel extends Model
     public $_saveParam = [];
     protected $_tableName = TBL_USER;
     public    $_cunrrentPage      = 1;
-    private $_columns = array('id','name','group_acp','created','created_by','modified','modified_by','status','ordering');
+    private $_columns = array('id','username','password','email','fullname','created','created_by','modified','modified_by','status','group_id');
     
     public function __construct()
     {
@@ -23,40 +23,20 @@ class UserModel extends Model
         $queryContent[] = "SELECT `u`.`id`,`u`.`username`,`u`.`email`,`u`.`fullname`,`u`.`password`,`u`.`created`,`u`.`created_by`,`u`.`modified`,`u`.`modified_by`,`u`.`status`,`u`.`ordering`,`u`.`group_id`,`g`.`name` AS `group_name`";             
         $queryContent[] = "FROM `$this->_tableName` AS `u`, `".TBL_GROUP."` AS `g`";
         $queryContent[] = "WHERE `u`.`group_id` = `g`.`id`";
-//         if(!empty($_SESSION['search'])){
-//             $queryContent[]     = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
-//             $flagSearchWhere    = true;
-//         }
         
-//         //$flagFilterWhere = false;
-//         if(isset($_SESSION['filter'])){
-//             if($flagSearchWhere  == true){
-//                 if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
-//                 if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
-//                 $flagfilterWhere = true;
-//             }
-            
-//             if($flagSearchWhere  == false){
-//                 if($_SESSION['filter'] == 'active') $queryContent[]    = 'WHERE `status` = 1';
-//                 if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'WHERE `status`= 0';
-//                 $flagfilterWhere = true;
-//             }
-            
-//             if ($_SESSION['filter'] == 'all') {
-//                 $flagfilterWhere = false;
-//             }
-            
-//         }
+        if(!empty($_SESSION['search'])){
+            $queryContent[]     = "AND `name` LIKE '%".$_SESSION['search']."%'";
+        }
         
-//         if(isset($_SESSION['selectGroupACP'])){
-//             if($flagSearchWhere  == true || $flagfilterWhere == true){
-//                 if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
-//                 if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
-//             }else if($flagSearchWhere  == false || $flagfilterWhere == false){
-//                 if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'WHERE `group_acp` = 1';
-//                 if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'WHERE `group_acp`= 0';
-//             }
-//         }
+        if(isset($_SESSION['filter'])){
+                if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
+                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';     
+        }
+        
+        if(isset($_SESSION['selectGroupACP'])){
+                if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
+                if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
+        }
         
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
@@ -131,6 +111,10 @@ class UserModel extends Model
     }
     
     public function saveItem($arrParam, $option = null){
+        
+        echo "<pre>";
+        print_r($arrParam);
+        echo "</pre>";
         
         if($option['task'] == 'add'){
             $arrParam['form']['created']    = date('Y-m-d',time());
@@ -289,7 +273,7 @@ class UserModel extends Model
     public function infoItem($arrParam,$option = null){
         if($option == null){
             $queryContent   = [];
-            $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`";
+            $queryContent[] = "SELECT `id`,`username`,`email`,fullname,`password`,`status`,`group_id`";
             $queryContent[] = "FROM `$this->_tableName`";
             $queryContent[] = "WHERE `id` = '" . $arrParam['id'] . "'";
             $queryContent = implode(" ", $queryContent);

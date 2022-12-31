@@ -55,6 +55,10 @@ class Model{
     public function insert($data, $type = 'single')
     {
         echo '<h3>'. __METHOD__ . '</h3>';    
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        
         if ($type == 'single') {
             $newQuery   = $this->createInsertSQL($data);
             $query      = "INSERT INTO `$this->table`(" . $newQuery['cols'] . ") VALUES (" . $newQuery['vals'] . ")";
@@ -140,6 +144,11 @@ class Model{
     // FIRSTID
     public function firstID()
     {
+        return mysqli_insert_id($this->connect);
+    }
+    
+    // LAST ID
+    public function lastID(){
         return mysqli_insert_id($this->connect);
     }
     

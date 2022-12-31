@@ -8,14 +8,6 @@ foreach ($this->groupNameData as $keyGroup=>$valueGroup){
     $selectGroup[$valueGroup['id']] = $valueGroup['name'];
 }
 
-// echo "<pre>";
-// print_r($selectGroup);
-// echo "</pre>";
-
-// echo "<pre>";
-// print_r($this);
-// echo "</pre>";
-
 if(!empty($this->Items)){
     $i=0;
     foreach ($this->Items as $key=>$value){
@@ -112,6 +104,16 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 <!-- Main content -->
 <div class="content">
 	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<?php 
+            	   require_once 'messageBox/index.php';
+            	?>
+            	<?php 
+                    echo '<h3>'.__FILE__.'</h3>';
+                ?>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-12">
 				<!-- Search & Filter -->
@@ -213,170 +215,6 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 								</thead>
 								<tbody>
 									<?php echo $listUser;?>
-<!-- 									<tr> -->
-<!-- 										<td><input type="checkbox"></td> -->
-<!-- 										<td>1</td> -->
-<!-- 										<td class="text-left"> -->
-<!-- 											<p class="mb-0">Username: admin01</p> -->
-<!-- 											<p class="mb-0">FullName: Nguyễn Văn A</p> -->
-<!-- 											<p class="mb-0">Email: admin01@example.com</p> -->
-<!-- 										</td> -->
-<!-- 										<td><select class="form-control custom-select w-auto"> -->
-<!-- 												<option>- Select Group -</option> -->
-<!-- 												<option selected>Admin</option> -->
-<!-- 												<option>Manager</option> -->
-<!-- 												<option>Member</option> -->
-<!-- 												<option>Register</option> -->
-<!-- 										</select></td> -->
-<!-- 										<td><a href="#" class="btn btn-success rounded-circle btn-sm"><i -->
-<!-- 												class="fas fa-check"></i></a></td> -->
-<!-- 										<td> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-user"></i> admin -->
-<!-- 											</p> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-clock"></i> 09/01/2021 -->
-<!-- 											</p> -->
-<!-- 										</td> -->
-<!-- 										<td> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-user"></i> admin -->
-<!-- 											</p> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-clock"></i> 09/01/2021 -->
-<!-- 											</p> -->
-<!-- 										</td> -->
-<!-- 										<td><a href="#" -->
-<!-- 											class="btn btn-secondary btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-key"></i></a> <a href="#" -->
-<!-- 											class="btn btn-info btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-pen"></i></a> <a href="#" -->
-<!-- 											class="btn btn-danger btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-trash "></i></a></td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td><input type="checkbox"></td> -->
-<!-- 										<td>2</td> -->
-<!-- 										<td class="text-left"> -->
-<!-- 											<p class="mb-0">Username: manager01</p> -->
-<!-- 											<p class="mb-0">FullName: Nguyễn Văn M</p> -->
-<!-- 											<p class="mb-0">Email: manager01@example.com</p> -->
-<!-- 										</td> -->
-<!-- 										<td><select class="form-control custom-select w-auto"> -->
-<!-- 												<option>- Select Group -</option> -->
-<!-- 												<option>Admin</option> -->
-<!-- 												<option selected>Manager</option> -->
-<!-- 												<option>Member</option> -->
-<!-- 												<option>Register</option> -->
-<!-- 										</select></td> -->
-<!-- 										<td><a href="#" class="btn btn-success rounded-circle btn-sm"><i -->
-<!-- 												class="fas fa-check"></i></a></td> -->
-<!-- 										<td> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-user"></i> admin -->
-<!-- 											</p> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-clock"></i> 09/01/2021 -->
-<!-- 											</p> -->
-<!-- 										</td> -->
-<!-- 										<td> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-user"></i> admin -->
-<!-- 											</p> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-clock"></i> 09/01/2021 -->
-<!-- 											</p> -->
-<!-- 										</td> -->
-<!-- 										<td><a href="#" -->
-<!-- 											class="btn btn-secondary btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-key"></i></a> <a href="#" -->
-<!-- 											class="btn btn-info btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-pen"></i></a> <a href="#" -->
-<!-- 											class="btn btn-danger btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-trash "></i></a></td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td><input type="checkbox"></td> -->
-<!-- 										<td>3</td> -->
-<!-- 										<td class="text-left"> -->
-<!-- 											<p class="mb-0">Username: member01</p> -->
-<!-- 											<p class="mb-0">FullName: Nguyễn Thị M</p> -->
-<!-- 											<p class="mb-0">Email: member01@example.com</p> -->
-<!-- 										</td> -->
-<!-- 										<td><select class="form-control custom-select w-auto"> -->
-<!-- 												<option>- Select Group -</option> -->
-<!-- 												<option>Admin</option> -->
-<!-- 												<option>Manager</option> -->
-<!-- 												<option selected>Member</option> -->
-<!-- 												<option>Register</option> -->
-<!-- 										</select></td> -->
-<!-- 										<td><a href="#" class="btn btn-success rounded-circle btn-sm"><i -->
-<!-- 												class="fas fa-check"></i></a></td> -->
-<!-- 										<td> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-user"></i> admin -->
-<!-- 											</p> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-clock"></i> 09/01/2021 -->
-<!-- 											</p> -->
-<!-- 										</td> -->
-<!-- 										<td> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-user"></i> admin -->
-<!-- 											</p> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-clock"></i> 09/01/2021 -->
-<!-- 											</p> -->
-<!-- 										</td> -->
-<!-- 										<td><a href="#" -->
-<!-- 											class="btn btn-secondary btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-key"></i></a> <a href="#" -->
-<!-- 											class="btn btn-info btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-pen"></i></a> <a href="#" -->
-<!-- 											class="btn btn-danger btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-trash "></i></a></td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td><input type="checkbox"></td> -->
-<!-- 										<td>4</td> -->
-<!-- 										<td class="text-left"> -->
-<!-- 											<p class="mb-0">Username: register01</p> -->
-<!-- 											<p class="mb-0">FullName: Trần Cao R</p> -->
-<!-- 											<p class="mb-0">Email: register01@example.com</p> -->
-<!-- 										</td> -->
-<!-- 										<td><select class="form-control custom-select w-auto"> -->
-<!-- 												<option>- Select Group -</option> -->
-<!-- 												<option>Admin</option> -->
-<!-- 												<option>Manager</option> -->
-<!-- 												<option>Member</option> -->
-<!-- 												<option selected>Register</option> -->
-<!-- 										</select></td> -->
-<!-- 										<td><a href="#" class="btn btn-danger rounded-circle btn-sm"><i -->
-<!-- 												class="fas fa-check"></i></a></td> -->
-<!-- 										<td> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-user"></i> admin -->
-<!-- 											</p> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-clock"></i> 09/01/2021 -->
-<!-- 											</p> -->
-<!-- 										</td> -->
-<!-- 										<td> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-user"></i> admin -->
-<!-- 											</p> -->
-<!-- 											<p class="mb-0"> -->
-<!-- 												<i class="far fa-clock"></i> 09/01/2021 -->
-<!-- 											</p> -->
-<!-- 										</td> -->
-<!-- 										<td><a href="#" -->
-<!-- 											class="btn btn-secondary btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-key"></i></a> <a href="#" -->
-<!-- 											class="btn btn-info btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-pen"></i></a> <a href="#" -->
-<!-- 											class="btn btn-danger btn-sm rounded-circle"><i -->
-<!-- 												class="fas fa-trash "></i></a></td> -->
-<!-- 									</tr> -->
 								</tbody>
 							</table>
 						</div>

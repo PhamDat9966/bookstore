@@ -1,14 +1,13 @@
 <?php
-        
-    //echo '<h3>'. __METHOD__ . '</h3>';
-//         $linkSaveClose	= URL::createLink('admin', 'group', 'form', array('type' => 'save-close'));
-    //         $btnSaveClose	= Helper::cmsButton('Save & Close', 'toolbar-save', $linkSaveClose, 'icon-32-save', 'submit');
+
+    $arrSelectGroup             = array();
+    $arrSelectGroup['default']  = '- Select Group -';
+    foreach ($this->groupNameData as $keyG=>$valueG){
+        $arrSelectGroup[$valueG['id']] = $valueG['name'];
+    }
+
     $linkSaveClose	    = URL::createLink('backend', 'user', 'form', array('type' => 'save-close'));
     $linkCancel	        = URL::createLink('backend', 'user', 'list');
-    //cmsButtonAtag($name, $id, $link, $icon, $type = 'new')
-    //cmsButtonAtag($name,$class ,$id, $link, $icon, $type = 'new')
-    //$btnSaveClose       = Helper::cmsButtonAtag($name = 'Save',$class = 'btn btn-success' ,$id = null, $link = $linkSaveClose, $icon = null, $type = 'new');    
-    //$btnCancel          = Helper::cmsButtonAtag($name = 'Cancel',$class = 'btn btn-danger' ,$id = null, $link = $linkCancel, $icon = null, $type = 'new');
     
     $dataForm           = @$this->arrParam['form'];
 
@@ -16,22 +15,20 @@
     $inputPassword      = Helper::cmsInput($type = 'text', $name = 'form[password]',$id = 'password', $value = @$dataForm['password'], $class = 'form-control', $size = null);
     $inputEmail         = Helper::cmsInput($type = 'text', $name = 'form[email]',$id = 'email', $value = @$dataForm['email'], $class = 'form-control', $size = null);
     $inputFullname      = Helper::cmsInput($type = 'text', $name = 'form[fullname]',$id = 'fullname', $value = @$dataForm['fullname'], $class = 'form-control', $size = null);
-    
-    
+      
     $inputToken		    = Helper::cmsInput($type = 'hidden',$name = 'form[token]',$id = 'token', $value = time());
     
     $arrSelectStatus    = array('default'=>'- Select Status -', 1 => 'Active', 0 => 'Inactive');
     $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class ='custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'],$style = null);
     
-    $arrSelectGroupACP  = array('default'=>'- Select GroupACB -', 1 => 'Yes', 0 => 'No');
-    $selectGroupACP     = Helper::cmsSelectbox($name = 'form[group_acp]', $class ='custom-select', $arrSelectGroupACP, $keySelect = @$dataForm['group_acp'],$style = null);
+    $selectGroup        = Helper::cmsSelectbox($name = 'form[group_id]', $class ='custom-select', $arrSelectGroup, $keySelect = @$dataForm['group_id'],$style = null);
     
     $rowUsername        = Helper::cmsRowForm($lblName = 'Username', $input = $inputUsername, $require = true);
     $rowPassword        = Helper::cmsRowForm($lblName = 'Password', $input = $inputPassword, $require = true);
     $rowEmail           = Helper::cmsRowForm($lblName = 'Email', $input = $inputEmail, $require = true);
     $rowFullname        = Helper::cmsRowForm($lblName = 'Fullname', $input = $inputFullname, $require = true);
     $rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = true);
-    $rowGroupACP        = Helper::cmsRowForm($lblName = 'GroupACP', $input = $selectGroupACP, $require = true);
+    $rowGroup           = Helper::cmsRowForm($lblName = 'Group', $input = $selectGroup, $require = true);
     
     $showErrors = '';
     if(!empty($this->errors)){
@@ -83,7 +80,7 @@
 								<?= $rowStatus;?>
 							</div>
 							<div class="form-group">
-								<?= $rowGroupACP;?>
+								<?= $rowGroup;?>
 							</div>
 							<div class="form-group">
 								<?= $rowID;?>

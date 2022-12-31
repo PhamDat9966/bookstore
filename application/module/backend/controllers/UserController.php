@@ -185,6 +185,10 @@ class UserController extends Controller{
     // ACTION : ADD & EDIT
     public function formAction($option = null){
         
+        // Group for User
+        $setNumberGroupLimitControl  = 6;
+        $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
+        
         $this->_view->_title        = 'User: Add';
         
         if(isset($this->_arrParam['id'])){
@@ -200,7 +204,7 @@ class UserController extends Controller{
                      ->addRule('email', 'email',array('min'=>3, 'max'=>255))
                      ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
                      ->addRule('status','status',array('deny'=>array('default')))
-                     ->addRule('group_acp','status',array('deny'=>array('default')));   
+                     ->addRule('group_id','status',array('deny'=>array('default')));   
             $validate->run();
             $this->_arrParam['form'] = $validate->getResult();
             
