@@ -25,7 +25,7 @@ class UserModel extends Model
         $queryContent[] = "WHERE `u`.`group_id` = `g`.`id`";
         
         if(!empty($_SESSION['search'])){
-            $queryContent[]     = "AND `name` LIKE '%".$_SESSION['search']."%'";
+            $queryContent[]     = "AND `username` LIKE '%".$_SESSION['search']."%'";
         }
         
         if(isset($_SESSION['filter'])){

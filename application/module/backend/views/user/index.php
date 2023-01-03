@@ -4,6 +4,7 @@
 // print_r($this);
 // echo "</pre>";
 
+$this->searchValue = Session::get('search');
 $listUser = '';
 
 //Created selectgroup Array
@@ -20,8 +21,11 @@ if(!empty($this->Items)){
         $ckb            =  '<input type="checkbox" name="cid[]" value="'.$id.'">';
         
         $name           = Helper::highLight(@$this->searchValue, $value['username']);
-        $fullName       = Helper::highLight(@$this->searchValue, $value['fullname']);
-        $email          = Helper::highLight(@$this->searchValue, $value['email']);
+        //$fullName       = Helper::highLight(@$this->searchValue, $value['fullname']);
+        //$email          = Helper::highLight(@$this->searchValue, $value['email']);
+        
+        $fullName       = $value['fullname'];
+        $email          = $value['email'];
         
         $info           = '<p class="mb-0 text-left">
                             <b>Username: </b>'.$name.'<br/>

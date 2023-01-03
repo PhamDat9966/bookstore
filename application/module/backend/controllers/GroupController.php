@@ -237,19 +237,6 @@ class GroupController extends Controller{
         
     }
     
-    
-    public function value_newAction(){
-        echo '<h3>'.__METHOD__.'</h3>';
-        
-        echo "<pre>GEt";
-        print_r($this->_arrParam);
-        echo "</pre>";
-        
-        echo "<pre>GEt";
-        print_r($_GET);
-        echo "</pre>";
-    }
-    
 }
 
 

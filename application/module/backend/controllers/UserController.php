@@ -142,6 +142,9 @@ class UserController extends Controller{
             $status  = trim($_GET['selectGroup']);
             Session::set('selectGroup',$status);
             $this->_view->_arrParam = $this->_arrParam;
+            if($_GET['selectGroup'] == 0){
+                Session::delete('selectGroup');
+            }
         }
         
     }
