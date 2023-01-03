@@ -8,29 +8,25 @@ class UserController extends Controller{
     }
     
     public function listAction(){
-        
-//         echo "<pre>";
-//         print_r($_GET);
-//         echo "</pre>";
 
         // Group for User
         $setNumberGroupLimitControl  = 6;
         $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
         
         //Bulk Action
-        if(isset($_GET['selectBox'])){
+        if(isset($_GET['selectBoxUser'])){
 
 
-            if($_GET['selectBox'] == 'delete'){
+            if($_GET['selectBoxUser'] == 'delete'){
                 $this->_model->deleteMultItem($this->_arrParam);                   
             }
             
-            if($_GET['selectBox'] == 'action'){
+            if($_GET['selectBoxUser'] == 'action'){
                 $this->_arrParam['type'] = 1;
                 $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
             }
             
-            if($_GET['selectBox'] == 'inactive'){
+            if($_GET['selectBoxUser'] == 'inactive'){
                 $this->_arrParam['type'] = 0;
                 $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
                 //URL::redirect(URL::createLink('admin', 'user', 'index'));

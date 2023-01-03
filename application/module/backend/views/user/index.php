@@ -13,6 +13,12 @@ foreach ($this->groupNameData as $keyGroup=>$valueGroup){
     $selectGroup[$valueGroup['id']] = $valueGroup['name'];
 }
 
+// Bulk Action
+$arrSelectBox = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
+$selection          = Helper::cmsSelectbox('selectBoxUser', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBoxUser');
+$buttonSelection    = Helper::cmsButtonSubmit($type ="submit", $class = 'btn btn-info' ,$textOutfit = "Apply", $name = "bulk" , $value = "bulk" , $id = 'bulkApplyUser');
+
+
 if(!empty($this->Items)){
     $i=0;
     foreach ($this->Items as $key=>$value){
@@ -178,7 +184,11 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 					<!-- /.card-body -->
 <!-- 				</div> -->
 				<!--                 //////////////////////// -->
-				
+			<form action="#" method="get" name="user-list-form" id="user-list-form">	
+				<input type="hidden" name="module" value="backend">
+                <input type="hidden" name="controller" value="user">
+                <input type="hidden" name="action" value="list">
+			
 				<!-- List -->
 				<div class="card card-outline card-info">
 					<div class="card-header">
@@ -199,13 +209,9 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 							<div class="row align-items-center justify-content-between mb-2">
 								<div>
 									<div class="input-group">
-										<select class="form-control custom-select">
-											<option>Bulk Action</option>
-											<option>Delete</option>
-											<option>Active</option>
-											<option>Inactive</option>
-										</select> <span class="input-group-append">
-											<button type="button" class="btn btn-info">Apply</button>
+										<?php echo $selection;?>
+										<span class="input-group-append">
+											<?php echo $buttonSelection;?>
 										</span>
 									</div>
 								</div>
@@ -240,6 +246,8 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 						</div>
 					</div>
 				</div>
+			</form>
+				
 			</div>
 		</div>
 	</div>
