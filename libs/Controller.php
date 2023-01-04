@@ -6,15 +6,6 @@ class Controller{
     protected $_templateObj;
     protected $_arrParam;
     protected $_pagination;
-// 	public function __construct(){
-// 	    echo '<h3>'.__METHOD__.'</h3>';
-// 	    $this->_arrParam = array_merge($_GET,$_POST);
-	    
-// 	}
-
-//     public function __construct(){
-        
-//     }
 	
 	public function loadModel($moduleName, $modelName){     
 	    $modelName     = ucfirst($modelName) . 'Model';

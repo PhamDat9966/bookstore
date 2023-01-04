@@ -145,38 +145,38 @@ class UserController extends Controller{
         
     }
     
-    public function countAction(){
-        $count          = [];
-        $queryCount     = [];
+//     public function countAction(){
+//         $count          = [];
+//         $queryCount     = [];
         
-        $flagWhere      = false;
-        $searchQuery    = '';    
-        if(isset($_SESSION['search'])){
-            $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+//         $flagWhere      = false;
+//         $searchQuery    = '';    
+//         if(isset($_SESSION['search'])){
+//             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
             
-            $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery");
-            $count['allStatus'] = $this->_model->totalItem();
+//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery");
+//             $count['allStatus'] = $this->_model->totalItem();
             
-            $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 1");
-            $count['activeStatus'] = $this->_model->totalItem();
+//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 1");
+//             $count['activeStatus'] = $this->_model->totalItem();
             
-            $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 0 ");
-            $count['inActiveStatus'] = $this->_model->totalItem();
+//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 0 ");
+//             $count['inActiveStatus'] = $this->_model->totalItem();
             
-            return $count;
-        }
+//             return $count;
+//         }
         
-        $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."`");
-        $count['allStatus'] = $this->_model->totalItem();
+//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."`");
+//         $count['allStatus'] = $this->_model->totalItem();
         
-        $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE `status` = 1");
-        $count['activeStatus'] = $this->_model->totalItem();
+//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE `status` = 1");
+//         $count['activeStatus'] = $this->_model->totalItem();
         
-        $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE  `status` = 0");
-        $count['inActiveStatus'] = $this->_model->totalItem();
+//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE  `status` = 0");
+//         $count['inActiveStatus'] = $this->_model->totalItem();
         
-        return $count;
-    }
+//         return $count;
+//     }
     
     public function clearAction(){
         $this->_view->_tag          = 'group';   

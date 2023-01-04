@@ -111,10 +111,6 @@ class UserModel extends Model
     
     public function saveItem($arrParam, $option = null){
         
-        echo "<pre>";
-        print_r($arrParam);
-        echo "</pre>";
-        
         if($option['task'] == 'add'){
             $arrParam['form']['created']    = date('Y-m-d',time());
             $arrParam['form']['created_by'] = 1;
