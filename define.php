@@ -2,8 +2,8 @@
     
     // ======================== PATH ================================//
     define('DS'                 , DIRECTORY_SEPARATOR);
-    define('ROOT_PATH'          , dirname(__FILE__));                         // Định nghĩa đường dẫn đến thư mục gốc
-    define('ROOT_URL'           , DS . 'bookstore' . DS);
+    define('ROOT_PATH'          , dirname(__FILE__));                         
+    define('ROOT_URL'           , DS . 'bookstore' . DS);                     // Định nghĩa đường dẫn đến thư mục gốc
     
     define('LIBRARY_PATH'       , ROOT_PATH . DS . 'libs' . DS);              // Định nghĩa đường dẫn đến thư mục thư viện
     
@@ -13,7 +13,7 @@
     define('APPLICATION_PATH'   , ROOT_PATH . DS . 'application' . DS);       // Định nghĩa đường dẫn đến thư mục application	
     define('APPLICATION_URL'    , ROOT_URL . DS . 'application' . DS);  
    
-    define ('MODULE_PATH'		, APPLICATION_PATH . 'module' . DS);		// Định nghĩa đường dẫn đến thư mục module
+    define ('MODULE_PATH'		, APPLICATION_PATH . 'module' . DS);		  // Định nghĩa đường dẫn đến thư mục module
     define ('MODULE_URL'        , APPLICATION_URL . 'module' . DS); 
     
     define ('TEMPLATE_PATH'		, PUBLIC_PATH . 'template' . DS);		      // Định nghĩa đường dẫn đến thư mục template	

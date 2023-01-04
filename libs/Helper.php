@@ -153,20 +153,20 @@ class Helper{
     }
     
     // Create Selectbox
-    public static function cmsRowForm($lblName, $input, $require = FALSE){  
+    public static function cmsRowForm($lblName, $input, $require = FALSE, $option = null){  
         $strRequire = '';
         if($require == true) $strRequire = '<span class="text-danger">*</span>';
-        $xhtml = '<label>'.$lblName.$strRequire.'</label>'.$input;
+        $xhtml = "<label $option>".$lblName.$strRequire.'</label>'.$input;
 
         return $xhtml;
     }
     
     // Create Row
-    public static function cmsInput($type, $name, $id, $value, $class = null, $size = null){
+    public static function cmsInput($type, $name, $id, $value, $class = null, $size = null,$option = null){
         $strSize    = ($size == null) ? '' : "size = '$size'";
         $strClass   = ($class == null) ? '' : "class = '$class'";
         
-        $xhtml = "<input type='$type' name='$name' id='$id' value='$value' $strClass $strSize>";
+        $xhtml = "<input type='$type' name='$name' id='$id' value='$value' $strClass $strSize $option>";
         
         return $xhtml;
     }

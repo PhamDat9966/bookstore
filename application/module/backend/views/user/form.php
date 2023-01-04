@@ -1,5 +1,22 @@
 <?php
+    $dataForm           = @$this->arrParam['form'];
 
+    $disabled           = '';
+    $passwordType       = 'text';
+    $hiddenRowForm      = '';
+    
+    $inputUsernameHidden = '';
+    $inputPasswordHidden = '';
+    $inputEmailHidden    = '';   
+    if(isset($this->arrParam['form']['id'])){
+        $disabled       = 'disabled';
+        $passwordType   = 'hidden';
+        $hiddenRowForm  = 'hidden';
+        $inputUsernameHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null);
+        $inputPasswordHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null);
+        $inputEmailHidden         = Helper::cmsInput($type = 'hidden', $name = 'form[email]'     ,$id = 'email'      , $value = @$dataForm['email']      , $class = 'form-control', $size = null);
+    }
+    
     $arrSelectGroup             = array();
     $arrSelectGroup['default']  = '- Select Group -';
     foreach ($this->groupNameData as $keyG=>$valueG){
@@ -7,14 +24,12 @@
     }
 
     $linkSaveClose	    = URL::createLink('backend', 'user', 'form', array('type' => 'save-close'));
-    $linkCancel	        = URL::createLink('backend', 'user', 'list');
-    
-    $dataForm           = @$this->arrParam['form'];
+    $linkCancel	        = URL::createLink('backend', 'user', 'list');    
 
-    $inputUsername      = Helper::cmsInput($type = 'text', $name = 'form[username]',$id = 'username', $value = @$dataForm['username'], $class = 'form-control', $size = null);
-    $inputPassword      = Helper::cmsInput($type = 'text', $name = 'form[password]',$id = 'password', $value = @$dataForm['password'], $class = 'form-control', $size = null);
-    $inputEmail         = Helper::cmsInput($type = 'text', $name = 'form[email]',$id = 'email', $value = @$dataForm['email'], $class = 'form-control', $size = null);
-    $inputFullname      = Helper::cmsInput($type = 'text', $name = 'form[fullname]',$id = 'fullname', $value = @$dataForm['fullname'], $class = 'form-control', $size = null);
+    $inputUsername      = Helper::cmsInput($type = 'text'       , $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null, $option = $disabled);
+    $inputPassword      = Helper::cmsInput($type = $passwordType, $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null, $option = $disabled);
+    $inputEmail         = Helper::cmsInput($type = 'text'       , $name = 'form[email]'     ,$id = 'email'      , $value = @$dataForm['email']      , $class = 'form-control', $size = null, $option = $disabled);
+    $inputFullname      = Helper::cmsInput($type = 'text'       , $name = 'form[fullname]'  ,$id = 'fullname'   , $value = @$dataForm['fullname']   , $class = 'form-control', $size = null);
       
     $inputToken		    = Helper::cmsInput($type = 'hidden',$name = 'form[token]',$id = 'token', $value = time());
     
@@ -23,12 +38,12 @@
     
     $selectGroup        = Helper::cmsSelectbox($name = 'form[group_id]', $class ='custom-select', $arrSelectGroup, $keySelect = @$dataForm['group_id'],$style = null);
     
-    $rowUsername        = Helper::cmsRowForm($lblName = 'Username', $input = $inputUsername, $require = true);
-    $rowPassword        = Helper::cmsRowForm($lblName = 'Password', $input = $inputPassword, $require = true);
-    $rowEmail           = Helper::cmsRowForm($lblName = 'Email', $input = $inputEmail, $require = true);
-    $rowFullname        = Helper::cmsRowForm($lblName = 'Fullname', $input = $inputFullname, $require = true);
-    $rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = true);
-    $rowGroup           = Helper::cmsRowForm($lblName = 'Group', $input = $selectGroup, $require = true);
+    $rowUsername        = Helper::cmsRowForm($lblName = 'Username', $input = $inputUsername,    $require = true);
+    $rowPassword        = Helper::cmsRowForm($lblName = 'Password', $input = $inputPassword,    $require = true, $option = $hiddenRowForm);
+    $rowEmail           = Helper::cmsRowForm($lblName = 'Email',    $input = $inputEmail,       $require = true);
+    $rowFullname        = Helper::cmsRowForm($lblName = 'Fullname', $input = $inputFullname,    $require = true);
+    $rowStatus          = Helper::cmsRowForm($lblName = 'Status',   $input = $selectStatus,     $require = true);
+    $rowGroup           = Helper::cmsRowForm($lblName = 'Group',    $input = $selectGroup,      $require = true);
     
     $showErrors = '';
     if(!empty($this->errors)){
@@ -48,6 +63,8 @@
         $inputID          = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'readonly', $size = null);            
         $rowID            = Helper::cmsRowForm($lblName = 'ID', ": $strID".$inputID);
     }
+    
+    //$cacel = ;
 ?>
 <div class="content">
 	<div class="container-fluid">
@@ -64,13 +81,13 @@
 					<div class="card card-outline card-info">
 						<div class="card-body">
 							<div class="form-group">
-								<?= $rowUsername;?>
+								<?= $rowUsername.$inputUsernameHidden;?>
 							</div>
 							<div class="form-group">
-								<?= $rowPassword;?>
+								<?= $rowPassword.$inputPasswordHidden;?>
 							</div>
 							<div class="form-group">
-								<?= $rowEmail;?>
+								<?= $rowEmail.$inputEmailHidden;?>
 							</div>
 							<div class="form-group">
 								<?= $rowFullname;?>
