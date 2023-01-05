@@ -198,6 +198,12 @@ class UserController extends Controller{
             $this->_view->_title  = 'User: Edit';
             $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
             
+            if(isset($this->_arrParam['generateAction'])){
+                if($this->_arrParam['generateAction'] == true){
+                    $this->_arrParam['form']['password'] = $this->generateRandomString($length = 12);
+                }
+            }
+            
             if(isset($this->_arrParam['task'])){
                 if(($this->_arrParam['task']) == 'generatepass'){
                     $this->_view->_title = 'User: Change Password';
@@ -256,9 +262,14 @@ class UserController extends Controller{
     }
     
     
-    public function generatepassAction(){
-        
-        
+    public function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
     
 }
