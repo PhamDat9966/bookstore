@@ -188,6 +188,8 @@ class UserController extends Controller{
     // ACTION : ADD & EDIT
     public function formAction($option = null){
         
+        echo '<h3>'.date('Y-m-d',time()). '</h3>';
+        
         // Group for User
         $setNumberGroupLimitControl  = 6;
         $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
@@ -230,6 +232,13 @@ class UserController extends Controller{
             } else {
 
                 $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');
+                
+                if(isset($this->_arrParam['task'])){
+                    if(($this->_arrParam['task']) == 'generatepass'){
+                        $task = 'generatepass';
+                    }
+                }
+                
                 $id = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
                 $type = $this->_arrParam['type'];
                 if($type == 'save-close') URL::redirect(URL::createLink('backend', 'user', 'list'));
@@ -245,7 +254,7 @@ class UserController extends Controller{
         $this->_view->arrParam      = $this->_arrParam;    
             
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
-        $this->_templateObj->setFileTemplate('group-form.php');
+        $this->_templateObj->setFileTemplate('user-form.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();   
         

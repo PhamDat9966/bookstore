@@ -123,10 +123,20 @@ class UserModel extends Model
         
         if($option['task'] == 'edit'){
             $arrParam['form']['modified']    = date('Y-m-d',time());
-            $arrParam['form']['modified_by'] = 10;
+            $arrParam['form']['modified_by'] = 1;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->update($data, array(array('id',$arrParam['form']['id'])));
+            Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
+            return $arrParam['form']['id'];
+        }
+        
+        if($option['task'] == 'generatepass'){
+            $arrParam['form']['modified']    = date('Y-m-d',time());
+            $arrParam['form']['modified_by'] = 1;
+            
+            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
+            $this->update($data, array(array('id',$arrParam['form']['password'])));
             Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
             return $arrParam['form']['id'];
         }
