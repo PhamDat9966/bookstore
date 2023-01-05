@@ -28,7 +28,7 @@ class Bootstrap{
         $this->_controllerOject->setView($this->_params['module']);
         $this->_controllerOject->setTemplate($this->_controllerOject);
         $this->_controllerOject->setParams($this->_params);
-        
+       
     }
     
     // CALL METHOD

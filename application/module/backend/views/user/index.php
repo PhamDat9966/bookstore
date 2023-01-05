@@ -18,7 +18,6 @@ $arrSelectBox = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inact
 $selection          = Helper::cmsSelectbox('selectBoxUser', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBoxUser');
 $buttonSelection    = Helper::cmsButtonSubmit($type ="submit", $class = 'btn btn-info' ,$textOutfit = "Apply", $name = "bulk" , $value = "bulk" , $id = 'bulkApplyUser');
 
-
 if(!empty($this->Items)){
     $i=0;
     foreach ($this->Items as $key=>$value){
@@ -44,7 +43,7 @@ if(!empty($this->Items)){
         $created_by     = '';
         $modified_by    = '';
         
-        $group          = '<select class="form-control custom-select w-auto';
+        $group          = '<select class="-control custom-select w-auto';
         // Get seletgroup array Get $created_by value and $modified_by value
         foreach ($selectGroup as $keyselect=>$valueSelect){
             if($value['created_by'] == $keyselect){
@@ -89,6 +88,10 @@ if(!empty($this->Items)){
         $editAction     = Helper::showItemAction('backend', 'user', 'form', $id, 'edit');
         $deleteAction   = Helper::showItemAction('backend', 'user', 'delete', $id, $statusAction ='delete');
         
+        //General Password
+        $generatePassLink   = URL::createLink('backend', 'user', 'form', $parram = array('task'=>'generatepass','id'=>$id));
+        $generatePassword   = Helper::cmsButton($url = $generatePassLink, $class = 'btn btn-secondary btn-sm rounded-circle', $textOufit = '<i class="fas fa-key"></i>');
+        
         $listUser      .=
         '<tr>
             <td>'.$ckb.'</td>
@@ -103,6 +106,7 @@ if(!empty($this->Items)){
                 <p class="mb-0">'.$modified.'</p>
             </td>
             <td>
+                '.$generatePassword.'
                 '.$editAction.'
                 '.$deleteAction.'
             </td>
@@ -113,6 +117,7 @@ if(!empty($this->Items)){
 
 $addNewUrl    = URL::createLink('backend', 'user', 'form');
 $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $textOufit = '<i class="fas fa-plus"></i> Add New');
+
 
 ?>
 <!-- Main content -->

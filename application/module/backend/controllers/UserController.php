@@ -197,9 +197,17 @@ class UserController extends Controller{
         if(isset($this->_arrParam['id'])){
             $this->_view->_title  = 'User: Edit';
             $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
+            
+            if(isset($this->_arrParam['task'])){
+                if(($this->_arrParam['task']) == 'generatepass'){
+                    $this->_view->_title = 'User: Change Password';
+                    $this->_arrParam['form']['task'] = 'generatepass';
+                }    
+            }
+            
             if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'user', 'list'));
         }
-
+        
         if(@$this->_arrParam['form']['token'] > 0){
             $validate = new Validate($this->_arrParam['form']);
             $validate->addRule('username', 'string',array('min'=>3, 'max'=>255))
@@ -248,16 +256,9 @@ class UserController extends Controller{
     }
     
     
-    public function value_newAction(){
-        echo '<h3>'.__METHOD__.'</h3>';
+    public function generatepassAction(){
         
-        echo "<pre>GEt";
-        print_r($this->_arrParam);
-        echo "</pre>";
         
-        echo "<pre>GEt";
-        print_r($_GET);
-        echo "</pre>";
     }
     
 }

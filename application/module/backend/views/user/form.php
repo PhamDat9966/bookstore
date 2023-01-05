@@ -1,20 +1,52 @@
 <?php
+    echo "<pre>";
+    print_r($this);
+    echo "</pre>";
+
     $dataForm           = @$this->arrParam['form'];
 
     $disabled           = '';
     $passwordType       = 'text';
     $hiddenRowForm      = '';
     
+    $inputIDHidden       = '';
     $inputUsernameHidden = '';
     $inputPasswordHidden = '';
     $inputEmailHidden    = '';   
+    
+    $statusStyle         = '';   
+    $groupStyle          = '';
+    
+    $generatePassword    = '';
+    $rowGeneratePassword = '';
+    
+    // Edit with ID and Generate Password
     if(isset($this->arrParam['form']['id'])){
-        $disabled       = 'disabled';
+        // disabled
+        $idDis = $usernameDis = $passwordDis = $emailDis = 'disabled';
+        
+        // hiddenInput when disabled Row
         $passwordType   = 'hidden';
-        $hiddenRowForm  = 'hidden';
+        $rowPasswordHidden  = 'hidden';
         $inputUsernameHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null);
         $inputPasswordHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null);
         $inputEmailHidden         = Helper::cmsInput($type = 'hidden', $name = 'form[email]'     ,$id = 'email'      , $value = @$dataForm['email']      , $class = 'form-control', $size = null);
+        
+        // GeneratePassword
+        if(isset($this->arrParam['form']['task'])){
+            if($this->arrParam['form']['task'] == 'generatepass'){
+                $fullNameDis     = 'disabled';
+                $rowStatusHidden = 'hidden';
+                $rowGroupHidden  = 'hidden';
+                $statusStyle     = 'display:none';   
+                $groupStyle      = 'display:none';
+                
+                $urlButtonGeneratePassword  = URL::createLink('backend', 'user', 'form', array('id'=>$this->arrParam['form']['id'],'task'=>$this->arrParam['form']['task'],'generateAction'=>'true'));
+                $buttonGeneratePassword     = Helper::cmsButton($url = $urlButtonGeneratePassword, $class = 'btn btn-info', $textOufit= '<i class="fas fa-sync-alt"></i> General'); 
+                $generatePassword           = Helper::cmsInput($type = null, $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null, $option = null);
+                $rowGeneratePassword        = Helper::cmsRowForm($lblName = 'Password', $input = $buttonGeneratePassword .$generatePassword,    $require = true, $option = $rowPasswordHidden);
+            }
+        }
     }
     
     $arrSelectGroup             = array();
@@ -26,24 +58,25 @@
     $linkSaveClose	    = URL::createLink('backend', 'user', 'form', array('type' => 'save-close'));
     $linkCancel	        = URL::createLink('backend', 'user', 'list');    
 
-    $inputUsername      = Helper::cmsInput($type = 'text'       , $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null, $option = $disabled);
-    $inputPassword      = Helper::cmsInput($type = $passwordType, $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null, $option = $disabled);
-    $inputEmail         = Helper::cmsInput($type = 'text'       , $name = 'form[email]'     ,$id = 'email'      , $value = @$dataForm['email']      , $class = 'form-control', $size = null, $option = $disabled);
-    $inputFullname      = Helper::cmsInput($type = 'text'       , $name = 'form[fullname]'  ,$id = 'fullname'   , $value = @$dataForm['fullname']   , $class = 'form-control', $size = null);
+    $inputUsername      = Helper::cmsInput($type = 'text'       , $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null, $option = $usernameDis);
+    $inputPassword      = Helper::cmsInput($type = $passwordType, $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null, $option = $passwordDis);
+    $inputEmail         = Helper::cmsInput($type = 'text'       , $name = 'form[email]'     ,$id = 'email'      , $value = @$dataForm['email']      , $class = 'form-control', $size = null, $option = $emailDis);
+    $inputFullname      = Helper::cmsInput($type = 'text'       , $name = 'form[fullname]'  ,$id = 'fullname'   , $value = @$dataForm['fullname']   , $class = 'form-control', $size = null, $option = $fullNameDis);
       
     $inputToken		    = Helper::cmsInput($type = 'hidden',$name = 'form[token]',$id = 'token', $value = time());
     
     $arrSelectStatus    = array('default'=>'- Select Status -', 1 => 'Active', 0 => 'Inactive');
-    $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class ='custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'],$style = null);
+    $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class ='custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'],$style = $statusStyle);
     
-    $selectGroup        = Helper::cmsSelectbox($name = 'form[group_id]', $class ='custom-select', $arrSelectGroup, $keySelect = @$dataForm['group_id'],$style = null);
+    $selectGroup        = Helper::cmsSelectbox($name = 'form[group_id]', $class ='custom-select', $arrSelectGroup, $keySelect = @$dataForm['group_id'],$style = $groupStyle);
     
+    // Row
     $rowUsername        = Helper::cmsRowForm($lblName = 'Username', $input = $inputUsername,    $require = true);
-    $rowPassword        = Helper::cmsRowForm($lblName = 'Password', $input = $inputPassword,    $require = true, $option = $hiddenRowForm);
+    $rowPassword        = Helper::cmsRowForm($lblName = 'Password', $input = $inputPassword,    $require = true, $option = $rowPasswordHidden);
     $rowEmail           = Helper::cmsRowForm($lblName = 'Email',    $input = $inputEmail,       $require = true);
     $rowFullname        = Helper::cmsRowForm($lblName = 'Fullname', $input = $inputFullname,    $require = true);
-    $rowStatus          = Helper::cmsRowForm($lblName = 'Status',   $input = $selectStatus,     $require = true);
-    $rowGroup           = Helper::cmsRowForm($lblName = 'Group',    $input = $selectGroup,      $require = true);
+    $rowStatus          = Helper::cmsRowForm($lblName = 'Status',   $input = $selectStatus,     $require = true, $option = $rowStatusHidden);
+    $rowGroup           = Helper::cmsRowForm($lblName = 'Group',    $input = $selectGroup,      $require = true, $option = $rowGroupHidden);
     
     $showErrors = '';
     if(!empty($this->errors)){
@@ -60,8 +93,9 @@
     $rowID      =   '';
     if(isset($this->arrParam['id'])){
         $strID            = $this->arrParam['id'];
-        $inputID          = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'readonly', $size = null);            
-        $rowID            = Helper::cmsRowForm($lblName = 'ID', ": $strID".$inputID);
+        $inputIDHidden    = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null); 
+        $inputID          = Helper::cmsInput($type = 'text', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null, $option = $idDis);
+        $rowID            = Helper::cmsRowForm($lblName = 'ID', $input = $inputID, $require = true);
     }
     
     //$cacel = ;
@@ -81,6 +115,10 @@
 					<div class="card card-outline card-info">
 						<div class="card-body">
 							<div class="form-group">
+								<?= $rowID.$inputIDHidden;?>
+							</div>
+						
+							<div class="form-group">
 								<?= $rowUsername.$inputUsernameHidden;?>
 							</div>
 							<div class="form-group">
@@ -99,9 +137,12 @@
 							<div class="form-group">
 								<?= $rowGroup;?>
 							</div>
+							
 							<div class="form-group">
-								<?= $rowID;?>
+								<?= $rowGeneratePassword;?>
 							</div>
+							
+							
 							<?= $inputToken;?>
 						</div>
 						<div class="card-footer">
