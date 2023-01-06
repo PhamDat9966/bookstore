@@ -145,6 +145,112 @@ class UserController extends Controller{
         
     }
     
+    public function clearAction(){
+        $this->_view->_tag          = 'group';
+        Session::set('search','');
+        Session::set('status','');
+        
+    }
+    
+    // ACTION : ADD & EDIT
+    public function formAction($option = null){
+        
+        //echo '<h3>'.date('Y-m-d',time()). '</h3>';
+        
+        // Group for User
+        $setNumberGroupLimitControl  = 6;
+        $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
+        
+        $this->_view->_title        = 'User: Add';
+        
+        if(isset($this->_arrParam['id'])){
+            $this->_view->_title  = 'User: Edit';
+            $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
+            
+            if(isset($this->_arrParam['generateAction'])){
+                if($this->_arrParam['generateAction'] == true){
+                    
+                    require_once LIBRARY_PATH. DS ."functions.php";
+                    $this->_arrParam['form']['password'] = randomString($length = 12);
+                    //$this->_arrParam['form']['password'] = $this->generateRandomString($length = 12);
+                }
+            }
+            
+            if(isset($this->_arrParam['task'])){
+                if(($this->_arrParam['task']) == 'generatepass'){
+                    $this->_view->_title = 'User: Change Password';
+                    $this->_arrParam['form']['task'] = 'generatepass';
+                }
+            }
+            
+            if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'user', 'list'));
+        }
+        
+        if(@$this->_arrParam['form']['token'] > 0){
+            $validate = new Validate($this->_arrParam['form']);
+            $validate->addRule('username', 'string',array('min'=>3, 'max'=>255))
+            ->addRule('password', 'string',array('min'=>3, 'max'=>255))
+            ->addRule('email', 'email',array('min'=>3, 'max'=>255))
+            ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
+            ->addRule('status','status',array('deny'=>array('default')))
+            ->addRule('group_id','status',array('deny'=>array('default')));
+            $validate->run();
+            $this->_arrParam['form'] = $validate->getResult();
+            
+            if($validate->isValid() == false){
+                $this->_view->errors    = $validate->showErrors();
+            } else {
+
+                $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');
+                if(isset($this->_arrParam['task'])){
+                    if(($this->_arrParam['task']) == 'generatepass'){
+                        $task = 'generatepass';
+                    }
+                }
+                //$task = (isset($this->_arrParam['form']['password']) ? 'generatepass':'add');
+                
+                $id = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
+                $type = $this->_arrParam['type'];
+                if($type == 'save-close') URL::redirect(URL::createLink('backend', 'user', 'list'));
+                //plus
+                if($type == 'save-new') URL::redirect(URL::createLink('backend', 'user', 'form'));
+                if($type == 'save') URL::redirect(URL::createLink('backend', 'user', 'form',array('id', $id)));
+                
+            }
+            
+        }
+        
+        $this->_view->_tag          = 'user';
+        $this->_view->arrParam      = $this->_arrParam;
+        
+        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFileTemplate('user-form.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('user/form', true);
+    }
+    
+    public function deleteAction()
+    {
+        
+        if(isset($_GET['id'])) $this->_model->deleteItem($_GET['id']);
+        $this->redirec('backend','group','list');
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+        
+    }
+    
+    
+    public function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    
 //     public function countAction(){
 //         $count          = [];
 //         $queryCount     = [];
@@ -178,108 +284,6 @@ class UserController extends Controller{
 //         return $count;
 //     }
     
-    public function clearAction(){
-        $this->_view->_tag          = 'group';   
-        Session::set('search','');
-        Session::set('status','');
-
-    }
-    
-    // ACTION : ADD & EDIT
-    public function formAction($option = null){
-        
-        echo '<h3>'.date('Y-m-d',time()). '</h3>';
-        
-        // Group for User
-        $setNumberGroupLimitControl  = 6;
-        $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
-        
-        $this->_view->_title        = 'User: Add';
-        
-        if(isset($this->_arrParam['id'])){
-            $this->_view->_title  = 'User: Edit';
-            $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
-            
-            if(isset($this->_arrParam['generateAction'])){
-                if($this->_arrParam['generateAction'] == true){
-                    $this->_arrParam['form']['password'] = $this->generateRandomString($length = 12);
-                }
-            }
-            
-            if(isset($this->_arrParam['task'])){
-                if(($this->_arrParam['task']) == 'generatepass'){
-                    $this->_view->_title = 'User: Change Password';
-                    $this->_arrParam['form']['task'] = 'generatepass';
-                }    
-            }
-            
-            if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'user', 'list'));
-        }
-        
-        if(@$this->_arrParam['form']['token'] > 0){
-            $validate = new Validate($this->_arrParam['form']);
-            $validate->addRule('username', 'string',array('min'=>3, 'max'=>255))
-                     ->addRule('password', 'string',array('min'=>3, 'max'=>255))
-                     ->addRule('email', 'email',array('min'=>3, 'max'=>255))
-                     ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
-                     ->addRule('status','status',array('deny'=>array('default')))
-                     ->addRule('group_id','status',array('deny'=>array('default')));   
-            $validate->run();
-            $this->_arrParam['form'] = $validate->getResult();
-            
-            if($validate->isValid() == false){
-                $this->_view->errors    = $validate->showErrors();
-            } else {
-
-                $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');
-                
-                if(isset($this->_arrParam['task'])){
-                    if(($this->_arrParam['task']) == 'generatepass'){
-                        $task = 'generatepass';
-                    }
-                }
-                
-                $id = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
-                $type = $this->_arrParam['type'];
-                if($type == 'save-close') URL::redirect(URL::createLink('backend', 'user', 'list'));
-                //plus
-                if($type == 'save-new') URL::redirect(URL::createLink('backend', 'user', 'form'));
-                if($type == 'save') URL::redirect(URL::createLink('backend', 'user', 'form',array('id', $id)));
-                
-            }
-
-        }
-        
-        $this->_view->_tag          = 'user'; 
-        $this->_view->arrParam      = $this->_arrParam;    
-            
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
-        $this->_templateObj->setFileTemplate('user-form.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();   
-        
-        $this->_view->render('user/form', true);
-    }
-    
-    public function deleteAction()
-    {
-            
-        if(isset($_GET['id'])) $this->_model->deleteItem($_GET['id']);
-        $this->redirec('backend','group','list');
-        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
-        
-    }
-    
-    
-    public function generateRandomString($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
     
 }
 

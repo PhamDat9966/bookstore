@@ -75,7 +75,7 @@ if(!empty($this->Items)){
         //MODIFIED
         
         // Time modified
-        $arrModifiedTime = explode(' ', $value['created']);
+        $arrModifiedTime = explode(' ', $value['modified']);
         
         //$modified      = Helper::formatDate('d-m-Y', $value['modified']);
         $modified        = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';

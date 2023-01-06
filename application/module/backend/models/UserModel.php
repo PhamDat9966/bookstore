@@ -112,7 +112,7 @@ class UserModel extends Model
     public function saveItem($arrParam, $option = null){
         
         if($option['task'] == 'add'){
-            $arrParam['form']['created']    = date('Y-m-d',time());
+            $arrParam['form']['created']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['created_by'] = 1;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
@@ -122,7 +122,7 @@ class UserModel extends Model
         }
         
         if($option['task'] == 'edit'){
-            $arrParam['form']['modified']    = date('Y-m-d',time());
+            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['modified_by'] = 1;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
@@ -132,7 +132,7 @@ class UserModel extends Model
         }
         
         if($option['task'] == 'generatepass'){
-            $arrParam['form']['modified']    = date('Y-m-d',time());
+            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['modified_by'] = 1;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
