@@ -206,8 +206,13 @@ $(document).ready(function(){
 	$('#selectGroup').on('change', function (e) {
 		//var selected		= $("#selectGroup option:selected").text();
 		//$('#formGroupACP').submit();
-		document.forms['formGroup'].submit();
+		document.forms['filterGroupForUser'].submit();
 	});
+	
+//	$('#selectGroupForUser').on('change', function (e) {
+//  		$('#user-list-form').submit();
+//	});
+
 	
 	// Bulk Apple filter + Ordering for User
 	$('#bulkApplyUser').on('click', function(e) {	
@@ -297,6 +302,12 @@ $(document).ready(function(){
 	    }
     	    
 	})
+	
+	
 })
 
+function changeGroupUser(url){
+	alert(url);
+	console.log(url);
+}
 

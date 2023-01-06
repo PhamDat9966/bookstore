@@ -1,13 +1,5 @@
 <?php
 
-// echo "<pre>";
-// print_r($this);
-// echo "</pre>";
-// echo '<h3>'. __METHOD__ . '</h3>';
-// echo "<pre>Session";
-// print_r($_SESSION);
-// echo "</pre>";
-
 //Filter
 $allItem      = @$this->_count['allStatus'];
 $activeItem   = @$this->_count['activeStatus'];
@@ -83,11 +75,16 @@ if(isset($_SESSION['selectGroup'])){
     $selectGroupFirst  = $_SESSION['selectGroup'];
 }
 
-// $selectGroup lấy dữ liệu tại: views/user/index.php
-$arrGroup        = array_merge($arrGroup,$selectGroup);
+//Created selectgroup Array
+$selectGroupFilter = [];
+foreach ($this->groupNameData as $keyGroup=>$valueGroup){
+    $selectGroupFilter[$valueGroup['id']] = $valueGroup['name'];
+}
+
+$arrGroup        = array_merge($arrGroup,$selectGroupFilter);
 
 $selectGroupBox     = Helper::cmsSelectbox('selectGroup', 'form-control custom-select',$arrValue = $arrGroup , $keySelect = $selectGroupFirst, null,$id = 'selectGroup');
-$formGroup          = '<form action="" method="GET" name="formGroup" id="formGroup">
+$formGroup          = '<form action="" method="GET" name="filterGroupForUser" id="filterGroupForUser">
                             <input type="hidden" name="module" value="backend">
                             <input type="hidden" name="controller" value="user">
                             <input type="hidden" name="action" value="list">

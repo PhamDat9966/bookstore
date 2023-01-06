@@ -138,14 +138,30 @@ class Helper{
     }
     
     // Create Selectbox
-    public static function cmsSelectbox($name,$class, $arrValue, $keySelect = 'default', $style = null,$id = null){
+    public static function cmsSelectbox($name,$class, $arrValue, $keySelect = 'default', $style = null,$id = null, $option = null){
         
-        $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" id="'.$id.'">';
+        
+        $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" id="'.$id.'" '.$option.'>';
         foreach($arrValue as $key => $value){
             if($key == $keySelect && is_numeric($keySelect)){
-                $xhtml .= '<option selected="selected" value = "'.$key.'">'.$value.'</option>';
+                $xhtml .= '<option selected="selected" value ='.$key.'>'.$value.'</option>';
             }else{
                 $xhtml .= '<option value = "'.$key.'">'.$value.'</option>';
+            }
+        }
+        $xhtml .= '</select>';
+        return $xhtml;
+    }
+    
+    public static function cmsSelectboxForUserSelectGroup($name,$class, $arrValue, $valueSelected = 'default', $style = null,$id = null, $option = null){
+        
+        
+        $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" id="'.$id.'" '.$option.'>';
+        foreach($arrValue as $key => $value){
+            if($value == $valueSelected ){
+                $xhtml .= '<option selected="selected" value ='.$key.'>'.$value.'</option>';
+            }else{
+                $xhtml .= '<option value = '.$key.'>'.$value.'</option>';
             }
         }
         $xhtml .= '</select>';

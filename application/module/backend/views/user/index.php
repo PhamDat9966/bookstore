@@ -1,10 +1,15 @@
 <?php 
 
+// echo "<pre>";
+// print_r($this);
+// echo "</pre>";
+
 $this->searchValue = Session::get('search');
 $listUser = '';
 
 //Created selectgroup Array
 $selectGroup = [];
+
 foreach ($this->groupNameData as $keyGroup=>$valueGroup){
     $selectGroup[$valueGroup['id']] = $valueGroup['name'];
 }
@@ -39,9 +44,13 @@ if(!empty($this->Items)){
         $created_by     = '';
         $modified_by    = '';
         
-        $group          = '<select class="-control custom-select w-auto';
-        // Get seletgroup array Get $created_by value and $modified_by value
+
+        $dataGroupForUser         = array();
+        $dataGroupForUser['id']   = $id;
+        $dataGroupForUser['group_id']   = $value['group_id'];
+        
         foreach ($selectGroup as $keyselect=>$valueSelect){
+            // 1 --- For Created_by and Modified_by
             if($value['created_by'] == $keyselect){
                 $created_by = $valueSelect;
             }
@@ -49,14 +58,24 @@ if(!empty($this->Items)){
             if($value['modified_by'] == $keyselect){
                 $modified_by = $valueSelect;
             }
-            
-            if($nameGroup == $valueSelect){
-                $group .= '<option selected="">'.$valueSelect.'</option>';
-            }
-            $group .= '<option>'.$valueSelect.'</option>';
+                        
         }
-        $group         .= '</select>';
         
+        
+        // SELECT GROUP  FOR USER ---
+        $dataGroupForUser         = array();
+        $jsonArrSelectGroupForUser = array();
+
+        $k=0;
+        foreach ($selectGroup as $keyA=>$valueA){
+            $dataGroupForUser[$k]['id'] = $id;
+            $dataGroupForUser[$k]['group_id'] = $keyA;
+            $jsonArrSelectGroupForUser[json_encode($dataGroupForUser[$k])] = $valueA;
+            $k++;
+        }
+        
+        $selectGroupForUser    = Helper::cmsSelectboxForUserSelectGroup($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectGroupForUser,$keySelect = $value['group_name'], $style = null,$idSelectBox = "selectGroupForUser",$option = 'onchange=\'changeGroupUser(this.value)\'');
+        $jsonArrSelectGroupForUser = '';
         $row            = ($i % 2 == 0) ? 'odd' : 'even';
         
         
@@ -93,7 +112,7 @@ if(!empty($this->Items)){
             <td>'.$ckb.'</td>
             <td>'.$id.'</td>
             <td>'.$info.'</td>
-            <td>'.$group.'</td>
+            <td>'.$selectGroupForUser.'</td>
             <td>'.$status.'</td>
             <td>
                 <p class="mb-0">'.$created.'</p>
@@ -136,55 +155,6 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                     require_once 'search-filter/index.php';
                 ?>
                 
-                <!--                 //////////////////////// -->
-<!-- 				<div class="card card-outline card-info"> -->
-<!-- 					<div class="card-header"> -->
-<!-- 						<h3 class="card-title">Search & Filter</h3> -->
-
-<!-- 						<div class="card-tools"> -->
-<!-- 							<button type="button" class="btn btn-tool" -->
-<!-- 								data-card-widget="collapse"> -->
-<!-- 								<i class="fas fa-minus"></i> -->
-<!-- 							</button> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="card-body"> -->
-<!-- 						<div class="container-fluid"> -->
-<!-- 							<div class="row justify-content-between align-items-center"> -->
-<!-- 								<div class="area-filter-status mb-2"> -->
-<!-- 									<a href="#" class="btn btn-info">All <span -->
-<!-- 										class="badge badge-pill badge-light">8</span></a> <a href="#" -->
-<!-- 										class="btn btn-secondary">Active <span -->
-<!-- 										class="badge badge-pill badge-light">3</span></a> <a href="#" -->
-<!-- 										class="btn btn-secondary">Inactive <span -->
-<!-- 										class="badge badge-pill badge-light">5</span></a> -->
-<!-- 								</div> -->
-<!-- 								<div class="area-filter-attribute mb-2"> -->
-<!-- 									<select class="form-control custom-select"> -->
-<!-- 										<option>- Select Group -</option> -->
-<!-- 										<option>Admin</option> -->
-<!-- 										<option>Manager</option> -->
-<!-- 										<option>Member</option> -->
-<!-- 										<option>Register</option> -->
-<!-- 									</select> -->
-<!-- 								</div> -->
-<!-- 								<div class="area-search mb-2"> -->
-<!-- 									<form action="" method="GET"> -->
-<!-- 										<div class="input-group"> -->
-<!-- 											<input type="text" class="form-control"> <span -->
-<!-- 												class="input-group-append"> -->
-<!-- 												<button type="submit" class="btn btn-info">Search</button> <a -->
-<!-- 												href="#" class="btn btn-danger">Clear</a> -->
-<!-- 											</span> -->
-<!-- 										</div> -->
-<!-- 									</form> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					<!-- /.card-body -->
-<!-- 				</div> -->
-				<!--                 //////////////////////// -->
 			<form action="#" method="get" name="user-list-form" id="user-list-form">	
 				<input type="hidden" name="module" value="backend">
                 <input type="hidden" name="controller" value="user">
@@ -210,7 +180,9 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 							<div class="row align-items-center justify-content-between mb-2">
 								<div>
 									<div class="input-group">
-										<?php echo $selection;?>
+										<?php 
+										  echo $selection;
+										?>
 										<span class="input-group-append">
 											<?php echo $buttonSelection;?>
 										</span>
