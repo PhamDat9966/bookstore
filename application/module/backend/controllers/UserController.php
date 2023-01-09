@@ -255,6 +255,17 @@ class UserController extends Controller{
         return $randomString;
     }
     
+    public function selectGroupForUserAction(){
+
+        
+        $arrSelectGroupForUser          = json_decode($this->_arrParam['selectGroup'], true);
+        $this->_arrParam['id']          = $arrSelectGroupForUser['id'];
+        $this->_arrParam['group_id']    = $arrSelectGroupForUser['group_id'];
+        
+        $result = $this->_model->changeGroupForUser($this->_arrParam,array('task'=>'change-ajax-group'));
+        echo json_encode($result);
+    }
+    
 //     public function countAction(){
 //         $count          = [];
 //         $queryCount     = [];

@@ -63,8 +63,8 @@ if(!empty($this->Items)){
         
         
         // SELECT GROUP  FOR USER ---
-        $dataGroupForUser         = array();
-        $jsonArrSelectGroupForUser = array();
+        $dataGroupForUser         = array(); // $id and $ground_id, $group_name
+        $jsonArrSelectGroupForUser = array();// tramform $id and $group_id is json
 
         $k=0;
         foreach ($selectGroup as $keyA=>$valueA){
@@ -139,7 +139,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 <div class="content">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-12">
+			<div class="col-12" id="alert">
 				<?php 
             	   require_once 'messageBox/index.php';
             	?>

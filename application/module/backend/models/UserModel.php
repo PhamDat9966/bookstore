@@ -72,6 +72,19 @@ class UserModel extends Model
         return array('id'=>$id,'group_acb'=>$GroupACB,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'group_acp'=>$GroupACB)));
     }
     
+    public function changeGroupForUser($arrParam, $option = null){
+        if($option['task'] == 'change-ajax-group'){
+            $GroupForUser = $arrParam['group_id'];
+            $id           = $arrParam['id'];
+            $query        = "UPDATE `$this->_tableName` SET `group_id` = $GroupForUser WHERE `id` = '".$id."'";
+            $this->query($query);
+            
+            //Session::set('message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
+            return array('message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
+            //return array('id'=>$id,'group_id'=>$GroupForUser,'url'=>URL::createLink('backend','user','list',array('id'=>$id,'group_id'=>$GroupForUser)));
+        }
+    }
+    
     public function changeStatus($arrParam, $option = null){
         
         if($option['task'] == 'change-status'){

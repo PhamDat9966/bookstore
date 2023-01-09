@@ -306,8 +306,30 @@ $(document).ready(function(){
 	
 })
 
-function changeGroupUser(url){
-	alert(url);
-	console.log(url);
+// Ajax at SelectBox group for User.
+function changeGroupUser(jsonParam){
+
+	$.ajax({
+		url		: 'index.php?module=backend&controller=user&action=selectGroupForUser',
+		type	: 'GET',
+		data	: {selectGroup:jsonParam},
+		success	: function(data){
+				/*
+				 * <div id="alert" class="alert alert-success alert-dismissible">
+	                    Trạng thái Group của User đã được cập nhật<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color:#FFFFFF;opacity: 1;">×</button>
+	                </div>
+				 */
+
+				var jsonOject 	= $.parseJSON(data);
+				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>Trạng thái Group của User đã được cập nhật<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
+				if($("#inAlert").length > 0){
+					$("#inAlert").remove();
+				}
+				$("#alert").prepend(element);
+					
+				console.log(jsonOject);
+			}
+	})
+	
 }
 
