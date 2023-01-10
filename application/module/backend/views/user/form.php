@@ -1,5 +1,4 @@
 <?php
-
     $dataForm           = @$this->arrParam['form'];
 
     $disabled           = '';
@@ -23,14 +22,25 @@
     $emailRequire        = true;
     $fullNameRequire     = true;
     
+    $inputID    = '';
+    $rowID      =   '';
+    
+    $inputHiddenTask     = ''; // For Generalpassword on case Password Empty
     // Edit with ID and Generate Password
     if(isset($this->arrParam['form']['id'])){
         // disabled
         $idDis = $usernameDis = $passwordDis = $emailDis = 'disabled';
         
         // hiddenInput when disabled Row
-        $passwordType   = 'hidden';
-        $rowPasswordHidden  = 'hidden';
+        $passwordType             = 'hidden';
+        $rowPasswordHidden        = 'hidden';
+        
+        $strID            = $this->arrParam['form']['id'];
+        $inputIDHidden    = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null);
+        $inputID          = Helper::cmsInput($type = 'text', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null, $option = $idDis);
+        $rowID            = Helper::cmsRowForm($lblName = 'ID', $input = $inputID, $require = $idRequire);
+        
+        $inputUsernameHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null);
         $inputUsernameHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null);
         $inputPasswordHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null);
         $inputEmailHidden         = Helper::cmsInput($type = 'hidden', $name = 'form[email]'     ,$id = 'email'      , $value = @$dataForm['email']      , $class = 'form-control', $size = null);
@@ -40,8 +50,8 @@
         $emailRequire        = false;
         
         // GeneratePassword
-        if(isset($this->arrParam['form']['task'])){
-            if($this->arrParam['form']['task'] == 'generatepass'){
+        if(isset($this->arrParam['task'])){
+            if($this->arrParam['task'] == 'generatepass'){
                 $fullNameDis     = 'disabled';
                 $rowStatusHidden = 'hidden';
                 $rowGroupHidden  = 'hidden';
@@ -51,12 +61,16 @@
                 
                 $inputFullNameHidden        = Helper::cmsInput($type = 'hidden', $name = 'form[fullname]', $id = 'fullname', $value = @$dataForm['fullname'] , $class = 'form-control', $size = null);
                 
-                $urlButtonGeneratePassword  = URL::createLink('backend', 'user', 'form', array('id'=>$this->arrParam['form']['id'],'task'=>$this->arrParam['form']['task'],'generateAction'=>'true'));
+                $urlButtonGeneratePassword  = URL::createLink('backend', 'user', 'form', array('id'=>$this->arrParam['form']['id'],'task'=>$this->arrParam['task'],'generateAction'=>'true'));
                 $buttonGeneratePassword     = "<div class='col-2'>".Helper::cmsButton($url = $urlButtonGeneratePassword, $class = 'btn btn-info d-block', $textOufit= '<i class="fas fa-sync-alt"></i> General')."</div>"; 
                 $generatePassword           = "<div class='col-10'>".Helper::cmsInput($type = null, $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null, $option = null)."</div>";
                 $lblGeneratePassword        = "<div class='row'>".$buttonGeneratePassword .$generatePassword."</div>";
                 
                 $rowGeneratePassword        = Helper::cmsRowForm($lblName = 'Password', $input = $lblGeneratePassword,    $require = false, $option = 'class="d-block"');
+                
+                //task Hidden for Form
+                $inputHiddenTask            = '<input type="hidden" name="task" value="'.$this->arrParam['task'].'">';
+                
             }
         }
     }
@@ -101,14 +115,14 @@
 			           </div>';
     }
     
-    $inputID    = '';
-    $rowID      =   '';
-    if(isset($this->arrParam['id'])){
-        $strID            = $this->arrParam['id'];
-        $inputIDHidden    = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null); 
-        $inputID          = Helper::cmsInput($type = 'text', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null, $option = $idDis);
-        $rowID            = Helper::cmsRowForm($lblName = 'ID', $input = $inputID, $require = $idRequire);
-    }
+//     $inputID    = '';
+//     $rowID      =   '';
+//     if(isset($this->arrParam['id'])){
+//         $strID            = $this->arrParam['id'];
+//         $inputIDHidden    = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null); 
+//         $inputID          = Helper::cmsInput($type = 'text', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null, $option = $idDis);
+//         $rowID            = Helper::cmsRowForm($lblName = 'ID', $input = $inputID, $require = $idRequire);
+//     }
     
     //$cacel = ;
 ?>
@@ -123,7 +137,7 @@
                     <input type="hidden" name="controller" value="user">
                     <input type="hidden" name="action" value="form">
                     <input type="hidden" name="type" value="save-close">
-				
+					<?php echo $inputHiddenTask;?>
 					<div class="card card-outline card-info">
 						<div class="card-body">
 							<div class="form-group">

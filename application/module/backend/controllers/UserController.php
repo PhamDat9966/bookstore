@@ -40,7 +40,7 @@ class UserController extends Controller{
         
         // filter and search
         if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])){
-            $this->filterAndSearch();
+            $this->filterAndSearchAction();
         } 
 
         // charge active, inactive userACB and status
@@ -118,7 +118,7 @@ class UserController extends Controller{
         $page = $this->_arrParam['page']; 
     }
     
-    public function filterAndSearch(){
+    public function filterAndSearchAction(){
         
         if(@$_GET['clear'] !=''){
             Session::delete('search');
@@ -159,45 +159,68 @@ class UserController extends Controller{
     // ACTION : ADD & EDIT
     public function formAction($option = null){
         
-        //echo '<h3>'.date('Y-m-d',time()). '</h3>';
-        
-        // Group for User
+        // SelectGroup for User
         $setNumberGroupLimitControl  = 6;
         $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
         
         $this->_view->_title        = 'User: Add';
         
+        // When is save but have error
+        if(isset($this->_arrParam['form'])){
+            $this->_arrParamOld['form'] = $this->_arrParam['form'];
+            $this->_arrParam['id'] = $this->_arrParam['form']['id'];
+        }
+        
         if(isset($this->_arrParam['id'])){
             $this->_view->_title  = 'User: Edit';
-            $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
             
-            if(isset($this->_arrParam['generateAction'])){
-                if($this->_arrParam['generateAction'] == true){
-                    
-                    require_once LIBRARY_PATH. DS ."functions.php";
-                    $this->_arrParam['form']['password'] = randomString($length = 12);
-                    //$this->_arrParam['form']['password'] = $this->generateRandomString($length = 12);
-                }
+            // For Case Save-close with Password = empty
+            if(isset($this->_arrParam['form']['id'])){
+                $this->_arrParam['id'] = $this->_arrParam['form']['id'];
             }
             
+            $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
+            
+            // GeneratePassword
             if(isset($this->_arrParam['task'])){
-                if(($this->_arrParam['task']) == 'generatepass'){
-                    $this->_view->_title = 'User: Change Password';
-                    $this->_arrParam['form']['task'] = 'generatepass';
+                if($this->_arrParam['task'] == 'generatepass'){
+
+                    $this->_view->_title                    = 'User: Change Password';
+                    $this->_arrParam['form']['task']        = 'generatepass';
+                    $this->_view->arrParam['form']['task']  = 'generatepass';
+                    $this->_view->arrParam                  = $this->_arrParam;
+                    
+                    if(isset($this->_arrParam['generateAction'])){
+                        if(($this->_arrParam['generateAction']) == 'true'){
+                            //$this->generatePasswordAction();
+                            require_once LIBRARY_PATH. DS ."functions.php";
+                            $this->_arrParam['form']['password'] = randomString($length = 12);
+                            // Call Again
+                            $this->_arrParam['task'] == 'generatepass';
+                            $this->_view->_title      = 'User: Change Password';
+                        } 
+                    }
+
                 }
             }
             
             if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'user', 'list'));
         }
         
+
+        if(isset($this->_arrParamOld)){
+            $this->_arrParam['form'] = $this->_arrParamOld['form'];
+        }
+          
         if(@$this->_arrParam['form']['token'] > 0){
             $validate = new Validate($this->_arrParam['form']);
             $validate->addRule('username', 'string',array('min'=>3, 'max'=>255))
-            ->addRule('password', 'string',array('min'=>3, 'max'=>255))
-            ->addRule('email', 'email',array('min'=>3, 'max'=>255))
-            ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
-            ->addRule('status','status',array('deny'=>array('default')))
-            ->addRule('group_id','status',array('deny'=>array('default')));
+                     ->addRule('password', 'string',array('min'=>3, 'max'=>255))
+                     ->addRule('email', 'email',array('min'=>3, 'max'=>255))
+                     ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
+                     ->addRule('status','status',array('deny'=>array('default')))
+                     ->addRule('group_id','status',array('deny'=>array('default')));
+            
             $validate->run();
             $this->_arrParam['form'] = $validate->getResult();
             
@@ -207,14 +230,13 @@ class UserController extends Controller{
 
                 $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');
                 if(isset($this->_arrParam['task'])){
-                    if(($this->_arrParam['task']) == 'generatepass'){
-                        $task = 'generatepass';
-                    }
+                        $task = $this->_arrParam['task'];
                 }
                 //$task = (isset($this->_arrParam['form']['password']) ? 'generatepass':'add');
                 
-                $id = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
-                $type = $this->_arrParam['type'];
+                $id      = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
+                $type    = $this->_arrParam['type'];
+                //if($this->_arrParam['task'] == 'generateAction') URL::redirect(URL::createLink('backend', 'user', 'form',array('id'=>$this->_arrParam['id'],'task'=>$this->_arrParam['generatepass'])));
                 if($type == 'save-close') URL::redirect(URL::createLink('backend', 'user', 'list'));
                 //plus
                 if($type == 'save-new') URL::redirect(URL::createLink('backend', 'user', 'form'));
@@ -233,6 +255,25 @@ class UserController extends Controller{
         $this->_templateObj->load();
         
         $this->_view->render('user/form', true);
+    }
+    
+    public function generatePasswordAction(){
+        
+        require_once LIBRARY_PATH. DS ."functions.php";
+        $this->_arrParam['form']['password'] = randomString($length = 12);
+//         $this->_view->_title = 'User: Change Password';
+//         $this->_arrParam['form']['task'] = 'generatepass';
+        
+//         $this->_view->_tag          = 'user';
+//         $this->_view->arrParam      = $this->_arrParam;
+        
+        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFileTemplate('user-form.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('user/form', true);
+        
     }
     
     public function deleteAction()

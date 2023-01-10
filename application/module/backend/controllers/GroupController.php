@@ -8,7 +8,7 @@ class GroupController extends Controller{
     }
     
     public function listAction(){
-
+        
         //Bulk Action
         if(isset($_GET['selectBox'])){
 
@@ -32,7 +32,7 @@ class GroupController extends Controller{
         
         // filter and search
         if(isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroupACP'])){
-            $this->filterAndSearch();
+            $this->filterAndSearchAction();
         }    
 
         // charge active, inactive groupACB and status
@@ -114,7 +114,7 @@ class GroupController extends Controller{
         $page = $this->_arrParam['page']; 
     }
     
-    public function filterAndSearch(){
+    public function filterAndSearchAction(){
         
         if(@$_GET['clear'] !=''){
             Session::delete('search');
