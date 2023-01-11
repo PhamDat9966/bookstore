@@ -8,11 +8,7 @@ class UserController extends Controller{
     }
     
     public function listAction(){
-        
-//         echo "<pre>";
-//         print_r($_GET);
-//         echo "</pre>";
-        
+
         // Group for User
         $setNumberGroupLimitControl  = 6;
         $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
@@ -165,7 +161,7 @@ class UserController extends Controller{
         
         $this->_view->_title        = 'User: Add';
         
-        // When is save but have error
+        // _arrParamOld use When is save but have error. _arrParamOld save error
         if(isset($this->_arrParam['form'])){
             $this->_arrParamOld['form'] = $this->_arrParam['form'];
             $this->_arrParam['id'] = $this->_arrParam['form']['id'];
@@ -189,17 +185,13 @@ class UserController extends Controller{
                     $this->_arrParam['form']['task']        = 'generatepass';
                     $this->_view->arrParam['form']['task']  = 'generatepass';
                     $this->_view->arrParam                  = $this->_arrParam;
-                    
-                    if(isset($this->_arrParam['generateAction'])){
-                        if(($this->_arrParam['generateAction']) == 'true'){
-                            //$this->generatePasswordAction();
-                            require_once LIBRARY_PATH. DS ."functions.php";
-                            $this->_arrParam['form']['password'] = randomString($length = 12);
-                            // Call Again
-                            $this->_arrParam['task'] == 'generatepass';
-                            $this->_view->_title      = 'User: Change Password';
-                        } 
-                    }
+
+                    //$this->generatePasswordAction();
+                    require_once LIBRARY_PATH. DS ."functions.php";
+                    $this->_arrParam['form']['password'] = randomString($length = 12);
+                    // Call Again
+                    $this->_arrParam['task'] == 'generatepass';
+                    $this->_view->_title      = 'User: Change Password';
 
                 }
             }
@@ -260,13 +252,7 @@ class UserController extends Controller{
     public function generatePasswordAction(){
         
         require_once LIBRARY_PATH. DS ."functions.php";
-        $this->_arrParam['form']['password'] = randomString($length = 12);
-//         $this->_view->_title = 'User: Change Password';
-//         $this->_arrParam['form']['task'] = 'generatepass';
-        
-//         $this->_view->_tag          = 'user';
-//         $this->_view->arrParam      = $this->_arrParam;
-        
+        $this->_arrParam['form']['password'] = randomString($length = 12);      
         $this->_templateObj->setFolderTemplate('admin/admin_template/');
         $this->_templateObj->setFileTemplate('user-form.php');
         $this->_templateObj->setFileConfig('template.ini');
@@ -306,41 +292,7 @@ class UserController extends Controller{
         $result = $this->_model->changeGroupForUser($this->_arrParam,array('task'=>'change-ajax-group'));
         echo json_encode($result);
     }
-    
-//     public function countAction(){
-//         $count          = [];
-//         $queryCount     = [];
-        
-//         $flagWhere      = false;
-//         $searchQuery    = '';    
-//         if(isset($_SESSION['search'])){
-//             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
-            
-//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery");
-//             $count['allStatus'] = $this->_model->totalItem();
-            
-//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 1");
-//             $count['activeStatus'] = $this->_model->totalItem();
-            
-//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 0 ");
-//             $count['inActiveStatus'] = $this->_model->totalItem();
-            
-//             return $count;
-//         }
-        
-//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."`");
-//         $count['allStatus'] = $this->_model->totalItem();
-        
-//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE `status` = 1");
-//         $count['activeStatus'] = $this->_model->totalItem();
-        
-//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE  `status` = 0");
-//         $count['inActiveStatus'] = $this->_model->totalItem();
-        
-//         return $count;
-//     }
-    
-    
+      
 }
 
 

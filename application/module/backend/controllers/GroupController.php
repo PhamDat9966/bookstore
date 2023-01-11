@@ -142,38 +142,6 @@ class GroupController extends Controller{
         
     }
     
-//     public function countAction(){
-//         $count          = [];
-//         $queryCount     = [];
-        
-//         $flagWhere      = false;
-//         $searchQuery    = '';    
-//         if(isset($_SESSION['search'])){
-//             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
-            
-//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery");
-//             $count['allStatus'] = $this->_model->totalItem();
-            
-//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 1");
-//             $count['activeStatus'] = $this->_model->totalItem();
-            
-//             $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE $searchQuery AND `status` = 0 ");
-//             $count['inActiveStatus'] = $this->_model->totalItem();
-            
-//             return $count;
-//         }
-        
-//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."`");
-//         $count['allStatus'] = $this->_model->totalItem();
-        
-//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE `status` = 1");
-//         $count['activeStatus'] = $this->_model->totalItem();
-        
-//         $this->_model->query("SELECT COUNT(`id`) AS totalItems FROM `".TBL_GROUP."` WHERE  `status` = 0");
-//         $count['inActiveStatus'] = $this->_model->totalItem();
-        
-//         return $count;
-//     }
     
     public function clearAction(){
         $this->_view->_tag          = 'group';   
@@ -184,8 +152,14 @@ class GroupController extends Controller{
     
     // ACTION : ADD & EDIT
     public function formAction($option = null){
-        
+
         $this->_view->_title        = 'User Groups: Add';
+        
+        //* _arrParamOld use When is save but have error. _arrParamOld save error*//
+        if(isset($this->_arrParam['form'])){
+            $this->_arrParamOld['form'] = $this->_arrParam['form'];
+            $this->_arrParam['id'] = $this->_arrParam['form']['id'];
+        }
         
         if(isset($this->_arrParam['id'])){
             $this->_view->_title  = 'User Groups: Edit';
@@ -193,6 +167,11 @@ class GroupController extends Controller{
             if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'group', 'list'));
         }
 
+        //* use _arrParamOld *//
+        if(isset($this->_arrParamOld)){
+            $this->_arrParam['form'] = $this->_arrParamOld['form'];
+        }
+        
         if(@$this->_arrParam['form']['token'] > 0){
             $validate = new Validate($this->_arrParam['form']);
             $validate->addRule('name', 'string',array('min'=>3, 'max'=>255))
