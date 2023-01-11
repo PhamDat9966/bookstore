@@ -218,6 +218,10 @@ class UserController extends Controller{
             
             if($validate->isValid() == false){
                 $this->_view->errors    = $validate->showErrors();
+                
+                // When it's show Error but it have generatePassword when refresh
+                $this->_arrParam['form']['password'] = randomString($length = 12);
+                
             } else {
 
                 $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');

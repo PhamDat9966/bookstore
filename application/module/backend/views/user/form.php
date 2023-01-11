@@ -17,7 +17,7 @@
     $generatePassword    = '';
     $rowGeneratePassword = '';
     
-    $idRequire           = true;
+    $idRequire           = false;
     $usernameRequire     = true;
     $emailRequire        = true;
     $fullNameRequire     = true;
