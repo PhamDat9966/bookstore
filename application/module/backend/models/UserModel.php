@@ -25,7 +25,8 @@ class UserModel extends Model
         $queryContent[] = "WHERE `u`.`group_id` = `g`.`id`";
         
         if(!empty($_SESSION['search'])){
-            $queryContent[]     = "AND `username` LIKE '%".$_SESSION['search']."%'";
+            $keyword            = '"%'.$_SESSION['search'].'%"';
+            $queryContent[]     = "AND (`username` LIKE $keyword OR `email` LIKE $keyword OR `fullname` LIKE $keyword)";
         }
         
         if(isset($_SESSION['filter'])){
@@ -61,27 +62,13 @@ class UserModel extends Model
         return $result;
     }
     
-    public function changeGroupACB($arrParam, $option = null){
-        
-        $GroupACB = ($arrParam['group_acp'] == 0) ? 1 : 0 ;
-        $id       = $arrParam['id'];
-        $query    = "UPDATE `$this->_tableName` SET `group_acp` = $GroupACB WHERE `id` = '".$id."'";
-        $this->query($query);
-        
-        Session::set('message', array('class' => 'success', 'content' => 'Trạng thái GroupACB được cập nhật'));
-        return array('id'=>$id,'group_acb'=>$GroupACB,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'group_acp'=>$GroupACB)));
-    }
-    
     public function changeGroupForUser($arrParam, $option = null){
         if($option['task'] == 'change-ajax-group'){
             $GroupForUser = $arrParam['group_id'];
             $id           = $arrParam['id'];
             $query        = "UPDATE `$this->_tableName` SET `group_id` = $GroupForUser WHERE `id` = '".$id."'";
             $this->query($query);
-            
-            //Session::set('message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
             return array('message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
-            //return array('id'=>$id,'group_id'=>$GroupForUser,'url'=>URL::createLink('backend','user','list',array('id'=>$id,'group_id'=>$GroupForUser)));
         }
     }
     
@@ -180,9 +167,10 @@ class UserModel extends Model
         $searchQuery    = '';
         
         if((!empty($_SESSION['search'])) && (!empty(is_numeric(@$_SESSION['selectGroup'])))){
-            $varSelectGroup_id = @$_SESSION['selectGroup'];
             
-            $searchQuery = "`username` LIKE '%".$_SESSION['search']."%'";
+            $varSelectGroup_id = @$_SESSION['selectGroup'];
+            $keyword            = '"%'.$_SESSION['search'].'%"';
+            $searchQuery = "(`username` LIKE $keyword OR `email` LIKE $keyword OR `fullname` LIKE $keyword)";
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_id` = $varSelectGroup_id");
             $count['allStatus'] = $this->totalItem();
@@ -213,7 +201,8 @@ class UserModel extends Model
         }
         
         if(!empty($_SESSION['search'])){
-            $searchQuery = "`username` LIKE '%".$_SESSION['search']."%'";
+            $keyword            = '"%'.$_SESSION['search'].'%"';
+            $searchQuery = "(`username` LIKE $keyword OR `email` LIKE $keyword OR `fullname` LIKE $keyword)";
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
             $count['allStatus'] = $this->totalItem();
@@ -306,16 +295,6 @@ class UserModel extends Model
         Session::set('message', array('class' => 'success', 'content' => 'Xóa thành công!'));
     }
     
-    public function multActiveStatus($checkbox,$option = null){
-        echo '<h3>this is multActiveStatus</h3>';
-        die();
-    }
-    
-    public function multInactiveStatus($checkbox,$option = null){
-        echo '<h3>this is multInactiveStatus</h3>';
-        die();
-    }
-    
     public function deleteMultItem($arrParam,$option = null)
     {
         if($option == null){
@@ -343,34 +322,7 @@ class UserModel extends Model
         }
         
     }
-    
-    public function listItemsFiter($option = null)
-    {
-        
-        $queryContent[] = "SELECT `id`,`username`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
-        $queryContent[] = "FROM `$this->_tableName`";
-        
-        $queryContent = implode(" ", $queryContent);
-        
-        $result = $this->listRecord($queryContent);
-        return $result;
-    }
-    
-    
-    public function search($searchValue = null){
-        $query = "SELECT * FROM `$this->table` ";
-        if($searchValue != '') $query .= "WHERE `username` LIKE '%$searchValue%'";
-        $result = $this->listRecord($query);
-        return $result;
-    }
-    
-    public function filter($filter = null){
-        $query = "SELECT * FROM `$this->table` ";
-        if($filter != '') $query .= "WHERE `status` = '$filter'";
-        $result = $this->listRecord($query);
-        return $result;
-    }
-    
+
 }
 
 

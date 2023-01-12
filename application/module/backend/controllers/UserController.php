@@ -8,7 +8,7 @@ class UserController extends Controller{
     }
     
     public function listAction(){
-        
+
         // Group for User
         $setNumberGroupLimitControl  = 6;
         $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);

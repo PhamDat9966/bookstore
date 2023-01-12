@@ -4,6 +4,7 @@ class DashboardController extends Controller{
     public function __construct(){
         Session::delete('filter');
         Session::delete('selectGroupACP');
+        Session::delete('selectGroup');
         Session::delete('status');
         Session::delete('search');
     }
