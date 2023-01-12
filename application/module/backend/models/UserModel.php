@@ -179,53 +179,53 @@ class UserModel extends Model
         $count          = array();
         $searchQuery    = '';
         
-//         if((!empty($_SESSION['search'])) && (!empty(is_numeric(@$_SESSION['selectGroupACP'])))){
-//             $varGroupACP = @$_SESSION['selectGroupACP'];
+        if((!empty($_SESSION['search'])) && (!empty(is_numeric(@$_SESSION['selectGroup'])))){
+            $varSelectGroup_id = @$_SESSION['selectGroup'];
             
-//             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+            $searchQuery = "`username` LIKE '%".$_SESSION['search']."%'";
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_acp` = $varGroupACP");
-//             $count['allStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_id` = $varSelectGroup_id");
+            $count['allStatus'] = $this->totalItem();
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1 AND `group_acp` = $varGroupACP");
-//             $count['activeStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1 AND `group_id` = $varSelectGroup_id");
+            $count['activeStatus'] = $this->totalItem();
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 AND `group_acp` = $varGroupACP");
-//             $count['inActiveStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 AND `group_id` = $varSelectGroup_id");
+            $count['inActiveStatus'] = $this->totalItem();
             
-//             return $count;
-//         }
+            return $count;
+        }
         
-//         if(!empty(is_numeric(@$_SESSION['selectGroupACP']))){
-//             $varGroupACP = @$_SESSION['selectGroupACP'];
+        if(!empty(is_numeric(@$_SESSION['selectGroup']))){
+            $varSelectGroup_id = @$_SESSION['selectGroup'];
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = ".$varGroupACP."");
-//             $count['allStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_id` = ".$varSelectGroup_id."");
+            $count['allStatus'] = $this->totalItem();
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 1 AND `group_acp` = ".$varGroupACP."");
-//             $count['activeStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 1 AND `group_id` = ".$varSelectGroup_id."");
+            $count['activeStatus'] = $this->totalItem();
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 0 AND `group_acp` = ".$varGroupACP."");
-//             $count['inActiveStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 0 AND `group_id` = ".$varSelectGroup_id."");
+            $count['inActiveStatus'] = $this->totalItem();
             
-//             return $count;
+            return $count;
             
-//         }
+        }
         
-//         if(!empty($_SESSION['search'])){
-//             $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+        if(!empty($_SESSION['search'])){
+            $searchQuery = "`username` LIKE '%".$_SESSION['search']."%'";
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
-//             $count['allStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
+            $count['allStatus'] = $this->totalItem();
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1");
-//             $count['activeStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1");
+            $count['activeStatus'] = $this->totalItem();
             
-//             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 ");
-//             $count['inActiveStatus'] = $this->totalItem();
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 ");
+            $count['inActiveStatus'] = $this->totalItem();
             
-//             return $count;
-//         }
+            return $count;
+        }
         
         
         
@@ -251,7 +251,7 @@ class UserModel extends Model
         $flagWhere      = false;
         
         if(!empty($_SESSION['search'])){
-            $queryContent[]     = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
+            $queryContent[]     = "WHERE `username` LIKE '%".$_SESSION['search']."%'";
             $flagWhere          = true;
         }
         
@@ -278,7 +278,7 @@ class UserModel extends Model
         $idSelect = $id;
         
         $queryContent   = [];
-        $queryContent[] = "SELECT `id`,`name`,`link`,`image`,`status`,`ordering`";
+        $queryContent[] = "SELECT `id`,`username`,`link`,`image`,`status`,`ordering`";
         $queryContent[] = "FROM `$this->_tableName`";
         $queryContent[] = "WHERE `id` = '" . $idSelect . "'";
         $queryContent = implode(" ", $queryContent);
@@ -347,7 +347,7 @@ class UserModel extends Model
     public function listItemsFiter($option = null)
     {
         
-        $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
+        $queryContent[] = "SELECT `id`,`username`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
         $queryContent[] = "FROM `$this->_tableName`";
         
         $queryContent = implode(" ", $queryContent);
@@ -359,7 +359,7 @@ class UserModel extends Model
     
     public function search($searchValue = null){
         $query = "SELECT * FROM `$this->table` ";
-        if($searchValue != '') $query .= "WHERE `name` LIKE '%$searchValue%'";
+        if($searchValue != '') $query .= "WHERE `username` LIKE '%$searchValue%'";
         $result = $this->listRecord($query);
         return $result;
     }
