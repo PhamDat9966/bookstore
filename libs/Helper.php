@@ -9,19 +9,7 @@ class Helper{
                  </a>';
         return $xhtml;
     }
-    
-//     public static function cmsButtonAtag($name,$class ,$id, $link, $icon, $type = 'new'){
-//         //<button type="submit" class="btn btn-success" namne="type" value="saveAndClose" "="">Save</button>
-//         $xhtml = '';
-//         if($type == 'new'){
-//             $xhtml .= '<a class="'.$class.'" href="'.$link.'" id="'.$id.'"><span class="'.$icon.'"></span>'.$name.'</a>';
-//         }else if($type == 'submit'){
-//             $xhtml .= '<a class="'.$class.'" href="#" onclick="javascript:submitForm(\''.$link.'\');" id="'.$id.'"><span class="'.$icon.'"></span>'.$name.'</a>';
-//         }
-//         return $xhtml;
-//     }
-    
-    
+
     //Button Input
     public static function cmsButtonSubmit( $type, $class = 'btn btn-info' , $textOutfit ,$name = null , $value = null, $id = null  ){
         //class: default secondary danger
@@ -39,6 +27,10 @@ class Helper{
         $classButton = '';
         if($class == 'btn btn-info'){
             $classButton = "class='btn btn-info'";
+        }
+        
+        if($class == 'btn btn-success'){
+            $classButton = "class='btn btn-success'";
         }
         
         if($class == 'btn btn-secondary'){
@@ -63,47 +55,6 @@ class Helper{
         $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>';
         return $xhtml;
     }
-    
-//     public static function cmsButton( $type, $class = 'default' , $textOutfit ,$name = null , $value = null, $id = null  ){
-//        //class: default secondary danger 
-        
-//        $nameButton = '';     
-//        if(isset($name)){
-//            $nameButton = "name='$name'";
-//        }
-       
-//        $valueButton = '';
-//        if(isset($value)){
-//            $valueButton = "value='$value'";
-//        }
-       
-//        $classButton = '';
-//        if($class == 'default'){
-//            $classButton = "class='btn btn-info'";
-//        }
-       
-//        if($class == 'secondary'){
-//            $classButton = "class='btn btn-secondary'";
-//        }
-       
-//        //class="btn btn-danger"
-//        if($class == 'danger'){
-//            $classButton = "class='btn btn-danger'";
-//        }
-
-//        $nameAndValue = '';
-//        if(isset($name) && isset($value)){
-//            $nameAndValue = "name='$name' value='$value'";
-//        }
-       
-//        $idAttr = '';
-//        if(!empty($id)){
-//            $idAttr = "id = '$id'";
-//        }
-       
-//        $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>'; 
-//        return $xhtml;
-//     }
     
     public static function cmsMessage($message){
         
@@ -208,7 +159,7 @@ class Helper{
     
     // Button Add
     public static function cmsAccent($Value, $link,  $status = null ,$id =NULL){
-        //<a href="index.php?module=admin&controller=rss&action=index" class="btn btn-danger">Cancel</a>
+
         $strBotton = $Value;
         
         if($Value == 'Cancel'){
@@ -292,8 +243,7 @@ class Helper{
 	
 	// Create Icon Group cmsStatus
 	public static function cmsStatus($statusValue, $link, $id){
-	    //$strStatus 	= ($statusValue == 0) ? 'btn-danger' : 'btn-success';
-	    
+
 	    if($statusValue == 0){
 	        $strStatus = 'btn-danger';
 	        $icon        =  '<i class="fas fa-minus"></i>';

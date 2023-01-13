@@ -214,22 +214,7 @@ class Model{
         }
         mysqli_free_result($resultQuery);
         return $result['totalItems'];
-        
-//         echo '<h3>'. __METHOD__ . '</h3>';
-        
-//         echo $resultQuery = ($resultQuery == null) ? $this->resultQuery : $resultQuery;
-        
-//         $returnQuery = $this->query($resultQuery);
-        
-//         echo "<pre>";
-//         print_r($returnQuery);
-//         echo "</pre>";
-        
-//         if (mysqli_num_rows($returnQuery) > 0) {
-//             $result = mysqli_fetch_assoc($returnQuery);
-//         }
-//         mysqli_free_result($returnQueryz);
-//         return $result['totalItems'];
+
     }
     
     

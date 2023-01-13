@@ -152,13 +152,15 @@ class GroupController extends Controller{
     
     // ACTION : ADD & EDIT
     public function formAction($option = null){
-
+        
         $this->_view->_title        = 'User Groups: Add';
         
         //* _arrParamOld use When is save but have error. _arrParamOld save error*//
         if(isset($this->_arrParam['form'])){
             $this->_arrParamOld['form'] = $this->_arrParam['form'];
-            $this->_arrParam['id'] = $this->_arrParam['form']['id'];
+            if(isset($this->_arrParam['form']['id'])){
+                $this->_arrParam['id'] = $this->_arrParam['form']['id'];
+            }    
         }
         
         if(isset($this->_arrParam['id'])){

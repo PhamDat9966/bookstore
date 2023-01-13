@@ -114,17 +114,11 @@
         					</h5>'.@$this->errors.'
 			           </div>';
     }
+
+    $submitButton = Helper::cmsButtonSubmit($type="submit",$class="btn btn-success" ,$textOutfit = "Save");
+    $cancelUrl    = URL::createLink("backend", "user", "list");
+    $cancelButton = Helper::cmsButton($cancelUrl, $class="btn btn-danger", $textOufit = "Cancel");
     
-//     $inputID    = '';
-//     $rowID      =   '';
-//     if(isset($this->arrParam['id'])){
-//         $strID            = $this->arrParam['id'];
-//         $inputIDHidden    = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null); 
-//         $inputID          = Helper::cmsInput($type = 'text', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'form-control', $size = null, $option = $idDis);
-//         $rowID            = Helper::cmsRowForm($lblName = 'ID', $input = $inputID, $require = $idRequire);
-//     }
-    
-    //$cacel = ;
 ?>
 <div class="content">
 	<div class="container-fluid">
@@ -172,11 +166,8 @@
 							<?= $inputToken;?>
 						</div>
 						<div class="card-footer">
-							<button type="submit" class="btn btn-success"  namne='type' value='saveAndClose'">Save</button>
-							<a href="index.php?module=backend&controller=user&action=list" class="btn btn-danger">Cancel</a>
-							<?php 
-							     //echo $btnCancel;
-							?>
+							<?= $submitButton;?>
+							<?= $cancelButton;?>
 						</div>
 					</div>
 				</form>

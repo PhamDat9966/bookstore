@@ -5,7 +5,6 @@ $this->searchValue = Session::get('search');
 $arrSelectBox = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive','ordering'=>'Ordering'];
 
 $selection          = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBox');
-//$buttonSelection    = '<button type="submit" name="submit" value="submit" class="btn btn-info">Apply</button>';
 $buttonSelection    = Helper::cmsButtonSubmit($type ="submit", $class = 'btn btn-info' ,$textOutfit = "Apply", $name = "bulk" , $value = "bulk" , $id = 'bulkApply');
 
 $listGroup = '';
@@ -66,7 +65,6 @@ if(!empty($this->Items)){
         $i++;
     }
 }
-// <a href="index.php?module=backend&controller=group&action=form" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a>
 $addNewUrl    = URL::createLink('backend', 'group', 'form');
 $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $textOufit = '<i class="fas fa-plus"></i> Add New');
 
@@ -120,7 +118,6 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                             </div>
                         </div>
                         <div>
-<!--                             <a href="index.php?module=backend&controller=group&action=form" class="btn btn-info"><i class="fas fa-plus"></i> Add New</a> -->
 							<?= $addNewButton;?>
                         </div>
                     </div>

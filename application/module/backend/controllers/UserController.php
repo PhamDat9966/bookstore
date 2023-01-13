@@ -16,7 +16,6 @@ class UserController extends Controller{
         //Bulk Action
         if(isset($_GET['selectBoxUser'])){
 
-
             if($_GET['selectBoxUser'] == 'delete'){
                 $this->_model->deleteMultItem($this->_arrParam);                   
             }
@@ -29,7 +28,6 @@ class UserController extends Controller{
             if($_GET['selectBoxUser'] == 'inactive'){
                 $this->_arrParam['type'] = 0;
                 $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-                //URL::redirect(URL::createLink('admin', 'user', 'index'));
             }
 
         }
@@ -164,7 +162,9 @@ class UserController extends Controller{
         // _arrParamOld use When is save but have error. _arrParamOld save error
         if(isset($this->_arrParam['form'])){
             $this->_arrParamOld['form'] = $this->_arrParam['form'];
-            $this->_arrParam['id'] = $this->_arrParam['form']['id'];
+            if(isset($this->_arrParam['form']['id'])){
+                $this->_arrParam['id'] = $this->_arrParam['form']['id'];
+            } 
         }
         
         if(isset($this->_arrParam['id'])){
@@ -186,7 +186,6 @@ class UserController extends Controller{
                     $this->_view->arrParam['form']['task']  = 'generatepass';
                     $this->_view->arrParam                  = $this->_arrParam;
 
-                    //$this->generatePasswordAction();
                     require_once LIBRARY_PATH. DS ."functions.php";
                     $this->_arrParam['form']['password'] = randomString($length = 12);
                     // Call Again
@@ -230,11 +229,10 @@ class UserController extends Controller{
                 if(isset($this->_arrParam['task'])){
                         $task = $this->_arrParam['task'];
                 }
-                //$task = (isset($this->_arrParam['form']['password']) ? 'generatepass':'add');
                 
                 $id      = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
                 $type    = $this->_arrParam['type'];
-                //if($this->_arrParam['task'] == 'generateAction') URL::redirect(URL::createLink('backend', 'user', 'form',array('id'=>$this->_arrParam['id'],'task'=>$this->_arrParam['generatepass'])));
+                
                 if($type == 'save-close') URL::redirect(URL::createLink('backend', 'user', 'list'));
                 //plus
                 if($type == 'save-new') URL::redirect(URL::createLink('backend', 'user', 'form'));

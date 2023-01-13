@@ -1,13 +1,7 @@
 <?php
-        //echo '<h3>'. __METHOD__ . '</h3>';
-    //         $linkSaveClose	= URL::createLink('admin', 'group', 'form', array('type' => 'save-close'));
-        //         $btnSaveClose	= Helper::cmsButton('Save & Close', 'toolbar-save', $linkSaveClose, 'icon-32-save', 'submit');
+
         $linkSaveClose	    = URL::createLink('backend', 'group', 'form', array('type' => 'save-close'));
         $linkCancel	        = URL::createLink('backend', 'group', 'list');
-        //cmsButtonAtag($name, $id, $link, $icon, $type = 'new')
-        //cmsButtonAtag($name,$class ,$id, $link, $icon, $type = 'new')
-        //$btnSaveClose       = Helper::cmsButtonAtag($name = 'Save',$class = 'btn btn-success' ,$id = null, $link = $linkSaveClose, $icon = null, $type = 'new');    
-        //$btnCancel          = Helper::cmsButtonAtag($name = 'Cancel',$class = 'btn btn-danger' ,$id = null, $link = $linkCancel, $icon = null, $type = 'new');
         
         $dataForm           = @$this->arrParam['form'];
 
@@ -42,6 +36,10 @@
             $inputID          = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$id = 'id', $value = @$dataForm['id'], $class = 'readonly', $size = null);            
             $rowID            = Helper::cmsRowForm($lblName = 'ID', ": $strID".$inputID);
         }
+        
+        $submitButton = Helper::cmsButtonSubmit($type="submit",$class="btn btn-success" ,$textOutfit = "Save");
+        $cancelUrl    = URL::createLink("backend", "user", "list");
+        $cancelButton = Helper::cmsButton($cancelUrl, $class="btn btn-danger", $textOufit = "Cancel");
 ?>
 <div class="content">
 	<div class="container-fluid">
@@ -72,11 +70,8 @@
 							<?= $inputToken;?>
 						</div>
 						<div class="card-footer">
-							<button type="submit" class="btn btn-success"  namne='type' value='saveAndClose'">Save</button>
-							<a href="index.php?module=backend&controller=group&action=list" class="btn btn-danger">Cancel</a>
-							<?php 
-							     //echo $btnCancel;
-							?>
+							<?= $submitButton;?>
+							<?= $cancelButton;?>
 						</div>
 					</div>
 				</form>

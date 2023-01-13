@@ -19,11 +19,6 @@ class Pagination
 		$this->currentPage			= $currentPage;
 		$this->totalPage			= ceil($totalItems / $totalItemsPerPage);
 	      
-// 		echo '<h3>'. __METHOD__ . '</h3>';
-// 		echo 'totalItems: '. $this->totalItems.'<br/>';
-// 		echo 'totalItemsPerPage: '. $this->totalItemsPerPage .'<br/>';
-// 		echo 'pageRange: '. $this->pageRange.'<br/>';
-//         echo 'currentPage: '.$this->currentPage;
 	}
 
 	public function showPagination($link = '?module=backend&controller=group&action=list')
