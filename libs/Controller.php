@@ -6,7 +6,8 @@ class Controller{
     protected $_templateObj;
     protected $_arrParam;
     protected $_pagination;
-	
+	protected $_arrParamOld;
+    
 	public function loadModel($moduleName, $modelName){     
 	    $modelName     = ucfirst($modelName) . 'Model';
 	    $path = MODULE_PATH . $moduleName . DS . 'models' . DS. $modelName .'.php';

@@ -19,7 +19,7 @@ class GroupModel extends Model
     {
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
-        $queryContent = [];
+        $queryContent   = [];
         $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
         $queryContent[] = "FROM `$this->_tableName`";
         $queryContent[] = "WHERE `id` > 0";
@@ -45,7 +45,7 @@ class GroupModel extends Model
         
         $queryContent = implode(" ", $queryContent);
         
-        $result = $this->listRecord($queryContent);
+        $result = $this->fetchAll($queryContent);
         return $result;
     }
     
@@ -209,7 +209,7 @@ class GroupModel extends Model
     
     public function countItem($arrParam,$option = null)
     {
-        $queryContent = [];
+        $queryContent   = [];
         $queryContent[] = "SELECT COUNT(`id`) AS total";
         $queryContent[] = "FROM `$this->_tableName`";
         
@@ -234,7 +234,7 @@ class GroupModel extends Model
  
         $queryContent = implode(" ", $queryContent);
              
-        $result = $this->singleRecord($queryContent);
+        $result = $this->fetchRow($queryContent);
 
         return $result['total'];
     }
@@ -246,9 +246,9 @@ class GroupModel extends Model
         $queryContent[] = "SELECT `id`,`name`,`link`,`image`,`status`,`ordering`";
         $queryContent[] = "FROM `$this->_tableName`";
         $queryContent[] = "WHERE `id` = '" . $idSelect . "'";    
-        $queryContent = implode(" ", $queryContent);
+        $queryContent   = implode(" ", $queryContent);
         
-        $result = $this->singleRecord($queryContent);
+        $result = $this->fetchRow($queryContent);
         return $result;
         
     }
@@ -259,8 +259,8 @@ class GroupModel extends Model
             $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`";
             $queryContent[] = "FROM `$this->_tableName`";
             $queryContent[] = "WHERE `id` = '" . $arrParam['id'] . "'";
-            $queryContent = implode(" ", $queryContent);
-            $result = $this->singleRecord($queryContent);
+            $queryContent   = implode(" ", $queryContent);
+            $result         = $this->fetchRow($queryContent);
             return $result;
         }
     }
@@ -269,16 +269,6 @@ class GroupModel extends Model
     {
         $this->delete([$id]);
         Session::set('message', array('class' => 'success', 'content' => 'Xóa thành công!'));
-    }
-    
-    public function multActiveStatus($checkbox,$option = null){
-        echo '<h3>this is multActiveStatus</h3>';
-        die();
-    }
-    
-    public function multInactiveStatus($checkbox,$option = null){
-        echo '<h3>this is multInactiveStatus</h3>';
-        die();
     }
     
     public function deleteMultItem($arrParam,$option = null)
@@ -320,7 +310,7 @@ class GroupModel extends Model
         
         $queryContent = implode(" ", $queryContent);
         
-        $result = $this->listRecord($queryContent);
+        $result = $this->fetchAll($queryContent);
         return $result;
     }
     
@@ -328,14 +318,14 @@ class GroupModel extends Model
     public function search($searchValue = null){
         $query = "SELECT * FROM `$this->table` ";
         if($searchValue != '') $query .= "WHERE `name` LIKE '%$searchValue%'";
-        $result = $this->listRecord($query);
+        $result = $this->fetchAll($query);
         return $result;
     }
     
     public function filter($filter = null){
         $query = "SELECT * FROM `$this->table` ";
         if($filter != '') $query .= "WHERE `status` = '$filter'";
-        $result = $this->listRecord($query);
+        $result = $this->fetchAll($query);
         return $result;
     }
     

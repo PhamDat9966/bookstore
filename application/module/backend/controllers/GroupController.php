@@ -175,8 +175,10 @@ class GroupController extends Controller{
         }
         
         if(@$this->_arrParam['form']['token'] > 0){
+            $queryName  = "SELECT `id` FROM `" .TBL_GROUP. "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
+
             $validate = new Validate($this->_arrParam['form']);
-            $validate->addRule('name', 'string',array('min'=>3, 'max'=>255))
+            $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryName, 'min' => 3, 'max' => 25))
                      ->addRule('status','status',array('deny'=>array('default')))
                      ->addRule('group_acp','status',array('deny'=>array('default')));   
             $validate->run();

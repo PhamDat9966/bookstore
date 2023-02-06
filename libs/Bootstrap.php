@@ -66,11 +66,11 @@ class Bootstrap{
     }
     
     //ERROR CONTROLLER
-    public function _error(){
-        require_once MODULE_PATH . 'default' . DS . 'controllers' . DS . 'ErrorController.php';
-        $this->_controllerOject    = new ErrorController();
-        $this->_controllerOject->setView('default');
-        $this->_controllerOject->indexAction();
-    }
+    //     public function _error(){
+    //         require_once MODULE_PATH . 'default' . DS . 'controllers' . DS . 'ErrorController.php';
+    //         $this->_controllerOject    = new ErrorController();
+    //         $this->_controllerOject->setView('default');
+    //         $this->_controllerOject->indexAction();
+    //     }
     
 }

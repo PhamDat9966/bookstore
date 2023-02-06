@@ -19,7 +19,7 @@ class UserModel extends Model
     {
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
-        $queryContent = [];
+        $queryContent   = [];
         $queryContent[] = "SELECT `u`.`id`,`u`.`username`,`u`.`email`,`u`.`fullname`,`u`.`password`,`u`.`created`,`u`.`created_by`,`u`.`modified`,`u`.`modified_by`,`u`.`status`,`u`.`ordering`,`u`.`group_id`,`g`.`name` AS `group_name`";             
         $queryContent[] = "FROM `$this->_tableName` AS `u`, `".TBL_GROUP."` AS `g`";
         $queryContent[] = "WHERE `u`.`group_id` = `g`.`id`";
@@ -45,28 +45,42 @@ class UserModel extends Model
         
         $queryContent = implode(" ", $queryContent);
         
-        $result = $this->listRecord($queryContent);
+        $result = $this->fetchAll($queryContent);
         return $result;
     }
     
     public function createdAndModified($arrParam, $option = null){
         
-        $queryContent = [];
+        $queryContent   = [];
         $queryContent[] = "SELECT `id`,`name`";
         $queryContent[] = "FROM `".TBL_GROUP."`";
         if($option != null){
             $queryContent[] = "LIMIT 0,".$option."";
         }    
         $queryContent = implode(" ", $queryContent);
-        $result = $this->listRecord($queryContent);
+        $result = $this->fetchAll($queryContent);
         return $result;
+    }
+    
+    public function itemInSelectbox($arrParam,$numberGroup = null ,$option = null){
+        if($option == null){
+            $query       = [];
+            $query[]     = "SELECT `id`,`name`";
+            $query[]     = "FROM `".TBL_GROUP."`";
+            if(!empty($numberGroup)){
+                $query[] = "LIMIT 0,".$numberGroup."";
+            }  
+            $query       = implode(" ", $query);
+            $result      = $this->fetchPairs($query);
+            return $result;
+        }     
     }
     
     public function changeGroupForUser($arrParam, $option = null){
         if($option['task'] == 'change-ajax-group'){
-            $GroupForUser = $arrParam['group_id'];
-            $id           = $arrParam['id'];
-            $query        = "UPDATE `$this->_tableName` SET `group_id` = $GroupForUser WHERE `id` = '".$id."'";
+            $GroupForUser   = $arrParam['group_id'];
+            $id             = $arrParam['id'];
+            $query          = "UPDATE `$this->_tableName` SET `group_id` = $GroupForUser WHERE `id` = '".$id."'";
             $this->query($query);
             return array('message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
         }
@@ -145,18 +159,17 @@ class UserModel extends Model
     public function pagination($totalItems,$totalItemsPerPage,$pageRange)
     {
         
-        $resulfPagination = [];
+        $resulfPagination       = [];
+        $currentPage            = (isset($_GET['page'])) ? $_GET['page'] : 1;
+        $this->_cunrrentPage    = $currentPage;
         
-        $currentPage = (isset($_GET['page'])) ? $_GET['page'] : 1;
-        $this->_cunrrentPage = $currentPage;
-        
-        $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
+        $paginator      = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
         $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'user', 'list'));
-        $position = ($currentPage - 1) * $totalItemsPerPage;
+        $position       = ($currentPage - 1) * $totalItemsPerPage;
         
-        $resulfPagination['position'] = $position;
-        $resulfPagination['totalItemsPerPage'] = $totalItemsPerPage;
-        $resulfPagination['paginationHTML'] = $paginationHTML;
+        $resulfPagination['position']           = $position;
+        $resulfPagination['totalItemsPerPage']  = $totalItemsPerPage;
+        $resulfPagination['paginationHTML']     = $paginationHTML;
         
         return $resulfPagination;
     }
@@ -258,7 +271,7 @@ class UserModel extends Model
         
         $queryContent = implode(" ", $queryContent);
         
-        $result = $this->singleRecord($queryContent);
+        $result = $this->fetchRow($queryContent);
         
         return $result['total'];
     }
@@ -272,7 +285,7 @@ class UserModel extends Model
         $queryContent[] = "WHERE `id` = '" . $idSelect . "'";
         $queryContent = implode(" ", $queryContent);
         
-        $result = $this->singleRecord($queryContent);
+        $result = $this->fetchRow($queryContent);
         return $result;
         
     }
@@ -284,7 +297,7 @@ class UserModel extends Model
             $queryContent[] = "FROM `$this->_tableName`";
             $queryContent[] = "WHERE `id` = '" . $arrParam['id'] . "'";
             $queryContent = implode(" ", $queryContent);
-            $result = $this->singleRecord($queryContent);
+            $result = $this->fetchRow($queryContent);
             return $result;
         }
     }

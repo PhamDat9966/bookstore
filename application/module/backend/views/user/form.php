@@ -41,7 +41,6 @@
         $rowID            = Helper::cmsRowForm($lblName = 'ID', $input = $inputID, $require = $idRequire);
         
         $inputUsernameHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null);
-        $inputUsernameHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[username]'  ,$id = 'username'   , $value = @$dataForm['username']   , $class = 'form-control', $size = null);
         $inputPasswordHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[password]'  ,$id = 'password'   , $value = @$dataForm['password']   , $class = 'form-control', $size = null);
         $inputEmailHidden         = Helper::cmsInput($type = 'hidden', $name = 'form[email]'     ,$id = 'email'      , $value = @$dataForm['email']      , $class = 'form-control', $size = null);
         
@@ -73,11 +72,12 @@
                 
             }
         }
+        $inputHiddenTask            = '<input type="hidden" name="task" value="'.$this->arrParam['task'].'">';
     }
     
     $arrSelectGroup             = array();
     $arrSelectGroup['default']  = '- Select Group -';
-    foreach ($this->groupNameData as $keyG=>$valueG){
+    foreach ($this->slbGroup as $keyG=>$valueG){
         $arrSelectGroup[$valueG['id']] = $valueG['name'];
     }
 

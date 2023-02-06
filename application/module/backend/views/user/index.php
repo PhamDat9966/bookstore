@@ -4,11 +4,7 @@ $this->searchValue = Session::get('search');
 $listUser = '';
 
 //Created selectgroup Array
-$selectGroup = [];
-
-foreach ($this->groupNameData as $keyGroup=>$valueGroup){
-    $selectGroup[$valueGroup['id']] = $valueGroup['name'];
-}
+$selectGroup = $this->slbGroup;
 
 // Bulk Action
 $arrSelectBox       = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
@@ -56,6 +52,10 @@ if(!empty($this->Items)){
         
         
         // SELECT GROUP  FOR USER ---
+        /*
+         * Mục đích sử dụng Onchange của Selecbox để chuyền value của selecbox về hàm jquery là changeGroupUser có chứa Ajax để 
+         * chuyền chuỗi json có chứa id và group_id về controller->_model để Update
+         */
         $dataGroupForUser         = array(); // $id and $ground_id, $group_name
         $jsonArrSelectGroupForUser = array();// tramform $id and $group_id is json
 
@@ -67,34 +67,36 @@ if(!empty($this->Items)){
             $k++;
         }
         
-        $selectGroupForUser    = Helper::cmsSelectboxForUserSelectGroup($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectGroupForUser,$keySelect = $value['group_name'], $style = null,$idSelectBox = "selectGroupForUser",$option = 'onchange=\'changeGroupUser(this.value)\'');
+        $selectGroupForUser     = Helper::cmsSelectboxForUserSelectGroup($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectGroupForUser,$keySelect = $value['group_name'], $style = null,$idSelectBox = "selectGroupForUser",$option = 'onchange=\'changeGroupUser(this.value)\'');
         $jsonArrSelectGroupForUser = '';
-        $row            = ($i % 2 == 0) ? 'odd' : 'even';
+        $row                = ($i % 2 == 0) ? 'odd' : 'even';
         
         
         //<a href="#" class="btn btn-success rounded-circle btn-sm"><i class="fas fa-check"></i></a>
-        $status         = '';
-        $urlstatus      = URL::createLink('backend','user','list',array('id'=>$id,'status'=>$value['status']),$this->_currentPage);
-        $status         = Helper::cmsStatus($value['status'], $urlstatus ,$id);
+        $status             = '';
+        $urlstatus          = URL::createLink('backend','user','list',array('id'=>$id,'status'=>$value['status']),$this->_currentPage);
+        $status             = Helper::cmsStatus($value['status'], $urlstatus ,$id);
         
         //CREATED:
         // Time create
         $arrCreatedTime = explode(' ', $value['created']);
         
-        $created        = '<i class="far fa-user"></i>  '.$created_by.'<br/>';
-        $created       .='<i class="far fa-clock"></i>  '.$arrCreatedTime[1].' '.Helper::formatDate('d-m-Y', $arrCreatedTime[0]);
+        $created            = '<i class="far fa-user"></i>  '.$created_by.'<br/>';
+        $created           .='<i class="far fa-clock"></i>  '.$arrCreatedTime[1].' '.Helper::formatDate('d-m-Y', $arrCreatedTime[0]);
         
         //MODIFIED
-        
         // Time modified
-        $arrModifiedTime = explode(' ', $value['modified']);
+        $arrModifiedTime    = explode(' ', $value['modified']);
         
         //$modified      = Helper::formatDate('d-m-Y', $value['modified']);
-        $modified        = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';
-        $modified       .='<i class="far fa-clock"></i>  '.$arrModifiedTime[1].' '.Helper::formatDate('d-m-Y', $arrModifiedTime[0]);
+        $modified           = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';
+        $modified          .='<i class="far fa-clock"></i>  '.$arrModifiedTime[1].' '.Helper::formatDate('d-m-Y', $arrModifiedTime[0]);
         
-        $editAction     = Helper::showItemAction('backend', 'user', 'form', $id, 'edit');
-        $deleteAction   = Helper::showItemAction('backend', 'user', 'delete', $id, $statusAction ='delete');
+        //$editAction         = Helper::showItemAction('backend', 'user', 'form', $id, 'edit');
+        $editPassLink   = URL::createLink('backend', 'user', 'form', $parram = array('task'=>'edit','id'=>$id));
+        $editPassword   = Helper::cmsButton($url = $editPassLink, $class = 'btn btn-sm btn-info rounded-circle', $textOufit = '<i class="fas fa-pen"></i>');
+        
+        $deleteAction       = Helper::showItemAction('backend', 'user', 'delete', $id, $statusAction ='delete');
         
         //General Password
         $generatePassLink   = URL::createLink('backend', 'user', 'form', $parram = array('task'=>'generatepass','id'=>$id));
@@ -115,7 +117,7 @@ if(!empty($this->Items)){
             </td>
             <td>
                 '.$generatePassword.'
-                '.$editAction.'
+                '.$editPassword.'
                 '.$deleteAction.'
             </td>
         </tr>';

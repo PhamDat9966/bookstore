@@ -1,5 +1,4 @@
 <?php
-
 //Filter
 $allItem      = @$this->_count['allStatus'];
 $activeItem   = @$this->_count['activeStatus'];
@@ -34,7 +33,6 @@ $buttonAll = Helper::cmsButtonSubmit($type='submit',$class = $allButtonClass, $t
 $textSpanIconActive  = 'Active <span class="badge badge-pill badge-light">'.$activeItem.'</span>';
 $buttonActive    = Helper::cmsButtonSubmit($type='submit',$class = $activeButtonClass, $textOufit = $textSpanIconActive,$name='filter',$value='active');
 
-//<a href="#" class="btn btn-secondary">Inactive <span class="badge badge-pill badge-light">5</span></a>
 $textSpanIconInactive  = 'Inactive <span class="badge badge-pill badge-light">'.$inactiveItem.'</span>';
 $buttonInactive        = Helper::cmsButtonSubmit($type='submit',$clas = $inactiveButtonClass, $textOufit = $textSpanIconInactive,$name='filter',$value='inactive');
 
@@ -76,10 +74,7 @@ if(isset($_SESSION['selectGroup'])){
 }
 
 //Created selectgroup Array
-$selectGroupFilter = [];
-foreach ($this->groupNameData as $keyGroup=>$valueGroup){
-    $selectGroupFilter[$valueGroup['id']] = $valueGroup['name'];
-}
+$selectGroupFilter = $this->slbGroup;
 
 $arrGroup        = array_merge($arrGroup,$selectGroupFilter);
 
@@ -119,21 +114,6 @@ $formGroup          = '<form action="" method="GET" name="filterGroupForUser" id
                 </div>
                 
                 <div class="area-search mb-2">
-                
-<!--                     <form action="index.php?module=backend&controller=group&action=list" method="GET"> -->
-<!--                         <div class="input-group"> -->
-                        	<!-- Search Input -->
-<!--                             <input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="'.@$this->searchValue.'"> -->
-<!--                             <span class="input-group-append"> -->
-<!--                             	<button type="submit" class="btn btn-info">Search</button> -->
-                                <?php 
-//                                     //echo $buttonSubmit;
-//                                 ?>
-<!--                                 <a href="#" class="btn btn-btn btn-danger">Clear</a> -->
-<!--                             </span> -->
-<!--                         </div> -->
-<!--                     </form> -->
-
 					<?php 
 					   echo $formSearch;
 					?>

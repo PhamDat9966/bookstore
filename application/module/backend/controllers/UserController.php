@@ -2,6 +2,8 @@
 
 class UserController extends Controller{
     
+    public $_statusReturn;
+
     public function __construct(){ 
         //parent::__construct();
           
@@ -9,10 +11,8 @@ class UserController extends Controller{
     
     public function listAction(){
 
-        // Group for User
-        $setNumberGroupLimitControl  = 6;
-        $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
-        
+        $this->_view->slbGroup= $this->_model->itemInSelectbox($this->_arrParam,$numberGroup = 6);
+  
         //Bulk Action
         if(isset($_GET['selectBoxUser'])){
 
@@ -49,11 +49,6 @@ class UserController extends Controller{
             // Ẩn url biến get của groupACB và Status bằng cách gọi lại liên kết          
             $this->redirec($this->_arrParam['module'],$this->_arrParam['controller'],$this->_arrParam['action'],$this->_arrParam['page']);
         }
-        
-        //Odering
-        if(isset($_GET['order'])){
-            $this->_model->ordering($this->_arrParam);
-        }      
 
         //Paginator
         $this->_arrParam['count']  = $this->_model->countFilterSearch();
@@ -93,17 +88,7 @@ class UserController extends Controller{
         
         $this->_view->render('user/index', true);
     }
-    
-    public function groupACBAction(){
-        $this->_arrParam['group_acp'] = $_GET['group_acp'];
-        $this->_groupACBReturn = $this->_model->changeGroupACB($this->_arrParam);
-        // $this->_arrParam['page'] lấy từ Paginator
-        if (isset($this->_arrParam['page'])){
-            $this->_groupACBReturn['url'].$this->_arrParam['page'];
-            $page = $this->_arrParam['page'];
-        }    
-    }
-    
+
     public function statusAction(){
         $this->_arrParam['status'] = $_GET['status'];
         $this->_statusReturn = $this->_model->changeStatus($this->_arrParam);
@@ -152,10 +137,13 @@ class UserController extends Controller{
     
     // ACTION : ADD & EDIT
     public function formAction($option = null){
+//         echo "<pre>form";
+//         print_r($this);
+//         echo "</pre>";
         
         // SelectGroup for User
         $setNumberGroupLimitControl  = 6;
-        $this->_view->groupNameData = $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
+        $this->_view->slbGroup= $this->_model->createdAndModified($this->_arrParam,$option = $setNumberGroupLimitControl);
         
         $this->_view->_title        = 'User: Add';
         
@@ -176,7 +164,7 @@ class UserController extends Controller{
             }
             
             $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
-            
+
             // GeneratePassword
             if(isset($this->_arrParam['task'])){
                 if($this->_arrParam['task'] == 'generatepass'){
@@ -204,15 +192,36 @@ class UserController extends Controller{
         }
           
         if(@$this->_arrParam['form']['token'] > 0){
+            
+            echo "<h3>".$this->_arrParam['form']['id']."</h3>";
+            
+            $queryUserName  = "SELECT `id` FROM `" .TBL_USER. "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "'";
+            $queryEmailName = "SELECT `id` FROM `" .TBL_USER. "` WHERE `email`      = '" . $this->_arrParam['form']['email'] . "'";
+            
+            if(isset($this->_arrParam['task'])){
+                $queryUserName  = "SELECT `id` FROM `" .TBL_USER. "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "' AND `id` != '" . $this->_arrParam['form']['id'] . "'";  
+                $queryEmailName = "SELECT `id` FROM `" .TBL_USER. "` WHERE `email`      = '" . $this->_arrParam['form']['email'] . "'  AND `id` != '" . $this->_arrParam['form']['id'] . "'";
+                
+                $queryUserName  = "SELECT `id` FROM `" .TBL_USER. "` WHERE `id` < 0";
+                $queryEmailName = "SELECT `id` FROM `" .TBL_USER. "` WHERE `id` < 0";
+            }
+
             $validate = new Validate($this->_arrParam['form']);
-            $validate->addRule('username', 'string',array('min'=>3, 'max'=>255))
+            $validate//->addRule('username', 'string',array('min'=>3, 'max'=>255))
+                     ->addRule('username', 'string-notExistRecord',array('database' => $this->_model, 'query' => $queryUserName, 'min' => 3, 'max' => 25))
                      ->addRule('password', 'string',array('min'=>3, 'max'=>255))
-                     ->addRule('email', 'email',array('min'=>3, 'max'=>255))
+                     //->addRule('email', 'string',array('min'=>3, 'max'=>255))
+                     ->addRule('email', 'email-notExistRecord',array('database' => $this->_model, 'query' => $queryEmailName, 'min' => 3, 'max' => 25))
                      ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
                      ->addRule('status','status',array('deny'=>array('default')))
                      ->addRule('group_id','status',array('deny'=>array('default')));
             
             $validate->run();
+            
+//             echo "<pre>validaet";
+//             print_r($validate);
+//             echo "</pre>";
+            
             $this->_arrParam['form'] = $validate->getResult();
             
             if($validate->isValid() == false){

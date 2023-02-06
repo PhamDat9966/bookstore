@@ -26,6 +26,7 @@ class Template{
         
         if(file_exists($pathFileConfig)){
             $arrCofig   =   parse_ini_file($pathFileConfig);
+
             $view = $this->_controller->_view;
             
             //$view->_title       = $this->createTitle($arrCofig['title']);
@@ -46,10 +47,12 @@ class Template{
     public function createLinkALLCSS($fileCSS,$filePluginsCSS){
         $arrayCSS       = array_merge($fileCSS,$filePluginsCSS);
         $arrCSSOut       = [];
+        
         foreach ($arrayCSS as $key=>$value){
             $temp = explode("|", $value);
             $arrCSSOut[$temp[0]] = $temp[1];
         }
+        
         ksort($arrCSSOut);
         
         $xhtml = '';

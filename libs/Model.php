@@ -176,7 +176,21 @@ class Model{
         return $newWhere;
     }
 
-    public function listRecord($query){
+    public function fetchPairs($query){
+        $result = array();
+        if(!empty($query)){
+            $resultQuery = $this->query($query);
+            if(mysqli_num_rows($resultQuery) > 0){
+                while($row = mysqli_fetch_assoc($resultQuery)){
+                    $result[$row['id']] = $row['name'];
+                }
+                mysqli_free_result($resultQuery);
+            }
+        }
+        return $result;
+    }
+    
+    public function fetchAll($query){
         $result = array();
         if(!empty($query)){
             $resultQuery = $this->query($query);
@@ -192,7 +206,7 @@ class Model{
     
     
     // SINGLE RECORD
-    public function singleRecord($query)
+    public function fetchRow($query)
     {
         $result = array();
         if(!empty($query)){
