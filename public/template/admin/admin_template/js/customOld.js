@@ -161,60 +161,6 @@ $(document).ready(function(){
 	})		
 })
 
-function changeGroupACP(link){
-	 //e.preventDefault();
-//	Swal.fire({
-//	  title: 'Xác nhận?',
-//	  icon: 'warning',
-//	  showCancelButton: true,
-//	  confirmButtonColor: '#3085d6',
-//	  cancelButtonColor		: '#d33',
-//	  position 				: 'top',
-//	  confirmButtonText: 'Đồng ý',
-//	  cancelButtonText: 'Hủy'
-//		  
-//	}).then((result) => {
-//	  if (result.isConfirmed) {
-//	    window.location.href = link; 
-//	  }
-//	})
-	
-	$.ajax({
-		url		: link,
-		type	: 'GET',
-		success	: function(data){	
-				/*
-				 * <a href="javascript:changeGroupACP('index.php?module=backend&amp;controller=group&amp;action=ajaxGroupACP&amp;id=4&amp;group_acp=0');" id="GroupACP-4" class="btn btn-danger rounded-circle btn-sm">
-			            <i class="fas fa-minus"></i>
-			        </a>
-				 */
-			
-				var dataOject = JSON.parse(data);
-				
-				
-				var element = 'a#GroupACP-' + dataOject.id;
-				classRemove = 'btn-success';
-				classAdd 	= 'btn-danger'
-				iclassRemove	= 'fa-check';
-				iclassAdd		= 'fa-minus';
-				
-				if(dataOject.group_acb==1){
-					classRemove 	= 'btn-danger';
-					classAdd 		= 'btn-success';
-					iclassRemove	= 'fa-minus';
-					iclassAdd		= 'fa-check';
-				}
-				
-				$(element).attr('href',"javascript:changeGroupACP('"+dataOject.url+"')");
-				$(element).removeClass(classRemove).addClass(classAdd);
-				$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
-				
-				console.log(dataOject);
-				console.log(element);
-			}
-	})
-	
-}
 
 function changeStatus(link){
 	 //e.preventDefault();
@@ -235,6 +181,24 @@ function changeStatus(link){
 	})
 }
 
+function changeGroupACP(link){
+	 //e.preventDefault();
+	Swal.fire({
+	  title: 'Xác nhận?',
+	  icon: 'warning',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor		: '#d33',
+	  position 				: 'top',
+	  confirmButtonText: 'Đồng ý',
+	  cancelButtonText: 'Hủy'
+		  
+	}).then((result) => {
+	  if (result.isConfirmed) {
+	    window.location.href = link; 
+	  }
+	})
+}
 
 // User
 $(document).ready(function(){

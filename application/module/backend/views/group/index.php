@@ -20,7 +20,9 @@ if(!empty($this->Items)){
         $row            = ($i % 2 == 0) ? 'odd' : 'even';
         
         $groupACP       = '';
-        $groupACP       = Helper::cmsGroupACP($value['group_acp'], URL::createLink('backend','group','list',array('id'=>$id,'group_acp'=>$value['group_acp']),$this->_currentPage),$id);
+        //$groupACP       = Helper::cmsGroupACP($value['group_acp'], URL::createLink('backend','group','list',array('id'=>$id,'group_acp'=>$value['group_acp']),$this->_currentPage),$id);
+        //Ajax groupACP
+        $groupACP       = Helper::cmsGroupACP($value['group_acp'], URL::createLink('backend','group','ajaxGroupACP',array('id'=>$id,'group_acp'=>$value['group_acp'])),$id);
         
         $status         = '';
         $urlstatus      = URL::createLink('backend','group','list',array('id'=>$id,'status'=>$value['status']),$this->_currentPage);

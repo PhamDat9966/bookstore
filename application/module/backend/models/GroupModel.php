@@ -51,13 +51,24 @@ class GroupModel extends Model
     
     public function changeGroupACB($arrParam, $option = null){
         
-        $GroupACB = ($arrParam['group_acp'] == 0) ? 1 : 0 ;
-        $id       = $arrParam['id'];
-        $query    = "UPDATE `$this->_tableName` SET `group_acp` = $GroupACB WHERE `id` = '".$id."'";
-        $this->query($query);    
+        if($option['task'] == 'change-ajax-groupACP'){
+            $GroupACB = ($arrParam['group_acp'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->_tableName` SET `group_acp` = $GroupACB WHERE `id` = '".$id."'";
+            $this->query($query);    
+
+            return array('id'=>$id,'group_acb'=>$GroupACB,'url'=>URL::createLink('backend','group','ajaxGroupACP',array('id'=>$id,'group_acp'=>$GroupACB)));
+        }   
         
-        Session::set('message', array('class' => 'success', 'content' => 'Trạng thái GroupACB được cập nhật'));
-        return array('id'=>$id,'group_acb'=>$GroupACB,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'group_acp'=>$GroupACB)));
+        if($option['task'] == 'change-groupACP'){
+            $GroupACB = ($arrParam['group_acp'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->_tableName` SET `group_acp` = $GroupACB WHERE `id` = '".$id."'";
+            $this->query($query);
+            
+            Session::set('message', array('class' => 'success', 'content' => 'Trạng thái GroupACB được cập nhật'));
+            return array('id'=>$id,'group_acb'=>$GroupACB,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'group_acp'=>$GroupACB)));
+        } 
     }
        
     public function changeStatus($arrParam, $option = null){

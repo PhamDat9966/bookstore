@@ -98,8 +98,8 @@ class GroupController extends Controller{
     
     public function groupACBAction(){
         $this->_arrParam['group_acp'] = $_GET['group_acp'];
-        $this->_groupACBReturn = $this->_model->changeGroupACB($this->_arrParam);
-        // $this->_arrParam['page'] lấy từ Paginator
+        $this->_groupACBReturn = $this->_model->changeGroupACB($this->_arrParam, array('task'=>'change-groupACP'));
+
         if (isset($this->_arrParam['page'])){
             $this->_groupACBReturn['url'].$this->_arrParam['page'];
             $page = $this->_arrParam['page'];
@@ -112,6 +112,11 @@ class GroupController extends Controller{
         
         $this->_statusReturn['url'].$this->_arrParam['page'];
         $page = $this->_arrParam['page']; 
+    }
+    
+    public function ajaxGroupACPAction(){
+        $return = json_encode($this->_model->changeGroupACB($this->_arrParam, $option = array('task'=>'change-ajax-groupACP')));
+        echo $return;
     }
     
     public function filterAndSearchAction(){

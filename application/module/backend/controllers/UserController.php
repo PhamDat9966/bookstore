@@ -137,9 +137,6 @@ class UserController extends Controller{
     
     // ACTION : ADD & EDIT
     public function formAction($option = null){
-//         echo "<pre>form";
-//         print_r($this);
-//         echo "</pre>";
         
         // SelectGroup for User
         $setNumberGroupLimitControl  = 6;
@@ -147,7 +144,7 @@ class UserController extends Controller{
         
         $this->_view->_title        = 'User: Add';
         
-        // _arrParamOld use When is save but have error. _arrParamOld save error
+        // _arrParamOld use When save have error. _arrParamOld save error
         if(isset($this->_arrParam['form'])){
             $this->_arrParamOld['form'] = $this->_arrParam['form'];
             if(isset($this->_arrParam['form']['id'])){
@@ -192,35 +189,25 @@ class UserController extends Controller{
         }
           
         if(@$this->_arrParam['form']['token'] > 0){
+            $taskAction          = 'add';
+            $queryUserName       = "SELECT `id` FROM `" .TBL_USER. "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "'";
+            $queryEmailName      = "SELECT `id` FROM `" .TBL_USER. "` WHERE `email`      = '" . $this->_arrParam['form']['email'] . "'";
             
-            echo "<h3>".$this->_arrParam['form']['id']."</h3>";
-            
-            $queryUserName  = "SELECT `id` FROM `" .TBL_USER. "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "'";
-            $queryEmailName = "SELECT `id` FROM `" .TBL_USER. "` WHERE `email`      = '" . $this->_arrParam['form']['email'] . "'";
-            
-            if(isset($this->_arrParam['task'])){
-                $queryUserName  = "SELECT `id` FROM `" .TBL_USER. "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "' AND `id` != '" . $this->_arrParam['form']['id'] . "'";  
-                $queryEmailName = "SELECT `id` FROM `" .TBL_USER. "` WHERE `email`      = '" . $this->_arrParam['form']['email'] . "'  AND `id` != '" . $this->_arrParam['form']['id'] . "'";
-                
-                $queryUserName  = "SELECT `id` FROM `" .TBL_USER. "` WHERE `id` < 0";
-                $queryEmailName = "SELECT `id` FROM `" .TBL_USER. "` WHERE `id` < 0";
+            if(isset($this->_arrParam['form']['id'])){
+                $taskAction      = 'edit';
+                $queryUserName  .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
+                $queryEmailName .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
             }
 
             $validate = new Validate($this->_arrParam['form']);
-            $validate//->addRule('username', 'string',array('min'=>3, 'max'=>255))
-                     ->addRule('username', 'string-notExistRecord',array('database' => $this->_model, 'query' => $queryUserName, 'min' => 3, 'max' => 25))
+            $validate->addRule('username', 'string-notExistRecord',array('database' => $this->_model, 'query' => $queryUserName, 'min' => 3, 'max' => 25))
                      ->addRule('password', 'string',array('min'=>3, 'max'=>255))
-                     //->addRule('email', 'string',array('min'=>3, 'max'=>255))
                      ->addRule('email', 'email-notExistRecord',array('database' => $this->_model, 'query' => $queryEmailName, 'min' => 3, 'max' => 25))
                      ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
                      ->addRule('status','status',array('deny'=>array('default')))
                      ->addRule('group_id','status',array('deny'=>array('default')));
             
             $validate->run();
-            
-//             echo "<pre>validaet";
-//             print_r($validate);
-//             echo "</pre>";
             
             $this->_arrParam['form'] = $validate->getResult();
             
