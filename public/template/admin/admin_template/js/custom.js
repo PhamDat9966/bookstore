@@ -190,7 +190,9 @@ function changeGroupACP(link){
 				 */
 			
 				var dataOject = JSON.parse(data);
-				
+				var id        = dataOject.id;
+				var group_acb = dataOject.group_acb;
+				var url       = dataOject.url;
 				
 				var element = 'a#GroupACP-' + dataOject.id;
 				classRemove = 'btn-success';
@@ -198,14 +200,14 @@ function changeGroupACP(link){
 				iclassRemove	= 'fa-check';
 				iclassAdd		= 'fa-minus';
 				
-				if(dataOject.group_acb==1){
+				if(group_acb==1){
 					classRemove 	= 'btn-danger';
 					classAdd 		= 'btn-success';
 					iclassRemove	= 'fa-minus';
 					iclassAdd		= 'fa-check';
 				}
 				
-				$(element).attr('href',"javascript:changeGroupACP('"+dataOject.url+"')");
+				$(element).attr('href',"javascript:changeGroupACP('"+url+"')");
 				$(element).removeClass(classRemove).addClass(classAdd);
 				$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
 				
