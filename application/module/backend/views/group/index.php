@@ -25,8 +25,10 @@ if(!empty($this->Items)){
         $groupACP       = Helper::cmsGroupACP($value['group_acp'], URL::createLink('backend','group','ajaxGroupACP',array('id'=>$id,'group_acp'=>$value['group_acp'])),$id);
         
         $status         = '';
-        $urlstatus      = URL::createLink('backend','group','list',array('id'=>$id,'status'=>$value['status']),$this->_currentPage);
-        $status         = Helper::cmsStatus($value['status'], $urlstatus ,$id);
+        //$urlstatus      = URL::createLink('backend','group','list',array('id'=>$id,'status'=>$value['status']),$this->_currentPage);
+        //$status         = Helper::cmsStatus($value['status'], $urlstatus ,$id);
+        //Ajax Status
+        $status         = Helper::cmsStatus($value['status'], URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$value['status'])),$id);
         
         $created_by     = '';
         $created_by     = ($value['created_by'] == 1) ? 'Admin' : 'Manager';

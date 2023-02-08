@@ -106,6 +106,16 @@ class GroupModel extends Model
             return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$Status)));
         }
         
+        if($option['task'] == 'change-ajax-status'){
+  
+            $Status = ($arrParam['status'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
+            $this->query($query);
+
+            return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$Status)));
+        }
+        
     }
     
     public function saveItem($arrParam, $option = null){

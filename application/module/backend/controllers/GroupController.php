@@ -119,6 +119,11 @@ class GroupController extends Controller{
         echo $return;
     }
     
+    public function ajaxStatusAction(){
+        $return = json_encode($this->_model->changeStatus($this->_arrParam, $option = array('task'=>'change-ajax-status')));
+        echo $return;
+    }
+    
     public function filterAndSearchAction(){
         
         if(@$_GET['clear'] !=''){

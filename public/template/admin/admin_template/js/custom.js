@@ -162,22 +162,6 @@ $(document).ready(function(){
 })
 
 function changeGroupACP(link){
-	 //e.preventDefault();
-//	Swal.fire({
-//	  title: 'Xác nhận?',
-//	  icon: 'warning',
-//	  showCancelButton: true,
-//	  confirmButtonColor: '#3085d6',
-//	  cancelButtonColor		: '#d33',
-//	  position 				: 'top',
-//	  confirmButtonText: 'Đồng ý',
-//	  cancelButtonText: 'Hủy'
-//		  
-//	}).then((result) => {
-//	  if (result.isConfirmed) {
-//	    window.location.href = link; 
-//	  }
-//	})
 	
 	$.ajax({
 		url		: link,
@@ -194,7 +178,7 @@ function changeGroupACP(link){
 				var group_acb = dataOject.group_acb;
 				var url       = dataOject.url;
 				
-				var element = 'a#GroupACP-' + dataOject.id;
+				var element = 'a#GroupACP-' + id;
 				classRemove = 'btn-success';
 				classAdd 	= 'btn-danger'
 				iclassRemove	= 'fa-check';
@@ -211,29 +195,47 @@ function changeGroupACP(link){
 				$(element).removeClass(classRemove).addClass(classAdd);
 				$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
 				
-				console.log(dataOject);
-				console.log(element);
 			}
 	})
 	
 }
 
 function changeStatus(link){
-	 //e.preventDefault();
-	Swal.fire({
-	  title: 'Xác nhận?',
-	  icon: 'warning',
-	  showCancelButton: true,
-	  confirmButtonColor: '#3085d6',
-	  cancelButtonColor		: '#d33',
-	  position 				: 'top',
-	  confirmButtonText: 'Đồng ý',
-	  cancelButtonText: 'Hủy'
-		  
-	}).then((result) => {
-	  if (result.isConfirmed) {
-	    window.location.href = link; 
-	  }
+	$.ajax({
+		url		: link,
+		type	: 'GET',
+		success	: function(data){	
+				/*
+				 * <a href="javascript:changeStatus('index.php?module=backend&amp;controller=group&amp;action=ajaxStatus&amp;id=2&amp;status=1');" id="status-2" class="btn btn-success rounded-circle btn-sm oncli">
+					    <i class="fas fa-check"></i>
+					</a>
+				 */
+			
+				var dataOject = JSON.parse(data);
+				var id        = dataOject.id;
+				var status 	  = dataOject.status;
+				var url       = dataOject.url;
+				
+				var element = 'a#status-' + id;
+				classRemove = 'btn-success';
+				classAdd 	= 'btn-danger'
+				iclassRemove	= 'fa-check';
+				iclassAdd		= 'fa-minus';
+				
+				if(status==1){
+					classRemove 	= 'btn-danger';
+					classAdd 		= 'btn-success';
+					iclassRemove	= 'fa-minus';
+					iclassAdd		= 'fa-check';
+				}
+				
+				$(element).attr('href',"javascript:changeStatus('"+url+"')");
+				$(element).removeClass(classRemove).addClass(classAdd);
+				$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
+				
+				console.log(dataOject);
+				
+			}
 	})
 }
 
