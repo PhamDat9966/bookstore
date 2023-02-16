@@ -97,6 +97,11 @@ class UserController extends Controller{
         $page = $this->_arrParam['page']; 
     }
     
+    public function ajaxUserStatusAction(){
+        $return = json_encode($this->_model->changeStatus($this->_arrParam, $option = array('task'=>'change-ajax-user-status')));
+        echo $return;
+    }
+    
     public function filterAndSearchAction(){
         
         if(@$_GET['clear'] !=''){

@@ -259,5 +259,24 @@ class Helper{
 	    
 	    return $xhtml;
 	}
+
+    // Create Icon Group cmsStatus
+	public static function cmsStatusUser($statusValue, $link, $id){
+
+	    if($statusValue == 0){
+	        $strStatus = 'btn-danger';
+	        $icon        =  '<i class="fas fa-minus"></i>';
+	    } else{
+	        $strStatus = 'btn-success';
+	        $icon        =  '<i class="fas fa-check"></i>';
+	    }
+	    
+	    $xhtml          ='
+        <a href="javascript:changeStatusUser(\''.$link.'\');" id="status-'.$id.'" class="btn '.$strStatus.' rounded-circle btn-sm oncli">
+            '.$icon.'
+        </a>';
+	    
+	    return $xhtml;
+	}
 }
 

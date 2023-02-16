@@ -34,8 +34,8 @@ if(!empty($this->Items)){
         $modified_by    = '';
         
 
-        $dataGroupForUser         = array();
-        $dataGroupForUser['id']   = $id;
+        $dataGroupForUser               = array();
+        $dataGroupForUser['id']         = $id;
         $dataGroupForUser['group_id']   = $value['group_id'];
         
         foreach ($selectGroup as $keyselect=>$valueSelect){
@@ -74,8 +74,11 @@ if(!empty($this->Items)){
         
         //<a href="#" class="btn btn-success rounded-circle btn-sm"><i class="fas fa-check"></i></a>
         $status             = '';
-        $urlstatus          = URL::createLink('backend','user','list',array('id'=>$id,'status'=>$value['status']),$this->_currentPage);
-        $status             = Helper::cmsStatus($value['status'], $urlstatus ,$id);
+        //$groupACP       = Helper::cmsGroupACP($value['group_acp'], URL::createLink('backend','group','ajaxGroupACP',array('id'=>$id,'group_acp'=>$value['group_acp'])),$id);
+        //
+        
+        $urlstatus          = URL::createLink('backend','user','ajaxUserStatus',array('id'=>$id,'status'=>$value['status']));
+        $status             = Helper::cmsStatusUser($value['status'], $urlstatus ,$id);
         
         //CREATED:
         // Time create
