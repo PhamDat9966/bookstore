@@ -8,7 +8,7 @@ class GroupController extends Controller{
     }
     
     public function listAction(){
-        
+                
         //Bulk Action
         if(isset($_GET['selectBox'])){
 
@@ -88,7 +88,7 @@ class GroupController extends Controller{
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);       
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
         
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
         $this->_templateObj->setFileTemplate('group-list.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
@@ -213,7 +213,7 @@ class GroupController extends Controller{
         $this->_view->_tag          = 'group'; 
         $this->_view->arrParam      = $this->_arrParam;    
             
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
         $this->_templateObj->setFileTemplate('group-form.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();   

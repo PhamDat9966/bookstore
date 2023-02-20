@@ -81,7 +81,7 @@ class UserController extends Controller{
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);       
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
         
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
         $this->_templateObj->setFileTemplate('user-list.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
@@ -246,7 +246,7 @@ class UserController extends Controller{
         $this->_view->_tag          = 'user';
         $this->_view->arrParam      = $this->_arrParam;
         
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
         $this->_templateObj->setFileTemplate('user-form.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
@@ -258,7 +258,7 @@ class UserController extends Controller{
         
         require_once LIBRARY_PATH. DS ."functions.php";
         $this->_arrParam['form']['password'] = randomString($length = 12);      
-        $this->_templateObj->setFolderTemplate('admin/admin_template/');
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
         $this->_templateObj->setFileTemplate('user-form.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();

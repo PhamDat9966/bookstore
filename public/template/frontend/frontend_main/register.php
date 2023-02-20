@@ -1,0 +1,180 @@
+<?php 
+    echo "<pre>";
+     print_r($this);
+    echo "</pre>";
+    $imageURL   = $this->_urlImg;
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   	<?php 
+		include_once 'html/header.php';
+	?>  
+</head>
+
+<body>
+    <div class="loader_skeleton">
+        <div class="typography_section">
+            <div class="typography-box">
+                <div class="typo-content loader-typo">
+                    <div class="pre-loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- header start -->
+    	<?php
+			include_once 'html/header_navigation.php';
+		?>
+    <!-- header end -->
+
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title">
+                        <h2 class="py-2">Đăng ký tài khoản</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="register-page section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Đăng ký tài khoản</h3>
+                    <div class="theme-card">
+                        <form action="" method="post" id="admin-form" class="theme-form">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="username" class="required">Tên tài khoản</label>
+                                    <input type="text" id="form[username]" name="form[username]" value="" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="fullname">Họ và tên</label>
+                                    <input type="text" id="form[fullname]" name="form[fullname]" value="" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="required">Email</label>
+                                    <input type="email" id="form[email]" name="form[email]" value="" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password" class="required">Mật khẩu</label>
+                                    <input type="password" id="form[password]" name="form[password]" value="" class="form-control">
+                                </div>
+                            </div>
+                            <input type="hidden" id="form[token]" name="form[token]" value="1599208957">
+                            <button type="submit" id="submit" name="submit" value="Tạo tài khoản" class="btn btn-solid">Tạo tài khoản</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	
+	
+	 <!-- footer -->
+    <div class="phonering-alo-phone phonering-alo-green phonering-alo-show" id="phonering-alo-phoneIcon">
+        <div class="phonering-alo-ph-circle"></div>
+        <div class="phonering-alo-ph-circle-fill"></div>
+        <a href="tel:0905744470" class="pps-btn-img" title="Liên hệ">
+            <div class="phonering-alo-ph-img-circle"></div>
+        </a>
+    </div>
+	
+    <footer class="footer-light mt-5">
+        <section class="section-b-space light-layout">
+            <div class="container">
+                <div class="row footer-theme partition-f">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer-title footer-mobile-title">
+                            <h4>Giới thiệu</h4>
+                        </div>
+                        <div class="footer-contant">
+                            <div class="footer-logo">
+                                <h2 style="color: #5fcbc4">BookStore</h2>
+                            </div>
+                            <p>Tự hào là website bán sách trực tuyến lớn nhất Việt Nam, cung cấp đầy đủ các thể loại
+                                sách, đặc biệt với những đầu sách độc quyền trong nước và quốc tế</p>
+                        </div>
+                    </div>
+                    <div class="col offset-xl-1">
+                        <div class="sub-title">
+                            <div class="footer-title">
+                                <h4>Danh mục nổi bật</h4>
+                            </div>
+                            <div class="footer-contant">
+                                <ul>
+                                    <li><a href="list.html">Bà mẹ - Em bé</a></li>
+                                    <li><a href="list.html">Học Ngoại Ngữ</a></li>
+                                    <li><a href="list.html">Công Nghệ Thông Tin</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="sub-title">
+                            <div class="footer-title">
+                                <h4>Chính sách</h4>
+                            </div>
+                            <div class="footer-contant">
+                                <ul>
+                                    <li><a href="#">Điều khoản sử dụng</a></li>
+                                    <li><a href="#">Chính sách bảo mật</a></li>
+                                    <li><a href="#">Hợp tác phát hành</a></li>
+                                    <li><a href="#">Phương thức vận chuyển</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="sub-title">
+                            <div class="footer-title">
+                                <h4>Thông tin</h4>
+                            </div>
+                            <div class="footer-contant">
+                                <ul class="contact-list">
+                                    <li><i class="fa fa-phone"></i>Hotline 1: <a href="tel:0905744470">090 5744 470</a>
+                                    </li>
+                                    <li><i class="fa fa-phone"></i>Hotline 2: <a href="tel:0383308983">0383 308 983</a>
+                                    </li>
+                                    <li><i class="fa fa-envelope-o"></i>Email: <a href="mailto:training@zend.vn"
+                                            class="text-lowercase">training@zend.vn</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="sub-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 col-sm-12">
+                        <div class="footer-end">
+                            <p><i class="fa fa-copyright" aria-hidden="true"></i> 2020 ZendVN</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer> <!-- footer end -->
+
+    <!-- tap to top -->
+    <div class="tap-top top-cls">
+        <div>
+            <i class="fa fa-angle-double-up"></i>
+        </div>
+    </div>
+    <!-- tap to top end -->
+	<?php 
+		include_once 'html/script.php';
+	?>
+	
+</body>
+
+</html>
