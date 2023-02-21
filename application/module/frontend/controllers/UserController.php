@@ -8,8 +8,17 @@ class UserController extends Controller{
         //parent::__construct();    
     }
     
+    public  function indexAction(){
+        
+        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('user/index', true);
+    }
+
     public  function registerAction(){
-        echo "<h3>".__METHOD__."</h3>";
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
         $this->_templateObj->setFileTemplate('register.php');

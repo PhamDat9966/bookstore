@@ -1,3 +1,7 @@
+<?php 
+    $imageURL   = $this->_urlImg;
+?>
+
 <header class="my-header sticky">
 	<div class="mobile-fix-option"></div>
 	<div class="container">
