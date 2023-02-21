@@ -14,7 +14,21 @@
 
 		<div>
 			<a href="" class="home text-center"> <img
-				src="<?php echo $this->_urlImg;?>/slider.jpg" alt=""
+				src="<?php echo $imageURL;?>/slider1.jpg" alt=""
+				class="bg-img blur-up lazyload">
+			</a>
+		</div>
+		
+		<div>
+			<a href="" class="home text-center"> <img
+				src="<?php echo $imageURL;?>/slider2.jpg" alt=""
+				class="bg-img blur-up lazyload">
+			</a>
+		</div>
+		
+		<div>
+			<a href="" class="home text-center"> <img
+				src="<?php echo $imageURL;?>/slider3.jpg" alt=""
 				class="bg-img blur-up lazyload">
 			</a>
 		</div>
