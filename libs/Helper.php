@@ -12,57 +12,64 @@ class Helper{
 
     //Button Input
     public static function cmsButtonSubmit( $type, $class = 'btn btn-info' , $textOutfit ,$name = null , $value = null, $id = null  ){
-        //class: default secondary danger
         
-        $nameButton = '';
-        if(isset($name)){
-            $nameButton = "name='$name'";
-        }
-        
-        $valueButton = '';
-        if(isset($value)){
-            $valueButton = "value='$value'";
-        }
-        
-        $classButton = '';
-        if($class == 'btn btn-info'){
-            $classButton = "class='btn btn-info'";
-        }
-        
-        if($class == 'btn btn-success'){
-            $classButton = "class='btn btn-success'";
-        }
-        
-        if($class == 'btn btn-secondary'){
-            $classButton = "class='btn btn-secondary'";
-        }
-        
-        if($class == 'btn btn-danger'){
-            $classButton = "class='btn btn-danger'";
-        }
-        
-        if($class == 'btn btn-solid'){
-            $classButton = "class='btn btn-solid'";
-        }
-        
-        $nameAndValue = '';
-        if(isset($name) && isset($value)){
-            $nameAndValue = "name='$name' value='$value'";
-        }
-        
-        $idAttr = '';
-        if(!empty($id)){
-            $idAttr = "id = '$id'";
-        }
-        
-        
-        $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>';
+        $xhtml = '<button type="'.$type.'" id="'.$id.'" name="'.$name.'" value="'.$value.'" class="'.$class.'">'.$textOutfit.'</button>';
         return $xhtml;
     }
-    
-    public static function cmsButtonSubmitPUBLIC($type = 'submit', $class = 'class = "btn btn-info"' , $textOutfit ,$name = null , $value = null, $id = null  ){
 
-        $xhtml = "<button $type $class $name $value $id>".$textOutfit."</button>";
+    //Button Input
+    // public static function cmsButtonSubmit( $type, $class = 'btn btn-info' , $textOutfit ,$name = null , $value = null, $id = null  ){
+    //     //class: default secondary danger
+        
+    //     $nameButton = '';
+    //     if(isset($name)){
+    //         $nameButton = "name='$name'";
+    //     }
+        
+    //     $valueButton = '';
+    //     if(isset($value)){
+    //         $valueButton = "value='$value'";
+    //     }
+        
+    //     $classButton = '';
+    //     if($class == 'btn btn-info'){
+    //         $classButton = "class='btn btn-info'";
+    //     }
+        
+    //     if($class == 'btn btn-success'){
+    //         $classButton = "class='btn btn-success'";
+    //     }
+        
+    //     if($class == 'btn btn-secondary'){
+    //         $classButton = "class='btn btn-secondary'";
+    //     }
+        
+    //     if($class == 'btn btn-danger'){
+    //         $classButton = "class='btn btn-danger'";
+    //     }
+        
+    //     if($class == 'btn btn-solid'){
+    //         $classButton = "class='btn btn-solid'";
+    //     }
+        
+    //     $nameAndValue = '';
+    //     if(isset($name) && isset($value)){
+    //         $nameAndValue = "name='$name' value='$value'";
+    //     }
+        
+    //     $idAttr = '';
+    //     if(!empty($id)){
+    //         $idAttr = "id = '$id'";
+    //     }
+        
+        
+    //     $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>';
+    //     return $xhtml;
+    // }
+    
+    public static function cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-info' , $textOutfit ,$name = null , $value = null, $id = null  ){
+
+        $xhtml = '<button type="'.$type.'" class="'.$class.'" name="'.$name.'" value="'.$value.'" $id="'.$id.'">'.$textOutfit.'</button>';
         return $xhtml;
         
     }

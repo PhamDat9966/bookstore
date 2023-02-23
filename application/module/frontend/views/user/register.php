@@ -1,4 +1,8 @@
 <?php 
+//     echo "<pre>VIEW";
+//     print_r($this);
+//     echo "</pre>";
+    
     // FORM ACTION
     $module     = '<input type="hidden"     name="module"       value="frontend">';
     $controller = '<input type="hidden"     name="controller"   value="user">';
@@ -6,10 +10,10 @@
     $typeSave   = '<input type="hidden"     name="type"         value="save">';
     
     // FORM INPUT
-    $inputUserName = Helper::cmsInput($type = 'text', $name = 'form[username]' , $id = 'username', $value = '', $class = 'form-control');
-    $inputFullName = Helper::cmsInput($type = 'text', $name = 'form[fullname]' , $id = 'fullname', $value = '', $class = 'form-control');
-    $inputEmail    = Helper::cmsInput($type = 'text', $name = 'form[email]'    , $id = 'email'   , $value = '', $class = 'form-control');
-    $inputPassword = Helper::cmsInput($type = 'text', $name = 'form[password]' , $id = 'password', $value = '', $class = 'form-control');
+    $inputUserName = Helper::cmsInput($type = 'text', $name = 'form[username]' , $id = 'username', $value = $this->arrParam['form']['username'], $class = 'form-control');
+    $inputFullName = Helper::cmsInput($type = 'text', $name = 'form[fullname]' , $id = 'fullname', $value = $this->arrParam['form']['fullname'], $class = 'form-control');
+    $inputEmail    = Helper::cmsInput($type = 'text', $name = 'form[email]'    , $id = 'email'   , $value = $this->arrParam['form']['email'],    $class = 'form-control');
+    $inputPassword = Helper::cmsInput($type = 'text', $name = 'form[password]' , $id = 'password', $value = $this->arrParam['form']['password'], $class = 'form-control');
     
     $rowUserName   = Helper::cmsRow($lblName = 'Tên Tài Khoảng' , $input = $inputUserName , $option = 'for="username"'  );
     $rowFullName   = Helper::cmsRow($lblName = 'Họ Và Tên'      , $input = $inputFullName , $option = 'for="fullname"'  );
@@ -17,7 +21,7 @@
     $rowPassword   = Helper::cmsRow($lblName = 'Mật Khẩu'       , $input = $inputPassword , $option = 'for="password"'  );
     
     // SUBMIT BUTTON
-    $buttonSumit   = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'class="btn btn-solid"' , $textOutfit = 'Tạo tài khoản' ,$name = 'name="form[submit]"' , $value = 'value="Tạo tài khoảng"', $id = 'id="submit"');
+    $buttonSumit   = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-solid' , $textOutfit = 'Tạo tài khoản' ,$name = "form[submit]" , $value = 'Tạo tài khoảng', $id = 'submit');
     $inputToken    = Helper::cmsInput($type = 'hidden', $name = '[form]token', $id = 'token', $value = time());
 ?>
 <div class="breadcrumb-section">
@@ -37,6 +41,7 @@
 			<div class="col-lg-12">
 				<h3>Đăng ký tài khoản</h3>
 				<div class="theme-card">
+					<?php echo $this->errors;?>
 					<!-- Form -->
 					<form action="#" method="get" id="admin-form" class="theme-form">
 						<div class="form-row">

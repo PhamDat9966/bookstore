@@ -148,7 +148,7 @@ class Validate{
 		}
 	}
 	
-	public function showErrors(){
+	public function showErrors($textColor = null){
 	    
 		$xhtml = '';
 		if(!empty($this->errors)){
@@ -158,8 +158,29 @@ class Validate{
 			}
 			$xhtml .=  '</ul>';
 		}
+
+		
 		return $xhtml;
 	}
+	
+	public function showErrorsPublic($textColor = null){
+	    
+	    $xhtml = '';
+	    if(!empty($this->errors)){
+	        
+	            $xhtml     .= '<div class="alert bg-danger alert-dismissible">';
+	            $xhtml     .= '<ul>';
+	            
+	            foreach($this->errors as $key => $value){
+	                $xhtml .= '<li class="text-white mt-3 mb-3" style="display: block;">'.$value.' </li>';
+	            }
+	            
+	            $xhtml     .=  '</ul>';
+	            $xhtml     .=  '</div>';
+	    }
+	    return $xhtml;
+	}
+	
 	
 	public function isValid(){
 	 	if(count($this->errors)>0) return false;
