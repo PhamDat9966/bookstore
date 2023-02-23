@@ -37,9 +37,12 @@ class Helper{
             $classButton = "class='btn btn-secondary'";
         }
         
-        //class="btn btn-danger"
         if($class == 'btn btn-danger'){
             $classButton = "class='btn btn-danger'";
+        }
+        
+        if($class == 'btn btn-solid'){
+            $classButton = "class='btn btn-solid'";
         }
         
         $nameAndValue = '';
@@ -52,8 +55,16 @@ class Helper{
             $idAttr = "id = '$id'";
         }
         
+        
         $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>';
         return $xhtml;
+    }
+    
+    public static function cmsButtonSubmitPUBLIC($type = 'submit', $class = 'class = "btn btn-info"' , $textOutfit ,$name = null , $value = null, $id = null  ){
+
+        $xhtml = "<button $type $class $name $value $id>".$textOutfit."</button>";
+        return $xhtml;
+        
     }
     
     public static function cmsMessage($message){
@@ -119,7 +130,7 @@ class Helper{
         return $xhtml;
     }
     
-    // Create Selectbox
+    // Create for - ADMIN
     public static function cmsRowForm($lblName, $input, $require = FALSE, $option = null){  
         $strRequire = '';
         if($require == true) $strRequire = '<span class="text-danger">*</span>';
@@ -128,7 +139,17 @@ class Helper{
         return $xhtml;
     }
     
-    // Create Row
+    // Create for - PUBLIC
+    public static function cmsRow($lblName, $input, $option = null){
+
+        $xhtml = '<div class="col-md-6">
+					<label '.$option.' class="required">'.$lblName.'</label>'.$input.' 
+				</div>';
+        
+        return $xhtml;
+    }
+    
+    // Create INPUT
     public static function cmsInput($type, $name, $id, $value, $class = null, $size = null,$option = null){
         $strSize    = ($size == null) ? '' : "size = '$size'";
         $strClass   = ($class == null) ? '' : "class = '$class'";

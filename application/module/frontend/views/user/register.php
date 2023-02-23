@@ -1,3 +1,23 @@
+<?php 
+    // FORM ACTION
+    $module     = '<input type="hidden"     name="module"       value="frontend">';
+    $controller = '<input type="hidden"     name="controller"   value="user">';
+    $action     = '<input type="hidden"     name="action"       value="register">';
+    $typeSave   = '<input type="hidden"     name="type"         value="save-close">';
+    
+    // FORM INPUT
+    $inputUserName = Helper::cmsInput($type = 'text', $name = 'form[username]' , $id = 'username', $value = '', $class = 'form-control');
+    $inputFullName = Helper::cmsInput($type = 'text', $name = 'form[fullname]' , $id = 'fullname', $value = '', $class = 'form-control');
+    $inputEmail    = Helper::cmsInput($type = 'text', $name = 'form[email]'    , $id = 'email'   , $value = '', $class = 'form-control');
+    $inputPassword = Helper::cmsInput($type = 'text', $name = 'form[password]' , $id = 'password', $value = '', $class = 'form-control');
+    
+    $rowUserName   = Helper::cmsRow($lblName = 'Tên Tài Khoảng' , $input = $inputUserName , $option = 'for="username"'  );
+    $rowFullName   = Helper::cmsRow($lblName = 'Họ Và Tên'      , $input = $inputFullName , $option = 'for="fullname"'  );
+    $rowEmail      = Helper::cmsRow($lblName = 'Email'          , $input = $inputEmail    , $option = 'for="email"'     );
+    $rowPassword   = Helper::cmsRow($lblName = 'Mật Khẩu'       , $input = $inputPassword , $option = 'for="password"'  );
+
+    $buttonSumit   = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'class="btn btn-solid"' , $textOutfit = 'Tạo tài khoản' ,$name = 'name="submit"' , $value = 'value="Tạo tài khoảng"', $id = 'id="submit"');
+?>
 <div class="breadcrumb-section">
 	<div class="container">
 		<div class="row">
@@ -15,34 +35,19 @@
 			<div class="col-lg-12">
 				<h3>Đăng ký tài khoản</h3>
 				<div class="theme-card">
-					<form action="" method="post" id="admin-form" class="theme-form">
+					<!-- Form -->
+					<form action="#" method="get" id="admin-form" class="theme-form">
 						<div class="form-row">
-							<div class="col-md-6">
-								<label for="username" class="required">Tên tài khoản</label> <input
-									type="text" id="form[username]" name="form[username]" value=""
-									class="form-control">
-							</div>
-							<div class="col-md-6">
-								<label for="fullname">Họ và tên</label> <input type="text"
-									id="form[fullname]" name="form[fullname]" value=""
-									class="form-control">
-							</div>
-							<div class="col-md-6">
-								<label for="email" class="required">Email</label> <input
-									type="email" id="form[email]" name="form[email]" value=""
-									class="form-control">
-							</div>
-							<div class="col-md-6">
-								<label for="password" class="required">Mật khẩu</label> <input
-									type="password" id="form[password]" name="form[password]"
-									value="" class="form-control">
-							</div>
+							<!-- module controller action typeSave -->
+							<?php echo $module . $controller . $action . $typeSave;?>
+							<!-- Form Input -->
+							<?php echo $rowUserName . $rowFullName . $rowEmail . $rowPassword;?>
 						</div>
 						<input type="hidden" id="form[token]" name="form[token]"
 							value="1599208957">
-						<button type="submit" id="submit" name="submit"
-							value="Tạo tài khoản" class="btn btn-solid">Tạo tài khoản</button>
+						<?php echo $buttonSumit;?>
 					</form>
+					<!-- form end -->
 				</div>
 			</div>
 		</div>

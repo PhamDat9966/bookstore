@@ -19,6 +19,12 @@ class UserController extends Controller{
     }
 
     public  function registerAction(){
+        echo "<pre>";
+         print_r($this);
+        echo "</pre>";
+        echo "<pre>GEt";
+         print_r($_GET);
+        echo "</pre>";
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
         $this->_templateObj->setFileTemplate('register.php');
