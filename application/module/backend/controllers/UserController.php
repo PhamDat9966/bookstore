@@ -185,7 +185,7 @@ class UserController extends Controller{
                 }
             }
             
-            if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'user', 'list'));
+            if(empty($this->_arrParam['form'])) URL::redirect('backend', 'user', 'list');
         }
         
 
@@ -234,10 +234,10 @@ class UserController extends Controller{
                 $id      = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
                 $type    = $this->_arrParam['type'];
                 
-                if($type == 'save-close') URL::redirect(URL::createLink('backend', 'user', 'list'));
+                if($type == 'save-close') URL::redirect('backend', 'user', 'list');
                 //plus
-                if($type == 'save-new') URL::redirect(URL::createLink('backend', 'user', 'form'));
-                if($type == 'save') URL::redirect(URL::createLink('backend', 'user', 'form',array('id', $id)));
+                if($type == 'save-new') URL::redirect('backend', 'user', 'form');
+                if($type == 'save') URL::redirect('backend', 'user', 'form',array('id', $id));
                 
             }
             

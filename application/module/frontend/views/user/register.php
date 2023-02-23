@@ -3,7 +3,7 @@
     $module     = '<input type="hidden"     name="module"       value="frontend">';
     $controller = '<input type="hidden"     name="controller"   value="user">';
     $action     = '<input type="hidden"     name="action"       value="register">';
-    $typeSave   = '<input type="hidden"     name="type"         value="save-close">';
+    $typeSave   = '<input type="hidden"     name="type"         value="save">';
     
     // FORM INPUT
     $inputUserName = Helper::cmsInput($type = 'text', $name = 'form[username]' , $id = 'username', $value = '', $class = 'form-control');
@@ -15,8 +15,10 @@
     $rowFullName   = Helper::cmsRow($lblName = 'Họ Và Tên'      , $input = $inputFullName , $option = 'for="fullname"'  );
     $rowEmail      = Helper::cmsRow($lblName = 'Email'          , $input = $inputEmail    , $option = 'for="email"'     );
     $rowPassword   = Helper::cmsRow($lblName = 'Mật Khẩu'       , $input = $inputPassword , $option = 'for="password"'  );
-
-    $buttonSumit   = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'class="btn btn-solid"' , $textOutfit = 'Tạo tài khoản' ,$name = 'name="submit"' , $value = 'value="Tạo tài khoảng"', $id = 'id="submit"');
+    
+    // SUBMIT BUTTON
+    $buttonSumit   = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'class="btn btn-solid"' , $textOutfit = 'Tạo tài khoản' ,$name = 'name="form[submit]"' , $value = 'value="Tạo tài khoảng"', $id = 'id="submit"');
+    $inputToken    = Helper::cmsInput($type = 'hidden', $name = '[form]token', $id = 'token', $value = time());
 ?>
 <div class="breadcrumb-section">
 	<div class="container">

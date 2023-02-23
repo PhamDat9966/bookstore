@@ -15,7 +15,8 @@ class URL{
 		return $url;
 	} 
 	
-	public static function redirect($link){
+	public static function redirect($module, $controller, $action){
+	    $link  =   self::createLink($module, $controller, $action);
 		header('location: ' . $link);
 		exit();
 	}

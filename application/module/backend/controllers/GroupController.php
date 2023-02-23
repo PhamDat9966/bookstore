@@ -25,7 +25,7 @@ class GroupController extends Controller{
             if($_GET['selectBox'] == 'inactive'){
                 $this->_arrParam['type'] = 0;
                 $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-                //URL::redirect(URL::createLink('admin', 'group', 'index'));
+                //URL::redirect(('admin', 'group', 'index');
             }
 
         }
@@ -176,7 +176,7 @@ class GroupController extends Controller{
         if(isset($this->_arrParam['id'])){
             $this->_view->_title  = 'User Groups: Edit';
             $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
-            if(empty($this->_arrParam['form'])) URL::redirect(URL::createLink('backend', 'group', 'list'));
+            if(empty($this->_arrParam['form'])) URL::redirect('backend', 'group', 'list');
         }
 
         //* use _arrParamOld *//
@@ -201,10 +201,10 @@ class GroupController extends Controller{
                 $task = (isset($this->_arrParam['form']['id']) ? 'edit':'add');
                 $id = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
                 $type = $this->_arrParam['type'];
-                if($type == 'save-close') URL::redirect(URL::createLink('backend', 'group', 'list'));
+                if($type == 'save-close') URL::redirect('backend', 'group', 'list');
                 //plus
-                if($type == 'save-new') URL::redirect(URL::createLink('backend', 'group', 'form'));
-                if($type == 'save') URL::redirect(URL::createLink('backend', 'group', 'form',array('id', $id)));
+                if($type == 'save-new') URL::redirect('backend', 'group', 'form');
+                if($type == 'save') URL::redirect('backend', 'group', 'form',array('id', $id));
                 
             }
 
