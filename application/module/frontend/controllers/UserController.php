@@ -19,17 +19,10 @@ class UserController extends Controller{
     }
 
     public  function registerAction(){
-//         echo "<pre>register";
-//          print_r($this->_arrParam);
-//         echo "</pre>";
         
         if(isset($this->_arrParam['form']['submit'])){
-            if(Session::get('token') == $this->_arrParam['form']['token']){
-                Session::delete('token');
-                URL::redirect('frontend', 'user', 'register');
-            }else{
-                Session::set('token', $this->_arrParam['form']['token']);
-            }
+            
+            URL::checkRefreshPage($this->_arrParam['form']['token'], 'frontend', 'user', 'register');
             
             $queryUserName       = "SELECT `id` FROM `" .TBL_USER. "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "'";
             $queryEmailName      = "SELECT `id` FROM `" .TBL_USER. "` WHERE `email`      = '" . $this->_arrParam['form']['email'] . "'";
@@ -38,6 +31,7 @@ class UserController extends Controller{
 
             $validate->addRule('username', 'string-notExistRecord',array('database' => $this->_model, 'query' => $queryUserName, 'min' => 3, 'max' => 25))  
                      ->addRule('email',    'email-notExistRecord',array('database' => $this->_model, 'query' => $queryEmailName, 'min' => 3, 'max' => 25))
+                     ->addRule('fullname', 'string',array('min'=>3, 'max'=>255))
                      ->addRule('password', 'string',array('min'=>3, 'max'=>255));
                      //->addRule('password', 'password',array('action'->'add'));
                      
@@ -48,17 +42,10 @@ class UserController extends Controller{
                 $this->_view->errors    = $validate->showErrorsPublic();
                 
             }else {
-                
-//                 die('DIE');
-                
-//                 $id      = $this->_model->saveItem($this->_arrParam,array('task'=>$task));
-                   $type    = $this->_arrParam['type'];
-                
-                if($type == 'save-close') URL::redirect('backend', 'user', 'list');
-                //plus
-                if($type == 'save-new') URL::redirect('backend', 'user', 'form');
-                if($type == 'save') URL::redirect('backend', 'user', 'form',array('id', $id));
-                
+        
+                $id      = $this->_model->saveItem($this->_arrParam,array('task'=>'save-register'));
+                URL::redirect('frontend', 'index', 'notice', array('type'=>'register-success'));
+
             }
         }
         

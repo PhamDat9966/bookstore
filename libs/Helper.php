@@ -157,7 +157,7 @@ class Helper{
     }
     
     // Create INPUT
-    public static function cmsInput($type, $name, $id, $value, $class = null, $size = null,$option = null){
+    public static function cmsInput($type, $name, $id = null, $value, $class = null, $size = null,$option = null){
         $strSize    = ($size == null) ? '' : "size = '$size'";
         $strClass   = ($class == null) ? '' : "class = '$class'";
         

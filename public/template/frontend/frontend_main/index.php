@@ -60,10 +60,16 @@
     ?>    
     <!-- Quick-view modal popup end-->
 
+	<!-- phonering -->
+	<?php 
+	   include_once 'html/phonering.php';
+	?>
+	<!-- end phonering -->
+	
     <!-- footer -->
-        <?php
-            include_once 'html/footer.php';
-        ?>
+    <?php
+        include_once 'html/footer.php';
+    ?>
     <!-- footer end -->
 
     <!-- tap to top -->

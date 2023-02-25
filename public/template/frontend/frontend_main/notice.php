@@ -22,20 +22,13 @@
 	    include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . 'user' . DS .'header_navigation.php';
 		//include_once 'html/header_navigation.php';
 	?>
-    <!-- header end -->
-
-	<!-- main content -->
-    <?php
-		include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . $this->_fileView . '.php';
-	?>
-	<!-- main content -->
 	
-	<!-- phonering -->
+	<!-- Main notice -->
 	<?php 
-	   include_once 'html/phonering.php';
+	   include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . $this->_fileView . '.php';
 	?>
-	<!-- phonering -->
-	
+	<!-- End Main notice -->
+
 	 <!-- footer -->
 	 	<?php include_once 'html/footer.php'; ?>
      <!-- footer end -->

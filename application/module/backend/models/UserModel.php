@@ -21,8 +21,8 @@ class UserModel extends Model
         
         $queryContent   = [];
         $queryContent[] = "SELECT `u`.`id`,`u`.`username`,`u`.`email`,`u`.`fullname`,`u`.`password`,`u`.`created`,`u`.`created_by`,`u`.`modified`,`u`.`modified_by`,`u`.`status`,`u`.`ordering`,`u`.`group_id`,`g`.`name` AS `group_name`";             
-        $queryContent[] = "FROM `$this->_tableName` AS `u`, `".TBL_GROUP."` AS `g`";
-        $queryContent[] = "WHERE `u`.`group_id` = `g`.`id`";
+        $queryContent[] = "FROM `$this->_tableName` AS `u` LEFT JOIN `".TBL_GROUP."` AS `g` ON `u`.`group_id` = `g`.`id`";
+        $queryContent[] = "WHERE `u`.`id` > 0";
         
         if(!empty($_SESSION['search'])){
             $keyword            = '"%'.$_SESSION['search'].'%"';

@@ -15,9 +15,18 @@ class URL{
 		return $url;
 	} 
 	
-	public static function redirect($module, $controller, $action){
-	    $link  =   self::createLink($module, $controller, $action);
+	public static function redirect($module, $controller, $action,$params = NULL){
+	    $link  =   self::createLink($module, $controller, $action,$params);
 		header('location: ' . $link);
 		exit();
+	}
+	
+	public static function checkRefreshPage($value, $module, $controller, $action, $params = null){
+	    if(Session::get('token') == $value){
+	        Session::delete('token');
+	        URL::redirect($module, $controller, $action, $params);
+	    }else{
+	        Session::set('token', $value);
+	    }
 	}
 }
