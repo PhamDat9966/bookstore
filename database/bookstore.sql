@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 04, 2023 lúc 08:50 PM
--- Phiên bản máy phục vụ: 10.4.24-MariaDB
--- Phiên bản PHP: 8.1.6
+-- Host: 127.0.0.1
+-- Generation Time: Feb 27, 2023 at 04:48 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `bookstore`
+-- Database: `bookstore`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `group`
+-- Table structure for table `group`
 --
 
 CREATE TABLE `group` (
@@ -40,34 +40,29 @@ CREATE TABLE `group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `group`
+-- Dumping data for table `group`
 --
 
 INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`) VALUES
-(1, 'Admin', 0, '2022-10-18', 1, '2022-12-23', 10, '1', '11'),
-(2, 'Manager', 1, '2022-10-05', NULL, '2022-10-13', NULL, '0', '8'),
-(3, 'Member', 0, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
-(4, 'Register', 1, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
-(5, 'Manage 1', 0, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
+(1, 'Admin', 1, '2022-10-18', 1, '2023-01-11', 10, '1', '11'),
+(2, 'Manager', 1, '2022-10-05', NULL, '2022-10-13', NULL, '1', '10'),
+(3, 'Member', 1, '2022-10-08', NULL, '2023-01-11', 10, '1', '11'),
+(4, 'Register', 0, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
+(5, 'Manage 1', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
 (6, 'Admin 1', 1, '2022-10-18', 1, '2022-10-13', 1, '0', '10'),
-(7, 'Admin 2', 0, '2022-10-05', NULL, '2022-10-13', NULL, '0', '8'),
+(7, 'Admin 2', 1, '2022-10-05', NULL, '2022-10-13', NULL, '0', '8'),
 (8, 'Manage 1', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
-(9, 'Manage 2', 1, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
-(10, 'Admin 1', 1, '2022-10-18', 1, '2022-10-13', 1, '1', '10'),
-(56, 'Admin 2', 0, '2022-10-05', NULL, '2022-10-13', NULL, '1', '22'),
-(57, 'Manage 1', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
-(64, 'fouder 03', 1, '2022-12-22', 1, '2022-12-22', NULL, '1', '6'),
-(65, 'fouder 03', 1, '2022-12-22', 1, '2022-12-22', NULL, '1', '10'),
-(66, 'fouder 03', 1, '2022-12-23', 1, '2022-12-23', NULL, '1', NULL),
-(67, 'fouder 01', 1, '2022-12-23', 1, '2022-12-23', 10, '0', '5'),
-(68, 'fouder 03', 1, '2022-12-31', 1, '2022-12-31', NULL, '1', NULL),
-(69, 'fouder 03', 1, '2022-12-31', 1, '2022-12-31', NULL, '1', NULL),
-(70, 'fouder 05', 1, '2022-12-31', 1, '2022-12-31', NULL, '1', NULL);
+(9, 'Manage 2', 0, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
+(10, 'Admin 1', 0, '2022-10-18', 1, '2022-10-13', 1, '1', '10'),
+(56, 'Admin123', 1, '2022-10-05', NULL, '2023-02-06', 10, '0', '22'),
+(57, 'Manage 1', 0, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
+(64, 'fouder 03', 0, '2022-12-22', 1, '2022-12-22', NULL, '0', '6'),
+(65, 'fouder 03', 1, '2022-12-22', 1, '2022-12-22', NULL, '1', '10');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -80,56 +75,60 @@ CREATE TABLE `user` (
   `created_by` int(11) DEFAULT NULL,
   `modified` datetime DEFAULT current_timestamp(),
   `modified_by` int(11) DEFAULT NULL,
+  `register_date` datetime DEFAULT current_timestamp(),
+  `register_ip` varchar(25) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
   `ordering` int(11) DEFAULT 10,
   `group_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `group_id`) VALUES
-(1, 'nva', 'nva@gmail.com', 'Nguyễn Văn A', '12345', '2022-12-28 10:04:00', 1, '2022-12-28 01:00:00', 2, 1, 10, 1),
-(2, 'nvb', 'nvb@gmail.com', 'Nguyễn Văn B', '12345', '2022-12-28 02:55:00', 2, '2022-12-28 00:00:00', 1, 0, 10, 2),
-(3, 'nvc', 'nvc@gmail.com', 'Nguyễn Văn C', '12345', '2022-12-28 08:55:00', 1, '2023-01-04 00:00:00', 10, 1, 10, 3),
-(4, 'admin', 'admin@gmail.com', 'Admin', '12345', '2022-12-28 00:00:00', 2, '2022-12-28 00:00:00', 1, 0, 10, 4),
-(5, 'nva01', 'nva@gmail.com', 'Nguyễn Văn A', '12345', '2022-12-28 10:04:00', 1, '2022-12-28 01:00:00', 2, 1, 10, 1),
-(6, 'nvb01', 'nvb@gmail.com', 'Nguyễn Văn B', '12345', '2022-12-28 02:55:00', 2, '2022-12-28 00:00:00', 1, 0, 10, 2),
-(7, 'nvc01', 'nvc@gmail.com', 'Nguyễn Văn C', '12345', '2022-12-28 08:55:00', 1, '2022-12-28 00:00:00', 2, 1, 10, 3),
-(8, 'admin', 'admin@gmail.com', 'Admin', '12345', '2022-12-28 00:00:00', 2, '2022-12-28 00:00:00', 1, 0, 10, 4);
+INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `register_date`, `register_ip`, `status`, `ordering`, `group_id`) VALUES
+(1, 'nva', 'nva@gmail.com', 'Nguyễn Văn A', '12345', '2022-12-28 10:04:00', 1, '2023-02-06 06:18:28', 1, '2023-02-25 14:39:22', NULL, 1, 10, 1),
+(2, 'nvb', 'nvb@gmail.com', 'PhamDat', '12345', '2022-12-28 02:55:00', 2, '2023-02-07 07:38:49', 1, '2023-02-25 14:39:22', NULL, 0, 10, 3),
+(3, 'nvc', 'nvc@gmail.com', 'PhamDat', '12345', '2022-12-28 08:55:00', 1, '2023-02-06 06:07:53', 1, '2023-02-25 14:39:22', NULL, 1, 10, 2),
+(4, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', 2, '2023-01-13 07:36:17', 1, '2023-02-25 14:39:22', NULL, 1, 10, 4),
+(33, 'nguyenvana', 'nguyenvana@gmail.com', 'Nguyen Van A', '123456', '2023-02-07 07:42:54', 1, '2023-02-07 13:42:54', NULL, '2023-02-25 14:39:22', NULL, 1, 10, 1),
+(35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '1234567', '2023-02-25 22:33:16', NULL, '2023-02-25 22:33:16', NULL, '2023-02-25 16:02:16', '::1', 0, 10, 0),
+(36, 'nguyenvanaa', 'nguyenvanaa@gmail.com', 'Nguyen Van A', '1234567', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 0),
+(37, 'nguyenvana1', 'nguyenvana1@gmail.com', 'Nguyen Van A1', '1234567', '2023-02-25 22:44:13', NULL, '2023-02-25 22:44:13', NULL, '2023-02-25 16:02:13', '::1', 0, 10, 0),
+(38, 'admin123123123', 'phamdat9966@gmail.com', 'PhamDat22222', 'dasdsadas', '2023-02-25 23:34:00', NULL, '2023-02-25 23:34:00', NULL, '2023-02-25 17:02:00', '::1', 0, 10, 0),
+(39, 'admin1231231236666', 'phamdat9966666@gmail.com', 'Nguyen Van A', 'dasdsadsad', '2023-02-25 23:55:05', NULL, '2023-02-25 23:55:05', NULL, '2023-02-25 17:02:05', '::1', 0, 10, 0);
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `group`
+-- Indexes for table `group`
 --
 ALTER TABLE `group`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `group`
+-- AUTO_INCREMENT for table `group`
 --
 ALTER TABLE `group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
--- AUTO_INCREMENT cho bảng `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

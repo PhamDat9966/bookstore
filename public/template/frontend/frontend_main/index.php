@@ -11,6 +11,8 @@
     <?php
         include_once 'html/header.php';
     ?>
+    <link rel="icon" href="images/favicon.png" type="<?php echo $imageURL;?>/x-icon">
+    <link rel="shortcut icon" href="images/favicon.png" type="<?php echo $imageURL;?>/x-icon">
 </head>
 
 <body>
@@ -74,7 +76,7 @@
 
     <!-- tap to top -->
     <?php 
-        include_once 'html/tap_top.php';
+        include_once 'html/tap-top.php';
     ?>
     <!-- tap to top end -->
     <!-- script -->

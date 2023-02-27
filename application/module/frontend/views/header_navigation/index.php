@@ -66,7 +66,7 @@
 								<ul>
 									<li class="onhover-div mobile-search">
 										<div>
-											<img src="<?php $imageURL;?>/search.png" onclick="openSearch()"
+											<img src="<?php echo $imageURL;?>/search.png" onclick="openSearch()"
 												class="img-fluid blur-up lazyload" alt=""> <i
 												class="ti-search" onclick="openSearch()"></i>
 										</div>

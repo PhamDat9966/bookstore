@@ -44,7 +44,8 @@ class Template{
         }
     }
     
-    public function createLinkALLCSS($fileCSS,$filePluginsCSS){
+    public function createLinkALLCSS($fileCSS,$filePluginsCSS = null){
+        
         $arrayCSS       = array_merge($fileCSS,$filePluginsCSS);
         $arrCSSOut       = [];
         

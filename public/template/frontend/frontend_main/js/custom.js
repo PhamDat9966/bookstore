@@ -7,7 +7,8 @@ $(document).ready(function(){
 	var controller 	= (getUrlVar('controller') == '' ) ? 'index' : getUrlVar('controller');
 	var action 		= (getUrlVar('action') == '' ) ? 'index' : getUrlVar('action');
 	var classSelect = controller + '-' + action;
-	// Add active ko sáng, tạm thời sử dụng class của bootstrap
-	$('ul#main-menu li.' + classSelect + ' a').addClass('text-primary');
-	//$('ul#main-menu li.' + classSelect + ' a').addClass('active');
+	
+	// Add class active link ko sáng, tạm thời sử dụng class của bootstrap
+	//$('ul#main-menu li.' + classSelect + ' a').addClass('text-primary');
+	$('ul#main-menu li.' + classSelect + ' a').addClass('my-menu-link active');
 });
