@@ -1,15 +1,17 @@
 <?php
-    $imageURL           = $this->_urlImg;
-    $strSpecial1        = '\\';
-    $strSpecial2        = "/";
-    $imageURL           = str_replace($strSpecial1 ,$strSpecial2, $imageURL);
+
+$imageURL           = $this->_urlImg;
+$strSpecial1        = '\\';
+$strSpecial2        = "/";
+$imageURL           = str_replace($strSpecial1 ,$strSpecial2, $imageURL);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <?php
-        include_once 'html/header.php';
+        include_once "html/header.php";
     ?>
 </head>
 
@@ -26,14 +28,19 @@
 	?>
     <!-- header end -->
 
-	<!-- MAIN CONTENT  --> 
-	<?php
-	   include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . $this->_fileView . '.php';
-	?>
-	<!-- END MAIN CONTENT  -->
-    <?php 
+    <!-- CATEGORY -->
+        <!-- main content -->
+        <?php
+            include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . $this->_fileView . '.php';
+        ?>
+        <!-- main content -->
+    <!-- END CATAGORY -->
+
+    <!-- phonering -->
+    <?php
         include_once 'html/phonering.php';
     ?>
+    <!-- phonering end -->
 
     <!-- footer -->
     <?php
@@ -42,15 +49,14 @@
     <!-- footer end -->
 
     <!-- tap to top -->
-    <?php 
-        include_once 'html/tap_top.php';
+    <?php
+        include_once 'html/tap-top.php';
     ?>
     <!-- tap to top end -->
-    <!-- script -->
+
     <?php
         include_once 'html/script.php';
     ?>
-    <!-- end script -->
 </body>
 
 </html>

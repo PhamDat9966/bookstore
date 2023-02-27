@@ -26,33 +26,19 @@
 	?>
     <!-- header end -->
 
-    <!-- Home slider -->
-    <?php 
-       require_once 'html/home_slider.php';
-    ?>
-    <!-- Home slider end -->
+    <!-- List Book -->
 
-    <!-- Top Collection -->
-        <?php
-            require_once 'html/productSlider.php';
-        ?>    
-    <!-- Top Collection end-->
-
-    <!-- service layout -->
     <?php
-        //Giao Hàng Miễn Phí 
-        //Hỗ Trợ 24/7
-        //Ưu Đãi và Khuyễn Mãi    
-        include_once 'html/serviceLayout.php';
+       include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . $this->_fileView . '.php';
     ?>
-    <!-- service layout  end -->
+    <!-- End List Book -->
 
-    <!-- Tab product -->
-    <?php
-        //Danh Mục Nổi Bật 
-        include_once 'html/product.php';
-    ?>        
-    <!-- Tab product end -->
+	<!-- phonering -->
+	<?php 
+	   include_once 'html/phonering.php';
+	?>
+	<!-- end phonering -->
+
 
     <!-- Quick-view modal popup start-->
     <?php
@@ -60,12 +46,7 @@
     ?>    
     <!-- Quick-view modal popup end-->
 
-	<!-- phonering -->
-	<?php 
-	   include_once 'html/phonering.php';
-	?>
-	<!-- end phonering -->
-	
+
     <!-- footer -->
     <?php
         include_once 'html/footer.php';

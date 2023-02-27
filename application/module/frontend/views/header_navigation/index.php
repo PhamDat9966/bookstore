@@ -1,5 +1,13 @@
 <?php 
     $imageURL   = $this->_urlImg;
+    
+    //Link
+	$linkHome			= URL::createLink('frontend','index','index');
+	$linkBook			= URL::createLink('frontend','index','list');
+	$linkCatalory		= URL::createLink('frontend','index','category');
+	$linkRegister		= URL::createLink('frontend','user','register');
+	$linkLogin			= URL::createLink('frontend','user','login');
+
 ?>
 
 <header class="my-header sticky">
@@ -27,9 +35,11 @@
 											Back<i class="fa fa-angle-right pl-2" aria-hidden="true"></i>
 										</div>
 									</li>
-									<li><a href="index.html">Trang chủ</a></li>
-									<li><a href="list.html">Sách</a></li>
-									<li><a href="category.html">Danh mục</a>
+									
+									<!-- Link Header Navigation -->
+									<li class="index-index"><a href="<?php echo $linkHome;?>">Trang chủ</a></li>
+									<li class="index-list"><a href="<?php echo $linkBook;?>">Sách</a></li>
+									<li class="index-category"><a href="<?php echo $linkCatalory;?>">Danh mục</a>
 										<ul>
 											<li><a href="list.html">Bà mẹ - Em bé</a></li>
 											<li><a href="list.html">Chính Trị - Pháp Lý</a></li>
@@ -46,8 +56,8 @@
 								<li class="onhover-dropdown mobile-account"><img
 									src="<?php echo $imageURL;?>/avatar.png" alt="avatar">
 									<ul class="onhover-show-div">
-										<li><a href="login.html">Đăng nhập</a></li>
-										<li><a href="register.html">Đăng ký</a></li>
+										<li><a href="<?php echo $linkLogin;?>">Đăng nhập</a></li>
+										<li><a href="<?php echo $linkRegister;?>">Đăng ký</a></li>
 									</ul></li>
 							</ul>
 						</div>

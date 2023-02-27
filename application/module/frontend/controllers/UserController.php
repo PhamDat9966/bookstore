@@ -17,7 +17,7 @@ class UserController extends Controller{
         
         $this->_view->render('user/index', true);
     }
-
+    
     public  function registerAction(){
         
         if(isset($this->_arrParam['form']['submit'])){
@@ -58,7 +58,20 @@ class UserController extends Controller{
         
         $this->_view->render('user/register', true);
     }
-      
+    
+    public function loginAction(){
+        
+        $this->_view->arrParam  =  $this->_arrParam;
+        
+        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
+        $this->_templateObj->setFileTemplate('login.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('user/login', true);// views folder
+        
+    }
+    
 }
 
 
