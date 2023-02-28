@@ -19,11 +19,12 @@ class IndexController extends Controller{
                 
                 $query      =   "SELECT `id` FROM `user` WHERE `username` = '$username' AND `password` = '$password'";
 
-                $validate->addRule('username', 'exitRecord', array('database'=> $this->_model,'query'=>$query))
-                         ->addRule('password', 'exitRecord', array('database'=> $this->_model,'query'=>$query));
+                $validate->addRule('username', 'existRecord', array('database'=> $this->_model,'query'=>$query))
+                         ->addRule('password', 'existRecord', array('database'=> $this->_model,'query'=>$query));
                 $validate->run();
                 
                 if($validate->isValid() == true){
+                    
                     $infoUser           = $this->_model->infoItem($this->_arrParam);
         
                     $arraySession       = array(
