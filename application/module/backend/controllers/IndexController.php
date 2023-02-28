@@ -10,33 +10,36 @@ class IndexController extends Controller{
     }
     
     public function loginAction(){
+        if(isset($this->_arrParam['form']['token'])){
+            if($this->_arrParam['form']['token'] > 0){
+                
+                $validate   =   new Validate($this->_arrParam['form']);
+                $username   =   $this->_arrParam['form']['username'];
+                $password   =   $this->_arrParam['form']['password'];
+                
+                $query      =   "SELECT `id` FROM `user` WHERE `username` = '$username' AND `password` = '$password'";
 
-        if($this->_arrParam['form']['token'] > 0){
-            
-            $validate   =   new Validate($this->_arrParam['form']);
-            $username   =   $this->_arrParam['form']['username'];
-            $password   =   $this->_arrParam['form']['password'];
-            
-            $query      =   "SELECT `id` FROM `user` WHERE `username` = '$username' AND `password` = '$password'";
-            
-            $validate->addRule('username', 'exitRecord', array('database'=> $this->_model,'query'=>$query));
-            $validate->run();
-            
-            if($validate->isValid() == true){
-                $infoUser           = $this->_model->infoItem($this->_arrParam);
-                $arraySession       = array(
-                                                'login'     => true,
-                                                'info'      => $infoUser,
-                                                'time'      => time(),
-                                                'group_acp' => $infoUser['group_acp']
-                                            );
-                Session::set('user', $arraySession);
-                //URL::redirect('backend', 'dashboard', 'index');
-            }else{
-                $this->_view->errors    = $validate->showErrors();
+                $validate->addRule('username', 'exitRecord', array('database'=> $this->_model,'query'=>$query))
+                         ->addRule('password', 'exitRecord', array('database'=> $this->_model,'query'=>$query));
+                $validate->run();
+                
+                if($validate->isValid() == true){
+                    $infoUser           = $this->_model->infoItem($this->_arrParam);
+        
+                    $arraySession       = array(
+                                                    'login'     => true,
+                                                    'info'      => $infoUser,
+                                                    'time'      => time(),
+                                                    'group_acp' => $infoUser['group_acp']
+                                                );
+                    Session::set('user', $arraySession);
+                    URL::redirect('backend', 'dashboard', 'index');
+                }else{
+                    $this->_view->errors    = $validate->showErrors();
+                }
             }
         }
-        
+
         $this->_view->_title        = 'Index: Admin Login';
         $this->_view->_tag          = 'login'; //for Sidebar
         

@@ -1,5 +1,13 @@
 <?php 
-    $linkAction = URL::createLink('backend', 'index', 'login');
+    $linkAction     = URL::createLink('backend', 'index', 'login');
+    $message        = '';
+    if(!empty($this->errors)){
+        $message    = '<div class="alert alert-danger alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							'.$this->errors.'	
+						</div>';
+    }
+    
 ?>
 <div class="login-box">
 	<div class="login-logo">
@@ -11,10 +19,7 @@
 			<p class="login-box-msg">Sign in to start your session</p>
 			
 			<!-- show Errors -->
-			<div class="alert alert-danger alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-			   <?php echo $this->errors;?>		
-            </div>
+			<?php echo $message;?>		
             <!-- end show Errors -->
             
 			<form action="<?php echo $linkAction;?>" method="post">
