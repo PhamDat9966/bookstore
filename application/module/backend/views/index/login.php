@@ -1,16 +1,26 @@
-
+<?php 
+    $linkAction = URL::createLink('backend', 'index', 'login');
+?>
 <div class="login-box">
 	<div class="login-logo">
-		<a href="../../index2.html"><b>Admin</b></a>
+		<a href="<?php echo $linkAction;?>"><b>Admin</b></a>
 	</div>
 	<!-- /.login-logo -->
 	<div class="card">
 		<div class="card-body login-card-body">
 			<p class="login-box-msg">Sign in to start your session</p>
-
-			<form action="../../index3.html" method="post">
+			
+			<!-- show Errors -->
+			<div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			   <?php echo $this->errors;?>		
+            </div>
+            <!-- end show Errors -->
+            
+			<form action="<?php echo $linkAction;?>" method="post">
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" placeholder="username">
+					<!-- username -->
+					<input name="form[username]" type="text" class="form-control" placeholder="Username">
 					<div class="input-group-append">
 						<div class="input-group-text">
 							<span class="fas fa-user"></span>
@@ -18,13 +28,18 @@
 					</div>
 				</div>
 				<div class="input-group mb-3">
-					<input type="password" class="form-control" placeholder="Password">
+					<!-- password -->
+					<input name="form[password]" type="password" class="form-control" placeholder="Password">
 					<div class="input-group-append">
 						<div class="input-group-text">
 							<span class="fas fa-lock"></span>
 						</div>
 					</div>
 				</div>
+				
+				<!-- Token -->
+				<input name="form[token]" type="hidden" value="<?php echo time();?>" >
+				
 				<div class="row">
 					<!-- /.col -->
 					<div class="col-12">

@@ -9,6 +9,10 @@ class DashboardController extends Controller{
         Session::delete('search');
     }
     public function indexAction(){
+        echo "<pre>";
+        print_r($_SESSION);
+        echo "</pre>";
+        
         $this->_view->_tag  = 'dashboard';  
         
         $this->_view->_arrParam       = $this->_model->countFilterSearch();
