@@ -7,7 +7,7 @@ $sidebar        = array(
                     'dashboard'=>
                     array(
                        'name'   =>'Dashboard',   
-                        'href'  =>'index.php?module=backend&controller=dashboard&action=index',
+                        'href'  =>URL::createLink('backend','dashboard','index'),
                         'icon'  =>'<i class="nav-icon fas fa-tachometer-alt"></i>'
                     ),
                     'group'=>
@@ -18,11 +18,13 @@ $sidebar        = array(
                         'tree'=>array(
                                         array(
                                             'name'=>'List',
-                                            'href'=>'index.php?module=backend&controller=group&action=list'  
+                                            'href'=>URL::createLink('backend','group','list')
+                                            //'href'=>'index.php?module=backend&controller=group&action=list'  
                                         ),
                                         array(
                                             'name'=>'Add',
-                                            'href'=>'index.php?module=backend&controller=group&action=form'
+                                            'href'=>URL::createLink('backend','group','form')
+                                            //'href'=>'index.php?module=backend&controller=group&action=form'
                                         )
                         )
                     ),
@@ -34,11 +36,13 @@ $sidebar        = array(
                         'tree'=>array(
                             array(
                                 'name'=>'List',
-                                'href'=>'index.php?module=backend&controller=user&action=list'
+                                'href'=>URL::createLink('backend','user','list')
+                                //'href'=>'index.php?module=backend&controller=user&action=list'
                             ),
                             array(
                                 'name'=>'Add',
-                                'href'=>'index.php?module=backend&controller=user&action=form'
+                                'href'=>URL::createLink('backend','user','form')
+                                //'href'=>'index.php?module=backend&controller=user&action=form'
                             )
                         )
                     ),

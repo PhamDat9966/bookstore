@@ -19,7 +19,7 @@
 
     <!-- header start -->
 	<?php
-	    include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . 'user' . DS .'header_navigation.php';
+	    include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . 'header_navigation' .DS. 'index.php';
 		//include_once 'html/header_navigation.php';
 	?>
 	

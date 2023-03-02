@@ -1,5 +1,4 @@
 <?php
-
 class Bootstrap{
     
     private $_params;
@@ -7,14 +6,65 @@ class Bootstrap{
     
     public function init(){
         $this->setParam();
-         @$controllerName   =  ucfirst($this->_params['controller']) . 'Controller';
-         @$filePath         =  MODULE_PATH . $this->_params['module'] . DS . 'controllers' . DS . $controllerName  . '.php';   
+        @$controllerName   =  ucfirst($this->_params['controller']) . 'Controller';
+        @$filePath         =  MODULE_PATH . $this->_params['module'] . DS . 'controllers' . DS . $controllerName  . '.php';   
         
         if(file_exists($filePath)){
             $this->loadExistingController($filePath, $controllerName);
             $this->callMethod();
         }else {
             $this->loadDefaultController();
+        }
+        
+    }
+    
+    // CALL METHOD
+    public function callMethod(){
+
+        $actionName         = $this->_params['action'].'Action';
+        if(method_exists($this->_controllerOject, $actionName) == true){
+
+            $module     = $this->_params['module'];
+            $controller = $this->_params['controller'];
+            $action     = $this->_params['action']; 
+            
+            $userInfo   = Session::get('user');
+            
+//             echo "<pre>userInfo";
+//             print_r($userInfo);
+//             echo "</pre>";
+
+            $logged     = ($userInfo['login'] == 'true' && $userInfo['time'] + TIME_LOGIN); // return 'True' or 'False'
+            $pageLogin  = ($controller == 'index') && ($action == 'login');                 // return 'True' or 'False'
+
+            if($module == 'backend'){
+
+                if($logged == true){
+
+                    if($userInfo['group_acp'] == 1){
+                        if($pageLogin == true)  URL::redirect('backend','index','index');
+                        if($pageLogin == false) $this->_controllerOject->$actionName();
+                    }else{
+                        URL::redirect('frontend','index','notice',array('type'=>'not-permission'));
+                    }
+
+                }else{
+
+                    Session::delete('user');
+                    if($pageLogin == true)  $this->_controllerOject->$actionName();
+                    if($pageLogin == false) URL::redirect('backend','index','login');
+
+                }
+
+            }else if($module == 'frontend'){
+                $this->_controllerOject->$actionName();
+            }
+
+            //$this->_controllerOject->{$actionName}();
+            //$controllerOject->indexAction();
+
+        }else{
+            $this->_error();
         }
         
     }
@@ -30,18 +80,7 @@ class Bootstrap{
         $this->_controllerOject->setParams($this->_params);
        
     }
-    
-    // CALL METHOD
-    public function callMethod(){
-        $actionName         = $this->_params['action'].'Action';
-        if(method_exists($this->_controllerOject, $actionName) == true){
-            $this->_controllerOject->{$actionName}();
-            //$controllerOject->indexAction();
-        }else{
-            $this->_error();
-        }
-    }
-    
+ 
     //  SET PARAMS
     public function setParam(){
         
