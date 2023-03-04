@@ -8,7 +8,17 @@ class Controller{
     protected $_pagination;
 	protected $_arrParamOld;
     
-	public function loadModel($moduleName, $modelName){     
+	public function __construct($arrParams){
+	    
+	    $this->setModel($arrParams['module'], $arrParams['controller']);
+	    $this->setTemplate($this);
+	    $this->setView($arrParams['module']);
+	    
+	    $this->setParams($arrParams);
+	    $this->_view->arrParam = $arrParams;
+	}
+	
+	public function setModel($moduleName, $modelName){     
 	    $modelName     = ucfirst($modelName) . 'Model';
 	    $path = MODULE_PATH . $moduleName . DS . 'models' . DS. $modelName .'.php';
 		if(file_exists($path)){

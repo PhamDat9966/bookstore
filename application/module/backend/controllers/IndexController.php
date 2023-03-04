@@ -5,9 +5,9 @@ class IndexController extends Controller
 
     public $_statusReturn;
 
-    public function __construct()
+    public function __construct($arrParams)
     {
-        //parent::__construct();
+        parent::__construct($arrParams);
 
     }
 

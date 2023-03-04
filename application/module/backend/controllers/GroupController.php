@@ -3,9 +3,9 @@
 class GroupController extends Controller
 {
 
-    public function __construct()
+    public function __construct($arrParams)
     {
-        //parent::__construct();
+        parent::__construct($arrParams);
 
     }
 
@@ -50,7 +50,7 @@ class GroupController extends Controller
                 $this->statusAction();
             }
 
-            // Ẩn url biến get của groupACB và Status bằng cách gọi lại liên kết          
+            // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
         }
 

@@ -4,9 +4,12 @@ class UserController extends Controller{
     
     public $_statusReturn;
 
-    public function __construct(){ 
-        //parent::__construct();    
+    public function __construct($arrParams)
+    {
+        parent::__construct($arrParams);
+        
     }
+    
     
     public  function indexAction(){
         

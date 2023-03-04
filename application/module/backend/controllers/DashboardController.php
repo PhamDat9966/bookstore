@@ -3,8 +3,9 @@
 class DashboardController extends Controller
 {
 
-    public function __construct()
+    public function __construct($arrParams)
     {
+        parent::__construct($arrParams);
         Session::delete('filter');
         Session::delete('selectGroupACP');
         Session::delete('selectGroup');

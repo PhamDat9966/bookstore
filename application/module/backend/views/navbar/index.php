@@ -3,6 +3,7 @@
 $userImage      = '<img src="' . $this->_urlImg . '/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image">';
 $userImage_01   = '<img src="' . $this->_urlImg . '/user2-160x160.jpg" class="img-circle" alt="User Image">';
 $linkLogout     = URL::createLink('backend', 'index', 'logout');
+$viewPage       = URL::createLink('frontend', 'index', 'index');
 
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -16,7 +17,7 @@ $linkLogout     = URL::createLink('backend', 'index', 'logout');
 	<ul class="navbar-nav ml-auto">
 
 		<!-- View Site -->
-		<li class="nav-item"><a href="#" class="nav-link"> <i
+		<li class="nav-item"><a href="<?php echo $viewPage;?>" class="nav-link"> <i
 				class="fa fa-eye" aria-hidden="true"></i> <span>View Site</span>
 		</a></li>
 		<!-- END View Site -->

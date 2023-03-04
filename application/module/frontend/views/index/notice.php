@@ -7,6 +7,9 @@ switch ($this->arrParam['type']) {
 	case 'not-permission':
 		$message = "Bạn không có quyền truy cập vào chức năng đó!.";
 		break;	
+	case 'not-url':
+	    $message = "Đường dẫn không hợp lệ!.";
+	    break;	
 }
 
 $mainPageLink   =   Helper::cmsButton(URL::createLink('frontend', 'user', 'index'), 'btn btn-solid', 'Quay về trang chủ');
