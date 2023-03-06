@@ -31,6 +31,21 @@ class UserModel extends Model
         
     }
     
+    public function infoItem($arrParam,$option = NULL){
+        if($option == NULL){
+            $email   = $arrParam['form']['email'];
+            $password   = $arrParam['form']['password'];
+            
+            $query[]    =   "SELECT `u`.`id`,`u`.`fullname`,`u`.`email`,`u`.`group_id`, `g`.`group_acp`";
+            $query[]    =   "FROM `user` AS `u` LEFT JOIN `group` AS `g` ON `u`.`group_id` = `g`.`id` ";
+            $query[]    =   "WHERE `email` = '$email' AND `password` = '$password'";
+            
+            $query      = implode(" ", $query);
+            $result     = $this->fetchRow($query);
+            return $result;
+        }
+    }
+    
     public function saveItem($arrParam, $option = null){
         
         if($option['task'] == 'save-register'){

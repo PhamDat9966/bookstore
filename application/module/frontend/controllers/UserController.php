@@ -64,7 +64,51 @@ class UserController extends Controller{
     
     public function loginAction(){
         
-        $this->_view->arrParam  =  $this->_arrParam;
+        echo "<pre>";
+         print_r($this->_arrParam);
+        echo "</pre>";
+        
+        echo "<pre>Session";
+         print_r($_SESSION);
+        echo "</pre>";
+        
+        //session_destroy();
+        
+        
+        if (isset($this->_arrParam['form']['token'])) {
+            if ($this->_arrParam['form']['token'] > 0) {
+                        
+                $email      =   $this->_arrParam['form']['email'];
+                $password   =   $this->_arrParam['form']['password'];
+                echo $query      =   "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password'";
+
+                $validate   =   new Validate($this->_arrParam['form']);
+                $validate->addRule('email',     'existRecord', array('database' => $this->_model, 'query' => $query))
+                         ->addRule('password',  'existRecord', array('database' => $this->_model, 'query' => $query));
+                $validate->run();
+                
+                if ($validate->isValid() == true) {
+                    
+                    $infoUser           = $this->_model->infoItem($this->_arrParam);
+                    
+                    $arraySession       = array(
+                        'login'     => true,
+                        'info'      => $infoUser,
+                        'time'      => time(),
+                        'group_acp' => $infoUser['group_acp']
+                    );
+                    Session::set('user', $arraySession);
+                    URL::redirect('frontend', 'user', 'login');
+                } else {
+                    $this->_view->errors    = $validate->showErrors();
+                }
+            }
+        }
+        
+        $this->_view->arrParam  =  $this->_arrParam; 
+        
+        $this->_view->_title        = 'Index: Admin Login';
+        $this->_view->_tag          = 'login'; //for Sidebar
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
         $this->_templateObj->setFileTemplate('login.php');

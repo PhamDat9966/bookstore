@@ -1,4 +1,9 @@
-
+<?php 
+    $linkAction     = URL::createLink('frontend', 'user', 'login');
+    $showErrors     = '<div class="alert bg-danger alert-dismissible" style="display: block;">
+                            '.$this->errors.'
+                       </div>';      
+?>
 <div class="breadcrumb-section">
 	<div class="container">
 		<div class="row">
@@ -15,8 +20,13 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<h3>Đăng nhập</h3>
+					<?php
+            		   if(!empty(@$this->errors)){
+            		       echo $showErrors;
+            		   }
+            		?>
 				<div class="theme-card">
-					<form action="" method="post" id="admin-form" class="theme-form">
+					<form action="<?php echo $linkAction;?>" method="post" id="admin-form" class="theme-form">
 						<div class="form-group">
 							<label for="email" class="required">Email</label> <input
 								type="email" id="form[email]" name="form[email]" value=""

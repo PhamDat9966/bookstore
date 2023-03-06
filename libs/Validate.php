@@ -152,9 +152,9 @@ class Validate{
 	    
 		$xhtml = '';
 		if(!empty($this->errors)){
-			$xhtml .= '<ul class="list-unstyled mb-0">';
+			$xhtml .= '<ul class="list-unstyled mb-0 bg-danger">';
 			foreach($this->errors as $key => $value){
-				$xhtml .= '<li class="text-white">'.$value.' </li>';
+				$xhtml .= '<li class="text-white" style="display: block;">'.$value.' </li>';
 			}
 			$xhtml .=  '</ul>';
 		}
