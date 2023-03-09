@@ -302,10 +302,11 @@ class UserModel extends Model
     public function infoItem($arrParam,$option = null){
         if($option == null){
             $queryContent   = [];
-            $queryContent[] = "SELECT `id`,`username`,`email`,fullname,`password`,`status`,`group_id`";
+            $queryContent[] = "SELECT `id`,`username`,`email`,`fullname`,`password`,`status`,`group_id`";
             $queryContent[] = "FROM `$this->_tableName`";
             $queryContent[] = "WHERE `id` = '" . $arrParam['id'] . "'";
             $queryContent = implode(" ", $queryContent);
+            
             $result = $this->fetchRow($queryContent);
             return $result;
         }

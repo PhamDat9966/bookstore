@@ -13,7 +13,8 @@ class Bootstrap{
             $this->loadExistingController($filePath, $controllerName);
             $this->callMethod();
         }else {
-            $this->loadDefaultController();
+            URL::redirect('frontend', 'index', 'note', array('type'=>'not-url'));
+            //$this->loadDefaultController();
         }
         
     }
@@ -34,17 +35,19 @@ class Bootstrap{
             $logged     = '';
 
             $userInfo   = Session::get('user');
-
+            
             if(!empty($userInfo)){
                $logged     = ($userInfo['login'] == 'true' && $userInfo['time'] + TIME_LOGIN); // return 'True' or 'False'
             }
 
             $pageLogin  = ($controller == 'index') && ($action == 'login');                 // return 'True' or 'False'
-
+            
+            // MODULE BACKEND
             if($module == 'backend'){
 
                 if($logged == true){
-
+                    
+                    // Go backend: group_acp : Admin control Panel
                     if($userInfo['group_acp'] == 1){
                         $this->_controllerOject->$actionName();
                         
@@ -54,19 +57,22 @@ class Bootstrap{
 
                 }else{
                     
-                    Session::delete('user');
-                    require_once MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php';
-                    $indexController    =   new IndexController($this->_params);
-                    $indexController->loginAction();
-
 //                     Session::delete('user');
-//                     if($pageLogin == true)  $this->_controllerOject->$actionName();
-//                     if($pageLogin == false) URL::redirect('backend','index','login');
+//                     require_once MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php';
+//                     $indexController    =   new IndexController($this->_params);
+//                     $indexController->loginAction();
+
+                    Session::delete('user');
+                    if($pageLogin == true)  $this->_controllerOject->$actionName();
+                    if($pageLogin == false) URL::redirect('backend','index','login');
 
                 }
-
+            
+            // MODULE FRONTEND
             }else if($module == 'frontend'){
+                
                 $this->_controllerOject->$actionName();
+                
             }
 
             //$this->_controllerOject->{$actionName}();

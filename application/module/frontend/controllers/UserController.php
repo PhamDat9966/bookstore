@@ -9,8 +9,7 @@ class UserController extends Controller{
         parent::__construct($arrParams);
         
     }
-    
-    
+      
     public  function indexAction(){
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
@@ -63,24 +62,15 @@ class UserController extends Controller{
     }
     
     public function loginAction(){
-        
-        echo "<pre>";
-         print_r($this->_arrParam);
-        echo "</pre>";
-        
-        echo "<pre>Session";
-         print_r($_SESSION);
-        echo "</pre>";
-        
+
         //session_destroy();
-        
-        
+
         if (isset($this->_arrParam['form']['token'])) {
             if ($this->_arrParam['form']['token'] > 0) {
                         
                 $email      =   $this->_arrParam['form']['email'];
                 $password   =   $this->_arrParam['form']['password'];
-                echo $query      =   "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password'";
+                $query      =   "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password'";
 
                 $validate   =   new Validate($this->_arrParam['form']);
                 $validate->addRule('email',     'existRecord', array('database' => $this->_model, 'query' => $query))
@@ -105,9 +95,9 @@ class UserController extends Controller{
             }
         }
         
-        $this->_view->arrParam  =  $this->_arrParam; 
+        //$this->_view->arrParam  =  $this->_arrParam; 
         
-        $this->_view->_title        = 'Index: Admin Login';
+        $this->_view->_title        = 'Index: User Login';
         $this->_view->_tag          = 'login'; //for Sidebar
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');

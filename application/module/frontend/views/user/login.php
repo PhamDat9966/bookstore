@@ -1,8 +1,12 @@
 <?php 
+
     $linkAction     = URL::createLink('frontend', 'user', 'login');
-    $showErrors     = '<div class="alert bg-danger alert-dismissible" style="display: block;">
-                            '.$this->errors.'
-                       </div>';      
+    $showErrors     = '';
+    if(!empty(@$this->errors)){
+        $showErrors     = '<div class="alert bg-danger alert-dismissible">
+                                '.$this->errors.'
+                           </div>';  
+    }    
 ?>
 <div class="breadcrumb-section">
 	<div class="container">
@@ -21,9 +25,9 @@
 			<div class="col-lg-6">
 				<h3>Đăng nhập</h3>
 					<?php
-            		   if(!empty(@$this->errors)){
+            		   
             		       echo $showErrors;
-            		   }
+
             		?>
 				<div class="theme-card">
 					<form action="<?php echo $linkAction;?>" method="post" id="admin-form" class="theme-form">
@@ -39,7 +43,7 @@
 								value="" class="form-control">
 						</div>
 						<input type="hidden" id="form[token]" name="form[token]"
-							value="1599208737">
+							value="<?php echo time();?>">
 						<button type="submit" id="submit" name="submit" value="Đăng nhập"
 							class="btn btn-solid">Đăng nhập</button>
 					</form>

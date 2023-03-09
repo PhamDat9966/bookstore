@@ -28,13 +28,13 @@
 			<?php include_once 'html/page-header.php';?>
 			
 			<!--MAIN CONTENT -->
-				<?php include_once 'html/main-dashboard.php';?>
-			<!--END MAIN CONTENT -->
-			
-		</div>	
-	   <!-- END WRAPPER -->
-    		
-    	
+			<div class="container-fluid">
+        		<?php 
+        		      require_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . $this->_fileView . '.php';
+         		?>
+			</div>	
+	       <!-- END WRAPPER -->
+
 	</div><!-- END WRAPPER -->
 	<!-- FOOTER -->
     <?php include_once 'html/footer.php';?>

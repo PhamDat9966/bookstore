@@ -4,6 +4,7 @@ $userImage      = '<img src="' . $this->_urlImg . '/user2-160x160.jpg" class="us
 $userImage_01   = '<img src="' . $this->_urlImg . '/user2-160x160.jpg" class="img-circle" alt="User Image">';
 $linkLogout     = URL::createLink('backend', 'index', 'logout');
 $viewPage       = URL::createLink('frontend', 'index', 'index');
+$linkMyProfile  = URL::createLink('backend', 'index', 'profile');
 
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -37,7 +38,7 @@ $viewPage       = URL::createLink('frontend', 'index', 'index');
 					</p>
 				</li>
 				<!-- Menu Footer-->
-				<li class="user-footer"><a href="#" class="btn btn-default btn-flat">Profile</a>
+				<li class="user-footer"><a href="<?php echo $linkMyProfile;?>" class="btn btn-default btn-flat">Profile</a>
 					<a href="<?php echo $linkLogout;?>" class="btn btn-default btn-flat float-right">Sign out</a>
 				</li>
 			</ul></li>

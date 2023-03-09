@@ -49,7 +49,7 @@ class UserController extends Controller
                 $this->statusAction();
             }
 
-            // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
+            // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
         }
 
@@ -211,11 +211,11 @@ class UserController extends Controller
 
             $validate = new Validate($this->_arrParam['form']);
             $validate->addRule('username', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryUserName, 'min' => 3, 'max' => 25))
-                ->addRule('password', 'string', array('min' => 3, 'max' => 255))
-                ->addRule('email', 'email-notExistRecord', array('database' => $this->_model, 'query' => $queryEmailName, 'min' => 3, 'max' => 25))
-                ->addRule('fullname', 'string', array('min' => 3, 'max' => 255))
-                ->addRule('status', 'status', array('deny' => array('default')))
-                ->addRule('group_id', 'status', array('deny' => array('default')));
+                    ->addRule('password', 'string', array('min' => 3, 'max' => 255))
+                    ->addRule('email', 'email-notExistRecord', array('database' => $this->_model, 'query' => $queryEmailName, 'min' => 3, 'max' => 25))
+                    ->addRule('fullname', 'string', array('min' => 3, 'max' => 255))
+                    ->addRule('status', 'status', array('deny' => array('default')))
+                    ->addRule('group_id', 'status', array('deny' => array('default')));
 
             $validate->run();
 

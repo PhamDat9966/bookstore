@@ -16,6 +16,7 @@ class Controller{
 	    
 	    $this->setParams($arrParams);
 	    $this->_view->arrParam = $arrParams;
+	    
 	}
 	
 	public function setModel($moduleName, $modelName){     

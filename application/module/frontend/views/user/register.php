@@ -41,8 +41,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h3>Đăng ký tài khoản</h3>
+				<?php echo @$this->errors;?>
 				<div class="theme-card">
-					<?php echo @$this->errors;?>
 					<!-- Form -->
 <!-- 					<form action="#" method="get" id="admin-form" class="theme-form"> -->
 					<form action="<?php echo $registerLink;?>" method="post" id="admin-form" class="theme-form">
@@ -54,7 +54,7 @@
 							<?php echo $rowUserName . $rowFullName . $rowEmail . $rowPassword;?>
 						</div>
 						<input type="hidden" id="form[token]" name="form[token]"
-							value="1599208957">
+							value="<?php echo time();?>">
 						<?php echo $buttonSumit;?>
 					</form>
 					<!-- form end -->

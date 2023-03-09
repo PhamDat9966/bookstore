@@ -2,11 +2,12 @@
     $imageURL   = $this->_urlImg;
     
     //Link
-	$linkHome			= URL::createLink('frontend','index','index');
-	$linkBook			= URL::createLink('frontend','index','list');
-	$linkCatalory		= URL::createLink('frontend','index','category');
-	$linkRegister		= URL::createLink('frontend','user','register');
-	$linkLogin			= URL::createLink('frontend','user','login');
+	$linkHome			      = URL::createLink('frontend','index','index');
+	$linkBook			      = URL::createLink('frontend','index','list');
+	$linkCatalory		      = URL::createLink('frontend','index','category');
+	$linkRegister		      = URL::createLink('frontend','user','register');
+	$linkLogin			      = URL::createLink('frontend','user','login');
+	$linkAdminControlPanel	  = URL::createLink('backend','index','index');
 
 ?>
 
@@ -39,6 +40,7 @@
 									<!-- Link Header Navigation -->
 									<li class="index-index"><a href="<?php echo $linkHome;?>">Trang chủ</a></li>
 									<li class="index-list"><a href="<?php echo $linkBook;?>">Sách</a></li>
+									<li class=""><a href="<?php echo $linkAdminControlPanel;?>">Admin Control Panel</a></li>
 									<li class="index-category"><a href="<?php echo $linkCatalory;?>">Danh mục</a>
 										<ul>
 											<li><a href="list.html">Bà mẹ - Em bé</a></li>

@@ -26,15 +26,15 @@ class Template{
         
         if(file_exists($pathFileConfig)){
             $arrCofig   =   parse_ini_file($pathFileConfig);
-
+            
             $view = $this->_controller->_view;
             
             //$view->_title       = $this->createTitle($arrCofig['title']);
             $view->_metaHTTP    = $this->createMetaHTTP($arrCofig['metaHTTP']);
             $view->_metaName    = $this->createMetaHTTP($arrCofig['metaName']);
             
-            $view->_cssFile     = $this->createLinkALLCSS($arrCofig['fileCss'],$arrCofig['filePluginsCss']);
-            $view->_jsFile      = $this->createLinkALLJS($arrCofig['fileJs'],$arrCofig['filePluginsJs']);
+            $view->_cssFile     = $this->createLinkALLCSS($arrCofig['fileCss'],@$arrCofig['filePluginsCss']);
+            $view->_jsFile      = $this->createLinkALLJS($arrCofig['fileJs'],@$arrCofig['filePluginsJs']);
             $view->_fontFile    = $this->createLinkFONT($arrCofig['dirFont'],$arrCofig['fileFont']);
 
             $view->_dirImg      = TEMPLATE_PATH . $folderImageTemplate.$arrCofig['dirImg'];
@@ -46,7 +46,7 @@ class Template{
     
     public function createLinkALLCSS($fileCSS,$filePluginsCSS = null){
         
-        $arrayCSS       = array_merge($fileCSS,$filePluginsCSS);
+        $arrayCSS   = (isset($filePluginsCSS)) ? array_merge($fileCSS,$filePluginsCSS) : $fileCSS;
         $arrCSSOut       = [];
         
         foreach ($arrayCSS as $key=>$value){
@@ -68,8 +68,10 @@ class Template{
     }
     
     public function createLinkALLJS($fileJS,$filePluginsJS){
-
-        $arrayJS    = array_merge($fileJS,$filePluginsJS);
+        
+        $arrayJS   = (isset($filePluginsJS)) ? array_merge($fileJS,$filePluginsJS) : $fileJS;
+        //$arrayJS    = array_merge($fileJS,$filePluginsJS);
+        
         $arrJSOut = [];
         foreach ($arrayJS as $key=>$value){
             $temp = explode("|", $value);

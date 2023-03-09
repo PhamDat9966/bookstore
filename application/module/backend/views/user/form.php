@@ -1,6 +1,6 @@
 <?php
     $dataForm           = @$this->arrParam['form'];
-
+    
     $disabled           = '';
     $passwordType       = 'text';
     $hiddenRowForm      = '';
@@ -176,12 +176,6 @@
 	</div>
 	<!-- /.container-fluid -->
 </div>
-
-
-
-
-
-
 
 
 

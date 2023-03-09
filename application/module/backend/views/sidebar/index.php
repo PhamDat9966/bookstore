@@ -7,7 +7,7 @@ $sidebar        = array(
                     'dashboard'=>
                     array(
                        'name'   =>'Dashboard',   
-                        'href'  =>URL::createLink('backend','dashboard','index'),
+                        'href'  =>URL::createLink('backend','index','index'),
                         'icon'  =>'<i class="nav-icon fas fa-tachometer-alt"></i>'
                     ),
                     'group'=>
