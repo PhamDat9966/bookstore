@@ -6,6 +6,8 @@ $listUser = '';
 //Created selectgroup Array
 $selectGroup = $this->slbGroup;
 
+$listUserWithGroupACP = $this->listUserGroupACP;
+
 // Bulk Action
 $arrSelectBox       = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
 $selection          = Helper::cmsSelectbox('selectBoxUser', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBoxUser');
@@ -33,19 +35,19 @@ if(!empty($this->Items)){
         $created_by     = '';
         $modified_by    = '';
         
-
         $dataGroupForUser               = array();
         $dataGroupForUser['id']         = $id;
         $dataGroupForUser['group_id']   = $value['group_id'];
         
-        foreach ($selectGroup as $keyselect=>$valueSelect){
+        foreach ($listUserWithGroupACP as $valueUserGroupACP){
+
             // 1 --- For Created_by and Modified_by
-            if($value['created_by'] == $keyselect){
-                $created_by = $valueSelect;
+            if($value['created_by'] ==  $valueUserGroupACP['id']){
+                $created_by         =   $valueUserGroupACP['username'];
             }
             
-            if($value['modified_by'] == $keyselect){
-                $modified_by = $valueSelect;
+            if($value['modified_by'] == $valueUserGroupACP['id']){
+                $modified_by         = $valueUserGroupACP['username'];
             }
                         
         }

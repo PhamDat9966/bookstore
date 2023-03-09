@@ -4,7 +4,6 @@ class IndexController extends Controller
 {
 
     public $_statusReturn;
-    public $_arrParamOld;
 
     public function __construct($arrParams)
     {
@@ -81,26 +80,14 @@ class IndexController extends Controller
     {
         
         $this->_view->_title        = 'Details';
-        $this->_view->_tag          = 'Details';
         
-        $userObj    =   Session::get('user');
-        $this->_view->arrParam['form'] = $userObj['info'];
+        $userObj                        =   Session::get('user');
+        $this->_view->arrParam['form']  =   $userObj['info'];
         
         if (@$this->_arrParam['form']['token'] > 0) {
-            $taskAction          = 'add';
-            $queryUserName       = "SELECT `id` FROM `" . TBL_USER . "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "'";
-            $queryEmailName      = "SELECT `id` FROM `" . TBL_USER . "` WHERE `email`      = '" . $this->_arrParam['form']['email'] . "'";
-            
-            if (isset($this->_arrParam['form']['id'])) {
-                $taskAction      = 'edit';
-                $queryUserName  .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
-                $queryEmailName .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
-            }
             
             $validate = new Validate($this->_arrParam['form']);
-            $validate->addRule('username', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryUserName, 'min' => 3, 'max' => 25))
-                     ->addRule('email', 'email-notExistRecord', array('database' => $this->_model, 'query' => $queryEmailName, 'min' => 3, 'max' => 25))
-                     ->addRule('fullname', 'string', array('min' => 3, 'max' => 255));
+            $validate->addRule('fullname', 'string', array('min' => 3, 'max' => 255));
             
             $validate->run();
             
@@ -110,21 +97,14 @@ class IndexController extends Controller
                 $this->_view->errors    = $validate->showErrors();
             } else {
                 
-                $task = (isset($this->_arrParam['form']['id']) ? 'edit' : 'add');
-                if (isset($this->_arrParam['task'])) {
-                    $task = $this->_arrParam['task'];
-                }
-                
-                $id      = $this->_model->saveItem($this->_arrParam, array('task' => $task));
-                $type    = $this->_arrParam['type'];        
-                
-                $_SESSION['user']['info']['fullname'] = $this->_arrParam['form']['fullname'];
-                
-                if ($type == 'save') URL::redirect('backend', 'index', 'profile', array('id', $id));
+            $id                                     = $this->_model->saveItem($this->_arrParam, array('task' => $task));
+            $type                                   = $this->_arrParam['type']; 
+            $_SESSION['user']['info']['fullname']   = $this->_arrParam['form']['fullname'];
+            
+            if ($type == 'save') URL::redirect('backend', 'index', 'profile', array('id', $id));
+            
             }
         }
-        
-        //$this->_view->_arrParam['form'] = $this->_arrParam['form'];
         
         $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
         $this->_templateObj->setFileTemplate('index.php');

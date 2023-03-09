@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2023 at 04:48 PM
+-- Generation Time: Mar 09, 2023 at 08:49 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -46,8 +46,8 @@ CREATE TABLE `group` (
 INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`) VALUES
 (1, 'Admin', 1, '2022-10-18', 1, '2023-01-11', 10, '1', '11'),
 (2, 'Manager', 1, '2022-10-05', NULL, '2022-10-13', NULL, '1', '10'),
-(3, 'Member', 1, '2022-10-08', NULL, '2023-01-11', 10, '1', '11'),
-(4, 'Register', 0, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
+(3, 'Member', 0, '2022-10-08', NULL, '2023-01-11', 10, '1', '11'),
+(4, 'Register', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
 (5, 'Manage 1', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
 (6, 'Admin 1', 1, '2022-10-18', 1, '2022-10-13', 1, '0', '10'),
 (7, 'Admin 2', 1, '2022-10-05', NULL, '2022-10-13', NULL, '0', '8'),
@@ -72,9 +72,9 @@ CREATE TABLE `user` (
   `fullname` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `created` datetime DEFAULT current_timestamp(),
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` varchar(25) DEFAULT NULL,
   `modified` datetime DEFAULT current_timestamp(),
-  `modified_by` int(11) DEFAULT NULL,
+  `modified_by` varchar(25) DEFAULT NULL,
   `register_date` datetime DEFAULT current_timestamp(),
   `register_ip` varchar(25) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
@@ -87,14 +87,14 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `register_date`, `register_ip`, `status`, `ordering`, `group_id`) VALUES
-(1, 'nva', 'nva@gmail.com', 'Nguyễn Văn A', '12345', '2022-12-28 10:04:00', 1, '2023-02-06 06:18:28', 1, '2023-02-25 14:39:22', NULL, 1, 10, 1),
-(2, 'nvb', 'nvb@gmail.com', 'PhamDat', '12345', '2022-12-28 02:55:00', 2, '2023-02-07 07:38:49', 1, '2023-02-25 14:39:22', NULL, 0, 10, 3),
-(3, 'nvc', 'nvc@gmail.com', 'PhamDat', '12345', '2022-12-28 08:55:00', 1, '2023-02-06 06:07:53', 1, '2023-02-25 14:39:22', NULL, 1, 10, 2),
-(4, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', 2, '2023-01-13 07:36:17', 1, '2023-02-25 14:39:22', NULL, 1, 10, 4),
-(33, 'nguyenvana', 'nguyenvana@gmail.com', 'Nguyen Van A', '123456', '2023-02-07 07:42:54', 1, '2023-02-07 13:42:54', NULL, '2023-02-25 14:39:22', NULL, 1, 10, 1),
-(35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '1234567', '2023-02-25 22:33:16', NULL, '2023-02-25 22:33:16', NULL, '2023-02-25 16:02:16', '::1', 0, 10, 0),
-(36, 'nguyenvanaa', 'nguyenvanaa@gmail.com', 'Nguyen Van A', '1234567', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 0),
-(37, 'nguyenvana1', 'nguyenvana1@gmail.com', 'Nguyen Van A1', '1234567', '2023-02-25 22:44:13', NULL, '2023-02-25 22:44:13', NULL, '2023-02-25 16:02:13', '::1', 0, 10, 0),
+(1, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', '1', '2023-03-09 07:57:13', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
+(2, 'nvb', 'nvb@gmail.com', 'PhamDat', '12345', '2022-12-28 02:55:00', '5', '2023-03-09 03:39:47', '1', '2023-02-25 14:39:22', NULL, 0, 10, 4),
+(3, 'nvc', 'nvc@gmail.com', 'PhamDat', '12345', '2022-12-28 08:55:00', '1', '2023-03-09 08:46:07', '5', '2023-02-25 14:39:22', NULL, 1, 10, 3),
+(4, 'nva', 'nva@gmail.com', 'Nguyễn Văn A', '12345', '2022-12-28 10:04:00', '1', '2023-03-09 08:20:43', '5', '2023-02-25 14:39:22', NULL, 0, 10, 3),
+(5, 'nguyenvana', 'nguyenvana@gmail.com', 'Nguyen Van A123', '12345', '2023-02-07 07:42:54', '5', '2023-03-09 03:41:00', '5', '2023-02-25 14:39:22', NULL, 1, 10, 1),
+(35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '12345', '2023-02-25 22:33:16', NULL, '2023-02-25 22:33:16', NULL, '2023-02-25 16:02:16', '::1', 0, 10, 0),
+(36, 'nguyenvanaa', 'nguyenvanaa@gmail.com', 'Nguyen Van A', '12345', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 0),
+(37, 'nguyenvana1', 'nguyenvana1@gmail.com', 'Nguyen Van A1', '12345', '2023-02-25 22:44:13', NULL, '2023-02-25 22:44:13', NULL, '2023-02-25 16:02:13', '::1', 0, 10, 0),
 (38, 'admin123123123', 'phamdat9966@gmail.com', 'PhamDat22222', 'dasdsadas', '2023-02-25 23:34:00', NULL, '2023-02-25 23:34:00', NULL, '2023-02-25 17:02:00', '::1', 0, 10, 0),
 (39, 'admin1231231236666', 'phamdat9966666@gmail.com', 'Nguyen Van A', 'dasdsadsad', '2023-02-25 23:55:05', NULL, '2023-02-25 23:55:05', NULL, '2023-02-25 17:02:05', '::1', 0, 10, 0);
 

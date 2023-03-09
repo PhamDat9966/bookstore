@@ -15,8 +15,10 @@ class UserController extends Controller
     public function listAction()
     {
 
-        $this->_view->slbGroup = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
-
+        $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
+        // Danh sách tài khoảng có groupACP = 1 là những tài khoảng đăng nhập được vào control Panel
+        $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
+        
         //Bulk Action
         if (isset($_GET['selectBoxUser'])) {
 

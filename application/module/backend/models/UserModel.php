@@ -134,6 +134,10 @@ class UserModel extends Model
     
     public function saveItem($arrParam, $option = null){
         
+
+        $created_by  = $_SESSION['user']['info']['id'];
+        $modified_by = $_SESSION['user']['info']['id'];
+        
         if($option['task'] == 'add'){
             $arrParam['form']['created']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['created_by'] = 1;
@@ -146,7 +150,7 @@ class UserModel extends Model
         
         if($option['task'] == 'edit'){
             $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['modified_by'] = 1;
+            $arrParam['form']['modified_by'] = $modified_by;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->update($data, array(array('id',$arrParam['form']['id'])));
@@ -156,7 +160,7 @@ class UserModel extends Model
         
         if($option['task'] == 'generatepass'){
             $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['modified_by'] = 1;
+            $arrParam['form']['modified_by'] = $modified_by;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->update($data, array(array('id',$arrParam['form']['password'])));
@@ -342,6 +346,22 @@ class UserModel extends Model
                     $this->query($query);
                 }
             }
+        }
+        
+    }
+    
+    public function listUserGroupACP($arrParam,$option = null)
+    {
+        $queryContent   = [];
+        
+        if($option == null){
+            
+            $queryContent[] = "SELECT `id`,`username`";
+            $queryContent[] = "FROM `".$this->_tableName."`";
+            $queryContent[] = "WHERE `group_id` = 1";
+            $queryContent   = implode(" ", $queryContent);
+            $result         = $this->fetchAll($queryContent);
+            return $result;
         }
         
     }
