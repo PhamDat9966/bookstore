@@ -13,6 +13,7 @@ class IndexController extends Controller
 
     public function loginAction()
     {
+        
         if (isset($this->_arrParam['form']['token'])) {
             if ($this->_arrParam['form']['token'] > 0) {
 

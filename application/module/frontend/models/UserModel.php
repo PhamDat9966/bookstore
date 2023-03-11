@@ -36,7 +36,7 @@ class UserModel extends Model
             $email   = $arrParam['form']['email'];
             $password   = $arrParam['form']['password'];
             
-            $query[]    =   "SELECT `u`.`id`,`u`.`fullname`,`u`.`email`,`u`.`group_id`, `g`.`group_acp`";
+            $query[]    =   "SELECT `u`.`id`,`u`.`username`,`u`.`fullname`,`u`.`email`,`u`.`group_id`, `g`.`group_acp`";
             $query[]    =   "FROM `user` AS `u` LEFT JOIN `group` AS `g` ON `u`.`group_id` = `g`.`id` ";
             $query[]    =   "WHERE `email` = '$email' AND `password` = '$password'";
             

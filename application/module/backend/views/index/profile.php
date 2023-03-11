@@ -1,4 +1,5 @@
 <?php
+
     $dataForm           = $this->arrParam['form'];
 
     $disabled           = '';
@@ -84,13 +85,22 @@
         $cancelUrl    = URL::createLink("backend", "user", "list");
         $cancelButton = Helper::cmsButton($cancelUrl, $class="btn btn-danger", $textOufit = "Cancel");
     
+        
+        $message = '';
+        
+        if(isset($_SESSION['message'])){
+            $message = Helper::cmsMessage($_SESSION['message']);
+        }
+        //Session::delete('message');
+        
 ?>
 <div class="content">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
 				<?php 
-            	   require_once 'messageBox/index.php';
+            	   //require_once 'messageBox/index.php';
+            	   echo $message;
             	?>
 			    <?= $showErrors;?>
 				<form action="#" method="get" name="user-list-form" id="user-list-form">

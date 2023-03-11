@@ -82,11 +82,12 @@ class UserController extends Controller{
                     $infoUser           = $this->_model->infoItem($this->_arrParam);
                     
                     $arraySession       = array(
-                        'login'     => true,
-                        'info'      => $infoUser,
-                        'time'      => time(),
-                        'group_acp' => $infoUser['group_acp']
-                    );
+                                                'login'     => true,
+                                                'info'      => $infoUser,
+                                                'username'  => $infoUser['username'],
+                                                'time'      => time(),
+                                                'group_acp' => $infoUser['group_acp']
+                                            );
                     Session::set('user', $arraySession);
                     URL::redirect('frontend', 'user', 'login');
                 } else {

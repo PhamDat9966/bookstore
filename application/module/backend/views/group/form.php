@@ -18,6 +18,16 @@ $rowName            = Helper::cmsRowForm($lblName = 'Name', $input = $inputName,
 $rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = true);
 $rowGroupACP        = Helper::cmsRowForm($lblName = 'GroupACP', $input = $selectGroupACP, $require = true);
 
+$rowNameOutput      = '';
+$inputNameHiden     = '';
+if($this->task == 'edit'){
+    $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null, $option = 'disabled');
+    $inputNameHiden = Helper::cmsInput($type = 'hidden', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
+    $rowName        = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = false);
+}
+
+$rowNameOutput  = $rowName . $inputNameHiden;
+
 $showErrors = '';
 if (!empty($this->errors)) {
 	$showErrors = '<div class="alert alert-danger alert-dismissible">
@@ -38,8 +48,10 @@ if (isset($this->arrParam['id'])) {
 }
 
 $submitButton = Helper::cmsButtonSubmit($type = "submit", $class = "btn btn-success", $textOutfit = "Save");
-$cancelUrl    = URL::createLink("backend", "user", "list");
+$cancelUrl    = URL::createLink("backend", "group", "list");
 $cancelButton = Helper::cmsButton($cancelUrl, $class = "btn btn-danger", $textOufit = "Cancel");
+
+
 ?>
 <div class="content">
 	<div class="container-fluid">
@@ -56,7 +68,7 @@ $cancelButton = Helper::cmsButton($cancelUrl, $class = "btn btn-danger", $textOu
 					<div class="card card-outline card-info">
 						<div class="card-body">
 							<div class="form-group">
-								<?= $rowName; ?>
+								<?= $rowNameOutput; ?>
 							</div>
 							<div class="form-group">
 								<?= $rowStatus; ?>

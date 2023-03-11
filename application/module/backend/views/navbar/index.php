@@ -6,6 +6,9 @@ $linkLogout     = URL::createLink('backend', 'index', 'logout');
 $viewPage       = URL::createLink('frontend', 'index', 'index');
 $linkMyProfile  = URL::createLink('backend', 'index', 'profile');
 
+$userName       =  $_SESSION['user']['info']['username'];
+$fullNameUser   =  $_SESSION['user']['info']['fullname'];
+
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 	<!-- Left navbar links -->
@@ -27,14 +30,14 @@ $linkMyProfile  = URL::createLink('backend', 'index', 'profile');
 		<li class="nav-item dropdown user user-menu"><a href="#"
 			class="nav-link dropdown-toggle" data-toggle="dropdown"> 
               	<?php echo $userImage;?>	
-			 	<span>Zendvn</span>
+			 	<span><?php echo $userName;?></span>
 		</a>
 			<ul class="dropdown-menu">
 				<!-- User image -->
 				<li class="user-header bg-light-blue">
 					<?php echo $userImage_01;?> 
 					<p>
-						ZendVN - Web Developer<small>admin</small>
+						ZendVN - Web Developer<small><?php echo $fullNameUser;?></small>
 					</p>
 				</li>
 				<!-- Menu Footer-->

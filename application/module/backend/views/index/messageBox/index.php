@@ -4,7 +4,7 @@ $message = '';
 if(isset($_SESSION['message'])){
     $message = Helper::cmsMessage($_SESSION['message']);
 }
-Session::delete('message');
+//Session::delete('message');
 
 ?>
 

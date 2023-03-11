@@ -171,7 +171,8 @@ class GroupController extends Controller
     {
         
         $this->_view->_title        = 'User Groups: Add';
-
+        $this->_view->task          = 'add'; 
+        
         //* _arrParamOld use When is save but have error. _arrParamOld save error*//
         if (isset($this->_arrParam['form'])) {
             $this->_arrParamOld['form'] = $this->_arrParam['form'];
@@ -182,6 +183,7 @@ class GroupController extends Controller
 
         if (isset($this->_arrParam['id'])) {
             $this->_view->_title  = 'User Groups: Edit';
+            $this->_view->task    = 'edit';  
             $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
             if (empty($this->_arrParam['form'])) URL::redirect('backend', 'group', 'list');
         }
@@ -192,12 +194,19 @@ class GroupController extends Controller
         }
 
         if (@$this->_arrParam['form']['token'] > 0) {
+            
+            $taskAction = 'add';
             $queryName  = "SELECT `id` FROM `" . TBL_GROUP . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
-
+            
+            if(isset($this->_arrParam['form']['id'])){
+                $taskAction      = "edit";
+                $queryName  .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
+            }
+            
             $validate = new Validate($this->_arrParam['form']);
             $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryName, 'min' => 3, 'max' => 25))
-                ->addRule('status', 'status', array('deny' => array('default')))
-                ->addRule('group_acp', 'status', array('deny' => array('default')));
+                     ->addRule('status', 'status', array('deny' => array('default')))
+                     ->addRule('group_acp', 'status', array('deny' => array('default')));
             $validate->run();
             $this->_arrParam['form'] = $validate->getResult();
 
@@ -205,8 +214,8 @@ class GroupController extends Controller
                 $this->_view->errors    = $validate->showErrors();
             } else {
 
-                $task = (isset($this->_arrParam['form']['id']) ? 'edit' : 'add');
-                $id = $this->_model->saveItem($this->_arrParam, array('task' => $task));
+                //$task = (isset($this->_arrParam['form']['id']) ? 'edit' : 'add');
+                $id = $this->_model->saveItem($this->_arrParam, array('task' => $taskAction));
                 $type = $this->_arrParam['type'];
                 if ($type == 'save-close') URL::redirect('backend', 'group', 'list');
                 //plus
