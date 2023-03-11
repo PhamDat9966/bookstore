@@ -49,6 +49,44 @@ class UserModel extends Model
         return $result;
     }
     
+    public function saveItem($arrParam, $option = null){
+        
+        
+        $created_by  = $_SESSION['user']['info']['id'];
+        $modified_by = $_SESSION['user']['info']['id'];
+        
+        if($option['task'] == 'add'){
+            $arrParam['form']['created']    = date('Y-m-d h:i:s',time());
+            $arrParam['form']['created_by'] = $created_by;
+            
+            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
+            $this->insert($data);
+            Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
+            return $this->lastID();
+        }
+        
+        if($option['task'] == 'edit'){
+            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
+            $arrParam['form']['modified_by'] = $modified_by;
+            
+            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
+            
+            $this->update($data, array(array('id',$arrParam['form']['id'])));
+            Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
+            return $arrParam['form']['id'];
+        }
+        
+        if($option['task'] == 'generatepass'){
+            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
+            $arrParam['form']['modified_by'] = $modified_by;
+            
+            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
+            $this->update($data, array(array('id',$arrParam['form']['password'])));
+            Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
+            return $arrParam['form']['id'];
+        }
+    }
+    
     public function createdAndModified($arrParam, $option = null){
         
         $queryContent   = [];
@@ -132,42 +170,7 @@ class UserModel extends Model
         }
     }
     
-    public function saveItem($arrParam, $option = null){
-        
-
-        $created_by  = $_SESSION['user']['info']['id'];
-        $modified_by = $_SESSION['user']['info']['id'];
-        
-        if($option['task'] == 'add'){
-            $arrParam['form']['created']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['created_by'] = 1;
-            
-            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
-            $this->insert($data);
-            Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
-            return $this->lastID();
-        }
-        
-        if($option['task'] == 'edit'){
-            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['modified_by'] = $modified_by;
-            
-            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
-            $this->update($data, array(array('id',$arrParam['form']['id'])));
-            Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
-            return $arrParam['form']['id'];
-        }
-        
-        if($option['task'] == 'generatepass'){
-            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['modified_by'] = $modified_by;
-            
-            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
-            $this->update($data, array(array('id',$arrParam['form']['password'])));
-            Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
-            return $arrParam['form']['id'];
-        }
-    }
+    
     
     public function pagination($totalItems,$totalItemsPerPage,$pageRange)
     {

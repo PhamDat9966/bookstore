@@ -1,5 +1,4 @@
 <?php
-
     $dataForm           = $this->arrParam['form'];
 
     $disabled           = '';
@@ -82,16 +81,9 @@
         }
     
         $submitButton = Helper::cmsButtonSubmit($type="submit",$class="btn btn-success" ,$textOutfit = "Save");
-        $cancelUrl    = URL::createLink("backend", "user", "list");
+        $cancelUrl    = URL::createLink("backend", "index", "index");
         $cancelButton = Helper::cmsButton($cancelUrl, $class="btn btn-danger", $textOufit = "Cancel");
     
-        
-        $message = '';
-        
-        if(isset($_SESSION['message'])){
-            $message = Helper::cmsMessage($_SESSION['message']);
-        }
-        //Session::delete('message');
         
 ?>
 <div class="content">
@@ -99,8 +91,7 @@
 		<div class="row">
 			<div class="col-12">
 				<?php 
-            	   //require_once 'messageBox/index.php';
-            	   echo $message;
+            	   require_once 'messageBoxProfile/index.php';
             	?>
 			    <?= $showErrors;?>
 				<form action="#" method="get" name="user-list-form" id="user-list-form">

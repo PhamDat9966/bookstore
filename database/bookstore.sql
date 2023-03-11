@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2023 at 03:58 AM
+-- Generation Time: Mar 11, 2023 at 09:44 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -32,9 +32,9 @@ CREATE TABLE `group` (
   `name` varchar(255) NOT NULL,
   `group_acp` tinyint(1) DEFAULT 0,
   `created` date DEFAULT current_timestamp(),
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` varchar(45) DEFAULT NULL,
   `modified` date DEFAULT current_timestamp(),
-  `modified_by` int(11) DEFAULT NULL,
+  `modified_by` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   `ordering` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -44,17 +44,18 @@ CREATE TABLE `group` (
 --
 
 INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`) VALUES
-(1, 'Admin', 1, '2022-10-18', 1, '2023-01-11', 10, '1', '11'),
-(2, 'Manager', 1, '2022-10-05', NULL, '2022-10-13', NULL, '1', '10'),
-(3, 'Member', 0, '2022-10-08', NULL, '2023-01-11', 10, '1', '11'),
-(4, 'Register', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
-(5, 'Manage 1', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
-(6, 'Admin 1', 1, '2022-10-18', 1, '2022-10-13', 1, '0', '10'),
+(1, 'Admin', 1, '2022-10-18', 'admin', '2023-01-11', 'admin', '1', '11'),
+(2, 'Manager', 1, '2022-10-05', 'admin', '2022-10-13', 'nguyenvana', '1', '10'),
+(3, 'Member', 0, '2022-10-08', NULL, '2023-01-11', 'admin', '1', '11'),
+(4, 'Register', 0, '2022-10-08', NULL, '2023-03-11', 'admin', '0', '10'),
+(5, 'Manage 1', 1, '2022-10-08', NULL, '2023-03-11', 'admin', '0', '10'),
+(6, 'Admin 1', 1, '2022-10-18', 'admin', '2022-10-13', 'nguyenvana', '0', '10'),
 (7, 'Admin 2', 1, '2022-10-05', NULL, '2022-10-13', NULL, '0', '8'),
 (8, 'fouder 01', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
 (9, 'fouder 02', 0, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
-(64, 'fouder 03', 0, '2022-12-22', 1, '2022-12-22', NULL, '0', '6'),
-(65, 'fouder 04', 1, '2022-12-22', 1, '2022-12-22', NULL, '1', '10');
+(64, 'fouder 03', 0, '2022-12-22', 'admin', '2022-12-22', NULL, '0', '6'),
+(65, 'fouder 04', 1, '2022-12-22', 'admin', '2022-12-22', NULL, '1', '10'),
+(72, 'test001', 0, '2023-03-11', 'admin', '2023-03-11', NULL, '0', NULL);
 
 -- --------------------------------------------------------
 
@@ -84,16 +85,16 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `register_date`, `register_ip`, `status`, `ordering`, `group_id`) VALUES
-(1, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', '1', '2023-03-11 03:23:11', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
-(2, 'nvb', 'nvb@gmail.com', 'PhamDat', '12345', '2022-12-28 02:55:00', '5', '2023-03-09 03:39:47', '1', '2023-02-25 14:39:22', NULL, 0, 10, 4),
-(3, 'nvc', 'nvc@gmail.com', 'PhamDat', '12345', '2022-12-28 08:55:00', '1', '2023-03-09 08:46:07', '5', '2023-02-25 14:39:22', NULL, 1, 10, 3),
-(4, 'nva', 'nva@gmail.com', 'Nguyễn Văn A', '12345', '2022-12-28 10:04:00', '1', '2023-03-11 03:35:22', '1', '2023-02-25 14:39:22', NULL, 0, 10, 3),
-(5, 'nguyenvana', 'nguyenvana@gmail.com', 'Nguyen Van A123', '12345', '2023-02-07 07:42:54', '5', '2023-03-09 03:41:00', '5', '2023-02-25 14:39:22', NULL, 1, 10, 1),
-(35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '12345', '2023-02-25 22:33:16', NULL, '2023-02-25 22:33:16', NULL, '2023-02-25 16:02:16', '::1', 0, 10, 0),
+(1, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', '1', '2023-03-11 08:37:20', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
+(2, 'nvb', 'nvb@gmail.com', 'PhamDat', '12345', '2022-12-28 02:55:00', '5', '2023-03-09 03:39:47', '5', '2023-02-25 14:39:22', NULL, 0, 10, 4),
+(3, 'nvc', 'nvc@gmail.com', 'PhamDat', '12345', '2022-12-28 08:55:00', '1', '2023-03-09 08:46:07', '1', '2023-02-25 14:39:22', NULL, 1, 10, 3),
+(4, 'nva', 'nva@gmail.com', 'Nguyễn Văn A', '12345', '2022-12-28 10:04:00', '5', '2023-03-11 08:57:58', '5', '2023-02-25 14:39:22', NULL, 1, 10, 3),
+(5, 'nguyenvana', 'nguyenvana@gmail.com', 'Nguyen Van A123', '12345', '2023-02-07 07:42:54', '1', '2023-03-11 08:52:17', '5', '2023-02-25 14:39:22', NULL, 1, 10, 1),
+(35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '12345', '2023-02-25 22:33:16', NULL, '2023-03-11 09:39:04', 'admin', '2023-02-25 16:02:16', '::1', 1, 10, 4),
 (36, 'nguyenvanaa', 'nguyenvanaa@gmail.com', 'Nguyen Van A', '12345', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 0),
 (37, 'nguyenvana1', 'nguyenvana1@gmail.com', 'Nguyen Van A1', '12345', '2023-02-25 22:44:13', NULL, '2023-02-25 22:44:13', NULL, '2023-02-25 16:02:13', '::1', 0, 10, 0),
 (38, 'admin123123123', 'phamdat9966@gmail.com', 'PhamDat22222', 'dasdsadas', '2023-02-25 23:34:00', NULL, '2023-02-25 23:34:00', NULL, '2023-02-25 17:02:00', '::1', 0, 10, 0),
-(39, 'admin1231231236666', 'phamdat9966666@gmail.com', 'Nguyen Van A', 'dasdsadsad', '2023-02-25 23:55:05', NULL, '2023-02-25 23:55:05', NULL, '2023-02-25 17:02:05', '::1', 0, 10, 0);
+(39, 'admin1231231236666', 'phamdat9966666@gmail.com', 'Nguyen Van A', 'dasdsadsad', '2023-02-25 23:55:05', NULL, '2023-03-11 09:40:10', '1', '2023-02-25 17:02:05', '::1', 0, 10, 4);
 
 --
 -- Indexes for dumped tables
@@ -119,7 +120,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `group`
 --
 ALTER TABLE `group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `user`

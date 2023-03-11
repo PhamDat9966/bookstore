@@ -16,7 +16,10 @@ class UserController extends Controller
     {
 
         $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
-        // Danh sách tài khoảng có groupACP = 1 là những tài khoảng đăng nhập được vào control Panel
+        
+        // Danh sách tài khoảng có groupACP = 1 là những tài khoảng vào được vào control Panel dùng để đối chiếu với
+        // với các id của create_by và modified_by rồi lấy lấy tên và gắn vào thẻ view
+        // Chỗ này để tiết kiện thời gian sử lý, nếu tài khoảng nào trước đây group_acp = 1 sau này = 0, thì coi như rỗng
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
         
         //Bulk Action
@@ -150,7 +153,6 @@ class UserController extends Controller
     // ACTION : ADD & EDIT
     public function formAction($option = null)
     {
-
         // SelectGroup for User
         $setNumberGroupLimitControl  = 6;
         $this->_view->slbGroup = $this->_model->createdAndModified($this->_arrParam, $option = $setNumberGroupLimitControl);

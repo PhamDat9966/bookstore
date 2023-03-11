@@ -98,7 +98,7 @@ class IndexController extends Controller
                 $this->_view->errors    = $validate->showErrors();
             } else {
                 
-            $id                                     = $this->_model->saveItem($this->_arrParam, array('task' => $task));
+            $id                                     = $this->_model->saveItem($this->_arrParam, array('task' => 'edit'));
             $type                                   = $this->_arrParam['type']; 
             $_SESSION['user']['info']['fullname']   = $this->_arrParam['form']['fullname'];
             

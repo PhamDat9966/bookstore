@@ -30,14 +30,10 @@ if (!empty($this->Items)) {
         //Ajax Status
         $status         = Helper::cmsStatus($value['status'], URL::createLink('backend', 'group', 'ajaxStatus', array('id' => $id, 'status' => $value['status'])), $id);
 
-        $created_by     = '';
-        $created_by     = ($value['created_by'] == 1) ? 'Admin' : 'Manager';
-
+        $created_by     = $value['created_by'];
         $created        = Helper::formatDate('d-m-Y', $value['created']);
 
-        $modified_by    = '';
-        $modified_by    = ($value['modified_by'] == 1) ? 'Admin' : 'Manager';
-
+        $modified_by    = $value['modified_by'];
         $modified       = Helper::formatDate('d-m-Y', $value['modified']);
 
         $ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';

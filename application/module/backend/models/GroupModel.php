@@ -120,12 +120,12 @@ class GroupModel extends Model
     
     public function saveItem($arrParam, $option = null){
         
-        $created  = $_SESSION['user']['info']['id'];
-        $modified = $_SESSION['user']['info']['id'];
+        $created_by  = $_SESSION['user']['info']['username'];
+        $modified_by = $_SESSION['user']['info']['username'];
         
         if($option['task'] == 'add'){
             $arrParam['form']['created']    = date('Y-m-d',time());
-            $arrParam['form']['created_by'] = $created;
+            $arrParam['form']['created_by'] = $created_by;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->insert($data);
@@ -135,7 +135,7 @@ class GroupModel extends Model
         
         if($option['task'] == 'edit'){
             $arrParam['form']['modified']    = date('Y-m-d',time());
-            $arrParam['form']['modified_by'] = $modified;
+            $arrParam['form']['modified_by'] = $modified_by;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));     
             $this->update($data, array(array('id',$arrParam['form']['id'])));
