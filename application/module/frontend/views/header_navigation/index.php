@@ -5,9 +5,122 @@
 	$linkHome			      = URL::createLink('frontend','index','index');
 	$linkBook			      = URL::createLink('frontend','index','list');
 	$linkCatalory		      = URL::createLink('frontend','index','category');
-	$linkRegister		      = URL::createLink('frontend','user','register');
-	$linkLogin			      = URL::createLink('frontend','user','login');
 	$linkAdminControlPanel	  = URL::createLink('backend','index','index');
+	
+	$userObj   = Session::get('user');
+	
+	//$arrayMenu = array(
+	//                   array('class'=>'index-index',   'link'=>$linkHome,               'name'=>'Trang chủ'),
+	//                   array('class'=>'index-list',    'link'=>$linkBook,               'name'=>'Sách'),
+	//                   array('class'=>'',              'link'=>$linkAdminControlPanel,  'name'=>'Admin Control Panel'),
+	//                   array('class'=>'index-category','link'=>$linkCatalory,           'name'=>'Danh mục',
+	//                         'child-list'=>array(
+	//                                               array('class'=>'','link'=>'abc.html','name'=>'Bà mẹ - Em bé'), 
+	//                                               array('class'=>'','link'=>'def.html','name'=>'Chính Trị - Pháp Lý'), 
+    //                	                           array('class'=>'','link'=>'list.html','name'=>'Học Ngoại Ngữ'),
+    //                	                           array('class'=>'','link'=>'list.html','name'=>'Công Nghệ Thông Tin'), 
+	//                                               array('class'=>'','link'=>'list.html','name'=>'Giáo Khoa - Giáo Trình'), 
+	//                                           ) 
+	//                   )
+    //             );
+	
+	// Default
+	$arrayMenu     = array();
+	$arrayMenu[]   = array('class'=>'index-index','link'=>$linkHome,'name'=>'Trang chủ');
+	$arrayMenu[]   = array('class'=>'index-list', 'link'=>$linkBook,'name'=>'Sách');	
+	$arrayMenu[]   = array('class'=>'index-category','link'=>$linkCatalory,           'name'=>'Danh mục',
+                	    'child-list'=>array(
+                	        array('class'=>'','link'=>'abc.html','name'=>'Bà mẹ - Em bé'),
+                	        array('class'=>'','link'=>'def.html','name'=>'Chính Trị - Pháp Lý'),
+                	        array('class'=>'','link'=>'list.html','name'=>'Học Ngoại Ngữ'),
+                	        array('class'=>'','link'=>'list.html','name'=>'Công Nghệ Thông Tin'),
+                	        array('class'=>'','link'=>'list.html','name'=>'Giáo Khoa - Giáo Trình'),
+                	    )
+	);
+	
+	if($userObj['group_acp'] == TRUE){
+	    $arrayMenu[]   = array('class'=>'','link'=>$linkAdminControlPanel,'name'=>'Admin Control Panel');
+	}
+	
+    $xhtml = '<ul id="main-menu" class="sm pixelstrap sm-horizontal">
+				<li>
+					<div class="mobile-back text-right">
+						Back<i class="fa fa-angle-right pl-2" aria-hidden="true"></i>
+					</div>
+				</li>';   
+    
+	foreach ($arrayMenu as $key=>$value){
+	    
+	    if(isset($value['child-list'])){
+	       $xhtml .='<li class="'.$value['class'].'"><a href="'.$value['link'].'">'.$value['name'].'</a>';
+	           $xhtml .='<ul>';
+    	       foreach ($value['child-list'] as $keyC=>$valueC){
+    	           $xhtml .= '<li class="'.$valueC['class'].'"><a href="'.$valueC['link'].'">'.$valueC['name'].'</a></li>';
+    	       }
+	           $xhtml .='</ul>';
+	       $xhtml .='</li>';
+	    }else{
+	       $xhtml .='<li class="'.$value['class'].'"><a href="'.$value['link'].'">'.$value['name'].'</a></li>';
+	    }   
+	    
+	}
+	
+	$xhtml .= '</ul>';
+	
+	
+/*	
+	<li class="index-index"><a href="<?php echo $linkHome;?>">Trang chủ</a></li>
+	<li class="index-list"><a href="<?php echo $linkBook;?>">Sách</a></li>
+	<li class=""><a href="<?php echo $linkAdminControlPanel;?>">Admin Control Panel</a></li>
+	<li class="index-category"><a href="<?php echo $linkCatalory;?>">Danh mục</a>
+    	<ul>
+    	<li><a href="list.html">Bà mẹ - Em bé</a></li>
+    	<li><a href="list.html">Chính Trị - Pháp Lý</a></li>
+    	<li><a href="list.html">Học Ngoại Ngữ</a></li>
+    	<li><a href="list.html">Công Nghệ Thông Tin</a></li>
+    	<li><a href="list.html">Giáo Khoa - Giáo Trình</a>
+    	
+    	</ul>
+	</li>
+*/	
+	
+	// login FALSE
+	$linkRegister		      = URL::createLink('frontend','index','register');
+	$linkLogin			      = URL::createLink('frontend','index','login');
+	
+	// Login TRUE
+	$linkLogout		          = URL::createLink('frontend','index','logout');
+	$linkUserInfo			  = URL::createLink('frontend','index','profile');
+	
+	$arrayAccount         = array();  
+	
+	if($userObj['login'] == FALSE){
+	    $arrayAccount[]   =  array('class'=>'','link'=>$linkLogin,   'name'=>'Đăng nhập');
+	    $arrayAccount[]   =  array('class'=>'','link'=>$linkRegister,'name'=>'Đăng ký');
+	}else{
+	    $arrayAccount[]   =  array('class'=>'','link'=>$linkUserInfo,'name'=>'Tài khoảng');
+	    $arrayAccount[]   =  array('class'=>'','link'=>$linkLogout,  'name'=>'Thoát');
+	}
+	
+	$userXhtmlContent    = '<ul class="header-dropdown">
+								<li class="onhover-dropdown mobile-account"><img
+									src="'.$imageURL.'/avatar.png" alt="avatar">
+									<ul class="onhover-show-div">';
+    foreach ($arrayAccount as $keyAccount=>$valueAccount){
+	   $userXhtmlContent .= '<li><a href="'.$valueAccount['link'].'">'.$valueAccount['name'].'</a></li>';		
+    }
+    $userXhtmlContent   .= '</ul></li></ul>';
+    
+	/*
+	<ul class="header-dropdown">
+		<li class="onhover-dropdown mobile-account"><img
+			src="<?php echo $imageURL;?>/avatar.png" alt="avatar">
+			<ul class="onhover-show-div">
+				<li><a href="<?php echo $linkLogin;?>">Đăng nhập</a></li>
+				<li><a href="<?php echo $linkRegister;?>">Đăng ký</a></li>
+			</ul></li>
+	</ul>
+	 */	
 
 ?>
 
@@ -30,38 +143,13 @@
 								<div class="toggle-nav">
 									<i class="fa fa-bars sidebar-bar"></i>
 								</div>
-								<ul id="main-menu" class="sm pixelstrap sm-horizontal">
-									<li>
-										<div class="mobile-back text-right">
-											Back<i class="fa fa-angle-right pl-2" aria-hidden="true"></i>
-										</div>
-									</li>
-									
-									<!-- Link Header Navigation -->
-									<li class="index-index"><a href="<?php echo $linkHome;?>">Trang chủ</a></li>
-									<li class="index-list"><a href="<?php echo $linkBook;?>">Sách</a></li>
-									<li class=""><a href="<?php echo $linkAdminControlPanel;?>">Admin Control Panel</a></li>
-									<li class="index-category"><a href="<?php echo $linkCatalory;?>">Danh mục</a>
-										<ul>
-											<li><a href="list.html">Bà mẹ - Em bé</a></li>
-											<li><a href="list.html">Chính Trị - Pháp Lý</a></li>
-											<li><a href="list.html">Học Ngoại Ngữ</a></li>
-											<li><a href="list.html">Công Nghệ Thông Tin</a></li>
-											<li><a href="list.html">Giáo Khoa - Giáo Trình</a>
-										
-										</ul></li>
-								</ul>
+								<?php echo $xhtml;?>
 							</nav>
 						</div>
 						<div class="top-header">
-							<ul class="header-dropdown">
-								<li class="onhover-dropdown mobile-account"><img
-									src="<?php echo $imageURL;?>/avatar.png" alt="avatar">
-									<ul class="onhover-show-div">
-										<li><a href="<?php echo $linkLogin;?>">Đăng nhập</a></li>
-										<li><a href="<?php echo $linkRegister;?>">Đăng ký</a></li>
-									</ul></li>
-							</ul>
+							<?php 
+							     echo $userXhtmlContent; 
+							?>
 						</div>
 						<div>
 							<div class="icon-nav">

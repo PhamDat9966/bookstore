@@ -12,6 +12,7 @@ class Bootstrap{
         if(file_exists($filePath)){
             $this->loadExistingController($filePath, $controllerName);
             $this->callMethod();
+            
         }else {
             URL::redirect('frontend', 'index', 'note', array('type'=>'not-url'));
             //$this->loadDefaultController();

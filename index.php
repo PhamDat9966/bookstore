@@ -14,6 +14,10 @@ Session::ini();
 $bootstrap = new Bootstrap();
 $bootstrap->init();
 
+// echo "<pre>";
+// print_r($bootstrap);
+// echo "</pre>";
+
 
 
 
