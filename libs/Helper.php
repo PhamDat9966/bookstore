@@ -149,9 +149,7 @@ class Helper{
     // Create for - PUBLIC
     public static function cmsRow($lblName, $input, $option = null){
 
-        $xhtml = '<div class="col-md-6">
-					<label '.$option.' class="required">'.$lblName.'</label>'.$input.' 
-				</div>';
+        $xhtml = '<label '.$option.' class="required">'.$lblName.'</label>'.$input;
         
         return $xhtml;
     }

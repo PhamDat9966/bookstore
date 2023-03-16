@@ -19,7 +19,7 @@
     $rowPassword   = Helper::cmsRow($lblName = 'Mật Khẩu'       , $input = $inputPassword , $option = 'for="password"'  );
     
     // SUBMIT BUTTON
-    $buttonSumit   = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-solid' , $textOutfit = 'Tạo tài khoản' ,$name = "form[submit]" , $value = 'Tạo tài khoảng', $id = 'submit');
+    $buttonSubmit  = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-solid' , $textOutfit = 'Tạo tài khoản' ,$name = "form[submit]" , $value = 'Tạo tài khoảng', $id = 'submit');
     $inputToken    = Helper::cmsInput($type = 'hidden', $name = '[form]token', $id = 'token', $value = time());
     
     $registerLink  = URL::createLink($module = 'frontend', $controller = 'user', $action = 'register');
@@ -51,11 +51,21 @@
 							<?php //echo $module . $controller . $action;?>
 							<?php echo $typeSave;?>
 							<!-- Form Input -->
-							<?php echo $rowUserName . $rowFullName . $rowEmail . $rowPassword;?>
+							<div class="col-md-6">
+    							<?php echo $rowUserName;?>
+    						</div>
+    						<div class="col-md-6">	
+    							<?php echo $rowFullName;?>
+    						</div>
+    						<div class="col-md-6">	
+    							<?php echo $rowEmail;?>
+    						</div>
+    						<div class="col-md-6">	
+    							<?php echo $rowPassword;?>
+    						</div>	
 						</div>
-						<input type="hidden" id="form[token]" name="form[token]"
-							value="<?php echo time();?>">
-						<?php echo $buttonSumit;?>
+						<?php echo $inputToken;?>
+						<?php echo $buttonSubmit;?>
 					</form>
 					<!-- form end -->
 				</div>

@@ -31,7 +31,6 @@ class Bootstrap{
             $controller = $this->_params['controller'];
             $action     = $this->_params['action']; 
             
-            $userInfo   = Session::get('user');
             $userInfo   = array();
             $logged     = '';
 
@@ -58,22 +57,26 @@ class Bootstrap{
 
                 }else{
                     
-//                     Session::delete('user');
-//                     require_once MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php';
-//                     $indexController    =   new IndexController($this->_params);
-//                     $indexController->loginAction();
-
-                    Session::delete('user');
-                    if($pageLogin == true)  $this->_controllerOject->$actionName();
-                    if($pageLogin == false) URL::redirect('backend','index','login');
-
+                    $this->callLoginAction($module);
                 }
             
             // MODULE FRONTEND
             }else if($module == 'frontend'){
-                
-                $this->_controllerOject->$actionName();
-                
+                //USER CONTROLLER - gio hang vv....
+                if($controller == 'user'){
+                    
+                    if($logged == true){
+                        $this->_controllerOject->$actionName();
+                    }else {
+                        
+                        $this->callLoginAction($module);
+                    }
+                    
+                }else{
+                    
+                    $this->_controllerOject->$actionName();
+                    
+                }
             }
 
             //$this->_controllerOject->{$actionName}();
@@ -84,6 +87,14 @@ class Bootstrap{
             //$this->_error();
         }
         
+    }
+    
+    // CALL ACTION LOGIN
+    public function callLoginAction($module = 'frontend'){
+        Session::delete('user');
+        require_once MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php';
+        $indexController    =   new IndexController($this->_params);
+        $indexController->loginAction();
     }
     
     // LOAD EXISTING CONTROLLER

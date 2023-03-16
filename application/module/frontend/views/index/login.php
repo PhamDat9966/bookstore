@@ -6,7 +6,19 @@
         $showErrors     = '<div class="alert bg-danger alert-dismissible">
                                 '.$this->errors.'
                            </div>';  
-    }    
+    }
+    
+    $inputEmail    = Helper::cmsInput($type = 'email',  $name = 'form[email]'    , $id = 'email'   , $value = "", $class = 'form-control');
+    $inputPassword = Helper::cmsInput($type = 'text',   $name = 'form[password]' , $id = 'password', $value = "",  $class = 'form-control');
+    /*
+    <input type="hidden" id="form[token]" name="form[token]"
+        value="<?php echo time();?>">
+    */    
+    $inputToken    = Helper::cmsInput($type = 'hidden',$name = 'form[token]' ,    $id = 'form[token]', $value = time(), $class = '');
+    
+    $rowEmail      = Helper::cmsRow($lblName = 'Email'          , $input = $inputEmail    , $option = 'for="email"'     );
+    $rowPassword   = Helper::cmsRow($lblName = 'Mật Khẩu'       , $input = $inputPassword , $option = 'for="password"'  );
+    $buttonSubmit  = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-solid' , $textOutfit = 'Đăng Nhập' ,$name = "form[submit]" , $value = 'Đăng Nhập', $id = 'submit');
 ?>
 <div class="breadcrumb-section">
 	<div class="container">
@@ -32,20 +44,22 @@
 				<div class="theme-card">
 					<form action="<?php echo $linkAction;?>" method="post" id="admin-form" class="theme-form">
 						<div class="form-group">
-							<label for="email" class="required">Email</label> <input
-								type="email" id="form[email]" name="form[email]" value=""
-								class="form-control">
+<!-- 							<label for="email" class="required">Email</label> <input -->
+<!-- 								type="email" id="form[email]" name="form[email]" value="" -->
+<!-- 								class="form-control"> -->
+							<?php 
+							     echo $rowEmail;
+							?>
 						</div>
 
 						<div class="form-group">
-							<label for="password" class="required">Mật khẩu</label> <input
-								type="password" id="form[password]" name="form[password]"
-								value="" class="form-control">
+<!-- 							<label for="password" class="required">Mật khẩu</label> <input -->
+<!-- 								type="password" id="form[password]" name="form[password]" -->
+<!-- 								value="" class="form-control"> -->
+							<?php echo $rowPassword;?>
 						</div>
-						<input type="hidden" id="form[token]" name="form[token]"
-							value="<?php echo time();?>">
-						<button type="submit" id="submit" name="submit" value="Đăng nhập"
-							class="btn btn-solid">Đăng nhập</button>
+						<?php echo $inputToken;?>	
+						<?php echo $buttonSubmit;?>
 					</form>
 				</div>
 			</div>

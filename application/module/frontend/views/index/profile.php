@@ -1,7 +1,6 @@
 <?php
     $titleProfile = $this->_title;
 ?>
-
 <div class="breadcrumb-section" style="margin-top: 50px;">
 	<div class="container">
 		<div class="row">

@@ -12,6 +12,17 @@ class IndexController extends Controller{
     
     public function loginAction(){
         
+        $userInfo   = array();
+        $logged     = '';
+        $userInfo   = Session::get('user');
+        
+        if(!empty($userInfo)){
+            if($userInfo['login'] == 'true' && $userInfo['time'] + TIME_LOGIN) // return 'True' or 'False'
+            {
+                URL::redirect('frontend','user', 'index');
+            }
+        }
+        
         //session_destroy();
         
         if (isset($this->_arrParam['form']['token'])) {
@@ -22,8 +33,7 @@ class IndexController extends Controller{
                 $query      =   "SELECT `id` FROM `user` WHERE `email` = '$email' AND `password` = '$password'";
                 
                 $validate   =   new Validate($this->_arrParam['form']);
-                $validate->addRule('email',     'existRecord', array('database' => $this->_model, 'query' => $query))
-                         ->addRule('password',  'existRecord', array('database' => $this->_model, 'query' => $query));
+                $validate->addRule('email',     'existRecord', array('database' => $this->_model, 'query' => $query));
                 $validate->run();
                 
                 if ($validate->isValid() == true) {
@@ -60,6 +70,17 @@ class IndexController extends Controller{
     }
     
     public  function registerAction(){
+        
+        $userInfo   = array();
+        $logged     = '';
+        $userInfo   = Session::get('user');
+        
+        if(!empty($userInfo)){
+            if($userInfo['login'] == 'true' && $userInfo['time'] + TIME_LOGIN) // return 'True' or 'False'
+            {
+                URL::redirect('frontend','user', 'index');
+            }
+        }
         
         if(isset($this->_arrParam['form']['submit'])){
             

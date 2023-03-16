@@ -2,7 +2,7 @@
     $imageURL   = $this->_urlImg;
     
     //Link
-	$linkHome			      = URL::createLink('frontend','index','index');
+	$linkHome			      = URL::createLink('frontend','user','index');
 	$linkBook			      = URL::createLink('frontend','index','list');
 	$linkCatalory		      = URL::createLink('frontend','index','category');
 	$linkAdminControlPanel	  = URL::createLink('backend','index','index');
