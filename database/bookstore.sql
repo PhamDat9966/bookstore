@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2023 at 09:44 AM
+-- Generation Time: Mar 16, 2023 at 03:31 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -36,26 +36,49 @@ CREATE TABLE `group` (
   `modified` date DEFAULT current_timestamp(),
   `modified_by` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `ordering` varchar(45) DEFAULT NULL
+  `ordering` varchar(45) DEFAULT NULL,
+  `privilege_id` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `group`
 --
 
-INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`) VALUES
-(1, 'Admin', 1, '2022-10-18', 'admin', '2023-01-11', 'admin', '1', '11'),
-(2, 'Manager', 1, '2022-10-05', 'admin', '2022-10-13', 'nguyenvana', '1', '10'),
-(3, 'Member', 0, '2022-10-08', NULL, '2023-01-11', 'admin', '1', '11'),
-(4, 'Register', 0, '2022-10-08', NULL, '2023-03-11', 'admin', '0', '10'),
-(5, 'Manage 1', 1, '2022-10-08', NULL, '2023-03-11', 'admin', '0', '10'),
-(6, 'Admin 1', 1, '2022-10-18', 'admin', '2022-10-13', 'nguyenvana', '0', '10'),
-(7, 'Admin 2', 1, '2022-10-05', NULL, '2022-10-13', NULL, '0', '8'),
-(8, 'fouder 01', 0, '2022-10-08', NULL, '2022-10-18', NULL, '0', '10'),
-(9, 'fouder 02', 0, '2022-10-08', NULL, '2022-10-18', NULL, '1', '10'),
-(64, 'fouder 03', 0, '2022-12-22', 'admin', '2022-12-22', NULL, '0', '6'),
-(65, 'fouder 04', 1, '2022-12-22', 'admin', '2022-12-22', NULL, '1', '10'),
-(72, 'test001', 0, '2023-03-11', 'admin', '2023-03-11', NULL, '0', NULL);
+INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `privilege_id`) VALUES
+(1, 'Admin', 1, '2022-10-18', 'admin', '2023-01-11', 'admin', '1', '11', '1,2,3,4,5,6,7,8,9,10'),
+(2, 'Manager', 1, '2022-10-05', 'admin', '2022-10-13', 'nguyenvana', '1', '10', '1,2,3,4,6,7,8,9,10'),
+(3, 'Member', 0, '2022-10-08', NULL, '2023-01-11', 'admin', '1', '11', ''),
+(4, 'Register', 0, '2022-10-08', NULL, '2023-03-11', 'admin', '0', '10', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `privilege`
+--
+
+CREATE TABLE `privilege` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `module` varchar(45) NOT NULL,
+  `controller` varchar(45) NOT NULL,
+  `action` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `privilege`
+--
+
+INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
+(1, 'Hiển thị danh sách người dùng', 'backend', 'user', 'list'),
+(2, 'Thay đổi status của người dùng', 'backend', 'user', 'status'),
+(3, 'Cập nhật thông tin người dùng', 'backend', 'user', 'form'),
+(4, 'Thay đổi status của người dùng sử dụng Ajax', 'backend', 'user', 'ajaxStatus'),
+(5, 'Xoá một hoặc nhiều người dùng', 'backend', 'user', 'trash'),
+(6, 'Thay đổi vị trí hiển thị của các người dùng', 'backend', 'user', 'ordering'),
+(7, 'Truy cập menu Admin Control Panel', 'backend', 'index', 'index'),
+(8, 'Đăng nhập Admin Control Panel', 'backend', 'index', 'login'),
+(9, 'Đăng xuất Admin Control Panel', 'backend', 'index', 'logout'),
+(10, 'Cập nhật thông tin tài khoảng quản trị', 'backend', 'index', 'profile');
 
 -- --------------------------------------------------------
 
@@ -86,11 +109,11 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `register_date`, `register_ip`, `status`, `ordering`, `group_id`) VALUES
 (1, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', '1', '2023-03-11 08:37:20', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
-(2, 'nvb', 'nvb@gmail.com', 'PhamDat', '12345', '2022-12-28 02:55:00', '5', '2023-03-09 03:39:47', '5', '2023-02-25 14:39:22', NULL, 0, 10, 4),
-(3, 'nvc', 'nvc@gmail.com', 'PhamDat', '12345', '2022-12-28 08:55:00', '1', '2023-03-09 08:46:07', '1', '2023-02-25 14:39:22', NULL, 1, 10, 3),
-(4, 'nva', 'nva@gmail.com', 'Nguyễn Văn A', '12345', '2022-12-28 10:04:00', '5', '2023-03-11 08:57:58', '5', '2023-02-25 14:39:22', NULL, 1, 10, 3),
+(2, 'manager', 'manager@gmail.com', 'Manager', '12345', '2022-12-28 02:55:00', '5', '2023-03-09 03:39:47', '5', '2023-02-25 14:39:22', NULL, 0, 10, 2),
+(3, 'member', 'member@gmail.com', 'Member', '12345', '2022-12-28 08:55:00', '1', '2023-03-09 08:46:07', '1', '2023-02-25 14:39:22', NULL, 1, 10, 3),
+(4, 'register', 'register@gmail.com', 'Register', '12345', '2022-12-28 10:04:00', '5', '2023-03-11 08:57:58', '5', '2023-02-25 14:39:22', NULL, 1, 10, 4),
 (5, 'nguyenvana', 'nguyenvana@gmail.com', 'Nguyen Van A123', '12345', '2023-02-07 07:42:54', '1', '2023-03-11 08:52:17', '5', '2023-02-25 14:39:22', NULL, 1, 10, 1),
-(35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '12345', '2023-02-25 22:33:16', NULL, '2023-03-11 09:39:04', 'admin', '2023-02-25 16:02:16', '::1', 1, 10, 4),
+(35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '12345', '2023-02-25 22:33:16', NULL, '2023-03-11 09:39:04', '1', '2023-02-25 16:02:16', '::1', 1, 10, 4),
 (36, 'nguyenvanaa', 'nguyenvanaa@gmail.com', 'Nguyen Van A', '12345', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 0),
 (37, 'nguyenvana1', 'nguyenvana1@gmail.com', 'Nguyen Van A1', '12345', '2023-02-25 22:44:13', NULL, '2023-02-25 22:44:13', NULL, '2023-02-25 16:02:13', '::1', 0, 10, 0),
 (38, 'admin123123123', 'phamdat9966@gmail.com', 'PhamDat22222', 'dasdsadas', '2023-02-25 23:34:00', NULL, '2023-02-25 23:34:00', NULL, '2023-02-25 17:02:00', '::1', 0, 10, 0),
@@ -107,6 +130,12 @@ ALTER TABLE `group`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `privilege`
+--
+ALTER TABLE `privilege`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -120,7 +149,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `group`
 --
 ALTER TABLE `group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `privilege`
+--
+ALTER TABLE `privilege`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user`

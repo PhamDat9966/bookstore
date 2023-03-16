@@ -17,9 +17,12 @@ class UserController extends Controller
 
         $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
         
-        // Danh sách tài khoảng có groupACP = 1 là những tài khoảng vào được vào control Panel dùng để đối chiếu với
-        // với các id của create_by và modified_by rồi lấy lấy tên và gắn vào thẻ view
-        // Chỗ này để tiết kiện thời gian sử lý, nếu tài khoảng nào trước đây group_acp = 1 sau này = 0, thì coi như rỗng
+        /*  listUserGroupACP:
+         *  Danh sách tài khoảng có groupACP = 1 là những tài khoảng vào được vào control Panel dùng để đối chiếu với
+         *  với các id từ create_by và modified_by, để trường hợp có đổi tên thì creat_by và modified_by sẽ tự động cập nhật
+         *   rồi từ id truy vấn đến tên và gắn vào thẻ tại view
+         *  để tiết kiện thời gian sử lý, nếu tài khoảng nào trước đây group_acp = 1 sau này = 0, thì coi như Null
+        */   
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
         
         //Bulk Action
