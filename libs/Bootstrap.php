@@ -44,9 +44,9 @@ class Bootstrap{
 
             $pageLogin  = ($controller == 'index') && ($action == 'login');                 // return 'True' or 'False'
             
-            echo "<pre>";
-            print_r($userInfo);
-            echo "</pre>";
+            //echo "<pre>";
+           // print_r($userInfo);
+            //echo "</pre>";
             
             // MODULE BACKEND
             if($module == 'backend'){

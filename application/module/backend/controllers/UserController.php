@@ -14,6 +14,9 @@ class UserController extends Controller
 
     public function listAction()
     {
+        echo "<pre>";
+        print_r($this->_arrParam);
+        echo "</pre>";
 
         $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
         
@@ -30,7 +33,8 @@ class UserController extends Controller
         if (isset($_GET['selectBoxUser'])) {
 
             if ($_GET['selectBoxUser'] == 'delete') {
-                $this->_model->deleteMultItem($this->_arrParam);
+                URL::redirect('backend', 'user', 'deleteMult',$this->_arrParam['cid']);
+                //$this->deleteMultAction($this->_arrParam);
             }
 
             if ($_GET['selectBoxUser'] == 'action') {
@@ -109,7 +113,7 @@ class UserController extends Controller
         $this->_statusReturn['url'] . $this->_arrParam['page'];
         $page = $this->_arrParam['page'];
     }
-
+    
     public function ajaxUserStatusAction()
     {
         $return = json_encode($this->_model->changeStatus($this->_arrParam, $option = array('task' => 'change-ajax-user-status')));
@@ -285,7 +289,23 @@ class UserController extends Controller
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
     }
 
-
+    public function deleteMultAction(){
+        
+        $arrParamPros = array();
+        foreach ($this->_arrParam as $key=>$value){
+            if(is_int($key)){
+                $arrParamPros[] = $value;
+            }
+        }
+        
+        $this->_arrParam['cid'] = $arrParamPros;
+        
+        $this->_model->deleteMultItem($this->_arrParam);
+        $this->redirec('backend', 'user', 'list');
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+        
+    }
+    
     public function generateRandomString($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

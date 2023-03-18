@@ -327,6 +327,7 @@ class UserModel extends Model
     
     public function deleteMultItem($arrParam,$option = null)
     {
+        
         if($option == null){
             if(!empty($arrParam['cid'])){
                 $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
