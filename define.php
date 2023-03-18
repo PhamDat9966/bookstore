@@ -39,6 +39,7 @@
     // ======================== DATABASE TABLE ================================//
     define('TBL_GROUP'          , 'group');
     define('TBL_USER'           , 'user');
+    define('TBL_PRIVILEGE'      , 'privilege');
 
     // ======================== CONFIG ================================//
     define('TIME_LOGIN'         , 36000);

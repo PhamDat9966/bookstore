@@ -20,9 +20,10 @@ class UserController extends Controller
         /*  listUserGroupACP:
          *  Danh sách tài khoảng có groupACP = 1 là những tài khoảng vào được vào control Panel dùng để đối chiếu với
          *  với các id từ create_by và modified_by, để trường hợp có đổi tên thì creat_by và modified_by sẽ tự động cập nhật
-         *   rồi từ id truy vấn đến tên và gắn vào thẻ tại view
-         *  để tiết kiện thời gian sử lý, nếu tài khoảng nào trước đây group_acp = 1 sau này = 0, thì coi như Null
-        */   
+         *  rồi từ id truy vấn đến tên và gắn vào thẻ tại view để tiết kiện thời gian sử lý và tránh phải foreach nhiều phần từ 
+         *  trong listUserGroupACB tại view nếu tài khoảng nào trước đây group_acp = 1 sau này = 0, thì coi như Null tại create_by và modified_by
+        */  
+        
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
         
         //Bulk Action

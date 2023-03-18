@@ -1,1 +1,1 @@
-Xem lai message của profile
+Sửa đổi tính năng delete thành trast, hoàn chỉnh phân quyền

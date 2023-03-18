@@ -23,8 +23,7 @@ class IndexController extends Controller
 
                 $query      =   "SELECT `id` FROM `user` WHERE `username` = '$username' AND `password` = '$password'";
 
-                $validate->addRule('username', 'existRecord', array('database' => $this->_model, 'query' => $query))
-                         ->addRule('password', 'existRecord', array('database' => $this->_model, 'query' => $query));
+                $validate->addRule('username', 'existRecord', array('database' => $this->_model, 'query' => $query));
                 $validate->run();
 
                 if ($validate->isValid() == true) {
@@ -38,8 +37,10 @@ class IndexController extends Controller
                         'time'      => time(),
                         'group_acp' => $infoUser['group_acp']
                     );
+                    
                     Session::set('user', $arraySession);
                     URL::redirect('backend', 'index', 'index');
+                    
                 } else {
                     $this->_view->errors    = $validate->showErrors();
                 }

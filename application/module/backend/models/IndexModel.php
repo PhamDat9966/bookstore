@@ -32,12 +32,29 @@ class IndexModel extends Model
             $username   = $arrParam['form']['username'];
             $password   = $arrParam['form']['password'];
             
-            $query[]    =   "SELECT `u`.`id`,`u`.`username`,`u`.`fullname`,`u`.`email`,`u`.`group_id`, `g`.`group_acp`";    
+            $query[]    =   "SELECT `u`.`id`,`u`.`username`,`u`.`fullname`,`u`.`email`,`u`.`group_id`, `g`.`group_acp`, `g`.`privilege_id`";    
             $query[]    =   "FROM `user` AS `u` LEFT JOIN `group` AS `g` ON `u`.`group_id` = `g`.`id` ";
             $query[]    =   "WHERE `username` = '$username' AND `password` = '$password'";
             
             $query      = implode(" ", $query);
             $result     = $this->fetchRow($query);
+            
+            if($result['group_acp'] == 1){
+                $arrPrivilege = explode(',', $result['privilege_id']);
+                
+                $strPrililegeID = '';
+                foreach ($arrPrivilege as $privilegeID) $strPrililegeID .= "'$privilegeID', ";
+              
+                $queryP     = array();
+                $queryP[]   = "SELECT `id`,CONCAT(`module`,'-',`controller`,'-',`action`) AS name";
+                $queryP[]   = "FROM `".TBL_PRIVILEGE."` AS p";
+                $queryP[]   = "WHERE id IN ($strPrililegeID'0')"; // Thêm 1 phần tử '0' phía sau vì chuỗi $strPrivilegeID thừa ra dấu ',' 
+                
+                $queryP                 = implode(' ', $queryP);
+                $result['privilege']    = $this->fetchPairs($queryP);
+                
+            }
+
             return $result;
         }
     }

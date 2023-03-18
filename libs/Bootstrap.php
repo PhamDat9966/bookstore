@@ -31,6 +31,8 @@ class Bootstrap{
             $controller = $this->_params['controller'];
             $action     = $this->_params['action']; 
             
+            echo $requestURL = "$module-$controller-$action";
+            
             $userInfo   = array();
             $logged     = '';
 
@@ -42,6 +44,10 @@ class Bootstrap{
 
             $pageLogin  = ($controller == 'index') && ($action == 'login');                 // return 'True' or 'False'
             
+            echo "<pre>";
+            print_r($userInfo);
+            echo "</pre>";
+            
             // MODULE BACKEND
             if($module == 'backend'){
 
@@ -49,8 +55,12 @@ class Bootstrap{
                     
                     // Go backend: group_acp : Admin control Panel
                     if($userInfo['group_acp'] == 1){
-                        $this->_controllerOject->$actionName();
-                        
+                        if(in_array($requestURL, $userInfo['info']['privilege']) == TRUE){
+                            $this->_controllerOject->$actionName();
+                        }else {
+                            URL::redirect('frontend','index','notice',array('type'=>'not-permission'));
+                        }
+                            
                     }else{
                         URL::redirect('frontend','index','notice',array('type'=>'not-permission'));
                     }

@@ -48,7 +48,7 @@ class IndexController extends Controller{
                         'group_acp' => $infoUser['group_acp']
                     );
                     Session::set('user', $arraySession);
-                    URL::redirect('frontend', 'index', 'profile');
+                    URL::redirect('frontend', 'user', 'index');
                 } else {
                     $this->_view->errors    = $validate->showErrors();
                 }

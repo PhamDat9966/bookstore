@@ -39,38 +39,39 @@ class Bootstrap{
             if(!empty($userInfo)){
                $logged     = ($userInfo['login'] == 'true' && $userInfo['time'] + TIME_LOGIN); // return 'True' or 'False'
             }
-            
-           
+
             if($module == 'backend'){
 
                 if($logged == true){
                     
                     if($userInfo['group_acp'] == 1){
-                        $this->_controllerOject->indexAction();
-                        //$this->_controllerObject->$actionName();
+                        $this->_controllerObject->$actionName();
                     }else{
                         URL::redirect('frontend','index','notice',array('type'=>'not-permission'));
                     }
 
                 }else{
-
-                    Session::delete('user');
-                    require_once MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php';
-                    $indexController    =   new IndexController($this->_params);
-                    $indexController->loginAction();
-
+                    $this->callLoginAction($module);
                 }
 
             }else if($module == 'frontend'){
-                $this->_controllerOject->$actionName();
+                
+                if($controller == 'user'){
+                    if($logged == true){
+                        $this->_controllerObject->$actionName();
+                    }else{
+                        $this->callLoginAction($module);
+                    }
+                }else {
+                    $this->_controllerOject->$actionName();
+                }
+                
             }
-
-            //$this->_controllerOject->{$actionName}();
-            //$controllerOject->indexAction();
-
-        }else{
-           //$this->_error();
+            
+        }else {
+            
             URL::redirect('frontend', 'index', 'notice',array('type'=>'not-url'));
+            
         }
         
     }
@@ -90,6 +91,14 @@ class Bootstrap{
        
     }
  
+    // CALL ACTION LOGIN
+    private function callLoginAction($module = 'frontend'){
+        Session::delete('user');
+        require_once (MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php');
+        $indexController = new IndexController($this->_params);
+        $indexController->loginAction();
+    }
+    
     //  SET PARAMS
     public function setParam(){
         
