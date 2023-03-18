@@ -14,10 +14,6 @@ class UserController extends Controller
 
     public function listAction()
     {
-        echo "<pre>";
-        print_r($this->_arrParam);
-        echo "</pre>";
-
         $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
         
         /*  listUserGroupACP:

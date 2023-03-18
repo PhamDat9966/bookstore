@@ -31,7 +31,7 @@ class Bootstrap{
             $controller = $this->_params['controller'];
             $action     = $this->_params['action']; 
             
-            echo $requestURL = "$module-$controller-$action";
+            $requestURL = "$module-$controller-$action";
             
             $userInfo   = array();
             $logged     = '';
@@ -43,11 +43,7 @@ class Bootstrap{
             }
 
             $pageLogin  = ($controller == 'index') && ($action == 'login');                 // return 'True' or 'False'
-            
-            //echo "<pre>";
-           // print_r($userInfo);
-            //echo "</pre>";
-            
+
             // MODULE BACKEND
             if($module == 'backend'){
 
