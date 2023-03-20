@@ -1,7 +1,7 @@
 <?php
 class URL{
 	
-	public static function createLink($module, $controller, $action, $params = null, $pagination = null){
+    public static function createLink($module, $controller, $action, $params = NULL, $strRequest = NULL){
 	    
 	    $linkParams = '';
 	    
@@ -11,12 +11,17 @@ class URL{
 	        }
 	    }
 	    
-		$url = 'index.php?module='.$module.'&controller='.$controller.'&action='.$action . $linkParams ;
+	    $linkRequest = '';
+	   if(!empty($strRequest)){
+	       $linkRequest = '&'.$strRequest;
+	   }
+	    
+		$url = 'index.php?module='.$module.'&controller='.$controller.'&action='.$action . $linkParams . $linkRequest ;
 		return $url;
 	} 
 	
-	public static function redirect($module, $controller, $action,$params = NULL){
-	    $link  =   self::createLink($module, $controller, $action,$params);
+	public static function redirect($module, $controller, $action,$params = NULL,$strRequest = NULL){
+	    $link  =   self::createLink($module, $controller, $action,$params,$strRequest);
 		header('location: ' . $link);
 		exit();
 	}

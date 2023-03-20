@@ -16,7 +16,8 @@ class UserController extends Controller
     {
         $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
         
-        /*  listUserGroupACP:
+        /*  
+         * listUserGroupACP:
          *  Danh sách tài khoảng có groupACP = 1 là những tài khoảng vào được vào control Panel dùng để đối chiếu với
          *  với các id từ create_by và modified_by, để trường hợp có đổi tên thì creat_by và modified_by sẽ tự động cập nhật
          *  rồi từ id truy vấn đến tên và gắn vào thẻ tại view để tiết kiện thời gian sử lý và tránh phải foreach nhiều phần từ 
@@ -34,13 +35,15 @@ class UserController extends Controller
             }
 
             if ($_GET['selectBoxUser'] == 'action') {
-                $this->_arrParam['type'] = 1;
-                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+
+                $strRequest = '&statusChoose=1';                
+                URL::redirect('backend', 'user', 'status',$this->_arrParam['cid'],$strRequest);
             }
 
             if ($_GET['selectBoxUser'] == 'inactive') {
-                $this->_arrParam['type'] = 0;
-                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+
+                $strRequest = '&statusChoose=0';
+                URL::redirect('backend', 'user', 'status',$this->_arrParam['cid'],$strRequest);
             }
         }
 
@@ -50,17 +53,17 @@ class UserController extends Controller
         }
 
         // charge active, inactive userACB and status
-        if (isset($_GET['id'])) {
+//         if (isset($_GET['id'])) {
 
-            $this->_arrParam['id'] = $_GET['id'];
+//             $this->_arrParam['id'] = $_GET['id'];
 
-            if (isset($_GET['status'])) {
-                $this->statusAction();
-            }
+//             if (isset($_GET['status'])) {
+//                 $this->statusAction();
+//             }
 
-            // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
-            $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
-        }
+//             // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
+//             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
+//         }
 
         //Paginator
         $this->_arrParam['count']  = $this->_model->countFilterSearch();
@@ -103,11 +106,19 @@ class UserController extends Controller
 
     public function statusAction()
     {
-        $this->_arrParam['status'] = $_GET['status'];
-        $this->_statusReturn = $this->_model->changeStatus($this->_arrParam);
 
-        $this->_statusReturn['url'] . $this->_arrParam['page'];
-        $page = $this->_arrParam['page'];
+        $arrParamPros = array();
+        foreach ($this->_arrParam as $key=>$value){
+            if(is_int($key)){
+                $arrParamPros[] = $value;
+            }
+        }
+        
+        $this->_arrParam['cid'] = $arrParamPros;
+        $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+        
+        $this->redirec('backend', 'user', 'list');
+        
     }
     
     public function ajaxUserStatusAction()
