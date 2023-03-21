@@ -5,13 +5,16 @@ class CategoryModel extends Model
     public $_arrParam;
     public $_saveParam = [];
     protected $_tableName = TBL_CATEGORY;
-    public    $_cunrrentPage      = 1;       
+    public    $_cunrrentPage      = 1;
+    private $_userInfo;
     private $_columns = array('id','name','picture','created','created_by','modified','modified_by','status','ordering');
     
     public function __construct()
     {
         parent::__construct();
         $this->setTable($this->_tableName);
+        $userObj         = Session::get('user');
+        $this->_userInfo = $userObj;
         
     }
     
@@ -50,6 +53,11 @@ class CategoryModel extends Model
        
     public function changeStatus($arrParam, $option = null){
         
+        $created_by  = $this->_userInfo['info']['id'];
+        $modified_by = $this->_userInfo['info']['id'];
+        
+        $modified    = date('Y-m-d',time());
+        
         if($option['task'] == 'change-status'){
             $status 	= $arrParam['type'];
             if(!empty($arrParam['cid'])){
@@ -63,7 +71,7 @@ class CategoryModel extends Model
                     $ids     .= "'0'";
                 }
                 
-                $query		= "UPDATE `$this->table` SET `status` = $status WHERE `id` IN ($ids)";
+                $query		= "UPDATE `$this->table` SET `status` = $status,`modified_by` = $modified_by,`modified` = $modified WHERE `id` IN ($ids)";
                 $this->query($query);
                 
                 Session::set('message', array('class' => 'success', 'content' => 'Có ' . $i . ' phần tử được thay đổi trạng thái!'));
@@ -85,20 +93,20 @@ class CategoryModel extends Model
         
         if($option['task'] == 'change-ajax-status'){
   
-            $Status = ($arrParam['status'] == 0) ? 1 : 0 ;
+            $status = ($arrParam['status'] == 0) ? 1 : 0 ;
             $id       = $arrParam['id'];
-            $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
-            $this->query($query);
+            $query    = "UPDATE `$this->table` SET `status` = $status,`modified_by` = $modified_by,`modified` = '$modified' WHERE `id`= $id";
+            $this->query($query);;
 
-            return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$Status)));
+            return array('id'=>$id,'status'=>$status,'url'=>URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$status)));
         }
         
     }
     
     public function saveItem($arrParam, $option = null){
         
-        $created_by  = $_SESSION['user']['info']['username'];
-        $modified_by = $_SESSION['user']['info']['username'];
+        $created_by  = $this->_userInfo['info']['username'];
+        $modified_by = $this->_userInfo['info']['username'];
         
         if($option['task'] == 'add'){
             $arrParam['form']['created']    = date('Y-m-d',time());
@@ -130,7 +138,7 @@ class CategoryModel extends Model
         $this->_cunrrentPage = $currentPage; 
         
         $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
-        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'group', 'list'));
+        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'category', 'list'));
         $position = ($currentPage - 1) * $totalItemsPerPage;
         
         $resulfPagination['position'] = $position;
@@ -328,6 +336,22 @@ class CategoryModel extends Model
         if($filter != '') $query .= "WHERE `status` = '$filter'";
         $result = $this->fetchAll($query);
         return $result;
+    }
+    
+    public function listUserGroupACP($arrParam,$option = null)
+    {
+        $queryContent   = [];
+        
+        if($option == null){
+            
+            $queryContent[] = "SELECT `id`,`username`";
+            $queryContent[] = "FROM `".TBL_USER."`";
+            $queryContent[] = "WHERE `group_id` = 1";
+            $queryContent   = implode(" ", $queryContent);
+            $result         = $this->fetchAll($queryContent);
+            return $result;
+        }
+        
     }
     
 }
