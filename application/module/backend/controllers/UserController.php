@@ -101,7 +101,7 @@ class UserController extends Controller
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
 
-        $this->_view->render('user/index', true);
+        $this->_view->render('category/index', true);
     }
 
     public function statusAction()
@@ -227,7 +227,7 @@ class UserController extends Controller
                 $queryUserName  .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
                 $queryEmailName .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
             }
-
+            
             $validate = new Validate($this->_arrParam['form']);
             $validate->addRule('username', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryUserName, 'min' => 3, 'max' => 25))
                     ->addRule('password', 'string', array('min' => 3, 'max' => 255))

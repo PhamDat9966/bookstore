@@ -51,11 +51,11 @@ class Bootstrap{
                     
                     // Go backend: group_acp : Admin control Panel
                     if($userInfo['group_acp'] == 1){
-                        if(in_array($requestURL, $userInfo['info']['privilege']) == TRUE){
+                        //if(in_array($requestURL, $userInfo['info']['privilege']) == TRUE){
                             $this->_controllerOject->$actionName();
-                        }else {
-                            URL::redirect('frontend','index','notice',array('type'=>'not-permission'));
-                        }
+                        //}else {
+                        //    URL::redirect('frontend','index','notice',array('type'=>'not-permission'));
+                        //}
                             
                     }else{
                         URL::redirect('frontend','index','notice',array('type'=>'not-permission'));

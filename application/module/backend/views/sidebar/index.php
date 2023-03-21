@@ -54,11 +54,11 @@ $sidebar        = array(
                         'tree'=>array(
                             array(
                                 'name'=>'List',
-                                'href'=>'#'
+                                'href'=>URL::createLink('backend','category','list')
                             ),
                             array(
                                 'name'=>'Add',
-                                'href'=>'#'
+                                'href'=>URL::createLink('backend','category','form')
                             )
                         )
                     ),
