@@ -2,6 +2,8 @@
 
 $this->searchValue = Session::get('search');
 
+$listUserWithGroupACP = $this->listUserGroupACP;
+
 $arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
 
 $selection          = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null, $id = 'selectBox');
@@ -24,12 +26,31 @@ if (!empty($this->Items)) {
         //$status         = Helper::cmsStatus($value['status'], $urlstatus ,$id);
         //Ajax Status
         $status         = Helper::cmsStatus($value['status'], URL::createLink('backend', 'category', 'ajaxStatus', array('id' => $id, 'status' => $value['status'])), $id);
-
-        $created_by     = $value['created_by'];
+        
+        $created_by     = '';
+        $modified_by    = '';
+        
+        //$created_by     = $value['created_by'];
         $created        = Helper::formatDate('d-m-Y', $value['created']);
 
-        $modified_by    = $value['modified_by'];
+        //$modified_by    = $value['modified_by'];
         $modified       = Helper::formatDate('d-m-Y', $value['modified']);
+        
+        // Tìm theo id với group_acp = 1
+        // Trong trường có thay đổi username hệ thống sẽ tự động cập nhật
+        
+        foreach ($listUserWithGroupACP as $valueUserGroupACP){
+            
+            // 1 --- For Created_by and Modified_by
+            if($value['created_by'] ==  $valueUserGroupACP['id']){
+                $created_by         =   $valueUserGroupACP['username'];
+            }
+            
+            if($value['modified_by'] == $valueUserGroupACP['id']){
+                $modified_by         = $valueUserGroupACP['username'];
+            }
+            
+        }
 
         $ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
 

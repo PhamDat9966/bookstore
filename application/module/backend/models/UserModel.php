@@ -6,12 +6,26 @@ class UserModel extends Model
     public $_saveParam = [];
     protected $_tableName = TBL_USER;
     public    $_cunrrentPage      = 1;
-    private $_columns = array('id','username','password','email','fullname','created','created_by','modified','modified_by','status','group_id');
+    private $_userInfo;
+    private $_columns = array(
+                                'id',
+                                'username',
+                                'password',
+                                'email',
+                                'fullname',
+                                'created',
+                                'created_by',
+                                'modified',
+                                'modified_by',
+                                'status',
+                                'group_id'
+                        );
     
     public function __construct()
     {
         parent::__construct();
         $this->setTable($this->_tableName);
+        $this->_userInfo = Session::get('user');
         
     }
     
@@ -52,8 +66,8 @@ class UserModel extends Model
     public function saveItem($arrParam, $option = null){
         
         
-        $created_by  = $_SESSION['user']['info']['id'];
-        $modified_by = $_SESSION['user']['info']['id'];
+        $created_by  = $this->_userInfo['info']['id'];
+        $modified_by = $this->_userInfo['info']['id'];
         
         if($option['task'] == 'add'){
             $arrParam['form']['created']    = date('Y-m-d h:i:s',time());
@@ -126,6 +140,9 @@ class UserModel extends Model
     
     public function changeStatus($arrParam, $option = null){
         
+        $modified_by = $this->_userInfo['info']['id'];
+        $modified    = date('Y-m-d h:i:s',time());
+        
         if($option['task'] == 'change-status'){
             $status 	= $arrParam['statusChoose'];
             if(!empty($arrParam['cid'])){
@@ -139,7 +156,7 @@ class UserModel extends Model
                     $ids     .= "'0'";
                 }
                 
-                $query		= "UPDATE `$this->table` SET `status` = $status WHERE `id` IN ($ids)";
+                $query		= "UPDATE `$this->table` SET `status` = $status,`modified_by` = $modified_by,`modified` = '$modified' WHERE `id` IN ($ids)";
                 $this->query($query);
                 
                 Session::set('message', array('class' => 'success', 'content' => 'Có ' . $i . ' phần tử được thay đổi trạng thái!'));
@@ -150,23 +167,22 @@ class UserModel extends Model
         
         if($option['task'] == null){
             
-            $Status = ($arrParam['status'] == 0) ? 1 : 0 ;
+            $status = ($arrParam['status'] == 0) ? 1 : 0 ;
             $id       = $arrParam['id'];
-            $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
+            $query    = "UPDATE `$this->_tableName` SET `status` = $status WHERE `id` = '".$id."'";
             $this->query($query);
             
             Session::set('message', array('class' => 'success', 'content' => 'Trạng thái Status được cập nhật'));
-            return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$Status)));
+            return array('id'=>$id,'status'=>$status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$status)));
         }
         
-        if($option['task'] == 'change-ajax-user-status'){
-  
-            $Status = ($arrParam['status'] == 0) ? 1 : 0 ;
+        if($option['task'] == 'change-ajax-user-status'){    
+            $status = ($arrParam['status'] == 0) ? 1 : 0 ;
             $id       = $arrParam['id'];
-            $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
+            $query    = "UPDATE `$this->table` SET `status` = $status,`modified_by` = $modified_by,`modified` = '$modified' WHERE `id`= $id";
             $this->query($query);
 
-            return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$Status)));
+            return array('id'=>$id,'status'=>$status,'url'=>URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$status)));
         }
     }
     

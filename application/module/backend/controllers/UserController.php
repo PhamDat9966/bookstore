@@ -53,17 +53,17 @@ class UserController extends Controller
         }
 
         // charge active, inactive userACB and status
-//         if (isset($_GET['id'])) {
+        if (isset($_GET['id'])) {
 
-//             $this->_arrParam['id'] = $_GET['id'];
+            $this->_arrParam['id'] = $_GET['id'];
 
-//             if (isset($_GET['status'])) {
-//                 $this->statusAction();
-//             }
+            if (isset($_GET['status'])) {
+                $this->statusAction();
+            }
 
-//             // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
-//             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
-//         }
+            // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
+            $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
+        }
 
         //Paginator
         $this->_arrParam['count']  = $this->_model->countFilterSearch();
@@ -101,7 +101,7 @@ class UserController extends Controller
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
 
-        $this->_view->render('category/index', true);
+        $this->_view->render('user/index', true);
     }
 
     public function statusAction()

@@ -1,18 +1,25 @@
 <?php
 
+// IF METHOD = GET
+// $inputModel         = Helper::cmsInput('hidden', 'module', 'backend');
+// $inputController    = Helper::cmsInput('hidden', 'controller', 'category');
+// $inputAction        = Helper::cmsInput('hidden', 'action', 'form');
+
 $linkSaveClose	    = URL::createLink('backend', 'category', 'form', array('type' => 'save-close'));
 $linkCancel	        = URL::createLink('backend', 'category', 'list');
 
 $dataForm           = @$this->arrParam['form'];
 
-$inputName          = Helper::cmsInput($type = 'text', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
-$inputToken		    = Helper::cmsInput($type = 'hidden', $name = 'form[token]', $id = 'token', $value = time());
+$inputName          = Helper::cmsInput($type = 'text'  , $name = 'form[name]',   $id  = 'name',   $value = @$dataForm['name'], $class = 'form-control', $size = null);
+$inputToken		    = Helper::cmsInput($type = 'hidden', $name = 'form[token]',  $id  = 'token',  $value = time());
+$inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture',      $id  = 'picture',$value = @$dataForm['picture'], $class = '');
 
 $arrSelectStatus    = array('default' => '- Select Status -', 1 => 'Active', 0 => 'Inactive');
 $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class = 'custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'], $style = null);
 
 $rowName            = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = true);
 $rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = true);
+$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture);
 
 $rowNameOutput      = '';
 $inputNameHiden     = '';
@@ -47,6 +54,7 @@ $submitButton = Helper::cmsButtonSubmit($type = "submit", $class = "btn btn-succ
 $cancelUrl    = URL::createLink("backend", "category", "list");
 $cancelButton = Helper::cmsButton($cancelUrl, $class = "btn btn-danger", $textOufit = "Cancel");
 
+$action       = 'index.php?module=backend&controller=category&action=form';
 
 ?>
 <div class="content">
@@ -54,11 +62,12 @@ $cancelButton = Helper::cmsButton($cancelUrl, $class = "btn btn-danger", $textOu
 		<div class="row">
 			<div class="col-12">
 				<?= $showErrors; ?>
-				<form action="#" method="get" name="category-list-form" id="category-list-form">
-
-					<input type="hidden" name="module" value="backend">
-					<input type="hidden" name="controller" value="category">
-					<input type="hidden" name="action" value="form">
+				<form action="#" method="post" name="category-list-form" id="category-list-form" enctype="multipart/form-data">
+					<?php 
+					   /* IF USE METHOD GET */
+					   //echo $inputModel.$inputController,$inputAction;
+					?>
+					
 					<input type="hidden" name="type" value="save-close">
 
 					<div class="card card-outline card-info">
@@ -68,6 +77,9 @@ $cancelButton = Helper::cmsButton($cancelUrl, $class = "btn btn-danger", $textOu
 							</div>
 							<div class="form-category">
 								<?= $rowStatus; ?>
+							</div>
+							<div class="form-category">
+								<?= $rowPicture; ?>
 							</div>
 							<div class="form-category">
 								<?= $rowID; ?>

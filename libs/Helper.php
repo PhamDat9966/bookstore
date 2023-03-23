@@ -140,9 +140,39 @@ class Helper{
     // Create for - ADMIN
     public static function cmsRowForm($lblName, $input, $require = FALSE, $option = null){  
         $strRequire = '';
+        
         if($require == true) $strRequire = '<span class="text-danger">*</span>';
         $xhtml = "<label $option>".$lblName.$strRequire.'</label>'.$input;
-
+            
+        return $xhtml;
+    }
+    
+    public static function cmsRowFormPicture($lblName, $input, $require = FALSE, $option = null){
+        
+        if($require == TRUE){
+            $xhtml = '<div class="form-group">
+                        <label for="exampleInputFile">Picture</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            '.$input.'
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                          </div>
+                          <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                          </div>
+                        </div>
+                      </div>';
+        } else {
+            $xhtml = '<div class="form-group">
+                        <label for="exampleInputFile">Picture</label>
+                        <div class="input-group">
+                          '.$input.'
+                        </div>
+                      </div>';
+            
+//             $strRequire = '<span class="text-danger">*</span>';
+//             $xhtml = "<label $option>".$lblName.$strRequire.'</label>'.$input;
+        }
         return $xhtml;
     }
     
