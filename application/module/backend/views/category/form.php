@@ -17,19 +17,27 @@ $inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture',     
 $arrSelectStatus    = array('default' => '- Select Status -', 1 => 'Active', 0 => 'Inactive');
 $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class = 'custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'], $style = null);
 
-$rowName            = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = true);
-$rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = true);
-$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture);
-
 $rowNameOutput      = '';
 $inputNameHiden     = '';
+
+$rowName            = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = true);
+$rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = true);
+
+$pictureShow        = '';
+
 if($this->task == 'edit'){
     $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null, $option = 'disabled');
     $inputNameHiden = Helper::cmsInput($type = 'hidden', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
     $rowName        = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = false);
+    
+    $pathImage      = UPLOAD_URL .'category'. DS . $dataForm['picture'];
+    $pictureShow    = '<img src="'.$pathImage.'">';
+    //<span class="info-box-text">Messages</span>
 }
 
 $rowNameOutput  = $rowName . $inputNameHiden;
+
+$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture);
 
 $showErrors = '';
 if (!empty($this->errors)) {
@@ -53,8 +61,6 @@ if (isset($this->arrParam['id'])) {
 $submitButton = Helper::cmsButtonSubmit($type = "submit", $class = "btn btn-success", $textOutfit = "Save");
 $cancelUrl    = URL::createLink("backend", "category", "list");
 $cancelButton = Helper::cmsButton($cancelUrl, $class = "btn btn-danger", $textOufit = "Cancel");
-
-$action       = 'index.php?module=backend&controller=category&action=form';
 
 ?>
 <div class="content">
@@ -80,6 +86,9 @@ $action       = 'index.php?module=backend&controller=category&action=form';
 							</div>
 							<div class="form-category">
 								<?= $rowPicture; ?>
+							</div>
+							<div class="form-category">
+								<?= $pictureShow; ?>
 							</div>
 							<div class="form-category">
 								<?= $rowID; ?>

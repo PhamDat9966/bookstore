@@ -112,10 +112,8 @@ class CategoryModel extends Model
             
             require_once LIBRARY_EXT_PATH . 'Upload.php';
             $uploadObj = new Upload();
-            $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
             
-            die('$this->model->saveItem fuction is die');
-            
+            $arrParam['form']['picture']    = $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
             $arrParam['form']['created']    = date('Y-m-d',time());
             $arrParam['form']['created_by'] = $created_by;
             
@@ -272,7 +270,7 @@ class CategoryModel extends Model
     public function infoItem($arrParam,$option = null){
         if($option == null){
             $queryContent   = [];
-            $queryContent[] = "SELECT `id`,`name`,`picture`,`status`";
+            $queryContent[] = "SELECT `id`,`name`,`picture`,`status`,`ordering`";
             $queryContent[] = "FROM `$this->_tableName`";
             $queryContent[] = "WHERE `id` = '" . $arrParam['id'] . "'";
             $queryContent   = implode(" ", $queryContent);
@@ -292,6 +290,15 @@ class CategoryModel extends Model
         if($option == null){
             if(!empty($arrParam['cid'])){
                 $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
+                
+                //Remove Images
+                $queryImg   = "SELECT `id`,`picture` AS `name` FROM `$this->_tableName` WHERE `id` IN ($ids)";
+                $arrImage   = $this->fetchPairs($queryImg);
+                
+                echo "<pre>";
+                print_r($arrImage);
+                echo "</pre>";
+                die("Function is DIE");
                 $query		= "DELETE FROM `$this->table` WHERE `id` IN ($ids)";
                 $this->query($query);
                 Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được xóa!'));

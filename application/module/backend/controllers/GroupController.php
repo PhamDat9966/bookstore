@@ -11,7 +11,6 @@ class GroupController extends Controller
 
     public function listAction()
     {
-
         //Bulk Action
         if (isset($_GET['selectBox'])) {
 

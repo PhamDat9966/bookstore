@@ -1,1 +1,2 @@
-Sửa lại tính năng Bulk của Category-List
+-Thêm Action multiDelete vào các Controller để Permission không sẽ quên
+-Cài đặt lại Xampp cho laptop vì nó bị lỗi font

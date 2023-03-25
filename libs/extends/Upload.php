@@ -5,23 +5,21 @@ class Upload{
     public function upload($fileObj, $folderUpload, $options = NULL){
         
         if($options == NULL){
-            
-//             echo "<pre>";
-//             print_r($fileObj);
-//             echo "</pre>";   
-//             echo $folderUpload;
 
             if($fileObj['tmp_name'] != NULL){
                 
-                $uploadDir           = UPLOAD_PATH . $folderUpload . DS;
-                $newFileName    = $this->randomString(8);
-                $extension           = '.' . pathinfo($fileObj['name'], PATHINFO_EXTENSION);   
+                $uploadDir     = UPLOAD_PATH . $folderUpload . DS;
+                //$newFileName   = $this->randomString(8);
+                //$extension     = '.' . pathinfo($fileObj['name'], PATHINFO_EXTENSION);   
                 
-                copy($fileObj['tmp_name'], $uploadDir . $newFileName . $extension);
+                $fileName      = $this->randomString(8) . '.' . pathinfo($fileObj['name'], PATHINFO_EXTENSION); 
+                
+                copy($fileObj['tmp_name'], $uploadDir . $fileName);
                 
             }
         }
         
+        return $fileName;
     }
     
     private function randomString($length = 5)

@@ -11,6 +11,9 @@ class CategoryController extends Controller
 
     public function listAction()
     {
+        echo "<pre>ListAction";
+        print_r($this->_arrParam);
+        echo "</pre>";
         /*
         * listUserGroupACP:
         *  Danh sách tài khoảng có groupACP = 1 là những tài khoảng vào được vào control Panel dùng để đối chiếu với
@@ -23,24 +26,24 @@ class CategoryController extends Controller
         
         
         //Bulk Action
-//         if (isset($_GET['selectBox'])) {
+        if (isset($_GET['selectBox'])) {
 
 
-//             if ($_GET['selectBox'] == 'delete') {
-//                 $this->_model->deleteMultItem($this->_arrParam);
-//             }
+            if ($_GET['selectBox'] == 'delete') {
+                $this->_model->deleteMultItem($this->_arrParam);
+            }
 
-//             if ($_GET['selectBox'] == 'action') {
-//                 $this->_arrParam['type'] = 1;
-//                 $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-//             }
+            if ($_GET['selectBox'] == 'action') {
+                $this->_arrParam['type'] = 1;
+                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+            }
 
-//             if ($_GET['selectBox'] == 'inactive') {
-//                 $this->_arrParam['type'] = 0;
-//                 $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-//                 //URL::redirect(('admin', 'catagory', 'index');
-//             }
-//        }
+            if ($_GET['selectBox'] == 'inactive') {
+                $this->_arrParam['type'] = 0;
+                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+                //URL::redirect(('admin', 'catagory', 'index');
+            }
+       }
 
         // filter and search
 //         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectCatagoryACP'])) {
@@ -175,7 +178,7 @@ class CategoryController extends Controller
             
             $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryName, 'min' => 3, 'max' => 25))
                      ->addRule('status', 'status', array('deny' => array('default')))
-                     ->addRule('picture', 'file', array('min' => 100, 'max' => 1000000, 'extension'=>array('jpg','png')), false);
+                     ->addRule('picture', 'file', array('min' => 100, 'max' => 1000000, 'extension'=>array('jpg','png','jpeg')), false);
             
             $validate->run();
             $this->_arrParam['form'] = $validate->getResult();

@@ -12,6 +12,7 @@
     define('PUBLIC_URL'         , ROOT_URL . DS . 'public' . DS);             // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n tÆ°Æ¡ng Ä‘á»‘i Ä‘áº¿n thá»±c public  
     
     define('UPLOAD_PATH'        , PUBLIC_PATH . 'files' . DS);                // Đường dẫn đến thư mục upload  
+    define('UPLOAD_URL'         , PUBLIC_URL . 'files' . DS);                // Đường dẫn đến thư mục upload  
     
     define('APPLICATION_PATH'   , ROOT_PATH . DS . 'application' . DS);       // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n Ä‘áº¿n thÆ° má»¥c application	
     define('APPLICATION_URL'    , ROOT_URL . DS . 'application' . DS);  
