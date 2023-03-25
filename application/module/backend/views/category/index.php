@@ -7,7 +7,7 @@ $listUserWithGroupACP = $this->listUserGroupACP;
 $arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
 
 $selection          = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null, $id = 'selectBox');
-$buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn btn-info', $textOutfit = "Apply", $name = "bulk", $value = "bulk", $id = 'bulkApply');
+$buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn btn-info', $textOutfit = "Apply", $name = "bulk", $value = "bulk", $id = 'bulkApplyCategory');
 
 $listCategory = '';
 

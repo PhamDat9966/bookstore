@@ -74,7 +74,7 @@ class GroupModel extends Model
     public function changeStatus($arrParam, $option = null){
         
         if($option['task'] == 'change-status'){
-            $status 	= $arrParam['type'];
+            $status 	= $arrParam['statusChoose'];
             if(!empty($arrParam['cid'])){
                 $i=0;
                 $ids = '';

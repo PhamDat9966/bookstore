@@ -39,25 +39,16 @@ if(!empty($this->Items)){
         $dataGroupForUser['id']         = $id;
         $dataGroupForUser['group_id']   = $value['group_id'];
         
-//         $created_by     = $value['created_by'];
-//         $modified_by    = $value['modified_by'];
-        
         // Tìm theo id với group_acp = 1
         // Trong trường có thay đổi username hệ thống sẽ tự động cập nhật
         
-        foreach ($listUserWithGroupACP as $valueUserGroupACP){
-
-            // 1 --- For Created_by and Modified_by
-            if($value['created_by'] ==  $valueUserGroupACP['id']){
-                $created_by         =   $valueUserGroupACP['username'];
-            }
-            
-            if($value['modified_by'] == $valueUserGroupACP['id']){
-                $modified_by         = $valueUserGroupACP['username'];
-            }
-                        
+        if(in_array($value['created_by'], array_flip($listUserWithGroupACP))){
+            $created_by         =   $listUserWithGroupACP[$value['created_by']];
         }
         
+        if(in_array($value['modified_by'], array_flip($listUserWithGroupACP))){
+            $modified_by         =   $listUserWithGroupACP[$value['modified_by']];
+        }
         
         // SELECT GROUP  FOR USER ---
         /*

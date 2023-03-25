@@ -11,24 +11,33 @@ class GroupController extends Controller
 
     public function listAction()
     {
+
         //Bulk Action
-        if (isset($_GET['selectBox'])) {
-
-
-            if ($_GET['selectBox'] == 'delete') {
-                $this->_model->deleteMultItem($this->_arrParam);
+        if (isset($this->_arrParam['selectBox'])) {
+            
+            $arrCid  = '';
+            if(!empty($this->_arrParam['cid'])){
+                foreach ($this->_arrParam['cid'] as $valueCid){
+                    $arrCid .= "&cid[]=$valueCid";
+                }
             }
 
-            if ($_GET['selectBox'] == 'action') {
-                $this->_arrParam['type'] = 1;
-                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+            if ($this->_arrParam['selectBox'] == 'delete') {
+                URL::redirect('backend', 'group', 'deleteMult',NULL, $arrCid);
+            }
+            
+            if ($this->_arrParam['selectBox'] == 'action') {
+                
+                $strRequest = $arrCid.'&statusChoose=1';
+                URL::redirect('backend', 'group', 'status', NULL ,$strRequest);
+            }
+            
+            if ($this->_arrParam['selectBox'] == 'inactive') {
+                
+                $strRequest = $arrCid.'&statusChoose=0';
+                URL::redirect('backend', 'group', 'status', NULL ,$strRequest);
             }
 
-            if ($_GET['selectBox'] == 'inactive') {
-                $this->_arrParam['type'] = 0;
-                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-                //URL::redirect(('admin', 'group', 'index');
-            }
         }
 
         // filter and search
@@ -110,11 +119,9 @@ class GroupController extends Controller
 
     public function statusAction()
     {
-        $this->_arrParam['status'] = $_GET['status'];
-        $this->_statusReturn = $this->_model->changeStatus($this->_arrParam);
 
-        $this->_statusReturn['url'] . $this->_arrParam['page'];
-        $page = $this->_arrParam['page'];
+        $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+        $this->redirec('backend', 'group', 'list');
     }
 
     public function ajaxGroupACPAction()
@@ -240,5 +247,13 @@ class GroupController extends Controller
         if (isset($_GET['id'])) $this->_model->deleteItem($_GET['id']);
         $this->redirec('backend', 'group', 'list');
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+    }
+    
+    public function deleteMultAction(){
+        
+        $this->_model->deleteMultItem($this->_arrParam);
+        $this->redirec('backend', 'group', 'list');
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+        
     }
 }

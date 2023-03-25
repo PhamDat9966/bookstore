@@ -343,7 +343,7 @@ class UserModel extends Model
     
     public function deleteMultItem($arrParam,$option = null)
     {
-        
+
         if($option == null){
             if(!empty($arrParam['cid'])){
                 $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
@@ -376,11 +376,10 @@ class UserModel extends Model
         
         if($option == null){
             
-            $queryContent[] = "SELECT `id`,`username`";
+            $queryContent[] = "SELECT `id`,`username` AS `name`";
             $queryContent[] = "FROM `".$this->_tableName."`";
-            $queryContent[] = "WHERE `group_id` = 1";
             $queryContent   = implode(" ", $queryContent);
-            $result         = $this->fetchAll($queryContent);
+            $result         = $this->fetchPairs($queryContent);
             return $result;
         }
         

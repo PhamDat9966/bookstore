@@ -5,7 +5,7 @@ $this->searchValue = Session::get('search');
 $arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
 
 $selection          = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null, $id = 'selectBox');
-$buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn btn-info', $textOutfit = "Apply", $name = "bulk", $value = "bulk", $id = 'bulkApply');
+$buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn btn-info', $textOutfit = "Apply", $name = "bulk", $value = "bulk", $id = 'bulkApplyGroup');
 
 $listGroup = '';
 
@@ -84,11 +84,11 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 
     <!-- List -->
     <!-- FORM GROUP -->
-    <form action="#" method="get" name="group-list-form" id="group-list-form">
+    <form action="#" method="post" name="group-list-form" id="group-list-form">
 
-        <input type="hidden" name="module" value="backend">
-        <input type="hidden" name="controller" value="group">
-        <input type="hidden" name="action" value="list">
+<!--         <input type="hidden" name="module" value="backend"> -->
+<!--         <input type="hidden" name="controller" value="group"> -->
+<!--         <input type="hidden" name="action" value="list"> -->
 
         <div class="card card-outline card-info">
             <div class="card-header">

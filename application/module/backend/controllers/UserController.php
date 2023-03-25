@@ -13,37 +13,36 @@ class UserController extends Controller
     }
 
     public function listAction()
-    {
-        $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
+    {   
         
-        /*  
-         * listUserGroupACP:
-         *  Danh sách tài khoảng có groupACP = 1 là những tài khoảng vào được vào control Panel dùng để đối chiếu với
-         *  với các id từ create_by và modified_by, để trường hợp có đổi tên thì creat_by và modified_by sẽ tự động cập nhật
-         *  rồi từ id truy vấn đến tên và gắn vào thẻ tại view để tiết kiện thời gian sử lý và tránh phải foreach nhiều phần từ 
-         *  trong listUserGroupACB tại view nếu tài khoảng nào trước đây group_acp = 1 sau này = 0, thì coi như Null tại create_by và modified_by
-        */  
+        $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
         
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
         
         //Bulk Action
         if (isset($_GET['selectBoxUser'])) {
-
+            
+            $arrCid  = ''; 
+            if(!empty($this->_arrParam['cid'])){
+                foreach ($this->_arrParam['cid'] as $valueCid){
+                    $arrCid .= "&cid[]=$valueCid";
+                }
+            }
+            
             if ($_GET['selectBoxUser'] == 'delete') {
-                URL::redirect('backend', 'user', 'deleteMult',$this->_arrParam['cid']);
-                //$this->deleteMultAction($this->_arrParam);
+                URL::redirect('backend', 'user', 'deleteMult',NULL, $arrCid);
             }
 
             if ($_GET['selectBoxUser'] == 'action') {
 
-                $strRequest = '&statusChoose=1';                
-                URL::redirect('backend', 'user', 'status',$this->_arrParam['cid'],$strRequest);
+                $strRequest = $arrCid.'&statusChoose=1';                
+                URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
             }
 
             if ($_GET['selectBoxUser'] == 'inactive') {
 
-                $strRequest = '&statusChoose=0';
-                URL::redirect('backend', 'user', 'status',$this->_arrParam['cid'],$strRequest);
+                $strRequest = $arrCid.'&statusChoose=0';
+                URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
             }
         }
 
@@ -106,15 +105,8 @@ class UserController extends Controller
 
     public function statusAction()
     {
-
-        $arrParamPros = array();
-        foreach ($this->_arrParam as $key=>$value){
-            if(is_int($key)){
-                $arrParamPros[] = $value;
-            }
-        }
         
-        $this->_arrParam['cid'] = $arrParamPros;
+        
         $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
         
         $this->redirec('backend', 'user', 'list');
@@ -297,15 +289,6 @@ class UserController extends Controller
     }
 
     public function deleteMultAction(){
-        
-        $arrParamPros = array();
-        foreach ($this->_arrParam as $key=>$value){
-            if(is_int($key)){
-                $arrParamPros[] = $value;
-            }
-        }
-        
-        $this->_arrParam['cid'] = $arrParamPros;
         
         $this->_model->deleteMultItem($this->_arrParam);
         $this->redirec('backend', 'user', 'list');

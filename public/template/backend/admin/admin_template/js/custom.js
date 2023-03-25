@@ -52,7 +52,7 @@ $(document).ready(function(){
 	})	
 	
 	// Bulk Apple filter + Ordering for Group
-	$('#bulkApply').on('click', function(e) {	
+	$('#bulkApplyGroup').on('click', function(e) {	
     	
     	var selected		= $("#selectBox option:selected").text();
     	
@@ -158,7 +158,11 @@ $(document).ready(function(){
 	     	}
 	    }
     	    
-	})		
+	})	
+	
+	
+	//Category
+	
 })
 
 // User
@@ -303,7 +307,7 @@ $(document).ready(function(){
 	})	
 	
 	// Bulk Apple filter + Ordering for Group
-	$('#bulkApply').on('click', function(e) {	
+	$('#bulkApplyCategory').on('click', function(e) {	
     	
     	var selected		= $("#selectBox option:selected").text();
     	
