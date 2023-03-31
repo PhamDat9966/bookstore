@@ -139,13 +139,24 @@ class CategoryController extends Controller
         
         $this->_view->_title        = 'User Categorys: Add';
         $this->_view->task          = 'add'; 
-
+               
+        // Edit
         if (isset($this->_arrParam['id'])) {
             $this->_view->_title  = 'User Categorys: Edit';
             $this->_view->task    = 'edit';  
             
             $token          = 0;
             $pictureHidden  = '';
+            
+            //Loading cho Input trong trường hợp đã Submit
+            if(isset($this->_arrParam['form']['name'])){
+                $name           = $this->_arrParam['form']['name'];
+            }
+            
+            if(isset($this->_arrParam['form']['status'])){
+                $status         = $this->_arrParam['form']['status'];
+            }
+            
             if(isset($this->_arrParam['form']['token'])){
                 $token          = $this->_arrParam['form']['token'];
             }
@@ -153,8 +164,12 @@ class CategoryController extends Controller
                 $pictureHidden  = $this->_arrParam['form']['picture_hidden'];
             }
             
+            //Nạp Trồng - Cho trường hợp chưa submit trên edit nhưng cần giá trị để xuất dữ liệu ra input
             $this->_arrParam['form']          = $this->_model->infoItem($this->_arrParam);
-            // Reload Old Form value
+            
+            // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
+            if(isset($name)) $this->_arrParam['form']['name']       = $name;
+            if(isset($status)) $this->_arrParam['form']['status']     = $status;
             $this->_arrParam['form']['token']          = $token;
             $this->_arrParam['form']['picture_hidden'] = $pictureHidden;
             

@@ -162,8 +162,8 @@ class CategoryModel extends Model
             return $this->lastID();
         }
         
-        if($option['task'] == 'edit'){
-
+        if($option['task'] == 'edit'){  
+            
             $arrParam['form']['modified']    = date('Y-m-d',time());
             $arrParam['form']['modified_by'] = $modified_by;
             

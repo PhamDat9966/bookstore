@@ -1,9 +1,5 @@
 <?php 
 
-echo "<pre>";
-print_r($this);
-echo "</pre>";
-
 $this->searchValue = Session::get('search');
 $listUser = '';
 
@@ -42,9 +38,6 @@ if(!empty($this->Items)){
         $dataGroupForUser               = array();
         $dataGroupForUser['id']         = $id;
         $dataGroupForUser['group_id']   = $value['group_id'];
-        
-        // Tìm theo id với group_acp = 1
-        // Trong trường có thay đổi username hệ thống sẽ tự động cập nhật
         
         if(in_array($value['created_by'], array_flip($listUserWithGroupACP))){
             $created_by         =   $listUserWithGroupACP[$value['created_by']];

@@ -3,6 +3,33 @@ $imageURL           = $this->_urlImg;
 $strSpecial1        = '\\';
 $strSpecial2        = "/";
 $imageURL           = str_replace($strSpecial1 ,$strSpecial2, $imageURL);
+
+$modul          = new Model();
+$query          = 'SELECT `id`,`name`,`picture` FROM `category` WHERE `status`= 1 ORDER BY `ordering` ASC';
+$listCategory   = $modul->fetchAll($query);
+
+$xhtml = '';
+
+foreach ($listCategory as $keyCats=>$valueCats){
+    $imgURL =  UPLOAD_URL .'category' . DS . $valueCats['picture'];
+    $strSpecial1        = '\\';
+    $strSpecial2        = "/";
+    $imgURL           = str_replace($strSpecial1 ,$strSpecial2, $imgURL);
+    
+    $xhtml .= '<div class="product-box">
+                <div class="img-wrapper">
+                    <div class="front">
+                        <a href="list.html"><img src="' .$imgURL. '" class="img-fluid blur-up lazyload bg-img" alt=""></a>
+                    </div>
+                </div>
+                <div class="product-detail">
+                    <a href="list.html">
+                        <h4>'.$valueCats['name'].'</h4>
+                    </a>
+                </div>
+            </div>';
+}
+
 ?>
 
 <div class="breadcrumb-section">
@@ -19,186 +46,7 @@ $imageURL           = str_replace($strSpecial1 ,$strSpecial2, $imageURL);
 <section class="ratio_asos j-box pets-box section-b-space" id="category">
     <div class="container">
         <div class="no-slider five-product row">
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="<?php echo $imageURL;?>/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="list.html"><img src="images/product.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                    </div>
-                </div>
-                <div class="product-detail">
-                    <a href="list.html">
-                        <h4>Bà mẹ - Em bé</h4>
-                    </a>
-                </div>
-            </div>
+  			<?php echo $xhtml;?>
         </div>
 
         <div class="product-pagination">

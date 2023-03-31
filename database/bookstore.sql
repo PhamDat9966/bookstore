@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 30, 2023 lúc 06:48 AM
+-- Thời gian đã tạo: Th3 31, 2023 lúc 10:56 AM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -44,11 +44,16 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`) VALUES
-(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', 'admin', '2023-03-30', NULL, 1, 10),
-(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', 'admin', '2023-03-30', NULL, 1, 10),
-(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', 'admin', '2023-03-30', NULL, 1, 10),
-(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', 'admin', '2023-03-30', 'admin', 1, 10),
-(25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', 'admin', '2023-03-30', 'admin', 1, 10);
+(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 10),
+(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '2023-03-30', '1', 1, 10),
+(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 10),
+(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 10),
+(25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 10),
+(26, 'Triếc Học', '08tgxj9s.png', '2023-03-30', '1', '2023-03-30', NULL, 1, 10),
+(27, 'Self Help', 'n3o1p82j.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 10),
+(28, 'Tiểu Sử - Hồi ký', '7p15v6x4.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 10),
+(29, 'Kinh Tế', 'g9u8z3mj.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 10),
+(30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 10);
 
 -- --------------------------------------------------------
 
@@ -74,10 +79,12 @@ CREATE TABLE `group` (
 --
 
 INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `privilege_id`) VALUES
-(1, 'Admin', 1, '2022-10-18', 'admin', '2023-01-11', 'admin', '1', '11', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17'),
-(2, 'Manager', 1, '2022-10-05', 'admin', '2022-10-13', 'nguyenvana', '1', '10', '1,2,3,4,6,7,8,9,10'),
-(3, 'Member', 0, '2022-10-08', NULL, '2023-01-11', 'admin', '1', '11', '1'),
-(4, 'Register', 1, '2022-10-08', NULL, '2023-03-30', '', '1', '13', '');
+(1, 'Admin', 1, '2022-10-18', '1', '2023-01-11', '1', '1', '11', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17'),
+(2, 'Manager', 1, '2022-10-05', '1', '2023-03-30', '', '1', '10', '1,2,3,4,6,7,8,9,10'),
+(3, 'Member', 1, '2022-10-08', NULL, '2023-01-11', '1', '0', '11', '1'),
+(4, 'Register', 0, '2022-10-08', NULL, '2023-03-30', '1', '1', '13', ''),
+(75, 'founder 01', 1, '2023-03-30', '', '2023-03-30', NULL, '1', NULL, ''),
+(76, 'fouder 02', 0, '2023-03-30', '1', '2023-03-30', NULL, '0', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -147,7 +154,7 @@ INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`
 (1, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', '1', '2023-03-21 09:44:19', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
 (2, 'manager', 'manager@gmail.com', 'Manager', '12345', '2022-12-28 02:55:00', '5', '2023-03-09 03:39:47', '5', '2023-02-25 14:39:22', NULL, 0, 10, 2),
 (3, 'member', 'member@gmail.com', 'Member', '12345', '2022-12-28 08:55:00', '1', '2023-03-09 08:46:07', '1', '2023-02-25 14:39:22', NULL, 0, 10, 3),
-(4, 'register', 'register@gmail.com', 'Register', '12345', '2022-12-28 10:04:00', '5', '2023-03-21 09:21:39', '1', '2023-02-25 14:39:22', NULL, 1, 10, 4),
+(4, 'register', 'register@gmail.com', 'Register', '12345', '2022-12-28 10:04:00', '5', '2023-03-31 09:23:31', '1', '2023-02-25 14:39:22', NULL, 0, 10, 4),
 (5, 'nguyenvana', 'nguyenvana@gmail.com', 'Nguyen Van A123', '12345', '2023-02-07 07:42:54', '1', '2023-03-21 09:37:02', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
 (35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '12345', '2023-02-25 22:33:16', NULL, '2023-03-11 09:39:04', '1', '2023-02-25 16:02:16', '::1', 1, 10, 4),
 (36, 'nguyenvanaa', 'nguyenvanaa123@gmail.com', 'Nguyen Van A', '12345', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 0),
@@ -190,13 +197,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT cho bảng `group`
 --
 ALTER TABLE `group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT cho bảng `privilege`
