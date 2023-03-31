@@ -6,7 +6,7 @@ $listUserWithGroupACP = $this->listUserGroupACP;
 
 $arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
 
-$selection          = Helper::cmsSelectbox('selectBox', 'form-control custom-select', $arrSelectBox, '0', null, $id = 'selectBox');
+$selection          = Helper::cmsSelectbox('selectBoxCatagory', 'form-control custom-select', $arrSelectBox, '0', null, $id = 'selectBox');
 $buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn btn-info', $textOutfit = "Apply", $name = "bulk", $value = "bulk", $id = 'bulkApplyCategory');
 
 $listCategory = '';
@@ -18,7 +18,10 @@ if (!empty($this->Items)) {
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="' . $id . '">';
         $name           = Helper::highLight(@$this->searchValue, $value['name']);
-
+        
+        // IMAGES
+        $picture        = '<img src="'. UPLOAD_URL . 'category' . DS . $value['picture'] . '" width="150" height="150">' ;
+        
         $row            = ($i % 2 == 0) ? 'odd' : 'even';
 
         $status         = '';
@@ -30,26 +33,18 @@ if (!empty($this->Items)) {
         $created_by     = '';
         $modified_by    = '';
         
-        //$created_by     = $value['created_by'];
+        //$created_by     = $value['created_by'];   
         $created        = Helper::formatDate('d-m-Y', $value['created']);
 
         //$modified_by    = $value['modified_by'];
         $modified       = Helper::formatDate('d-m-Y', $value['modified']);
         
-        // Tìm theo id với group_acp = 1
-        // Trong trường có thay đổi username hệ thống sẽ tự động cập nhật
+        if(in_array($value['created_by'], array_flip($listUserWithGroupACP))){
+            $created_by = $listUserWithGroupACP[$value['created_by']];
+        }
         
-        foreach ($listUserWithGroupACP as $valueUserGroupACP){
-            
-            // 1 --- For Created_by and Modified_by
-            if($value['created_by'] ==  $valueUserGroupACP['id']){
-                $created_by         =   $valueUserGroupACP['username'];
-            }
-            
-            if($value['modified_by'] == $valueUserGroupACP['id']){
-                $modified_by         = $valueUserGroupACP['username'];
-            }
-            
+        if(in_array($value['modified_by'], array_flip($listUserWithGroupACP))){
+            $modified_by = $listUserWithGroupACP[$value['modified_by']];
         }
 
         $ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
@@ -62,6 +57,7 @@ if (!empty($this->Items)) {
             <td>' . $ckb . '</td>
             <td>' . $id . '</td>
             <td>' . $name . '</td>
+            <td>' . $picture . '</td>
             <td>' . $status . '</td>
             <td>' . $ordering . '</td>
             <td>
@@ -86,14 +82,14 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 ?>
 <div class="col-12">
     <?php
-    require_once 'messageBox/index.php';
+        require_once 'messageBox/index.php';
     ?>
     <?php
-    echo '<h3>' . __FILE__ . '</h3>';
+        echo '<h3>' . __FILE__ . '</h3>';
     ?>
     <!-- Search & Filter -->
     <?php
-    require_once 'search-filter/index.php';
+        require_once 'search-filter/index.php';
     ?>
     <!-- END Search & Filter  -->
 
@@ -125,7 +121,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                         <div>
                             <div class="input-category">
                                 <?php
-                                echo $selection;
+                                    echo $selection;
                                 ?>
                                 <span class="input-category-append">
                                     <?php echo $buttonSelection; ?>
@@ -145,6 +141,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                                 <th><input type="checkbox" name="checkall-toggle"></th>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Picture</th>
                                 <th>Status</th>
                                 <th>Ordering</th>
                                 <th>Created</th>

@@ -1,5 +1,6 @@
 <?php
 
+$listUserWithGroupACP = $this->listUserGroupACP;
 $this->searchValue = Session::get('search');
 
 $arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
@@ -30,12 +31,20 @@ if (!empty($this->Items)) {
         //Ajax Status
         $status         = Helper::cmsStatus($value['status'], URL::createLink('backend', 'group', 'ajaxStatus', array('id' => $id, 'status' => $value['status'])), $id);
 
-        $created_by     = $value['created_by'];
         $created        = Helper::formatDate('d-m-Y', $value['created']);
-
-        $modified_by    = $value['modified_by'];
         $modified       = Helper::formatDate('d-m-Y', $value['modified']);
+        
+        $created_by     = '';
+        $modified_by    = '';
+        
+        if(in_array($value['created_by'], array_flip($listUserWithGroupACP))){
+            $created_by = $listUserWithGroupACP[$value['created_by']];
+        }
 
+        if(in_array($value['modified_by'], array_flip($listUserWithGroupACP))){
+            $modified_by = $listUserWithGroupACP[$value['modified_by']];
+        }
+        
         $ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
 
         $editAction     = Helper::showItemAction('backend', 'group', 'form', $id, 'edit');

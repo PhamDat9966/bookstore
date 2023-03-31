@@ -103,15 +103,54 @@ class CategoryModel extends Model
         
     }
     
+    public function deleteItem($id,$option = null)
+    {
+        $this->delete([$id]);
+        Session::set('message', array('class' => 'success', 'content' => 'Xóa thành công!'));
+    }
+    
+    public function deleteMultItem($arrParam,$option = null)
+    {
+        if($option == null){
+            if(!empty($arrParam['cid'])){
+                $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
+                
+                //Remove Images
+                $queryImg   = "SELECT `id`,`picture` AS `name` FROM `$this->_tableName` WHERE `id` IN ($ids)";
+                $arrImage   = $this->fetchPairs($queryImg);
+                
+                require_once LIBRARY_EXT_PATH . 'Upload.php';
+                $uploadObj = new Upload();
+                
+                foreach ($arrImage as $value){
+                    $uploadObj->removeFile('category', $value);
+                }
+                
+                // Delete from Database
+                $query		= "DELETE FROM `$this->table` WHERE `id` IN ($ids)";
+                $this->query($query);
+                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được xóa!'));
+            }else{
+                Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muốn xóa!'));
+            }
+        }
+        
+    }
+    
+    
     public function saveItem($arrParam, $option = null){
         
-        $created_by  = $this->_userInfo['info']['username'];
-        $modified_by = $this->_userInfo['info']['username'];
+        require_once LIBRARY_EXT_PATH . 'Upload.php';
+        $uploadObj = new Upload();
+        
+        $created_by  = $this->_userInfo['info']['id'];
+        $modified_by = $this->_userInfo['info']['id'];
         
         if($option['task'] == 'add'){
             
-            require_once LIBRARY_EXT_PATH . 'Upload.php';
-            $uploadObj = new Upload();
+            $arrParam['form']['created']    = date('Y-m-d',time());
+            $arrParam['form']['created_by'] = $created_by;
+            
             
             $arrParam['form']['picture']    = $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
             $arrParam['form']['created']    = date('Y-m-d',time());
@@ -124,8 +163,16 @@ class CategoryModel extends Model
         }
         
         if($option['task'] == 'edit'){
+
             $arrParam['form']['modified']    = date('Y-m-d',time());
             $arrParam['form']['modified_by'] = $modified_by;
+            
+            if($arrParam['form']['picture']['name'] == null){
+                unset($arrParam['form']['picture']);
+            }else {
+                $uploadObj->removeFile('category', $arrParam['form']['picture_hidden']);
+                $arrParam['form']['picture'] = $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
+            }
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));     
             $this->update($data, array(array('id',$arrParam['form']['id'])));
@@ -279,35 +326,7 @@ class CategoryModel extends Model
         }
     }
     
-    public function deleteItem($id,$option = null)
-    {
-        $this->delete([$id]);
-        Session::set('message', array('class' => 'success', 'content' => 'Xóa thành công!'));
-    }
     
-    public function deleteMultItem($arrParam,$option = null)
-    {
-        if($option == null){
-            if(!empty($arrParam['cid'])){
-                $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
-                
-                //Remove Images
-                $queryImg   = "SELECT `id`,`picture` AS `name` FROM `$this->_tableName` WHERE `id` IN ($ids)";
-                $arrImage   = $this->fetchPairs($queryImg);
-                
-                echo "<pre>";
-                print_r($arrImage);
-                echo "</pre>";
-                die("Function is DIE");
-                $query		= "DELETE FROM `$this->table` WHERE `id` IN ($ids)";
-                $this->query($query);
-                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được xóa!'));
-            }else{
-                Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muốn xóa!'));
-            }
-        }
-
-    }
     
     public function ordering($arrParam,$option = null)
     {
@@ -358,11 +377,10 @@ class CategoryModel extends Model
         
         if($option == null){
             
-            $queryContent[] = "SELECT `id`,`username`";
-            $queryContent[] = "FROM `".TBL_USER."`";
-            $queryContent[] = "WHERE `group_id` = 1";
+            $queryContent[] = "SELECT `id`,`username` AS `name`";
+            $queryContent[] = "FROM `". TBL_USER ."`";
             $queryContent   = implode(" ", $queryContent);
-            $result         = $this->fetchAll($queryContent);
+            $result         = $this->fetchPairs($queryContent);
             return $result;
         }
         

@@ -1,5 +1,9 @@
 <?php 
 
+echo "<pre>";
+print_r($this);
+echo "</pre>";
+
 $this->searchValue = Session::get('search');
 $listUser = '';
 

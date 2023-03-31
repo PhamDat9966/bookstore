@@ -6,12 +6,14 @@ class GroupController extends Controller
     public function __construct($arrParams)
     {
         parent::__construct($arrParams);
+        $this->_view->_tag          = 'group'; //for Sidebar
 
     }
 
     public function listAction()
     {
-
+        $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);  
+        
         //Bulk Action
         if (isset($this->_arrParam['selectBox'])) {
             
@@ -94,7 +96,7 @@ class GroupController extends Controller
 
         //end Load
         $this->_view->_title        = 'User Groups: List Item';
-        $this->_view->_tag          = 'group'; //for Sidebar
+
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
 

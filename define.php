@@ -9,20 +9,22 @@
     define('LIBRARY_EXT_PATH'   , LIBRARY_PATH . 'extends' . DS);              // Đường đẫn đến thư mục upload
     
     define('PUBLIC_PATH'        , ROOT_PATH . DS . 'public' . DS);            // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n Ä‘áº¿n thÆ° má»¥c public	
-    define('PUBLIC_URL'         , ROOT_URL . DS . 'public' . DS);             // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n tÆ°Æ¡ng Ä‘á»‘i Ä‘áº¿n thá»±c public  
+    define('PUBLIC_URL'         , ROOT_URL . DS . 'public' . DS);             // Đường dẫn tương đối đến thư mục public  
     
     define('UPLOAD_PATH'        , PUBLIC_PATH . 'files' . DS);                // Đường dẫn đến thư mục upload  
-    define('UPLOAD_URL'         , PUBLIC_URL . 'files' . DS);                // Đường dẫn đến thư mục upload  
+    define('UPLOAD_URL'         , PUBLIC_URL . 'files' . DS);                 // Đường dẫn đến thư mục upload 
     
-    define('APPLICATION_PATH'   , ROOT_PATH . DS . 'application' . DS);       // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n Ä‘áº¿n thÆ° má»¥c application	
-    define('APPLICATION_URL'    , ROOT_URL . DS . 'application' . DS);  
+    define('SCRIPT_PATH'        , PUBLIC_PATH . 'script' . DS);               // Đường dẫn đến thư mục scripts
+    
+    define('APPLICATION_PATH'   , ROOT_PATH . DS . 'application' . DS);       // Đường dẫn đến thư mục application	
+    define('APPLICATION_URL'    , ROOT_URL . DS . 'application' . DS);        // Đường dẫn tương đối đến thư mục application	
    
     define ('MODULE_PATH'		, APPLICATION_PATH . 'module' . DS);		  // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n Ä‘áº¿n thÆ° má»¥c module
-    define ('MODULE_URL'        , APPLICATION_URL . 'module' . DS);           // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n tÆ°Æ¡ng Ä‘á»‘i Ä‘áº¿n thÆ° má»¥c module
+    define ('MODULE_URL'        , APPLICATION_URL . 'module' . DS);           // Đường dẫn tương đối đến thư mục module
     
     define ('BLOCK_PATH'		, APPLICATION_PATH . 'block' . DS);		      // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n Ä‘áº¿n thÆ° má»¥c block
     
-    define ('TEMPLATE_PATH'		, PUBLIC_PATH . 'template' . DS);		      // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n Ä‘áº¿n thÆ° má»¥c template	
+    define ('TEMPLATE_PATH'		, PUBLIC_PATH . 'template' . DS);		      // Đường dẫn tương đối đến thư mục template	
     define ('TEMPLATE_URL'		, PUBLIC_URL . 'template' . DS);	
     
     define('DEFAULT_MODULE'         , 'backend');

@@ -64,8 +64,7 @@ class UserModel extends Model
     }
     
     public function saveItem($arrParam, $option = null){
-        
-        
+               
         $created_by  = $this->_userInfo['info']['id'];
         $modified_by = $this->_userInfo['info']['id'];
         

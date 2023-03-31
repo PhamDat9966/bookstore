@@ -12,7 +12,7 @@ class GroupModel extends Model
     {
         parent::__construct();
         $this->setTable($this->_tableName);
-        
+        $this->_userInfo = Session::get('user');
     }
     
     public function listItems($arrParam,$option = null)
@@ -120,11 +120,11 @@ class GroupModel extends Model
     
     public function saveItem($arrParam, $option = null){
         
-        $created_by  = $_SESSION['user']['info']['username'];
-        $modified_by = $_SESSION['user']['info']['username'];
+        $created_by  = $this->_userInfo['info']['id'];
+        $modified_by = $this->_userInfo['info']['id'];
         
         if($option['task'] == 'add'){
-            $arrParam['form']['created']    = date('Y-m-d',time());
+            $arrParam['form']['created']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['created_by'] = $created_by;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
@@ -134,7 +134,7 @@ class GroupModel extends Model
         }
         
         if($option['task'] == 'edit'){
-            $arrParam['form']['modified']    = date('Y-m-d',time());
+            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['modified_by'] = $modified_by;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));     
@@ -351,6 +351,21 @@ class GroupModel extends Model
         if($filter != '') $query .= "WHERE `status` = '$filter'";
         $result = $this->fetchAll($query);
         return $result;
+    }
+    
+    public function listUserGroupACP($arrParam,$option = null)
+    {
+        $queryContent   = [];
+        
+        if($option == null){
+            
+            $queryContent[] = "SELECT `id`,`username` AS `name`";
+            $queryContent[] = "FROM `". TBL_USER ."`";
+            $queryContent   = implode(" ", $queryContent);
+            $result         = $this->fetchPairs($queryContent);
+            return $result;
+        }
+        
     }
     
 }

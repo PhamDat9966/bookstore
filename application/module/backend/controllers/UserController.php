@@ -8,8 +8,8 @@ class UserController extends Controller
     public function __construct($arrParams)
     {
         parent::__construct($arrParams);
+        $this->_view->_tag          = 'user'; //for Sidebar
         
-
     }
 
     public function listAction()
@@ -91,7 +91,7 @@ class UserController extends Controller
 
         //end Load
         $this->_view->_title        = 'User Manager: List';
-        $this->_view->_tag          = 'user'; //for Sidebar
+
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
 
@@ -105,10 +105,8 @@ class UserController extends Controller
 
     public function statusAction()
     {
-        
-        
-        $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-        
+      
+        $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));       
         $this->redirec('backend', 'user', 'list');
         
     }

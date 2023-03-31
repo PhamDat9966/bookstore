@@ -22,6 +22,12 @@ class Upload{
         return $fileName;
     }
     
+    public function removeFile($folderUpload, $fileName){
+        
+        $fileName   =   UPLOAD_PATH . $folderUpload . DS . $fileName;
+        @unlink($fileName);
+    }
+    
     private function randomString($length = 5)
     {
         

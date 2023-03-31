@@ -12,32 +12,36 @@ $dataForm           = @$this->arrParam['form'];
 
 $inputName          = Helper::cmsInput($type = 'text'  , $name = 'form[name]',   $id  = 'name',   $value = @$dataForm['name'], $class = 'form-control', $size = null);
 $inputToken		    = Helper::cmsInput($type = 'hidden', $name = 'form[token]',  $id  = 'token',  $value = time());
-$inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture',      $id  = 'picture',$value = @$dataForm['picture'], $class = '');
+
+//Picture
+$inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture',      $id  = 'picture',$value = @$dataForm['picture'], $class = '', $size = NULL, $option = 'onchange="previewPicture()"');
+$pictureShow        = '<img id="imageShow" src="">';
 
 $arrSelectStatus    = array('default' => '- Select Status -', 1 => 'Active', 0 => 'Inactive');
 $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class = 'custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'], $style = null);
 
 $rowNameOutput      = '';
-$inputNameHiden     = '';
+$inputNameHidden    = '';
 
 $rowName            = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = true);
 $rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = true);
 
-$pictureShow        = '';
-
+$inputPictureHidden = '';
 if($this->task == 'edit'){
-    $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null, $option = 'disabled');
-    $inputNameHiden = Helper::cmsInput($type = 'hidden', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
+
+    $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
     $rowName        = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = false);
+    $rowStatus      = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = false);
     
-    $pathImage      = UPLOAD_URL .'category'. DS . $dataForm['picture'];
-    $pictureShow    = '<img src="'.$pathImage.'">';
-    //<span class="info-box-text">Messages</span>
+    $pathImage                = UPLOAD_URL .'category'. DS . $dataForm['picture'];
+    $pictureShow              = '<img id="imageShow" src="'.$pathImage.'">';
+    $inputPictureHidden       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_hidden]', $id  = 'picture',$value = @$dataForm['picture'], $class = 'form-control', $size = null);
+
 }
 
-$rowNameOutput  = $rowName . $inputNameHiden;
+$rowNameOutput  = $rowName . $inputNameHidden;
 
-$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture);
+$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture . $inputPictureHidden);
 
 $showErrors = '';
 if (!empty($this->errors)) {

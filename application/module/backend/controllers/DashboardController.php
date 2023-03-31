@@ -11,13 +11,11 @@ class DashboardController extends Controller
         Session::delete('selectGroup');
         Session::delete('status');
         Session::delete('search');
+        $this->_view->_tag  = 'dashboard';
     }
 
     public function indexAction()
     {
-
-        $this->_view->_tag  = 'dashboard';
-
         $this->_view->_arrParam       = $this->_model->countFilterSearch();
 
         $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');

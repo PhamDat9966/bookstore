@@ -416,5 +416,12 @@ $(document).ready(function(){
 	})		
 })
 
-
+// Review Picture with jquery
+function previewPicture(){
+    $('#imageShow').attr('src', URL.createObjectURL(event.target.files[0]));
+}
+// Review Picture with javascript
+//function previewPicture() {
+//	imageShow.src=URL.createObjectURL(event.target.files[0]);
+//}
 

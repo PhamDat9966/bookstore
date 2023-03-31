@@ -6,42 +6,39 @@ class CategoryController extends Controller
     public function __construct($arrParams)
     {
         parent::__construct($arrParams);
+        $this->_view->_tag          = 'category'; //for Sidebar
 
     }
 
     public function listAction()
     {
-        echo "<pre>ListAction";
-        print_r($this->_arrParam);
-        echo "</pre>";
-        /*
-        * listUserGroupACP:
-        *  Danh sách tài khoảng có groupACP = 1 là những tài khoảng vào được vào control Panel dùng để đối chiếu với
-        *  với các id từ create_by và modified_by, để trường hợp có đổi tên thì creat_by và modified_by sẽ tự động cập nhật
-        *  rồi từ id truy vấn đến tên và gắn vào thẻ tại view để tiết kiện thời gian sử lý và tránh phải foreach nhiều phần từ
-        *  trong listUserGroupACB tại view nếu tài khoảng nào trước đây group_acp = 1 sau này = 0, thì coi như Null tại create_by và modified_by
-        */
         
-        $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
-        
+        $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);     
         
         //Bulk Action
-        if (isset($_GET['selectBox'])) {
-
-
-            if ($_GET['selectBox'] == 'delete') {
-                $this->_model->deleteMultItem($this->_arrParam);
+        if (isset($this->_arrParam['selectBoxCatagory'])) {
+            
+            $arrCid  = '';
+            if(!empty($this->_arrParam['cid'])){
+                foreach ($this->_arrParam['cid'] as $valueCid){
+                    $arrCid .= "&cid[]=$valueCid";
+                }
             }
 
-            if ($_GET['selectBox'] == 'action') {
-                $this->_arrParam['type'] = 1;
-                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+            if ($this->_arrParam['selectBoxCatagory'] == 'delete') {
+                URL::redirect('backend', 'category', 'deleteMult', NULL , $arrCid);
             }
 
-            if ($_GET['selectBox'] == 'inactive') {
+            if ($this->_arrParam['selectBoxCatagory'] == 'action') {
+                
+                $strRequest = $arrCid.'&statusChoose=1';
+                URL::redirect('backend', 'category', 'status', NULL ,$strRequest);
+                
+            }
+
+            if ($this->_arrParam['selectBoxCatagory'] == 'inactive') {
                 $this->_arrParam['type'] = 0;
                 $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-                //URL::redirect(('admin', 'catagory', 'index');
             }
        }
 
@@ -82,7 +79,6 @@ class CategoryController extends Controller
 
         //end Load
         $this->_view->_title        = 'Catagorys: List Item';
-        $this->_view->_tag          = 'Catagory'; //for Sidebar
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
 
@@ -96,11 +92,8 @@ class CategoryController extends Controller
 
     public function statusAction()
     {
-        $this->_arrParam['status'] = $_GET['status'];
-        $this->_statusReturn = $this->_model->changeStatus($this->_arrParam);
-
-        $this->_statusReturn['url'] . $this->_arrParam['page'];
-        $page = $this->_arrParam['page'];
+        $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+        $this->redirec('backend', 'category', 'list');
     }
 
     public function ajaxStatusAction()
@@ -146,43 +139,50 @@ class CategoryController extends Controller
         
         $this->_view->_title        = 'User Categorys: Add';
         $this->_view->task          = 'add'; 
-        
-        //* _arrParamOld use When is save but have error. _arrParamOld save error*//
-        if (isset($this->_arrParam['form'])) {
-            $this->_arrParamOld['form'] = $this->_arrParam['form'];
-            if (isset($this->_arrParam['form']['id'])) {
-                $this->_arrParam['id'] = $this->_arrParam['form']['id'];
-            }
-        }
 
         if (isset($this->_arrParam['id'])) {
             $this->_view->_title  = 'User Categorys: Edit';
             $this->_view->task    = 'edit';  
-            $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
+            
+            $token          = 0;
+            $pictureHidden  = '';
+            if(isset($this->_arrParam['form']['token'])){
+                $token          = $this->_arrParam['form']['token'];
+            }
+            if(isset($this->_arrParam['form']['picture_hidden'])){
+                $pictureHidden  = $this->_arrParam['form']['picture_hidden'];
+            }
+            
+            $this->_arrParam['form']          = $this->_model->infoItem($this->_arrParam);
+            // Reload Old Form value
+            $this->_arrParam['form']['token']          = $token;
+            $this->_arrParam['form']['picture_hidden'] = $pictureHidden;
+            
             if (empty($this->_arrParam['form'])) URL::redirect('backend', 'category', 'list');
         }
         
         if(!empty($_FILES)) $this->_arrParam['form']['picture'] = $_FILES['picture'];
 
-        if (@$this->_arrParam['form']['token'] > 0) {
+        
+        if ($this->_arrParam['form']['token'] > 0) {
             
             $taskAction = 'add';
             $queryName  = "SELECT `id` FROM `" . TBL_CATEGORY . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
             
             if(isset($this->_arrParam['form']['id'])){
                 $taskAction      = "edit";
-                $queryName  .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
+                $queryName      .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
             }
             
             $validate = new Validate($this->_arrParam['form']);
             
-            $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryName, 'min' => 3, 'max' => 25))
+            $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryName, 'min' => 3, 'max' => 250))
                      ->addRule('status', 'status', array('deny' => array('default')))
                      ->addRule('picture', 'file', array('min' => 100, 'max' => 1000000, 'extension'=>array('jpg','png','jpeg')), false);
             
             $validate->run();
             $this->_arrParam['form'] = $validate->getResult();
-
+            
             if ($validate->isValid() == false) {
                 $this->_view->errors    = $validate->showErrors();
             } else {
@@ -197,7 +197,6 @@ class CategoryController extends Controller
             }
         }
 
-        $this->_view->_tag          = 'category';
         $this->_view->arrParam      = $this->_arrParam;
 
         $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
@@ -214,5 +213,13 @@ class CategoryController extends Controller
         if (isset($_GET['id'])) $this->_model->deleteItem($_GET['id']);
         $this->redirec('backend', 'category', 'list');
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+    }
+    
+    public function deleteMultAction(){
+        
+        $this->_model->deleteMultItem($this->_arrParam);
+        $this->redirec('backend', 'category', 'list');
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+        
     }
 }

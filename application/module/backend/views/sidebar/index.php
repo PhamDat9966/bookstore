@@ -26,7 +26,7 @@ $sidebar        = array(
                                             'href'=>URL::createLink('backend','group','form')
                                             //'href'=>'index.php?module=backend&controller=group&action=form'
                                         )
-                        )
+                                    )
                     ),
                     'user'=>
                     array(
@@ -34,33 +34,33 @@ $sidebar        = array(
                         'href'=>'#',
                         'icon'  =>'<i class="nav-icon fa fa-user"></i>',
                         'tree'=>array(
-                            array(
-                                'name'=>'List',
-                                'href'=>URL::createLink('backend','user','list')
-                                //'href'=>'index.php?module=backend&controller=user&action=list'
-                            ),
-                            array(
-                                'name'=>'Add',
-                                'href'=>URL::createLink('backend','user','form')
-                                //'href'=>'index.php?module=backend&controller=user&action=form'
-                            )
-                        )
+                                        array(
+                                            'name'=>'List',
+                                            'href'=>URL::createLink('backend','user','list')
+                                            //'href'=>'index.php?module=backend&controller=user&action=list'
+                                        ),
+                                        array(
+                                            'name'=>'Add',
+                                            'href'=>URL::createLink('backend','user','form')
+                                            //'href'=>'index.php?module=backend&controller=user&action=form'
+                                        )
+                                    )
                     ),
-                    'catagory'=>
+                    'category'=>
                     array(
-                        'name'=>'Catagory',
+                        'name'=>'Category',
                         'href'=>'#',
                         'icon'  =>'<i class="<i nav-icon fa fa-tags"></i>',
                         'tree'=>array(
-                            array(
-                                'name'=>'List',
-                                'href'=>URL::createLink('backend','category','list')
-                            ),
-                            array(
-                                'name'=>'Add',
-                                'href'=>URL::createLink('backend','category','form')
-                            )
-                        )
+                                        array(
+                                            'name'=>'List',
+                                            'href'=>URL::createLink('backend','category','list')
+                                        ),
+                                        array(
+                                            'name'=>'Add',
+                                            'href'=>URL::createLink('backend','category','form')
+                                        )
+                                    )
                     ),
                     'book'=>
                     array(
@@ -68,17 +68,18 @@ $sidebar        = array(
                         'href'=>'#',
                         'icon'  =>'<i class="nav-icon fa fa-book"></i>',
                         'tree'=>array(
-                            array(
-                                'name'=>'List',
-                                'href'=>'#'
-                            ),
-                            array(
-                                'name'=>'Add',
-                                'href'=>'#'
-                            )
-                        )
+                                        array(
+                                            'name'=>'List',
+                                            'href'=>'#'
+                                        ),
+                                        array(
+                                            'name'=>'Add',
+                                            'href'=>'#'
+                                        )
+                                    )
                     ),
               );
+
 $xhtm  = '';
 $xhtm .= '<nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">';

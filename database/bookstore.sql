@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 21, 2023 at 10:05 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.9
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th3 30, 2023 lúc 06:48 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bookstore`
+-- Cơ sở dữ liệu: `bookstore`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -37,21 +37,23 @@ CREATE TABLE `category` (
   `modified_by` varchar(255) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
   `ordering` int(11) DEFAULT 10
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`) VALUES
-(10, 'test001', NULL, '2023-03-21', '1', '2023-03-21', '5', 1, 10),
-(12, 'test002', NULL, '2023-03-21', '5', '2023-03-21', NULL, 1, 10),
-(13, 'test003', NULL, '2023-03-21', '5', '2023-03-21', '1', 1, 10);
+(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', 'admin', '2023-03-30', NULL, 1, 10),
+(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', 'admin', '2023-03-30', NULL, 1, 10),
+(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', 'admin', '2023-03-30', NULL, 1, 10),
+(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', 'admin', '2023-03-30', 'admin', 1, 10),
+(25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', 'admin', '2023-03-30', 'admin', 1, 10);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group`
+-- Cấu trúc bảng cho bảng `group`
 --
 
 CREATE TABLE `group` (
@@ -65,22 +67,22 @@ CREATE TABLE `group` (
   `status` varchar(45) DEFAULT NULL,
   `ordering` varchar(45) DEFAULT NULL,
   `privilege_id` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `group`
+-- Đang đổ dữ liệu cho bảng `group`
 --
 
 INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `privilege_id`) VALUES
 (1, 'Admin', 1, '2022-10-18', 'admin', '2023-01-11', 'admin', '1', '11', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17'),
 (2, 'Manager', 1, '2022-10-05', 'admin', '2022-10-13', 'nguyenvana', '1', '10', '1,2,3,4,6,7,8,9,10'),
 (3, 'Member', 0, '2022-10-08', NULL, '2023-01-11', 'admin', '1', '11', '1'),
-(4, 'Register', 0, '2022-10-08', NULL, '2023-03-11', 'admin', '1', '13', '');
+(4, 'Register', 1, '2022-10-08', NULL, '2023-03-30', '', '1', '13', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `privilege`
+-- Cấu trúc bảng cho bảng `privilege`
 --
 
 CREATE TABLE `privilege` (
@@ -89,10 +91,10 @@ CREATE TABLE `privilege` (
   `module` varchar(45) NOT NULL,
   `controller` varchar(45) NOT NULL,
   `action` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `privilege`
+-- Đang đổ dữ liệu cho bảng `privilege`
 --
 
 INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
@@ -117,7 +119,7 @@ INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
@@ -135,10 +137,10 @@ CREATE TABLE `user` (
   `status` tinyint(1) DEFAULT 0,
   `ordering` int(11) DEFAULT 10,
   `group_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `user`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `register_date`, `register_ip`, `status`, `ordering`, `group_id`) VALUES
@@ -153,57 +155,57 @@ INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`
 (42, 'fouder02', 'phamdat999666@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 4);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `group`
+-- Chỉ mục cho bảng `group`
 --
 ALTER TABLE `group`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `privilege`
+-- Chỉ mục cho bảng `privilege`
 --
 ALTER TABLE `privilege`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `group`
+-- AUTO_INCREMENT cho bảng `group`
 --
 ALTER TABLE `group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
--- AUTO_INCREMENT for table `privilege`
+-- AUTO_INCREMENT cho bảng `privilege`
 --
 ALTER TABLE `privilege`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
