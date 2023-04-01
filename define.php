@@ -47,6 +47,7 @@
     define('TBL_USER'           , 'user');
     define('TBL_PRIVILEGE'      , 'privilege');
     define('TBL_CATEGORY'       , 'category');
+    define('TBL_BOOK'           , 'book');
 
     // ======================== CONFIG ================================//
     define('TIME_LOGIN'         , 36000);

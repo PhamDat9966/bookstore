@@ -70,11 +70,11 @@ $sidebar        = array(
                         'tree'=>array(
                                         array(
                                             'name'=>'List',
-                                            'href'=>'#'
+                                            'href'=>URL::createLink('backend','book','list')
                                         ),
                                         array(
                                             'name'=>'Add',
-                                            'href'=>'#'
+                                            'href'=>URL::createLink('backend','book','form')
                                         )
                                     )
                     ),
