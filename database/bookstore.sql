@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 31, 2023 lúc 10:56 AM
+-- Thời gian đã tạo: Th4 02, 2023 lúc 09:59 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `bookstore`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `book`
+--
+
+CREATE TABLE `book` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `price` decimal(10,0) NOT NULL,
+  `special` tinyint(1) DEFAULT 0,
+  `sale_off` int(3) DEFAULT 0,
+  `picture` text DEFAULT NULL,
+  `created` datetime DEFAULT current_timestamp(),
+  `created_by` varchar(255) DEFAULT NULL,
+  `modified` datetime DEFAULT current_timestamp(),
+  `modified_by` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 0,
+  `ordering` int(11) DEFAULT 10,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -166,6 +189,12 @@ INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`
 --
 
 --
+-- Chỉ mục cho bảng `book`
+--
+ALTER TABLE `book`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
@@ -192,6 +221,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
+
+--
+-- AUTO_INCREMENT cho bảng `book`
+--
+ALTER TABLE `book`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `category`
