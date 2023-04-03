@@ -308,7 +308,6 @@ class UserController extends Controller
     public function selectGroupForUserAction()
     {
 
-
         $arrSelectGroupForUser          = json_decode($this->_arrParam['selectGroup'], true);
         $this->_arrParam['id']          = $arrSelectGroupForUser['id'];
         $this->_arrParam['group_id']    = $arrSelectGroupForUser['group_id'];

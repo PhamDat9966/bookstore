@@ -1,5 +1,3 @@
-// ChangeGroupACP
-
 function changeGroupACP(link){
 	$(document).ready(function() {
 		$.ajax({
@@ -179,15 +177,16 @@ function changeGroupUser(jsonParam){
 	                    Trạng thái Group của User đã được cập nhật<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color:#FFFFFF;opacity: 1;">×</button>
 	                </div>
 				 */
-
+				console.log(data);
 				var jsonOject 	= $.parseJSON(data);
-				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>Trạng thái Group của User đã được cập nhật<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
+				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>"+jsonOject[1].content+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
 				if($("#inAlert").length > 0){
 					$("#inAlert").remove();
 				}
 				$("#alert").prepend(element);
 					
 				console.log(jsonOject);
+				console.log(jsonOject[1].content);
 			}
 	})
 	

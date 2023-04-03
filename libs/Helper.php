@@ -130,7 +130,7 @@ class Helper{
             if($value == $valueSelected ){
                 $xhtml .= '<option selected="selected" value ='.$key.'>'.$value.'</option>';
             }else{
-                $xhtml .= '<option value = '.$key.'>'.$value.'</option>';
+                $xhtml .=   '<option value = '.$key.'>'.$value.'</option>';
             }
         }
         $xhtml .= '</select>';
