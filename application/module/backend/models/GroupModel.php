@@ -17,6 +17,9 @@ class GroupModel extends Model
     
     public function listItems($arrParam,$option = null)
     {
+        echo "<pre>ListItem";
+        print_r($arrParam);
+        echo "</pre>";    
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
         $queryContent   = [];
@@ -24,18 +27,18 @@ class GroupModel extends Model
         $queryContent[] = "FROM `$this->_tableName`";
         $queryContent[] = "WHERE `id` > 0";
         
-        if(!empty($_SESSION['search'])){
-            $queryContent[]     = "AND `name` LIKE '%".$_SESSION['search']."%'";
+        if(!empty($arrParam['search'])){
+            $queryContent[]     = "AND `name` LIKE '%". $arrParam['search']."%'";
         }
         
-        if(isset($_SESSION['filter'])){
-            if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
-            if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
+        if(isset($arrParam['filter'])){
+            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
+            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
         }
         
-        if(isset($_SESSION['selectGroupACP'])){
-            if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
-            if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
+        if(isset($arrParam['selectGroupACP'])){
+            if($arrParam['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
+            if($arrParam['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
         } 
         
         $position           = $this->_arrParam['position'];
@@ -144,16 +147,19 @@ class GroupModel extends Model
         }
     }
     
-    public function pagination($totalItems,$totalItemsPerPage,$pageRange)
+    public function pagination($totalItems,$totalItemsPerPage,$pageRange,$currentPage,$arrParam)
     {   
-
+        unset($arrParam['module']);
+        unset($arrParam['controller']);
+        unset($arrParam['action']);
+        
         $resulfPagination = [];
         
         $currentPage = (isset($_GET['page'])) ? $_GET['page'] : 1;
         $this->_cunrrentPage = $currentPage; 
         
         $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
-        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'group', 'list'));
+        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'group', 'list',$arrParam));
         $position = ($currentPage - 1) * $totalItemsPerPage;
         
         $resulfPagination['position'] = $position;
@@ -163,15 +169,15 @@ class GroupModel extends Model
         return $resulfPagination;
     }
     
-    public function countFilterSearch(){
+    public function countFilterSearch($arrParam){
         
         $count          = array();
         $searchQuery    = '';
         
-        if((!empty($_SESSION['search'])) && (!empty(is_numeric(@$_SESSION['selectGroupACP'])))){
-            $varGroupACP = @$_SESSION['selectGroupACP'];
+        if((!empty($arrParam['search'])) && (!empty(is_numeric($arrParam['selectGroupACP'])))){
+            $varGroupACP = $arrParam['selectGroupACP'];
             
-            $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+            $searchQuery = "`name` LIKE '%".$arrParam['search']."%'";
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_acp` = $varGroupACP");
             $count['allStatus'] = $this->totalItem();
@@ -185,8 +191,8 @@ class GroupModel extends Model
             return $count;
         }
         
-        if(!empty(is_numeric(@$_SESSION['selectGroupACP']))){
-            $varGroupACP = @$_SESSION['selectGroupACP'];
+        if(!empty(is_numeric($arrParam['selectGroupACP']))){
+            $varGroupACP = $arrParam['selectGroupACP'];
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = ".$varGroupACP."");
             $count['allStatus'] = $this->totalItem();
@@ -201,8 +207,8 @@ class GroupModel extends Model
             
         }
         
-        if(!empty($_SESSION['search'])){
-            $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+        if(!empty($arrParam['search'])){
+            $searchQuery = "`name` LIKE '%".$arrParam['search']."%'";
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
             $count['allStatus'] = $this->totalItem();

@@ -12,7 +12,13 @@ class GroupController extends Controller
 
     public function listAction()
     {
+        echo "<pre>listAction";
+        print_r($this->_arrParam);
+        echo "</pre>";
+        
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);  
+        
+        $optionFilterSearchLink = '';
         
         //Bulk Action
         if (isset($this->_arrParam['selectBox'])) {
@@ -43,9 +49,9 @@ class GroupController extends Controller
         }
 
         // filter and search
-        if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroupACP'])) {
-            $this->filterAndSearchAction();
-        }
+//         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroupACP'])) {
+//             $this->filterAndSearchAction();
+//         }
 
         // charge active, inactive groupACB and status
         if (isset($_GET['id'])) {
@@ -70,14 +76,14 @@ class GroupController extends Controller
         }
 
         //Paginator
-        $this->_arrParam['count']  = $this->_model->countFilterSearch();
+        $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
 
         $totalItems                = $this->_arrParam['count']['allStatus'];
-        if (isset($_SESSION['filter'])) {
-            if ($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
-            if ($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
+        if (isset($this->_arrParam['filter'])) {
+            if ($this->_arrParam['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
+            if ($this->_arrParam['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
         }
 
         $currentPage               = 1;
@@ -88,7 +94,7 @@ class GroupController extends Controller
             $currentPage           = $_GET['page'];
         }
 
-        $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage);
+        $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage,$arrParam = $this->_arrParam);                     
         $this->_model->_arrParam['position']             = $this->_pagination['position'];
         $this->_model->_arrParam['totalItemsPerPage']    = $this->_pagination['totalItemsPerPage'];
 

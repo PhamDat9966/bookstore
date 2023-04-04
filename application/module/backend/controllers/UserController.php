@@ -314,5 +314,6 @@ class UserController extends Controller
 
         $result = $this->_model->changeGroupForUser($this->_arrParam, array('task' => 'change-ajax-group'));
         echo json_encode($result);
+        
     }
 }

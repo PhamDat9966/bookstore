@@ -7,6 +7,7 @@
     $jsFile      = str_replace('type="text/javascript"', "", $jsFile);
     echo $jsFile;
 ?>
+    <!-- Mẫu -->
 <!-- <script src="/bookstore/public/template/frontend/frontend_main/js/jquery-3.3.1.min.js"></script> -->
 <!-- <script src="/bookstore/public/template/frontend/frontend_main/js/jquery-ui.min.js"></script> -->
 <!-- <script src="/bookstore/public/template/frontend/frontend_main/js/jquery.exitintent.js"></script> -->

@@ -1,5 +1,6 @@
 <?php
-echo "<pre>view";
+
+echo "<pre>";
 print_r($this->arrParam);
 echo "</pre>";
 
@@ -13,31 +14,21 @@ $activeButtonClass      = 'btn btn-secondary';
 $inactiveButtonClass    = 'btn btn-secondary';
 
 //Hidden Value Filter
-$hiddenFilter           = ''; 
-$hiddenSearch           = '';
-$hiddenSelectGroupACP   = '';
-//filterSearch
+$hiddenFilter          = ''; 
 
-if($this->arrParam['filter'] != NULL){
-    if($this->arrParam['filter'] == 'active'){
-        
-        $hiddenFilter = '<input type="hidden" name="filter" value="active">';
+if(isset($_SESSION['filter'])){
+    if($_SESSION['filter'] == 'active'){
         $allButtonClass         = 'btn btn-secondary';
         $activeButtonClass      = 'btn btn-info';
         $inactiveButtonClass    = 'btn btn-secondary';
     }
-    if($this->arrParam['filter'] == 'inactive'){
-        $hiddenFilter = '<input type="hidden" name="filter" value="inactive">';
+    
+    if($_SESSION['filter'] == 'inactive'){
         $allButtonClass         = 'btn btn-secondary';
         $activeButtonClass      = 'btn btn-secondary';
         $inactiveButtonClass    = 'btn btn-info';
     }
-    if($this->arrParam['filter'] == 'all'){
-        $hiddenFilter = '<input type="hidden" name="filter value="all">';
-    }
 }
-
-//if(isset($this->arrParam['search'])) $hiddenSearch = '<input type="hidden" name="search" value="'.$this->arrParam['search'].'">';
 
 $buttonSubmit = Helper::cmsButtonSubmit($type='submit',$class='btn btn-info', $textOufit='Search');
 
@@ -56,33 +47,42 @@ $buttonInactive        = Helper::cmsButtonSubmit($type='submit',$clas = $inactiv
 
 $buttonClear           = Helper::cmsButtonSubmit($type='submit',$class='btn btn-danger', $textOufit = 'Clear',$name='clear',$value='clear'); 
 
-if($activeItem    == 0 ) $buttonActive = '';
-if($inactiveItem  == 0)  $buttonInactive = '';
 
 //FILTER
-$filterButton          = $hiddenFilter.' '. $buttonAll.' '.$buttonActive.' '.$buttonInactive;
+$formFiler         = '<form action="" method="GET">
+                        <input type="hidden" name="module" value="backend">
+                        <input type="hidden" name="controller" value="group">
+                        <input type="hidden" name="action" value="list">
+                        '. $buttonAll.' '.$buttonActive.' '.$buttonInactive.'                      
+                      </form>';
                    
 //SEARCH
 
-//$this->searchValue = Session::get('search');
+$this->searchValue = Session::get('search');
 
-$formSearch        = '<div class="input-group">
-						<input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="'.$this->arrParam['search'].'">
-                        <span class="input-group-append">
-                        	<button type="submit" class="btn btn-info">Search</button>
-                            '.' '.$buttonClear.'
-                        </span>
-                    </div>';
+$formSearch        = '<form action="" method="GET">
+                            <input type="hidden" name="module" value="backend">
+                            <input type="hidden" name="controller" value="group">
+                            <input type="hidden" name="action" value="list">
+
+                            <div class="input-group">
+    							<input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="' . @$this->searchValue . '">
+                                <span class="input-group-append">
+                                	<button type="submit" class="btn btn-info">Search</button>
+                                    '.' '.$buttonClear.'
+                                </span>
+                            </div>
+
+                        </form>';
 
 // filter Group ACP
 
 $selectGroupACP = 'selectGroupACP';
-if(isset($this->arrParam['selectGroupACP'])){
-    $selectGroupACP = $this->arrParam['selectGroupACP'];
+if(isset($_SESSION['selectGroupACP'])){
+    $selectGroupACP = $_SESSION['selectGroupACP'];
 }
 $arrGroupACP        = ['groupACP'=>'- Select Group ACP -','0'=>'No','1'=>'Yes'];
 $selectGroupACP     = Helper::cmsSelectbox('selectGroupACP', 'form-control custom-select', $arrGroupACP , $selectGroupACP, null,$id = 'selectGroupACP');
-
 $formGroupACP       = '<form action="" method="GET" name="formGroupACP" id="formGroupACP">
                             <input type="hidden" name="module" value="backend">
                             <input type="hidden" name="controller" value="group">
@@ -104,18 +104,13 @@ $formGroupACP       = '<form action="" method="GET" name="formGroupACP" id="form
     </div>
     <div class="card-body">
         <div class="container-fluid">
-        
-        <form action="" method="GET" name="formGroupACP" id="formGroupACP">
-        	<input type="hidden" name="module" value="backend">
-            <input type="hidden" name="controller" value="group">
-            <input type="hidden" name="action" value="list">
-            
             <div class="row justify-content-between align-items-center">
                 <div class="area-filter-status mb-2">
 					<?php 
-					   echo $filterButton; 
+					   echo $formFiler; 
 					?>
                 </div>
+                
                 <div class="area-filter-status mb-2">
 					<?php 
 					   echo $formGroupACP ; 
@@ -123,13 +118,26 @@ $formGroupACP       = '<form action="" method="GET" name="formGroupACP" id="form
                 </div>
                 
                 <div class="area-search mb-2">
+                
+<!--                     <form action="index.php?module=backend&controller=group&action=list" method="GET"> -->
+<!--                         <div class="input-group"> -->
+                        	<!-- Search Input -->
+<!--                             <input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="'.@$this->searchValue.'"> -->
+<!--                             <span class="input-group-append"> -->
+<!--                             	<button type="submit" class="btn btn-info">Search</button> -->
+                                <?php 
+//                                     //echo $buttonSubmit;
+//                                 ?>
+<!--                                 <a href="#" class="btn btn-btn btn-danger">Clear</a> -->
+<!--                             </span> -->
+<!--                         </div> -->
+<!--                     </form> -->
+
 					<?php 
 					   echo $formSearch;
-					   //echo $hiddenSearch;
 					?>
                 </div>
             </div>
-        </form>    
         </div>
     </div>
     <!-- /.card-body -->

@@ -62,8 +62,9 @@ if(!empty($this->Items)){
             $jsonArrSelectGroupForUser[json_encode($dataGroupForUser[$k])] = $valueA;
             $k++;
         }
-        
+
         $selectGroupForUser     = Helper::cmsSelectboxForUserSelectGroup($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectGroupForUser,$keySelect = $value['group_name'], $style = null,$idSelectBox = "selectGroupForUser",$option = 'onchange=\'changeGroupUser(this.value)\'');
+        
         $jsonArrSelectGroupForUser = '';
         $row                = ($i % 2 == 0) ? 'odd' : 'even';
         
