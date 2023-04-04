@@ -2,12 +2,11 @@
 class URL{
 	
     public static function createLink($module, $controller, $action, $params = NULL, $strRequest = NULL){
-	    
 	    $linkParams = '';
 	    
 	    if(!empty($params)){
 	        foreach ($params as $key => $value){
-	            $linkParams .= "&$key=$value";
+	            @$linkParams .= "&$key=$value";
 	        }
 	    }
 	    

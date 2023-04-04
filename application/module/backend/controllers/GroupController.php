@@ -12,13 +12,9 @@ class GroupController extends Controller
 
     public function listAction()
     {
-        echo "<pre>listAction";
-        print_r($this->_arrParam);
-        echo "</pre>";
-        
+        // Clear Search
+        if(isset($this->_arrParam['clear'])) $this->_arrParam['search'] = '';
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);  
-        
-        $optionFilterSearchLink = '';
         
         //Bulk Action
         if (isset($this->_arrParam['selectBox'])) {
@@ -51,8 +47,8 @@ class GroupController extends Controller
         // filter and search
 //         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroupACP'])) {
 //             $this->filterAndSearchAction();
-//         }
-
+//         }        
+        
         // charge active, inactive groupACB and status
         if (isset($_GET['id'])) {
 

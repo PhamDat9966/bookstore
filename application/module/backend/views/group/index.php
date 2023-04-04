@@ -1,7 +1,13 @@
 <?php
-
 $listUserWithGroupACP = $this->listUserGroupACP;
-$this->searchValue = Session::get('search');
+
+$this->searchValue = '';
+if(isset($this->arrParam['search'])){
+    $this->searchValue = $this->arrParam['search'];
+}    
+
+if(isset($this->arrParam['clear'])) $this->searchValue = NULL;
+
 
 $arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
 

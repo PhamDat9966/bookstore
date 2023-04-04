@@ -1,7 +1,6 @@
 <?php
-echo "<pre>view";
-print_r($this->arrParam);
-echo "</pre>";
+
+if(isset($this->arrParam['clear'])) $this->arrParam['search'] = NULL;
 
 //Filter
 $allItem      = @$this->_count['allStatus'];
@@ -18,7 +17,7 @@ $hiddenSearch           = '';
 $hiddenSelectGroupACP   = '';
 //filterSearch
 
-if($this->arrParam['filter'] != NULL){
+if(isset($this->arrParam['filter'])){
     if($this->arrParam['filter'] == 'active'){
         
         $hiddenFilter = '<input type="hidden" name="filter" value="active">';
@@ -67,7 +66,7 @@ $filterButton          = $hiddenFilter.' '. $buttonAll.' '.$buttonActive.' '.$bu
 //$this->searchValue = Session::get('search');
 
 $formSearch        = '<div class="input-group">
-						<input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="'.$this->arrParam['search'].'">
+						<input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="'.@$this->arrParam['search'].'">
                         <span class="input-group-append">
                         	<button type="submit" class="btn btn-info">Search</button>
                             '.' '.$buttonClear.'
@@ -105,10 +104,10 @@ $formGroupACP       = '<form action="" method="GET" name="formGroupACP" id="form
     <div class="card-body">
         <div class="container-fluid">
         
-        <form action="" method="GET" name="formGroupACP" id="formGroupACP">
-        	<input type="hidden" name="module" value="backend">
-            <input type="hidden" name="controller" value="group">
-            <input type="hidden" name="action" value="list">
+        <form action="#" method="POST" name="formGroupACP" id="formGroupACP">
+<!--         	<input type="hidden" name="module" value="backend"> -->
+<!--             <input type="hidden" name="controller" value="group"> -->
+<!--             <input type="hidden" name="action" value="list"> -->
             
             <div class="row justify-content-between align-items-center">
                 <div class="area-filter-status mb-2">

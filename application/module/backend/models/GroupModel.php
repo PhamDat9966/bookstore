@@ -17,9 +17,6 @@ class GroupModel extends Model
     
     public function listItems($arrParam,$option = null)
     {
-        echo "<pre>ListItem";
-        print_r($arrParam);
-        echo "</pre>";    
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
         $queryContent   = [];
@@ -191,7 +188,7 @@ class GroupModel extends Model
             return $count;
         }
         
-        if(!empty(is_numeric($arrParam['selectGroupACP']))){
+        if(@!empty(is_numeric($arrParam['selectGroupACP']))){
             $varGroupACP = $arrParam['selectGroupACP'];
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = ".$varGroupACP."");
