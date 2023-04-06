@@ -1,6 +1,4 @@
 <?php 
-
-$this->searchValue = Session::get('search');
 $listUser = '';
 
 //Created selectgroup Array
@@ -20,9 +18,9 @@ if(!empty($this->Items)){
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="'.$id.'">';
         
-        $name           = Helper::highLight(@$this->searchValue, $value['username']);
-        $fullName       = Helper::highLight(@$this->searchValue, $value['fullname']);
-        $email          = Helper::highLight(@$this->searchValue, $value['email']);
+        $name           = Helper::highLight(@$this->arrParam['search'], $value['username']);
+        $fullName       = Helper::highLight(@$this->arrParam['search'], $value['fullname']);
+        $email          = Helper::highLight(@$this->arrParam['search'], $value['email']);
         
         $info           = '<p class="mb-0 text-left">
                             <b>Username: </b>'.$name.'<br/>
@@ -67,8 +65,6 @@ if(!empty($this->Items)){
         
         $jsonArrSelectGroupForUser = '';
         $row                = ($i % 2 == 0) ? 'odd' : 'even';
-        
-        
         //<a href="#" class="btn btn-success rounded-circle btn-sm"><i class="fas fa-check"></i></a>
         $status             = '';
         //$groupACP       = Helper::cmsGroupACP($value['group_acp'], URL::createLink('backend','group','ajaxGroupACP',array('id'=>$id,'group_acp'=>$value['group_acp'])),$id);
@@ -147,7 +143,10 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 			<div class="col-12">
 				<!-- Search & Filter -->
 				<?php 
-                    require_once 'search-filter/index.php';
+                    //require_once 'search-filter/index.php';
+                ?>
+                <?php
+                    require_once MODULE_PATH .'backend'. DS . 'views' . DS . 'search-filter' . DS .'index.php';
                 ?>
                 
 			<form action="#" method="get" name="user-list-form" id="user-list-form">	

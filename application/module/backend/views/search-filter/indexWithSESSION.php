@@ -1,7 +1,7 @@
 <?php
 
 echo "<pre>";
-print_r($this);
+print_r($this->arrParam);
 echo "</pre>";
 
 //Filter
@@ -12,6 +12,9 @@ $inactiveItem = @$this->_count['inActiveStatus'];
 $allButtonClass         = 'btn btn-info';
 $activeButtonClass      = 'btn btn-secondary';
 $inactiveButtonClass    = 'btn btn-secondary';
+
+//Hidden Value Filter
+$hiddenFilter          = ''; 
 
 if(isset($_SESSION['filter'])){
     if($_SESSION['filter'] == 'active'){
@@ -38,15 +41,17 @@ $buttonAll = Helper::cmsButtonSubmit($type='submit',$class = $allButtonClass, $t
 $textSpanIconActive  = 'Active <span class="badge badge-pill badge-light">'.$activeItem.'</span>';
 $buttonActive    = Helper::cmsButtonSubmit($type='submit',$class = $activeButtonClass, $textOufit = $textSpanIconActive,$name='filter',$value='active');
 
+//Inactive
 $textSpanIconInactive  = 'Inactive <span class="badge badge-pill badge-light">'.$inactiveItem.'</span>';
 $buttonInactive        = Helper::cmsButtonSubmit($type='submit',$clas = $inactiveButtonClass, $textOufit = $textSpanIconInactive,$name='filter',$value='inactive');
 
 $buttonClear           = Helper::cmsButtonSubmit($type='submit',$class='btn btn-danger', $textOufit = 'Clear',$name='clear',$value='clear'); 
 
+
 //FILTER
 $formFiler         = '<form action="" method="GET">
                         <input type="hidden" name="module" value="backend">
-                        <input type="hidden" name="controller" value="user">
+                        <input type="hidden" name="controller" value="group">
                         <input type="hidden" name="action" value="list">
                         '. $buttonAll.' '.$buttonActive.' '.$buttonInactive.'                      
                       </form>';
@@ -57,7 +62,7 @@ $this->searchValue = Session::get('search');
 
 $formSearch        = '<form action="" method="GET">
                             <input type="hidden" name="module" value="backend">
-                            <input type="hidden" name="controller" value="user">
+                            <input type="hidden" name="controller" value="group">
                             <input type="hidden" name="action" value="list">
 
                             <div class="input-group">
@@ -72,23 +77,17 @@ $formSearch        = '<form action="" method="GET">
 
 // filter Group ACP
 
-$selectGroupFirst = '0';
-$arrGroup         = array('0'=>'- Select Group -'); 
-if(isset($_SESSION['selectGroup'])){
-    $selectGroupFirst  = $_SESSION['selectGroup'];
+$selectGroupACP = 'selectGroupACP';
+if(isset($_SESSION['selectGroupACP'])){
+    $selectGroupACP = $_SESSION['selectGroupACP'];
 }
-
-//Created selectgroup Array
-$selectGroupFilter = $this->slbGroup;
-
-$arrGroup        = array_merge($arrGroup,$selectGroupFilter);
-
-$selectGroupBox     = Helper::cmsSelectbox('selectGroup', 'form-control custom-select',$arrValue = $arrGroup , $keySelect = $selectGroupFirst, null,$id = 'selectGroup');
-$formGroup          = '<form action="" method="GET" name="filterGroupForUser" id="filterGroupForUser">
+$arrGroupACP        = ['groupACP'=>'- Select Group ACP -','0'=>'No','1'=>'Yes'];
+$selectGroupACP     = Helper::cmsSelectbox('selectGroupACP', 'form-control custom-select', $arrGroupACP , $selectGroupACP, null,$id = 'selectGroupACP');
+$formGroupACP       = '<form action="" method="GET" name="formGroupACP" id="formGroupACP">
                             <input type="hidden" name="module" value="backend">
-                            <input type="hidden" name="controller" value="user">
+                            <input type="hidden" name="controller" value="group">
                             <input type="hidden" name="action" value="list">
-                             '.$selectGroupBox.'            
+                             '.$selectGroupACP.'            
                         </form>';
 
 ?>
@@ -114,11 +113,26 @@ $formGroup          = '<form action="" method="GET" name="filterGroupForUser" id
                 
                 <div class="area-filter-status mb-2">
 					<?php 
-					   echo $formGroup ; 
+					   echo $formGroupACP ; 
 					?>
                 </div>
                 
                 <div class="area-search mb-2">
+                
+<!--                     <form action="index.php?module=backend&controller=group&action=list" method="GET"> -->
+<!--                         <div class="input-group"> -->
+                        	<!-- Search Input -->
+<!--                             <input type="text" class="form-control" name="search" placeholder="Enter search keyword...." value="'.@$this->searchValue.'"> -->
+<!--                             <span class="input-group-append"> -->
+<!--                             	<button type="submit" class="btn btn-info">Search</button> -->
+                                <?php 
+//                                     //echo $buttonSubmit;
+//                                 ?>
+<!--                                 <a href="#" class="btn btn-btn btn-danger">Clear</a> -->
+<!--                             </span> -->
+<!--                         </div> -->
+<!--                     </form> -->
+
 					<?php 
 					   echo $formSearch;
 					?>

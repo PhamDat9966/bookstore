@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 02, 2023 lúc 09:59 PM
--- Phiên bản máy phục vụ: 10.4.27-MariaDB
--- Phiên bản PHP: 8.2.0
+-- Thời gian đã tạo: Th4 06, 2023 lúc 03:45 PM
+-- Phiên bản máy phục vụ: 10.4.24-MariaDB
+-- Phiên bản PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,7 +42,7 @@ CREATE TABLE `book` (
   `status` tinyint(1) DEFAULT 0,
   `ordering` int(11) DEFAULT 10,
   `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE `category` (
   `modified_by` varchar(255) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
   `ordering` int(11) DEFAULT 10
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Đang đổ dữ liệu cho bảng `category`
@@ -95,7 +95,7 @@ CREATE TABLE `group` (
   `status` varchar(45) DEFAULT NULL,
   `ordering` varchar(45) DEFAULT NULL,
   `privilege_id` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Đang đổ dữ liệu cho bảng `group`
@@ -107,7 +107,13 @@ INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modifi
 (3, 'Member', 1, '2022-10-08', NULL, '2023-01-11', '1', '0', '11', '1'),
 (4, 'Register', 0, '2022-10-08', NULL, '2023-03-30', '1', '1', '13', ''),
 (75, 'founder 01', 1, '2023-03-30', '', '2023-03-30', NULL, '1', NULL, ''),
-(76, 'fouder 02', 0, '2023-03-30', '1', '2023-03-30', NULL, '0', NULL, '');
+(76, 'founder 02', 0, '2023-03-30', '1', '2023-03-30', NULL, '0', NULL, ''),
+(77, 'founder 03', 1, '2023-04-04', '1', '2023-04-04', NULL, '1', NULL, ''),
+(78, 'founder 04', 1, '2023-04-04', '1', '2023-04-04', NULL, '1', NULL, ''),
+(79, 'founder 05', 1, '2023-03-30', '', '2023-03-30', NULL, '1', NULL, ''),
+(80, 'founder 06', 0, '2023-03-30', '1', '2023-03-30', NULL, '0', NULL, ''),
+(81, 'founder 07', 1, '2023-04-04', '1', '2023-04-04', NULL, '1', NULL, ''),
+(82, 'founder 08', 1, '2023-04-04', '1', '2023-04-04', NULL, '1', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -121,7 +127,7 @@ CREATE TABLE `privilege` (
   `module` varchar(45) NOT NULL,
   `controller` varchar(45) NOT NULL,
   `action` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Đang đổ dữ liệu cho bảng `privilege`
@@ -167,7 +173,7 @@ CREATE TABLE `user` (
   `status` tinyint(1) DEFAULT 0,
   `ordering` int(11) DEFAULT 10,
   `group_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
@@ -177,12 +183,12 @@ INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`
 (1, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', '1', '2023-03-21 09:44:19', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
 (2, 'manager', 'manager@gmail.com', 'Manager', '12345', '2022-12-28 02:55:00', '5', '2023-03-09 03:39:47', '5', '2023-02-25 14:39:22', NULL, 0, 10, 2),
 (3, 'member', 'member@gmail.com', 'Member', '12345', '2022-12-28 08:55:00', '1', '2023-03-09 08:46:07', '1', '2023-02-25 14:39:22', NULL, 0, 10, 3),
-(4, 'register', 'register@gmail.com', 'Register', '12345', '2022-12-28 10:04:00', '5', '2023-03-31 09:23:31', '1', '2023-02-25 14:39:22', NULL, 0, 10, 4),
+(4, 'register', 'register@gmail.com', 'Register', '12345', '2022-12-28 10:04:00', '5', '2023-04-03 12:10:08', '1', '2023-02-25 14:39:22', NULL, 0, 10, 4),
 (5, 'nguyenvana', 'nguyenvana@gmail.com', 'Nguyen Van A123', '12345', '2023-02-07 07:42:54', '1', '2023-03-21 09:37:02', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
 (35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '12345', '2023-02-25 22:33:16', NULL, '2023-03-11 09:39:04', '1', '2023-02-25 16:02:16', '::1', 1, 10, 4),
-(36, 'nguyenvanaa', 'nguyenvanaa123@gmail.com', 'Nguyen Van A', '12345', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 0),
+(36, 'nguyenvanaa', 'nguyenvanaa123@gmail.com', 'Nguyen Van A', '12345', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 4),
 (41, 'fouder01', 'phamdat9966@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 4),
-(42, 'fouder02', 'phamdat999666@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 4);
+(42, 'fouder02', 'phamdat999666@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 3);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -238,7 +244,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT cho bảng `group`
 --
 ALTER TABLE `group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT cho bảng `privilege`

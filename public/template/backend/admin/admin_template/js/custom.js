@@ -4,18 +4,19 @@ function submitForm(url){
 }
 
 $(document).ready(function(){
+	
 	// filter group ACP
 	$('#selectGroupACP').on('change', function (e) {
-		var selected		= $("#selectGroupACP option:selected").text();
+		var selected		= $("#formFilterAndSearch option:selected").text();
 		
 		if(selected == "- Select Group ACP -"){	
-			$('#formGroupACP').submit();
+			$('#formFilterAndSearch').submit();
 		}
 		if(selected == "Yes"){	
-			$('#formGroupACP').submit();
+			$('#formFilterAndSearch').submit();
 		}
 		if(selected == "No"){
-			$('#formGroupACP').submit();
+			$('#formFilterAndSearch').submit();
 		}
 	});
 	
@@ -169,9 +170,21 @@ $(document).ready(function(){
 $(document).ready(function(){
 	// filter group User
 	$('#selectGroup').on('change', function (e) {
+		
+//		var selected		= $("#formFilterAndSearch option:selected").text();
+//		if(selected == "- Select Group ACP -"){	
+//			$('#formFilterAndSearch').submit();
+//		}
+//		if(selected == "Yes"){	
+//			$('#formFilterAndSearch').submit();
+//		}
+//		if(selected == "No"){
+//			$('#formFilterAndSearch').submit();
+//		}
+		
 		//var selected		= $("#selectGroup option:selected").text();
-		//$('#formGroupACP').submit();
-		document.forms['filterGroupForUser'].submit();
+		$('#formFilterAndSearch').submit();
+		//document.forms['filterGroupForUser'].submit();
 	});
 	
 //	$('#selectGroupForUser').on('change', function (e) {

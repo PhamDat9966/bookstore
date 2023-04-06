@@ -14,9 +14,20 @@ class UserController extends Controller
 
     public function listAction()
     {   
+        echo "<pre>";
+        print_r($this->_arrParam);
+        echo "</pre>";
+
+        // Clear Search
+        if(isset($this->_arrParam['clear'])) {
+            
+            unset($this->_arrParam['search']);
+            unset($this->_arrParam['clear']);
+            
+            URL::redirect('backend', 'user', 'list', $params = $this->_arrParam);
+        }
         
         $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
-        
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
         
         //Bulk Action
@@ -65,30 +76,54 @@ class UserController extends Controller
         }
 
         //Paginator
-        $this->_arrParam['count']  = $this->_model->countFilterSearch();
+//         $this->_arrParam['count']  = $this->_model->countFilterSearch();
+//         $this->_view->_count       = $this->_arrParam['count'];
+//         $this->_model->_countParam = $this->_arrParam['count'];
+
+//         $totalItems                = $this->_arrParam['count']['allStatus'];
+//         if (isset($_SESSION['filter'])) {
+//             if ($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
+//             if ($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
+//         }
+
+//         $currentPage               = 1;
+//         $totalItemsPerPage         = 5;
+//         $pageRange                 = 3;
+
+//         if (isset($_GET['page'])) {
+//             $currentPage           = $_GET['page'];
+//         }
+
+//         $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage);
+//         $this->_model->_arrParam['position']             = $this->_pagination['position'];
+//         $this->_model->_arrParam['totalItemsPerPage']    = $this->_pagination['totalItemsPerPage'];
+
+//         $this->_view->Pagination    = $this->_pagination;
+    
+        $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
-
+        
         $totalItems                = $this->_arrParam['count']['allStatus'];
-        if (isset($_SESSION['filter'])) {
-            if ($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
-            if ($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
+        if (isset($this->_arrParam['filter'])) {
+            if ($this->_arrParam['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
+            if ($this->_arrParam['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
         }
-
+        
         $currentPage               = 1;
         $totalItemsPerPage         = 5;
         $pageRange                 = 3;
-
+        
         if (isset($_GET['page'])) {
             $currentPage           = $_GET['page'];
         }
-
-        $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage);
+        
+        $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage,$arrParam = $this->_arrParam);
         $this->_model->_arrParam['position']             = $this->_pagination['position'];
         $this->_model->_arrParam['totalItemsPerPage']    = $this->_pagination['totalItemsPerPage'];
-
+        
         $this->_view->Pagination    = $this->_pagination;
-
+        
         //end Load
         $this->_view->_title        = 'User Manager: List';
 

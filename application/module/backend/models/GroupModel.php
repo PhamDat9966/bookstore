@@ -146,13 +146,18 @@ class GroupModel extends Model
     
     public function pagination($totalItems,$totalItemsPerPage,$pageRange,$currentPage,$arrParam)
     {   
+        
+        echo "<pre>pagimod";
+        print_r($arrParam);
+        echo "</pre>";
+        
         unset($arrParam['module']);
         unset($arrParam['controller']);
         unset($arrParam['action']);
         
         $resulfPagination = [];
         
-        $currentPage = (isset($_GET['page'])) ? $_GET['page'] : 1;
+        $currentPage = (isset($arrParam['page'])) ? $arrParam['page'] : 1;
         $this->_cunrrentPage = $currentPage; 
         
         $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);

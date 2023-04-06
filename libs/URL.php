@@ -25,6 +25,15 @@ class URL{
 		exit();
 	}
 	
+	public static function redirectObFlush($module, $controller, $action,$params = NULL,$strRequest = NULL){
+// 	    flush(); // Flush the buffer
+// 	    ob_flush();
+	    $link  =   self::createLink($module, $controller, $action,$params,$strRequest);
+	    header('location: ' . $link);
+	    ob_end_flush();
+	    exit();
+	}
+	
 	public static function checkRefreshPage($value, $module, $controller, $action, $params = null){
 	    if(Session::get('token') == $value){
 	        Session::delete('token');
@@ -33,4 +42,5 @@ class URL{
 	        Session::set('token', $value);
 	    }
 	}
+
 }

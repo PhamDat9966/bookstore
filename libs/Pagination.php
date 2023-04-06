@@ -10,6 +10,10 @@ class Pagination
 
 	public function __construct($totalItems, $totalItemsPerPage, $pageRange, $currentPage)
 	{
+	    echo "<pre>paginnation oj";
+	    print_r($this);
+	    echo "</pre>";
+	    
 		$this->totalItems			= $totalItems;
 		$this->totalItemsPerPage	= $totalItemsPerPage;
 

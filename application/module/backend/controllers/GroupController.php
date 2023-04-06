@@ -12,8 +12,23 @@ class GroupController extends Controller
 
     public function listAction()
     {
+        echo "<pre>";
+        print_r($this->_arrParam);
+        echo "</pre>";
+        ob_start();
+//         if(isset($this->_arrParam['pageDown'])){
+//             ob_start();
+//         }
+        
         // Clear Search
-        if(isset($this->_arrParam['clear'])) $this->_arrParam['search'] = '';
+        if(isset($this->_arrParam['clear'])) {
+            
+            unset($this->_arrParam['search']);
+            unset($this->_arrParam['clear']);
+            
+            URL::redirect('backend', 'group', 'list', $params = $this->_arrParam);
+        }
+        
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);  
         
         //Bulk Action
@@ -85,9 +100,20 @@ class GroupController extends Controller
         $currentPage               = 1;
         $totalItemsPerPage         = 5;
         $pageRange                 = 3;
-
-        if (isset($_GET['page'])) {
-            $currentPage           = $_GET['page'];
+        
+        if (isset($this->_arrParam['page'])) {
+            $currentPage           = $this->_arrParam['page'];       
+        }
+        
+        if(isset($this->_arrParam['pageDown'])) {
+            //die();
+//             $this->_arrParam['page'] = 1;
+//             $currentPage             = 1;
+            
+             $currentPage = $this->_arrParam['pageDown'];
+             $this->_arrParam['page'] = $this->_arrParam['pageDown'];
+ 
+            unset($this->_arrParam['pageDown']);
         }
 
         $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage,$arrParam = $this->_arrParam);                     
@@ -108,6 +134,8 @@ class GroupController extends Controller
         $this->_templateObj->load();
 
         $this->_view->render('group/index', true);
+        
+        ob_end_flush();
     }
 
     public function groupACBAction()

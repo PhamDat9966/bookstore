@@ -1,32 +1,18 @@
 <?php
 
-class UserModel extends Model
+class GroupModel extends Model
 {
     public $_arrParam;
     public $_saveParam = [];
-    protected $_tableName = TBL_USER;
-    public    $_cunrrentPage      = 1;
-    private $_userInfo;
-    private $_columns = array(
-                                'id',
-                                'username',
-                                'password',
-                                'email',
-                                'fullname',
-                                'created',
-                                'created_by',
-                                'modified',
-                                'modified_by',
-                                'status',
-                                'group_id'
-                        );
+    protected $_tableName = TBL_GROUP;
+    public    $_cunrrentPage      = 1;       
+    private $_columns = array('id','name','group_acp','created','created_by','modified','modified_by','status','ordering');
     
     public function __construct()
     {
         parent::__construct();
         $this->setTable($this->_tableName);
         $this->_userInfo = Session::get('user');
-        
     }
     
     public function listItems($arrParam,$option = null)
@@ -34,25 +20,23 @@ class UserModel extends Model
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
         $queryContent   = [];
-        $queryContent[] = "SELECT `u`.`id`,`u`.`username`,`u`.`email`,`u`.`fullname`,`u`.`password`,`u`.`created`,`u`.`created_by`,`u`.`modified`,`u`.`modified_by`,`u`.`status`,`u`.`ordering`,`u`.`group_id`,`g`.`name` AS `group_name`";             
-        $queryContent[] = "FROM `$this->_tableName` AS `u` LEFT JOIN `".TBL_GROUP."` AS `g` ON `u`.`group_id` = `g`.`id`";
-        $queryContent[] = "WHERE `u`.`id` > 0";
+        $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
+        $queryContent[] = "FROM `$this->_tableName`";
+        $queryContent[] = "WHERE `id` > 0";
         
         if(!empty($arrParam['search'])){
-            $keyword            = '"%'.$arrParam['search'].'%"';
-            $queryContent[]     = "AND (`username` LIKE $keyword OR `email` LIKE $keyword OR `fullname` LIKE $keyword)";
+            $queryContent[]     = "AND `name` LIKE '%". $arrParam['search']."%'";
         }
         
         if(isset($arrParam['filter'])){
-            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `u`.`status`= 1';
-            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `u`.`status`= 0';     
+            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
+            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
         }
         
-        if(isset($arrParam['selectGroup'])){
-            if($arrParam['selectGroup'] != '0'){
-                $queryContent[]    = "AND `u`.`group_id`= '".$arrParam['selectGroup']."'";
-            }    
-        }
+        if(isset($arrParam['selectGroupACP'])){
+            if($arrParam['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
+            if($arrParam['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
+        } 
         
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
@@ -65,8 +49,77 @@ class UserModel extends Model
         return $result;
     }
     
+    public function changeGroupACB($arrParam, $option = null){
+        
+        if($option['task'] == 'change-ajax-groupACP'){
+            $GroupACB = ($arrParam['group_acp'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->_tableName` SET `group_acp` = $GroupACB WHERE `id` = '".$id."'";
+            $this->query($query);    
+
+            return array('id'=>$id,'group_acb'=>$GroupACB,'url'=>URL::createLink('backend','group','ajaxGroupACP',array('id'=>$id,'group_acp'=>$GroupACB)));
+        }   
+        
+        if($option['task'] == 'change-groupACP'){
+            $GroupACB = ($arrParam['group_acp'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->_tableName` SET `group_acp` = $GroupACB WHERE `id` = '".$id."'";
+            $this->query($query);
+            
+            Session::set('message', array('class' => 'success', 'content' => 'Trạng thái GroupACB được cập nhật'));
+            return array('id'=>$id,'group_acb'=>$GroupACB,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'group_acp'=>$GroupACB)));
+        } 
+    }
+       
+    public function changeStatus($arrParam, $option = null){
+        
+        if($option['task'] == 'change-status'){
+            $status 	= $arrParam['statusChoose'];
+            if(!empty($arrParam['cid'])){
+                $i=0;
+                $ids = '';
+                if(!empty($arrParam['cid'])){
+                    foreach($arrParam['cid'] as $id) {
+                        $ids .= "'" . $id . "', ";
+                        $i++;
+                    }
+                    $ids     .= "'0'";
+                }
+                
+                $query		= "UPDATE `$this->table` SET `status` = $status WHERE `id` IN ($ids)";
+                $this->query($query);
+                
+                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $i . ' phần tử được thay đổi trạng thái!'));
+            }else{
+                Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muỗn thay đổi trạng thái!'));
+            }
+        }
+        
+        if($option['task'] == null){
+            
+            $Status = ($arrParam['status'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
+            $this->query($query);
+            
+            Session::set('message', array('class' => 'success', 'content' => 'Trạng thái Status được cập nhật'));
+            return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$Status)));
+        }
+        
+        if($option['task'] == 'change-ajax-status'){
+  
+            $Status = ($arrParam['status'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->_tableName` SET `status` = $Status WHERE `id` = '".$id."'";
+            $this->query($query);
+
+            return array('id'=>$id,'status'=>$Status,'url'=>URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$Status)));
+        }
+        
+    }
+    
     public function saveItem($arrParam, $option = null){
-               
+        
         $created_by  = $this->_userInfo['info']['id'];
         $modified_by = $this->_userInfo['info']['id'];
         
@@ -84,130 +137,36 @@ class UserModel extends Model
             $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['modified_by'] = $modified_by;
             
-            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
-            
+            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));     
             $this->update($data, array(array('id',$arrParam['form']['id'])));
             Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
             return $arrParam['form']['id'];
         }
-        
-        if($option['task'] == 'generatepass'){
-            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['modified_by'] = $modified_by;
-            
-            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
-            $this->update($data, array(array('id',$arrParam['form']['password'])));
-            Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
-            return $arrParam['form']['id'];
-        }
     }
     
-    public function createdAndModified($arrParam, $option = null){
+    public function pagination($totalItems,$totalItemsPerPage,$pageRange,$currentPage,$arrParam)
+    {   
+        unset($arrParam['module']);
+        unset($arrParam['controller']);
+        unset($arrParam['action']);
         
-        $queryContent   = [];
-        $queryContent[] = "SELECT `id`,`name`";
-        $queryContent[] = "FROM `".TBL_GROUP."`";
-        if($option != null){
-            $queryContent[] = "LIMIT 0,".$option."";
-        }    
-        $queryContent = implode(" ", $queryContent);
-        $result = $this->fetchAll($queryContent);
-        return $result;
-    }
-    
-    public function itemInSelectbox($arrParam,$numberGroup = null ,$option = null){
-        if($option == null){
-            $query       = [];
-            $query[]     = "SELECT `id`,`name`";
-            $query[]     = "FROM `".TBL_GROUP."`";
-            if(!empty($numberGroup)){
-                $query[] = "LIMIT 0,".$numberGroup."";
-            }  
-            $query       = implode(" ", $query);
-            $result      = $this->fetchPairs($query);
-            return $result;
-        }     
-    }
-    
-    public function changeGroupForUser($arrParam, $option = null){
-        if($option['task'] == 'change-ajax-group'){
-            $GroupForUser   = $arrParam['group_id'];
-            $id             = $arrParam['id'];
-            $query          = "UPDATE `$this->_tableName` SET `group_id` = $GroupForUser WHERE `id` = '".$id."'";
-            $this->query($query);
-            return array('message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
-        }
-    }
-    
-    public function changeStatus($arrParam, $option = null){
+        $resulfPagination = [];
         
-        $modified_by = $this->_userInfo['info']['id'];
-        $modified    = date('Y-m-d h:i:s',time());
+        $currentPage = (isset($_GET['page'])) ? $_GET['page'] : 1;
+        $this->_cunrrentPage = $currentPage; 
         
-        if($option['task'] == 'change-status'){
-            $status 	= $arrParam['statusChoose'];
-            if(!empty($arrParam['cid'])){
-                $i=0;
-                $ids = '';
-                if(!empty($arrParam['cid'])){
-                    foreach($arrParam['cid'] as $id) {
-                        $ids .= "'" . $id . "', ";
-                        $i++;
-                    }
-                    $ids     .= "'0'";
-                }
-                
-                $query		= "UPDATE `$this->table` SET `status` = $status,`modified_by` = $modified_by,`modified` = '$modified' WHERE `id` IN ($ids)";
-                $this->query($query);
-                
-                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $i . ' phần tử được thay đổi trạng thái!'));
-            }else{
-                Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muỗn thay đổi trạng thái!'));
-            }
-        }
+        $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
+        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'group', 'list',$arrParam));
+        $position = ($currentPage - 1) * $totalItemsPerPage;
         
-        if($option['task'] == null){
-            
-            $status = ($arrParam['status'] == 0) ? 1 : 0 ;
-            $id       = $arrParam['id'];
-            $query    = "UPDATE `$this->_tableName` SET `status` = $status WHERE `id` = '".$id."'";
-            $this->query($query);
-            
-            Session::set('message', array('class' => 'success', 'content' => 'Trạng thái Status được cập nhật'));
-            return array('id'=>$id,'status'=>$status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$status)));
-        }
-        
-        if($option['task'] == 'change-ajax-user-status'){    
-            $status = ($arrParam['status'] == 0) ? 1 : 0 ;
-            $id       = $arrParam['id'];
-            $query    = "UPDATE `$this->table` SET `status` = $status,`modified_by` = $modified_by,`modified` = '$modified' WHERE `id`= $id";
-            $this->query($query);
-
-            return array('id'=>$id,'status'=>$status,'url'=>URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$status)));
-        }
-    }
-    
-    
-    
-    public function pagination($totalItems,$totalItemsPerPage,$pageRange)
-    {
-        
-        $resulfPagination       = [];
-        $currentPage            = (isset($_GET['page'])) ? $_GET['page'] : 1;
-        $this->_cunrrentPage    = $currentPage;
-        
-        $paginator      = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
-        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'user', 'list'));
-        $position       = ($currentPage - 1) * $totalItemsPerPage;
-        
-        $resulfPagination['position']           = $position;
-        $resulfPagination['totalItemsPerPage']  = $totalItemsPerPage;
-        $resulfPagination['paginationHTML']     = $paginationHTML;
+        $resulfPagination['position'] = $position;
+        $resulfPagination['totalItemsPerPage'] = $totalItemsPerPage;
+        $resulfPagination['paginationHTML'] = $paginationHTML;
         
         return $resulfPagination;
     }
     
-    public function countFilterSearch(){
+    public function countFilterSearch($arrParam){
         
         $count          = array();
         $searchQuery    = '';
@@ -277,21 +236,21 @@ class UserModel extends Model
     
     public function countItem($arrParam,$option = null)
     {
-        $queryContent = [];
+        $queryContent   = [];
         $queryContent[] = "SELECT COUNT(`id`) AS total";
         $queryContent[] = "FROM `$this->_tableName`";
         
         $flagWhere      = false;
         
         if(!empty($_SESSION['search'])){
-            $queryContent[]     = "WHERE `username` LIKE '%".$_SESSION['search']."%'";
+            $queryContent[]     = "WHERE `name` LIKE '%".$_SESSION['search']."%'";
             $flagWhere          = true;
         }
         
         if(isset($_SESSION['filter'])){
             if($flagWhere == true){
-                if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
-                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
+                if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1'; 
+                if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0'; 
             }
             
             if($flagWhere == false){
@@ -299,11 +258,11 @@ class UserModel extends Model
                 if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'WHERE `status`= 0';
             }
         }
-        
+ 
         $queryContent = implode(" ", $queryContent);
-        
+             
         $result = $this->fetchRow($queryContent);
-        
+
         return $result['total'];
     }
     
@@ -311,10 +270,10 @@ class UserModel extends Model
         $idSelect = $id;
         
         $queryContent   = [];
-        $queryContent[] = "SELECT `id`,`username`,`link`,`image`,`status`,`ordering`";
+        $queryContent[] = "SELECT `id`,`name`,`link`,`image`,`status`,`ordering`";
         $queryContent[] = "FROM `$this->_tableName`";
-        $queryContent[] = "WHERE `id` = '" . $idSelect . "'";
-        $queryContent = implode(" ", $queryContent);
+        $queryContent[] = "WHERE `id` = '" . $idSelect . "'";    
+        $queryContent   = implode(" ", $queryContent);
         
         $result = $this->fetchRow($queryContent);
         return $result;
@@ -324,12 +283,11 @@ class UserModel extends Model
     public function infoItem($arrParam,$option = null){
         if($option == null){
             $queryContent   = [];
-            $queryContent[] = "SELECT `id`,`username`,`email`,`fullname`,`password`,`status`,`group_id`";
+            $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`";
             $queryContent[] = "FROM `$this->_tableName`";
             $queryContent[] = "WHERE `id` = '" . $arrParam['id'] . "'";
-            $queryContent = implode(" ", $queryContent);
-            
-            $result = $this->fetchRow($queryContent);
+            $queryContent   = implode(" ", $queryContent);
+            $result         = $this->fetchRow($queryContent);
             return $result;
         }
     }
@@ -342,7 +300,6 @@ class UserModel extends Model
     
     public function deleteMultItem($arrParam,$option = null)
     {
-
         if($option == null){
             if(!empty($arrParam['cid'])){
                 $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
@@ -353,20 +310,50 @@ class UserModel extends Model
                 Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muốn xóa!'));
             }
         }
-        
+
     }
     
     public function ordering($arrParam,$option = null)
     {
+
         if($option == null){
             if(!empty($arrParam['order'])){
                 foreach ($arrParam['order'] as $id=>$ordering){
-                    $query    = "UPDATE `$this->_tableName` SET `ordering` = $ordering WHERE `id` = '".$id."'";
-                    $this->query($query);
+                    if(!empty($ordering)){
+                        $query    = "UPDATE `$this->_tableName` SET `ordering` = $ordering WHERE `id` = '".$id."'";
+                        $this->query($query);
+                    }    
                 }
             }
         }
         
+    }
+    
+    public function listItemsFiter($option = null)
+    {
+
+        $queryContent[] = "SELECT `id`,`name`,`group_acp`,`status`,`ordering`,`created`,`created_by`,`modified`,`modified_by`";
+        $queryContent[] = "FROM `$this->_tableName`";
+        
+        $queryContent = implode(" ", $queryContent);
+        
+        $result = $this->fetchAll($queryContent);
+        return $result;
+    }
+    
+    
+    public function search($searchValue = null){
+        $query = "SELECT * FROM `$this->table` ";
+        if($searchValue != '') $query .= "WHERE `name` LIKE '%$searchValue%'";
+        $result = $this->fetchAll($query);
+        return $result;
+    }
+    
+    public function filter($filter = null){
+        $query = "SELECT * FROM `$this->table` ";
+        if($filter != '') $query .= "WHERE `status` = '$filter'";
+        $result = $this->fetchAll($query);
+        return $result;
     }
     
     public function listUserGroupACP($arrParam,$option = null)
@@ -376,16 +363,16 @@ class UserModel extends Model
         if($option == null){
             
             $queryContent[] = "SELECT `id`,`username` AS `name`";
-            $queryContent[] = "FROM `".$this->_tableName."`";
+            $queryContent[] = "FROM `". TBL_USER ."`";
             $queryContent   = implode(" ", $queryContent);
             $result         = $this->fetchPairs($queryContent);
             return $result;
         }
         
     }
-
+    
 }
-
+    
 
 
 

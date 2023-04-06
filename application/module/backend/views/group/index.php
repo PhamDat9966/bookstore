@@ -1,13 +1,8 @@
 <?php
+
 $listUserWithGroupACP = $this->listUserGroupACP;
 
-$this->searchValue = '';
-if(isset($this->arrParam['search'])){
-    $this->searchValue = $this->arrParam['search'];
-}    
-
-if(isset($this->arrParam['clear'])) $this->searchValue = NULL;
-
+if(isset($this->arrParam['clear'])) $this->arrParam['search'] = NULL;
 
 $arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
 
@@ -16,13 +11,21 @@ $buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn bt
 
 $listGroup = '';
 
+// Dùng cho trường hợp $this->Items = empty; vidu như ở page = 3. trong bản search tìm kiếm là f. Nếu số phần tử không đủ thống kê nó sẽ tự động trừ về 1 page
+if(empty($this->Items)){
+    //URL::redirectObFlush('backend', 'group', 'list');
+    URL::redirectObFlush('backend', 'group', 'list',array('pageDown'=>$this->arrParam['page'] - 1));
+    //URL::ob_start('backend', 'group', 'list',array('page'=>$this->arrParam['page'] - 1));
+}
+
+
 if (!empty($this->Items)) {
     $i = 0;
     foreach ($this->Items as $key => $value) {
 
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="' . $id . '">';
-        $name           = Helper::highLight(@$this->searchValue, $value['name']);
+        $name           = Helper::highLight(@$this->arrParam['search'], $value['name']);
 
         $row            = ($i % 2 == 0) ? 'odd' : 'even';
 
@@ -86,14 +89,14 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 ?>
 <div class="col-12">
     <?php
-    require_once 'messageBox/index.php';
+        require_once 'messageBox/index.php';
     ?>
     <?php
-    echo '<h3>' . __FILE__ . '</h3>';
+        echo '<h3>' . __FILE__ . '</h3>';
     ?>
     <!-- Search & Filter -->
     <?php
-    require_once 'search-filter/index.php';
+        require_once MODULE_PATH .'backend'. DS . 'views' . DS . 'search-filter' . DS .'index.php';
     ?>
     <!-- END Search & Filter  -->
 
