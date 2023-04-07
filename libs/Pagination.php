@@ -22,7 +22,7 @@ class Pagination
 	      
 	}
 
-	public function showPagination($link = '?module=backend&controller=group&action=list')
+	public function showPagination($link)
 	{
 		// Pagination
 		$paginationHTML = '';

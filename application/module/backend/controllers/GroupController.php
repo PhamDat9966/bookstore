@@ -12,6 +12,7 @@ class GroupController extends Controller
 
     public function listAction()
     {
+        
         ob_start();
         
         // Clear Search
@@ -90,7 +91,7 @@ class GroupController extends Controller
         $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
-
+        
         $totalItems                = $this->_arrParam['count']['allStatus'];
         if (isset($this->_arrParam['filter'])) {
             if ($this->_arrParam['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
@@ -102,20 +103,20 @@ class GroupController extends Controller
         $pageRange                 = 3;
         
         if (isset($this->_arrParam['page'])) {
-            $currentPage           = $this->_arrParam['page'];       
+            $currentPage           = $_GET['page'];       
         }
         
-        if(isset($this->_arrParam['pageDown'])) {
+//         if(isset($this->_arrParam['pageDown'])) {
 
-            $resultCount = $this->_model->countItems($this->_arrParam);
-            $totalItems = $resultCount[0]['count'];
+//             $resultCount = $this->_model->countItems($this->_arrParam);
+//             $totalItems = $resultCount[0]['count'];
             
-            /* Đây là số của page cần phải lùi lại khi search ở view với page ở đó làm $this->Items chở thành giá trị rỗng*/
-            $numberPage = ceil($totalItems/$totalItemsPerPage); 
-            $this->_arrParam['page'] = $numberPage;
+//             /* Đây là số của page cần phải lùi lại khi search ở view với page ở đó làm $this->Items chở thành giá trị rỗng*/
+//             $numberPage = ceil($totalItems/$totalItemsPerPage); 
+//             $this->_arrParam['page'] = $numberPage;
  
-            unset($this->_arrParam['pageDown']);
-        }
+//             unset($this->_arrParam['pageDown']);
+//         }
 
         $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage,$arrParam = $this->_arrParam);                     
         $this->_model->_arrParam['position']             = $this->_pagination['position'];

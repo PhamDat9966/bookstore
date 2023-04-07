@@ -111,7 +111,7 @@ class UserController extends Controller
         }
         
         $currentPage               = 1;
-        $totalItemsPerPage         = 5;
+        $totalItemsPerPage         = 3;
         $pageRange                 = 3;
         
         if (isset($_GET['page'])) {

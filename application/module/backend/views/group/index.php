@@ -1,5 +1,9 @@
 <?php
 
+// echo "<pre>View-Group";
+// print_r($this);
+// echo "</pre>";
+
 $listUserWithGroupACP = $this->listUserGroupACP;
 
 if(isset($this->arrParam['clear'])) $this->arrParam['search'] = NULL;
@@ -12,9 +16,9 @@ $buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn bt
 $listGroup = '';
 
 // Dùng cho trường hợp $this->Items = empty; vidu như ở page = 3. trong bản search tìm kiếm là f. Nếu số phần tử không đủ thống kê nó sẽ tự động trừ về 1 page
-if(empty($this->Items)){
-    URL::redirectObFlush('backend', 'group', 'list',array('pageDown'=>'pageDown','search'=>$this->arrParam['search']));
-}
+// if(empty($this->Items)){
+//     URL::redirectObFlush('backend', 'group', 'list',array('pageDown'=>'pageDown','search'=>$this->arrParam['search']));
+// }
 
 
 if (!empty($this->Items)) {

@@ -198,7 +198,8 @@ class GroupModel extends Model
         
         if(isset($arrParam['selectGroupACP'])){
             if($arrParam['selectGroupACP'] == 'groupACP'){
-                unset($arrParam['selectGroupACP']);
+                //unset($arrParam['selectGroupACP']);
+                $arrParam['selectGroupACP'] = '';
             }
         }
         
