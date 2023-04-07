@@ -13,9 +13,7 @@ $listGroup = '';
 
 // Dùng cho trường hợp $this->Items = empty; vidu như ở page = 3. trong bản search tìm kiếm là f. Nếu số phần tử không đủ thống kê nó sẽ tự động trừ về 1 page
 if(empty($this->Items)){
-    //URL::redirectObFlush('backend', 'group', 'list');
-    URL::redirectObFlush('backend', 'group', 'list',array('pageDown'=>$this->arrParam['page'] - 1));
-    //URL::ob_start('backend', 'group', 'list',array('page'=>$this->arrParam['page'] - 1));
+    URL::redirectObFlush('backend', 'group', 'list',array('pageDown'=>'pageDown','search'=>$this->arrParam['search']));
 }
 
 

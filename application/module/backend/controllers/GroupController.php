@@ -12,13 +12,7 @@ class GroupController extends Controller
 
     public function listAction()
     {
-        echo "<pre>";
-        print_r($this->_arrParam);
-        echo "</pre>";
         ob_start();
-//         if(isset($this->_arrParam['pageDown'])){
-//             ob_start();
-//         }
         
         // Clear Search
         if(isset($this->_arrParam['clear'])) {
@@ -63,6 +57,12 @@ class GroupController extends Controller
 //         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroupACP'])) {
 //             $this->filterAndSearchAction();
 //         }        
+
+        if(isset($this->_arrParam['selectGroupACP'])){
+            if($this->_arrParam['selectGroupACP'] == 'groupACP'){
+                unset($this->_arrParam['selectGroupACP']);
+            }
+        }
         
         // charge active, inactive groupACB and status
         if (isset($_GET['id'])) {
@@ -106,12 +106,13 @@ class GroupController extends Controller
         }
         
         if(isset($this->_arrParam['pageDown'])) {
-            //die();
-//             $this->_arrParam['page'] = 1;
-//             $currentPage             = 1;
+
+            $resultCount = $this->_model->countItems($this->_arrParam);
+            $totalItems = $resultCount[0]['count'];
             
-             $currentPage = $this->_arrParam['pageDown'];
-             $this->_arrParam['page'] = $this->_arrParam['pageDown'];
+            /* Đây là số của page cần phải lùi lại khi search ở view với page ở đó làm $this->Items chở thành giá trị rỗng*/
+            $numberPage = ceil($totalItems/$totalItemsPerPage); 
+            $this->_arrParam['page'] = $numberPage;
  
             unset($this->_arrParam['pageDown']);
         }

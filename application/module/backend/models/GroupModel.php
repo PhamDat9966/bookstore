@@ -49,6 +49,34 @@ class GroupModel extends Model
         return $result;
     }
     
+    public function countItems($arrParam,$option = null)
+    {
+        //$totalItemsCount = $arrParam['count']['allStatus'];
+        
+        $queryContent   = [];
+        $queryContent[] = "SELECT `id`,COUNT(`id`) AS `count`";
+        $queryContent[] = "FROM `$this->_tableName`";
+        $queryContent[] = "WHERE `id` > 0";
+        
+        if(!empty($arrParam['search'])){
+            $queryContent[]     = "AND `name` LIKE '%". $arrParam['search']."%'";
+        }
+        
+        if(isset($arrParam['filter'])){
+            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
+            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
+        }
+        
+        if(isset($arrParam['selectGroupACP'])){
+            if($arrParam['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
+            if($arrParam['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
+        }
+        $queryContent = implode(" ", $queryContent);
+        
+        $result = $this->fetchAll($queryContent);
+        return $result;
+    }
+    
     public function changeGroupACB($arrParam, $option = null){
         
         if($option['task'] == 'change-ajax-groupACP'){
@@ -145,12 +173,7 @@ class GroupModel extends Model
     }
     
     public function pagination($totalItems,$totalItemsPerPage,$pageRange,$currentPage,$arrParam)
-    {   
-        
-        echo "<pre>pagimod";
-        print_r($arrParam);
-        echo "</pre>";
-        
+    {           
         unset($arrParam['module']);
         unset($arrParam['controller']);
         unset($arrParam['action']);
@@ -173,11 +196,17 @@ class GroupModel extends Model
     
     public function countFilterSearch($arrParam){
         
+        if(isset($arrParam['selectGroupACP'])){
+            if($arrParam['selectGroupACP'] == 'groupACP'){
+                unset($arrParam['selectGroupACP']);
+            }
+        }
+        
         $count          = array();
         $searchQuery    = '';
         
-        if((!empty($arrParam['search'])) && (!empty(is_numeric($arrParam['selectGroupACP'])))){
-            $varGroupACP = $arrParam['selectGroupACP'];
+        if((isset($arrParam['search'])) && (isset($arrParam['selectGroupACP']))){
+            $varGroupACP = is_numeric($arrParam['selectGroupACP']);
             
             $searchQuery = "`name` LIKE '%".$arrParam['search']."%'";
             
