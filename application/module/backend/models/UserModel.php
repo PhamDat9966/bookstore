@@ -65,6 +65,36 @@ class UserModel extends Model
         return $result;
     }
     
+    public function countItemsPaginator($arrParam,$option = null)
+    {
+        //$totalItemsCount = $arrParam['count']['allStatus'];
+        
+        $queryContent   = [];
+        $queryContent[] = "SELECT `id`,COUNT(`id`) AS `count`";
+        $queryContent[] = "FROM `$this->_tableName`";
+        $queryContent[] = "WHERE `id` > 0";
+        
+        if(!empty($arrParam['search'])){
+            $queryContent[]     = "AND `username` LIKE '%". $arrParam['search']."%'";
+        }
+        
+        if(isset($arrParam['filter'])){
+            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
+            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
+        }
+        
+        if(isset($arrParam['selectGroup'])){
+            if($arrParam['selectGroup'] != '0'){
+                $queryContent[]    = "AND `group_id`= '".$arrParam['selectGroup']."'";
+            }
+        }
+        
+        echo $queryContent = implode(" ", $queryContent);
+        
+        $result = $this->fetchAll($queryContent);
+        return $result;
+    }
+    
     public function saveItem($arrParam, $option = null){
                
         $created_by  = $this->_userInfo['info']['id'];

@@ -1,4 +1,9 @@
 <?php 
+
+echo "<pre>";
+print_r($this->arrParam);
+echo "</pre>";
+
 $listUser = '';
 
 //Created selectgroup Array
@@ -10,6 +15,16 @@ $listUserWithGroupACP = $this->listUserGroupACP;
 $arrSelectBox       = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
 $selection          = Helper::cmsSelectbox('selectBoxUser', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBoxUser');
 $buttonSelection    = Helper::cmsButtonSubmit($type ="submit", $class = 'btn btn-info' ,$textOutfit = "Apply", $name = "bulk" , $value = "bulk" , $id = 'bulkApplyUser');
+
+if(empty($this->Items)){
+    if(!isset($this->arrParam['pageDown'])){
+        URL::redirect('backend', 'user', 'list',
+                        array('pageDown'=>'pageDown',
+                              'search'=>$this->arrParam['search'],
+                              'selectGroup'=>$this->arrParam['selectGroup'])
+                     );
+    }    
+}
 
 if(!empty($this->Items)){
     $i=0;

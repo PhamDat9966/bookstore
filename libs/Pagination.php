@@ -8,17 +8,17 @@ class Pagination
 	private $totalPage;						// Tổng số trang
 	public  $currentPage			= 1;	// Trang hiện tại
 
-	public function __construct($totalItems, $totalItemsPerPage, $pageRange, $currentPage)
+	public function __construct($totalItems, $pagination)
 	{
 	    
 		$this->totalItems			= $totalItems;
-		$this->totalItemsPerPage	= $totalItemsPerPage;
+		$this->totalItemsPerPage	= $pagination['totalItemsPerPage'];
 
-		if ($pageRange % 2 == 0) $pageRange = $pageRange + 1;
-
-		$this->pageRange			= $pageRange;
-		$this->currentPage			= $currentPage;
-		$this->totalPage			= ceil($totalItems / $totalItemsPerPage);
+		if ($pagination['pageRange'] % 2 == 0) $pagination['pageRange'] = $pagination['pageRange'] + 1;
+		
+		$this->pageRange			= $pagination['pageRange'];
+		$this->currentPage			= $pagination['currentPage'];
+		$this->totalPage			= ceil($totalItems / $this->totalItemsPerPage);
 	      
 	}
 

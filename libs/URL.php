@@ -1,7 +1,11 @@
 <?php
 class URL{
 	
-    public static function createLink($module, $controller, $action, $params = NULL, $strRequest = NULL){
+    public static function createLink($module, $controller, $action, $params = NULL, $strRequest = NULL,$option = NULL){
+        if($option == 'pagination'){
+            unset($params['page']);
+        }
+        
 	    $linkParams = '';
 	    
 	    if(!empty($params)){
@@ -17,21 +21,12 @@ class URL{
 	    
 		$url = 'index.php?module='.$module.'&controller='.$controller.'&action='.$action . $linkParams . $linkRequest ;
 		return $url;
-	} 
+	}
 	
 	public static function redirect($module, $controller, $action,$params = NULL,$strRequest = NULL){
 	    $link  =   self::createLink($module, $controller, $action,$params,$strRequest);
 		header('location: ' . $link);
 		exit();
-	}
-	
-	public static function redirectObFlush($module, $controller, $action,$params = NULL,$strRequest = NULL){
-// 	    flush(); // Flush the buffer
-// 	    ob_flush();
-	    $link  =   self::createLink($module, $controller, $action,$params,$strRequest);
-	    header('location: ' . $link);
-	    ob_end_flush();
-	    exit();
 	}
 	
 	public static function checkRefreshPage($value, $module, $controller, $action, $params = null){

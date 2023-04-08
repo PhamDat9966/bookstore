@@ -11,8 +11,7 @@ class GroupController extends Controller
     }
 
     public function listAction()
-    {
-        
+    {        
         ob_start();
         
         // Clear Search
@@ -55,8 +54,8 @@ class GroupController extends Controller
         }
 
         // filter and search
-//         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroupACP'])) {
-//             $this->filterAndSearchAction();
+//         if (isset($this->_arrParam['filter']) || isset($this->_arrParam['search']) || isset($this->_arrParam['clear']) || isset($this->_arrParam['selectGroupACP'])) {
+//             //$this->filterAndSearchAction();  
 //         }        
 
         if(isset($this->_arrParam['selectGroupACP'])){
@@ -91,38 +90,37 @@ class GroupController extends Controller
         $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
-        
+
         $totalItems                = $this->_arrParam['count']['allStatus'];
         if (isset($this->_arrParam['filter'])) {
             if ($this->_arrParam['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
             if ($this->_arrParam['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
         }
-
-        $currentPage               = 1;
-        $totalItemsPerPage         = 5;
-        $pageRange                 = 3;
         
+        // CURRENT PAGE
         if (isset($this->_arrParam['page'])) {
-            $currentPage           = $_GET['page'];       
+            $this->_pagination['currentPage']           = $this->_arrParam['page'];       
         }
         
 //         if(isset($this->_arrParam['pageDown'])) {
 
-//             $resultCount = $this->_model->countItems($this->_arrParam);
+//             $resultCount = $this->_model->countItemsPaginator($this->_arrParam);
 //             $totalItems = $resultCount[0]['count'];
+            
+//             //echo "<h3>".$totalItems."</h3>";
             
 //             /* Đây là số của page cần phải lùi lại khi search ở view với page ở đó làm $this->Items chở thành giá trị rỗng*/
 //             $numberPage = ceil($totalItems/$totalItemsPerPage); 
 //             $this->_arrParam['page'] = $numberPage;
  
-//             unset($this->_arrParam['pageDown']);
+//             //unset($this->_arrParam['pageDown']);
 //         }
+        
+        $this->_paginationResult                         = $this->_model->pagination($totalItems, $this->_pagination ,$arrParam = $this->_arrParam);                     
+        $this->_model->_arrParam['position']             = $this->_paginationResult['position'];
+        $this->_model->_arrParam['totalItemsPerPage']    = $this->_paginationResult['totalItemsPerPage'];
 
-        $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage,$arrParam = $this->_arrParam);                     
-        $this->_model->_arrParam['position']             = $this->_pagination['position'];
-        $this->_model->_arrParam['totalItemsPerPage']    = $this->_pagination['totalItemsPerPage'];
-
-        $this->_view->Pagination    = $this->_pagination;
+        $this->_view->Pagination    = $this->_paginationResult;
 
         //end Load
         $this->_view->_title        = 'User Groups: List Item';
@@ -289,5 +287,15 @@ class GroupController extends Controller
         $this->redirec('backend', 'group', 'list');
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
         
+    }
+    
+    public function errorAction(){
+        
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
+        $this->_templateObj->setFileTemplate('group-list.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('group/error', true);
     }
 }

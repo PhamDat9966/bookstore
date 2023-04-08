@@ -14,6 +14,7 @@ class UserController extends Controller
 
     public function listAction()
     {   
+        ob_start();
         echo "<pre>";
         print_r($this->_arrParam);
         echo "</pre>";
@@ -27,7 +28,7 @@ class UserController extends Controller
             URL::redirect('backend', 'user', 'list', $params = $this->_arrParam);
         }
         
-        $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
+        $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 4);
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
         
         //Bulk Action
@@ -58,9 +59,9 @@ class UserController extends Controller
         }
 
         // filter and search
-        if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])) {
-            $this->filterAndSearchAction();
-        }
+//         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])) {
+//             $this->filterAndSearchAction();
+//         }
 
         // charge active, inactive userACB and status
         if (isset($_GET['id'])) {
@@ -114,8 +115,20 @@ class UserController extends Controller
         $totalItemsPerPage         = 3;
         $pageRange                 = 3;
         
-        if (isset($_GET['page'])) {
-            $currentPage           = $_GET['page'];
+        if (isset($this->_arrParam['page'])) {
+            $currentPage           = $this->_arrParam['page'];
+        }
+        
+        if(isset($this->_arrParam['pageDown'])) {
+            
+            $resultCount = $this->_model->countItemsPaginator($this->_arrParam);
+            $totalItems = $resultCount[0]['count'];
+            
+            /* Đây là số của page cần phải lùi lại khi search ở view với page ở đó làm $this->Items chở thành giá trị rỗng*/
+            $numberPage = ceil($totalItems/$totalItemsPerPage);
+            $this->_arrParam['page'] = $numberPage;
+            
+            unset($this->_arrParam['pageDown']);
         }
         
         $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage,$arrParam = $this->_arrParam);
@@ -136,6 +149,7 @@ class UserController extends Controller
         $this->_templateObj->load();
 
         $this->_view->render('user/index', true);
+        ob_end_flush();
     }
 
     public function statusAction()

@@ -38,6 +38,8 @@ class GroupModel extends Model
             if($arrParam['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
         } 
         
+        $queryContent[]     = 'ORDER BY `ordering` ASC';
+        
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
         
@@ -49,7 +51,7 @@ class GroupModel extends Model
         return $result;
     }
     
-    public function countItems($arrParam,$option = null)
+    public function countItemsPaginator($arrParam,$option = null)
     {
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
@@ -172,7 +174,7 @@ class GroupModel extends Model
         }
     }
     
-    public function pagination($totalItems,$totalItemsPerPage,$pageRange,$currentPage,$arrParam)
+    public function pagination($totalItems, $pagination, $arrParam)
     {           
         unset($arrParam['module']);
         unset($arrParam['controller']);
@@ -183,12 +185,12 @@ class GroupModel extends Model
         $currentPage = (isset($arrParam['page'])) ? $arrParam['page'] : 1;
         $this->_cunrrentPage = $currentPage; 
         
-        $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
-        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'group', 'list',$arrParam));
-        $position = ($currentPage - 1) * $totalItemsPerPage;
+        $paginator = new Pagination($totalItems, $pagination);
+        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'group', 'list', $arrParam));
         
+        $position = ($currentPage - 1) * $pagination['totalItemsPerPage'];
         $resulfPagination['position'] = $position;
-        $resulfPagination['totalItemsPerPage'] = $totalItemsPerPage;
+        $resulfPagination['totalItemsPerPage'] = $pagination['totalItemsPerPage'];
         $resulfPagination['paginationHTML'] = $paginationHTML;
         
         return $resulfPagination;
@@ -198,15 +200,14 @@ class GroupModel extends Model
         
         if(isset($arrParam['selectGroupACP'])){
             if($arrParam['selectGroupACP'] == 'groupACP'){
-                //unset($arrParam['selectGroupACP']);
-                $arrParam['selectGroupACP'] = '';
+                unset($arrParam['selectGroupACP']);
             }
         }
         
         $count          = array();
         $searchQuery    = '';
         
-        if((isset($arrParam['search'])) && (isset($arrParam['selectGroupACP']))){
+        if(!empty($arrParam['search']) && (isset($arrParam['selectGroupACP']))){
             $varGroupACP = is_numeric($arrParam['selectGroupACP']);
             
             $searchQuery = "`name` LIKE '%".$arrParam['search']."%'";

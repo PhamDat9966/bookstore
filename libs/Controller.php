@@ -4,15 +4,25 @@ class Controller{
     public $_view;
     protected $_model;
     protected $_templateObj;
+    
+    // GET - POST
     protected $_arrParam;
-    protected $_pagination;
-	protected $_arrParamOld;
+    
+    // Pagination
+    protected $_pagination = array(
+                                    'totalItemsPerPage' => 5,
+                                    'pageRange'         => 3,
+                                   );
     
 	public function __construct($arrParams){
 	    
 	    $this->setModel($arrParams['module'], $arrParams['controller']);
 	    $this->setTemplate($this);
 	    $this->setView($arrParams['module']);
+	    
+	    // Pagination
+	    $this->_pagination['currentPage']      = (isset($this->_arrParam['page'])) ? $this->_arrParam['page'] : 1;
+	    $arrParams['pagination']               = $this->_pagination;
 	    
 	    $this->setParams($arrParams);
 	    $this->_view->arrParam = $arrParams;

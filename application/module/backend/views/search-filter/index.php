@@ -1,5 +1,4 @@
 <?php
-
 // THIS IS FILTER AND SEARCH FOR ALL CONTROLLER
 
 //Filter
@@ -56,8 +55,26 @@ $buttonInactive        = Helper::cmsButtonSubmit($type='submit',$clas = $inactiv
 
 $buttonClear           = Helper::cmsButtonSubmit($type='submit',$class='btn btn-danger', $textOufit = 'Clear',$name='clear',$value='clear'); 
 
-if($activeItem    == 0 ) $buttonActive = '';
-if($inactiveItem  == 0)  $buttonInactive = '';
+if($activeItem    == 0 ) {
+    $buttonActive = '';
+    if($this->arrParam['filter'] == 'active'){
+        unset($this->arrParam['module']);
+        unset($this->arrParam['controller']);
+        unset($this->arrParam['action']);
+        $this->arrParam['filter'] = 'all';
+        URL::redirect($this->arrParam['module'], $this->arrParam['controller'], $this->arrParam['action'],$params = $this->arrParam);
+    }
+}
+if($inactiveItem  == 0)  {
+    $buttonInactive = '';
+    if($this->arrParam['filter'] == 'inactive'){
+        unset($this->arrParam['module']);
+        unset($this->arrParam['controller']);
+        unset($this->arrParam['action']);
+        $this->arrParam['filter'] = 'all';
+        URL::redirect($this->arrParam['module'], $this->arrParam['controller'], $this->arrParam['action'],$params = $this->arrParam);
+    }
+}
 
 //FILTER
 $filterButton          = $hiddenFilter.' '. $buttonAll.' '.$buttonActive.' '.$buttonInactive;
@@ -100,6 +117,10 @@ if($this->_tag == 'user'){
     $selectBoxFilterSearch      = Helper::cmsSelectbox('selectGroup', 'form-control custom-select',$arrValue = $arrGroup , $keySelect = $selectGroupFirst, null,$id = 'selectGroup');
 }
 
+// Để tránh các lỗi phát sinh do quá trình lọc không ra giá trị rỗng, Mỗi lần lọc với các tác vụ bất kỳ
+// $refresh sẽ tự đưa về page = 1
+//$refreshPage = Helper::cmsInput($type = "hidden", $name="page", $value="1");
+$refreshPage = '<input type="hidden" name="page" value="1">';
 ?>
 
 <div class="card card-outline card-info">
@@ -115,9 +136,9 @@ if($this->_tag == 'user'){
     <div class="card-body">
         <div class="container-fluid">
         
-        <form action="#" method="POST" name="formFilterAndSearch" id="formFilterAndSearch">
-                 
+        <form action="#" method="POST" name="formFilterAndSearch" id="formFilterAndSearch">     
             <div class="row justify-content-between align-items-center">
+            	<?php echo $refreshPage;?>
                 <div class="area-filter-status mb-2">
 					<?php 
 					   echo $filterButton; 
