@@ -10,15 +10,6 @@ $buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn bt
 
 $listGroup = '';
 
-// Dùng cho trường hợp $this->Items = empty; vidu như ở page = 3. trong bản search tìm kiếm là f. Nếu số phần tử không đủ thống kê nó sẽ tự động trừ về 1 page
-// if(empty($this->Items)){
-//     URL::redirect('backend', 'group', 'list',
-//         array('pageDown'=>'pageDown',
-//                 'filter'=>$this->arrParam['filter'],
-//                 'search'=>$this->arrParam['search'],
-//                 'selectGroupACP'=>$this->arrParam['selectGroupACP']));
-// }
-
 if(empty($this->Items)){
     URL::redirect('backend', 'group', 'error');
 }

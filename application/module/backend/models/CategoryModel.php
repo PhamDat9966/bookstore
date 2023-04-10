@@ -27,19 +27,21 @@ class CategoryModel extends Model
         $queryContent[] = "FROM `$this->_tableName`";
         $queryContent[] = "WHERE `id` > 0";
         
-        if(!empty($_SESSION['search'])){
-            $queryContent[]     = "AND `name` LIKE '%".$_SESSION['search']."%'";
+        if(!empty($arrParam['search'])){
+            $queryContent[]     = "AND `name` LIKE '%".$arrParam['search']."%'";
         }
         
-        if(isset($_SESSION['filter'])){
-            if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
-            if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
+        if(isset($arrParam['filter'])){
+            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
+            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
         }
         
-        if(isset($_SESSION['selectGroupACP'])){
-            if($_SESSION['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
-            if($_SESSION['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
+        if(isset($arrParam['selectGroupACP'])){
+            if($arrParam['selectGroupACP'] == '1') $queryContent[]    = 'AND `group_acp`= 1';
+            if($arrParam['selectGroupACP'] == '0') $queryContent[]    = 'AND `group_acp`= 0';
         } 
+        
+        $queryContent[]     = 'ORDER BY `ordering` ASC';
         
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
@@ -181,34 +183,40 @@ class CategoryModel extends Model
         }
     }
     
-    public function pagination($totalItems,$totalItemsPerPage,$pageRange)
-    {   
-
+    public function pagination($totalItems, $pagination, $arrParam)
+    {
+        unset($arrParam['module']);
+        unset($arrParam['controller']);
+        unset($arrParam['action']);
+        
         $resulfPagination = [];
+        $currentPage = (isset($arrParam['page'])) ? $arrParam['page'] : 1;
+        $this->_cunrrentPage = $currentPage;
         
-        $currentPage = (isset($_GET['page'])) ? $_GET['page'] : 1;
-        $this->_cunrrentPage = $currentPage; 
+        $paginator = new Pagination($totalItems, $pagination);
+        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'category', 'list', $arrParam));
         
-        $paginator = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
-        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'category', 'list'));
-        $position = ($currentPage - 1) * $totalItemsPerPage;
-        
+        $position = ($currentPage - 1) * $pagination['totalItemsPerPage'];
         $resulfPagination['position'] = $position;
-        $resulfPagination['totalItemsPerPage'] = $totalItemsPerPage;
+        $resulfPagination['totalItemsPerPage'] = $pagination['totalItemsPerPage'];
         $resulfPagination['paginationHTML'] = $paginationHTML;
+        
+        // Send for 'public function listItems'
+        $this->_arrParam['position']             = $resulfPagination['position'];
+        $this->_arrParam['totalItemsPerPage']    = $resulfPagination['totalItemsPerPage'];
         
         return $resulfPagination;
     }
     
-    public function countFilterSearch(){
+    public function countFilterSearch($arrParam){
         
         $count          = array();
         $searchQuery    = '';
         
-        if((!empty($_SESSION['search'])) && (!empty(is_numeric(@$_SESSION['selectGroupACP'])))){
-            $varGroupACP = @$_SESSION['selectGroupACP'];
+        if((!empty($arrParam['search'])) && (isset($arrParam['selectGroupACP']))){
+            $varGroupACP = @$arrParam['selectGroupACP'];
             
-            $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+            $searchQuery = "`name` LIKE '%".$arrParam['search']."%'";
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_acp` = $varGroupACP");
             $count['allStatus'] = $this->totalItem();
@@ -222,8 +230,8 @@ class CategoryModel extends Model
             return $count;
         }
         
-        if(!empty(is_numeric(@$_SESSION['selectGroupACP']))){
-            $varGroupACP = @$_SESSION['selectGroupACP'];
+        if(!empty(is_numeric(@$arrParam['selectGroupACP']))){
+            $varGroupACP = @$arrParam['selectGroupACP'];
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = ".$varGroupACP."");
             $count['allStatus'] = $this->totalItem();
@@ -238,8 +246,8 @@ class CategoryModel extends Model
             
         }
         
-        if(!empty($_SESSION['search'])){
-            $searchQuery = "`name` LIKE '%".$_SESSION['search']."%'";
+        if(!empty($arrParam['search'])){
+            $searchQuery = "`name` LIKE '%".$arrParam['search']."%'";
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
             $count['allStatus'] = $this->totalItem();
@@ -382,6 +390,21 @@ class CategoryModel extends Model
             $queryContent   = implode(" ", $queryContent);
             $result         = $this->fetchPairs($queryContent);
             return $result;
+        }
+        
+    }
+    
+    public function changeOrdering($arrParam, $option = null){
+        
+        if($option['task'] == 'change-ajax-ordering'){
+            $ojectOrdering = json_decode($arrParam['paramOrdering']);
+            
+            $id             = $ojectOrdering->id;
+            $valueOrdering  = $ojectOrdering->value;
+            $query    = "UPDATE `$this->_tableName` SET `ordering` = $valueOrdering WHERE `id` = '".$id."'";
+            $this->query($query);
+            
+            return array('id'=>$id,'ordering'=>$valueOrdering,'url'=>URL::createLink('backend','category','ajaxOrdering',array('id'=>$id,'ordering'=>$valueOrdering)));
         }
         
     }

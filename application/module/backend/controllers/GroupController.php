@@ -102,23 +102,7 @@ class GroupController extends Controller
             $this->_pagination['currentPage']           = $this->_arrParam['page'];       
         }
         
-//         if(isset($this->_arrParam['pageDown'])) {
-
-//             $resultCount = $this->_model->countItemsPaginator($this->_arrParam);
-//             $totalItems = $resultCount[0]['count'];
-            
-//             //echo "<h3>".$totalItems."</h3>";
-            
-//             /* Đây là số của page cần phải lùi lại khi search ở view với page ở đó làm $this->Items chở thành giá trị rỗng*/
-//             $numberPage = ceil($totalItems/$totalItemsPerPage); 
-//             $this->_arrParam['page'] = $numberPage;
- 
-//             //unset($this->_arrParam['pageDown']);
-//         }
-        
         $this->_paginationResult                         = $this->_model->pagination($totalItems, $this->_pagination ,$arrParam = $this->_arrParam);                     
-        $this->_model->_arrParam['position']             = $this->_paginationResult['position'];
-        $this->_model->_arrParam['totalItemsPerPage']    = $this->_paginationResult['totalItemsPerPage'];
 
         $this->_view->Pagination    = $this->_paginationResult;
 
@@ -292,10 +276,10 @@ class GroupController extends Controller
     public function errorAction(){
         
         $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('group-list.php');
+        $this->_templateObj->setFileTemplate('error.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
         
-        $this->_view->render('group/error', true);
+        $this->_view->render('error/error', true);
     }
 }

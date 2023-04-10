@@ -190,7 +190,6 @@ class Helper{
         $strClass   = ($class == null) ? '' : "class = '$class'";
         
         $xhtml = "<input type='$type' name='$name' id='$id' value='$value' $strClass $strSize $option>";
-        
         return $xhtml;
     }
     

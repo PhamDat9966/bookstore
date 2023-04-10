@@ -172,23 +172,43 @@ function changeGroupUser(jsonParam){
 		type	: 'GET',
 		data	: {selectGroup:jsonParam},
 		success	: function(data){
-				/*
-				 * <div id="alert" class="alert alert-success alert-dismissible">
-	                    Trạng thái Group của User đã được cập nhật<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color:#FFFFFF;opacity: 1;">×</button>
-	                </div>
-				 */
-				console.log(data);
+
 				var jsonOject 	= $.parseJSON(data);
 				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>"+jsonOject[1].content+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
 				if($("#inAlert").length > 0){
 					$("#inAlert").remove();
 				}
 				$("#alert").prepend(element);
-					
-				console.log(jsonOject);
-				console.log(jsonOject[1].content);
 			}
 	})
 	
 }
 
+
+//AJAX CATEGORY ORDERING
+$(document).ready(function () {
+    $("#category-list-form").find("input,textarea,select").on('input', function () {
+        const ordering		= {};
+        ordering.id    = this.name;
+        ordering.value = this.value;
+        
+        orderingJSON   =  JSON.stringify(ordering);
+        $.ajax({
+    		url		: 'index.php?module=backend&controller=category&action=ajaxOrdering',
+    		type	: 'GET',
+    	    data:{paramOrdering:orderingJSON},
+    		success	: function(data){
+    				var jsonOject 	= JSON.parse(data);
+    			
+    				var element = '#category-list-form #category-ordering-' + jsonOject.id;	
+    				
+    				$(element).attr('value',jsonOject.ordering);
+    				
+    				$(element).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
+    				console.log(element);
+    			
+    			}
+    	})
+        
+    });
+});

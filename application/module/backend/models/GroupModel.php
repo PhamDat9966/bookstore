@@ -2,11 +2,11 @@
 
 class GroupModel extends Model
 {
-    public $_arrParam;
-    public $_saveParam = [];
-    protected $_tableName = TBL_GROUP;
-    public    $_cunrrentPage      = 1;       
-    private $_columns = array('id','name','group_acp','created','created_by','modified','modified_by','status','ordering');
+    public      $_arrParam;
+    public      $_saveParam = [];
+    protected   $_tableName = TBL_GROUP;
+    public      $_cunrrentPage      = 1;       
+    private     $_columns = array('id','name','group_acp','created','created_by','modified','modified_by','status','ordering');
     
     public function __construct()
     {
@@ -40,6 +40,7 @@ class GroupModel extends Model
         
         $queryContent[]     = 'ORDER BY `ordering` ASC';
         
+        /* received from 'public function Pagination()' */ 
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
         
@@ -181,7 +182,6 @@ class GroupModel extends Model
         unset($arrParam['action']);
         
         $resulfPagination = [];
-        
         $currentPage = (isset($arrParam['page'])) ? $arrParam['page'] : 1;
         $this->_cunrrentPage = $currentPage; 
         
@@ -192,6 +192,10 @@ class GroupModel extends Model
         $resulfPagination['position'] = $position;
         $resulfPagination['totalItemsPerPage'] = $pagination['totalItemsPerPage'];
         $resulfPagination['paginationHTML'] = $paginationHTML;
+        
+        // Send for 'public function listItems'
+        $this->_arrParam['position']             = $resulfPagination['position'];
+        $this->_arrParam['totalItemsPerPage']    = $resulfPagination['totalItemsPerPage'];
         
         return $resulfPagination;
     }

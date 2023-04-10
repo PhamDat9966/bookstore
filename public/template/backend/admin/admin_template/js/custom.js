@@ -426,7 +426,8 @@ $(document).ready(function(){
 	     	}
 	    }
     	    
-	})		
+	})
+	
 })
 
 // Review Picture with jquery
@@ -437,4 +438,7 @@ function previewPicture(){
 //function previewPicture() {
 //	imageShow.src=URL.createObjectURL(event.target.files[0]);
 //}
+
+
+
 

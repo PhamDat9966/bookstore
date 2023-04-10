@@ -219,20 +219,27 @@ class UserModel extends Model
     
     
     
-    public function pagination($totalItems,$totalItemsPerPage,$pageRange)
+    public function pagination($totalItems, $pagination,$arrParam)
     {
+        unset($arrParam['module']);
+        unset($arrParam['controller']);
+        unset($arrParam['action']);
         
-        $resulfPagination       = [];
-        $currentPage            = (isset($_GET['page'])) ? $_GET['page'] : 1;
-        $this->_cunrrentPage    = $currentPage;
+        $resulfPagination = [];
+        $currentPage = (isset($arrParam['page'])) ? $arrParam['page'] : 1;
+        $this->_cunrrentPage = $currentPage;
         
-        $paginator      = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
-        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'user', 'list'));
-        $position       = ($currentPage - 1) * $totalItemsPerPage;
+        $paginator = new Pagination($totalItems, $pagination);
+        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'user', 'list', $arrParam));
         
-        $resulfPagination['position']           = $position;
-        $resulfPagination['totalItemsPerPage']  = $totalItemsPerPage;
-        $resulfPagination['paginationHTML']     = $paginationHTML;
+        $position = ($currentPage - 1) * $pagination['totalItemsPerPage'];
+        $resulfPagination['position'] = $position;
+        $resulfPagination['totalItemsPerPage'] = $pagination['totalItemsPerPage'];
+        $resulfPagination['paginationHTML'] = $paginationHTML;
+        
+        // Send for 'public function listItems'
+        $this->_arrParam['position']             = $resulfPagination['position'];
+        $this->_arrParam['totalItemsPerPage']    = $resulfPagination['totalItemsPerPage'];
         
         return $resulfPagination;
     }

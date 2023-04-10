@@ -1,9 +1,5 @@
 <?php 
 
-echo "<pre>";
-print_r($this->arrParam);
-echo "</pre>";
-
 $listUser = '';
 
 //Created selectgroup Array
@@ -17,13 +13,7 @@ $selection          = Helper::cmsSelectbox('selectBoxUser', 'form-control custom
 $buttonSelection    = Helper::cmsButtonSubmit($type ="submit", $class = 'btn btn-info' ,$textOutfit = "Apply", $name = "bulk" , $value = "bulk" , $id = 'bulkApplyUser');
 
 if(empty($this->Items)){
-    if(!isset($this->arrParam['pageDown'])){
-        URL::redirect('backend', 'user', 'list',
-                        array('pageDown'=>'pageDown',
-                              'search'=>$this->arrParam['search'],
-                              'selectGroup'=>$this->arrParam['selectGroup'])
-                     );
-    }    
+    URL::redirect('backend', 'user', 'error');
 }
 
 if(!empty($this->Items)){
@@ -157,9 +147,6 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 		<div class="row">
 			<div class="col-12">
 				<!-- Search & Filter -->
-				<?php 
-                    //require_once 'search-filter/index.php';
-                ?>
                 <?php
                     require_once MODULE_PATH .'backend'. DS . 'views' . DS . 'search-filter' . DS .'index.php';
                 ?>

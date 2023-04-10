@@ -15,9 +15,6 @@ class UserController extends Controller
     public function listAction()
     {   
         ob_start();
-        echo "<pre>";
-        print_r($this->_arrParam);
-        echo "</pre>";
 
         // Clear Search
         if(isset($this->_arrParam['clear'])) {
@@ -76,31 +73,6 @@ class UserController extends Controller
             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
         }
 
-        //Paginator
-//         $this->_arrParam['count']  = $this->_model->countFilterSearch();
-//         $this->_view->_count       = $this->_arrParam['count'];
-//         $this->_model->_countParam = $this->_arrParam['count'];
-
-//         $totalItems                = $this->_arrParam['count']['allStatus'];
-//         if (isset($_SESSION['filter'])) {
-//             if ($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
-//             if ($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
-//         }
-
-//         $currentPage               = 1;
-//         $totalItemsPerPage         = 5;
-//         $pageRange                 = 3;
-
-//         if (isset($_GET['page'])) {
-//             $currentPage           = $_GET['page'];
-//         }
-
-//         $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage);
-//         $this->_model->_arrParam['position']             = $this->_pagination['position'];
-//         $this->_model->_arrParam['totalItemsPerPage']    = $this->_pagination['totalItemsPerPage'];
-
-//         $this->_view->Pagination    = $this->_pagination;
-    
         $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
@@ -111,31 +83,14 @@ class UserController extends Controller
             if ($this->_arrParam['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
         }
         
-        $currentPage               = 1;
-        $totalItemsPerPage         = 3;
-        $pageRange                 = 3;
-        
+        // CURRENT PAGE
         if (isset($this->_arrParam['page'])) {
-            $currentPage           = $this->_arrParam['page'];
+            $this->_pagination['currentPage']           = $this->_arrParam['page'];
         }
         
-        if(isset($this->_arrParam['pageDown'])) {
-            
-            $resultCount = $this->_model->countItemsPaginator($this->_arrParam);
-            $totalItems = $resultCount[0]['count'];
-            
-            /* Đây là số của page cần phải lùi lại khi search ở view với page ở đó làm $this->Items chở thành giá trị rỗng*/
-            $numberPage = ceil($totalItems/$totalItemsPerPage);
-            $this->_arrParam['page'] = $numberPage;
-            
-            unset($this->_arrParam['pageDown']);
-        }
+        $this->_paginationResult                         = $this->_model->pagination($totalItems, $this->_pagination ,$arrParam = $this->_arrParam);
         
-        $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage,$arrParam = $this->_arrParam);
-        $this->_model->_arrParam['position']             = $this->_pagination['position'];
-        $this->_model->_arrParam['totalItemsPerPage']    = $this->_pagination['totalItemsPerPage'];
-        
-        $this->_view->Pagination    = $this->_pagination;
+        $this->_view->Pagination    = $this->_paginationResult;
         
         //end Load
         $this->_view->_title        = 'User Manager: List';
@@ -364,5 +319,15 @@ class UserController extends Controller
         $result = $this->_model->changeGroupForUser($this->_arrParam, array('task' => 'change-ajax-group'));
         echo json_encode($result);
         
+    }
+    
+    public function errorAction(){
+
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
+        $this->_templateObj->setFileTemplate('error.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('error/error', true);
     }
 }

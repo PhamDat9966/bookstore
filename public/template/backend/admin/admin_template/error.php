@@ -26,7 +26,7 @@
 			
 			<!--MAIN CONTENT -->
 				<?php 
-				   include_once 'html/main-category-list.php';
+				   include_once 'html/main-group-list.php';
 				?>
 			<!--END MAIN CONTENT -->
 			

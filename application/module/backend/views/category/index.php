@@ -1,8 +1,10 @@
 <?php
-
-$this->searchValue = Session::get('search');
+// echo "<pre>View";
+// print_r($this->arrParam);
+// echo "</pre>";
 
 $listUserWithGroupACP = $this->listUserGroupACP;
+if(isset($this->arrParam['clear'])) $this->arrParam['search'] = NULL;
 
 $arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
 
@@ -11,13 +13,17 @@ $buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn bt
 
 $listCategory = '';
 
+if(empty($this->Items)){
+    URL::redirect('backend', 'category', 'error');
+}
+
 if (!empty($this->Items)) {
     $i = 0;
     foreach ($this->Items as $key => $value) {
 
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="' . $id . '">';
-        $name           = Helper::highLight(@$this->searchValue, $value['name']);
+        $name           = Helper::highLight(@$this->arrParam['search'], $value['name']);
         
         // IMAGES
         $picture        = '<img src="'. UPLOAD_URL . 'category' . DS . $value['picture'] . '" width="150" height="150">' ;
@@ -47,32 +53,33 @@ if (!empty($this->Items)) {
             $modified_by = $listUserWithGroupACP[$value['modified_by']];
         }
 
-        $ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
+        //$ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
+        $ordering       = Helper::cmsInput('number', $id, 'category-ordering-'.$id.'', $value['ordering'], null,'2', null);
 
         $editAction     = Helper::showItemAction('backend', 'category', 'form', $id, 'edit');
         $deleteAction   = Helper::showItemAction('backend', 'category', 'delete', $id, $statusAction = 'delete');
 
         $listCategory       .=
             '<tr class=' . $row . '>
-            <td>' . $ckb . '</td>
-            <td>' . $id . '</td>
-            <td>' . $name . '</td>
-            <td>' . $picture . '</td>
-            <td>' . $status . '</td>
-            <td>' . $ordering . '</td>
-            <td>
-                <p class="mb-0"><i class="far fa-user"></i> ' . $created_by . '</p>
-                <p class="mb-0"><i class="far fa-clock"></i> ' . $created . '</p>
-            </td>
-            <td>
-                <p class="mb-0"><i class="far fa-user"></i> ' . $modified_by . '</p>
-                <p class="mb-0"><i class="far fa-clock"></i> ' . $modified . '</p>
-            </td>
-            <td>
-                ' . $editAction . '
-                ' . $deleteAction . '
-            </td>
-        </tr>';
+                <td>' . $ckb . '</td>
+                <td>' . $id . '</td>
+                <td>' . $name . '</td>
+                <td>' . $picture . '</td>
+                <td>' . $status . '</td>
+                <td>' . $ordering . '</td>
+                <td>
+                    <p class="mb-0"><i class="far fa-user"></i> ' . $created_by . '</p>
+                    <p class="mb-0"><i class="far fa-clock"></i> ' . $created . '</p>
+                </td>
+                <td>
+                    <p class="mb-0"><i class="far fa-user"></i> ' . $modified_by . '</p>
+                    <p class="mb-0"><i class="far fa-clock"></i> ' . $modified . '</p>
+                </td>
+                <td>
+                    ' . $editAction . '
+                    ' . $deleteAction . '
+                </td>
+            </tr>';
         $i++;
     }
 }
@@ -89,7 +96,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
     ?>
     <!-- Search & Filter -->
     <?php
-        require_once 'search-filter/index.php';
+        require_once MODULE_PATH .'backend'. DS . 'views' . DS . 'search-filter' . DS .'index.php';
     ?>
     <!-- END Search & Filter  -->
 
