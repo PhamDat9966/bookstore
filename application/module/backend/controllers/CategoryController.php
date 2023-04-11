@@ -11,10 +11,7 @@ class CategoryController extends Controller
     }
 
     public function listAction()
-    {
-//         echo "<pre>listaction";
-//         print_r($this->_arrParam);
-//         echo "</pre>";
+    {    
         ob_start();
         
         // Clear Search
@@ -27,6 +24,11 @@ class CategoryController extends Controller
         }
         
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);     
+        
+        // page for bulk action
+        if(isset($this->_arrParam['page'])){
+            Session::set('page', $this->_arrParam['page']);
+        }
         
         //Bulk Action
         if (isset($this->_arrParam['selectBoxCatagory'])) {
@@ -54,7 +56,8 @@ class CategoryController extends Controller
                 URL::redirect('backend', 'category', 'status', NULL ,$strRequest);
             }
        }
-
+        
+       //session::delete('page');
         // filter and search
 //         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectCatagoryACP'])) {
 //             $this->filterAndSearchAction();
@@ -86,6 +89,7 @@ class CategoryController extends Controller
         $this->_view->Pagination    = $this->_paginationResult;
 
         //end Load
+        
         $this->_view->_title        = 'Catagorys: List Item';
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
@@ -102,8 +106,14 @@ class CategoryController extends Controller
 
     public function statusAction()
     {
+
+        if(!empty($_SESSION['page'])){
+            $this->_arrParam['page'] = session::get('page');
+            session::delete('page');
+        }
+        
         $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
-        $this->redirec('backend', 'category', 'list');
+        $this->redirec('backend', 'category', 'list',$page=$this->_arrParam['page']);
     }
 
     public function ajaxStatusAction()
