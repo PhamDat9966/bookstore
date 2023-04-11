@@ -8,13 +8,13 @@
                            </div>';  
     }
     
-    $inputEmail    = Helper::cmsInput($type = 'email',  $name = 'form[email]'    , $id = 'email'   , $value = "", $class = 'form-control');
-    $inputPassword = Helper::cmsInput($type = 'text',   $name = 'form[password]' , $id = 'password', $value = "",  $class = 'form-control');
+    $inputEmail    = Helper::cmsInput($type = 'email',  $name = 'form[email]'    ,  $value = "", $id = 'email'   , $class = 'form-control');
+    $inputPassword = Helper::cmsInput($type = 'text',   $name = 'form[password]' ,  $value = "", $id = 'password',  $class = 'form-control');
     /*
     <input type="hidden" id="form[token]" name="form[token]"
         value="<?php echo time();?>">
     */    
-    $inputToken    = Helper::cmsInput($type = 'hidden',$name = 'form[token]' ,    $id = 'form[token]', $value = time(), $class = '');
+    $inputToken    = Helper::cmsInput($type = 'hidden',$name = 'form[token]' ,  $value = time(), $id = 'form[token]', $class = '');
     
     $rowEmail      = Helper::cmsRow($lblName = 'Email'          , $input = $inputEmail    , $option = 'for="email"'     );
     $rowPassword   = Helper::cmsRow($lblName = 'Mật Khẩu'       , $input = $inputPassword , $option = 'for="password"'  );

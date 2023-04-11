@@ -117,9 +117,6 @@ if($this->_tag == 'user'){
     $selectBoxFilterSearch      = Helper::cmsSelectbox('selectGroup', 'form-control custom-select',$arrValue = $arrGroup , $keySelect = $selectGroupFirst, null,$id = 'selectGroup');
 }
 
-// Để tránh các lỗi phát sinh do quá trình lọc không ra giá trị rỗng, Mỗi lần lọc với các tác vụ bất kỳ
-// $refresh sẽ tự đưa về page = 1
-//$refreshPage = Helper::cmsInput($type = "hidden", $name="page", $value="1");
 $refreshPage = '<input type="hidden" name="page" value="1">';
 ?>
 

@@ -1,20 +1,15 @@
 <?php
 
-// IF METHOD = GET
-// $inputModel         = Helper::cmsInput('hidden', 'module', 'backend');
-// $inputController    = Helper::cmsInput('hidden', 'controller', 'category');
-// $inputAction        = Helper::cmsInput('hidden', 'action', 'form');
-
 $linkSaveClose	    = URL::createLink('backend', 'category', 'form', array('type' => 'save-close'));
 $linkCancel	        = URL::createLink('backend', 'category', 'list');
 
 $dataForm           = @$this->arrParam['form'];
 
-$inputName          = Helper::cmsInput($type = 'text'  , $name = 'form[name]',   $id  = 'name',   $value = @$dataForm['name'], $class = 'form-control', $size = null);
-$inputToken		    = Helper::cmsInput($type = 'hidden', $name = 'form[token]',  $id  = 'token',  $value = time());
+$inputName          = Helper::cmsInput($type = 'text'  , $name = 'form[name]', $value = @$dataForm['name'], $id  = 'name', $class = 'form-control', $size = null);
+$inputToken		    = Helper::cmsInput($type = 'hidden', $name = 'form[token]', $value = time(), $id  = 'token');
 
 //Picture
-$inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture',      $id  = 'picture',$value = @$dataForm['picture'], $class = '', $size = NULL, $option = 'onchange="previewPicture()"');
+$inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture', $value = @$dataForm['picture'], $id  = 'picture', $class = '', $size = NULL, $option = 'onchange="previewPicture()"');
 $pictureShow        = '<img id="imageShow" src="">';
 
 $arrSelectStatus    = array('default' => '- Select Status -', 1 => 'Active', 0 => 'Inactive');
@@ -29,13 +24,13 @@ $rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectSt
 $inputPictureHidden = '';
 if($this->task == 'edit'){
 
-    $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
+    $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $value = @$dataForm['name'], $id = 'name', $class = 'form-control', $size = null);
     $rowName        = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = false);
     $rowStatus      = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = false);
     
     $pathImage                = UPLOAD_URL .'category'. DS . $dataForm['picture'];
     $pictureShow              = '<img id="imageShow" src="'.$pathImage.'">';
-    $inputPictureHidden       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_hidden]', $id  = 'picture',$value = @$dataForm['picture'], $class = 'form-control', $size = null);
+    $inputPictureHidden       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_hidden]', $value = @$dataForm['picture'], $id  = 'picture', $class = 'form-control', $size = null);
 
 }
 
@@ -58,7 +53,7 @@ $inputID    = '';
 $rowID      =   '';
 if (isset($this->arrParam['id'])) {
 	$strID            = $this->arrParam['id'];
-	$inputID          = Helper::cmsInput($type = 'hidden', $name = 'form[id]', $id = 'id', $value = @$dataForm['id'], $class = 'readonly', $size = null);
+	$inputID          = Helper::cmsInput($type = 'hidden', $name = 'form[id]', $value = @$dataForm['id'], $id = 'id', $class = 'readonly', $size = null);
 	$rowID            = Helper::cmsRowForm($lblName = 'ID', ": $strID" . $inputID);
 }
 

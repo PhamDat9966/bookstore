@@ -54,7 +54,7 @@ if (!empty($this->Items)) {
         }
 
         //$ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
-        $ordering       = Helper::cmsInput('number', $id, 'category-ordering-'.$id.'', $value['ordering'], null, null, 'style="width: 3em"');
+        $ordering       = Helper::cmsInput('number', $id, $value['ordering'],'category-ordering-'.$id.'', null, null, 'style="width: 3em"');
 
         $editAction     = Helper::showItemAction('backend', 'category', 'form', $id, 'edit');
         $deleteAction   = Helper::showItemAction('backend', 'category', 'delete', $id, $statusAction = 'delete');
@@ -130,7 +130,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                                 <?php
                                     echo $selection;
                                 ?>
-                                <span class="input-category-append">
+                                <span class="input-group-append">
                                     <?php 
                                         echo $buttonSelection; 
                                     ?>

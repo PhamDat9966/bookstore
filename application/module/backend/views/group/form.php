@@ -5,8 +5,8 @@ $linkCancel	        = URL::createLink('backend', 'group', 'list');
 
 $dataForm           = @$this->arrParam['form'];
 
-$inputName          = Helper::cmsInput($type = 'text', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
-$inputToken		    = Helper::cmsInput($type = 'hidden', $name = 'form[token]', $id = 'token', $value = time());
+$inputName          = Helper::cmsInput($type = 'text', $name = 'form[name]', $value = @$dataForm['name'], $id = 'name', $class = 'form-control', $size = null);
+$inputToken		    = Helper::cmsInput($type = 'hidden', $name = 'form[token]', $value = time(), $id = 'token');
 
 $arrSelectStatus    = array('default' => '- Select Status -', 1 => 'Active', 0 => 'Inactive');
 $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class = 'custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'], $style = null);
@@ -21,8 +21,8 @@ $rowGroupACP        = Helper::cmsRowForm($lblName = 'GroupACP', $input = $select
 $rowNameOutput      = '';
 $inputNameHiden     = '';
 if($this->task == 'edit'){
-    $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null, $option = 'disabled');
-    $inputNameHiden = Helper::cmsInput($type = 'hidden', $name = 'form[name]', $id = 'name', $value = @$dataForm['name'], $class = 'form-control', $size = null);
+    $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $value = @$dataForm['name'], $id = 'name', $class = 'form-control', $size = null, $option = 'disabled');
+    $inputNameHiden = Helper::cmsInput($type = 'hidden', $name = 'form[name]', $value = @$dataForm['name'],$id = 'name', $class = 'form-control', $size = null);
     $rowName        = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = false);
 }
 
@@ -43,7 +43,7 @@ $inputID    = '';
 $rowID      =   '';
 if (isset($this->arrParam['id'])) {
 	$strID            = $this->arrParam['id'];
-	$inputID          = Helper::cmsInput($type = 'hidden', $name = 'form[id]', $id = 'id', $value = @$dataForm['id'], $class = 'readonly', $size = null);
+	$inputID          = Helper::cmsInput($type = 'hidden', $name = 'form[id]', $value = @$dataForm['id'], $id = 'id', $class = 'readonly', $size = null);
 	$rowID            = Helper::cmsRowForm($lblName = 'ID', ": $strID" . $inputID);
 }
 

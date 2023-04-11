@@ -1,17 +1,13 @@
 <?php 
 
     $dataForm   = @$this->arrParam['form'];
-    // FORM ACTION WITH GET
-//     $module         = Helper::cmsInput($type='hidden', $name='module', $id='', $value='frontend');
-//     $controller     = Helper::cmsInput($type='hidden', $name='controller', $id='', $value='user');
-//     $action         = Helper::cmsInput($type='hidden', $name='action', $id='', $value='register');
-    $typeSave      = Helper::cmsInput($type='hidden', $name='type', $id='', $value='save');
+    $typeSave      = Helper::cmsInput($type='hidden', $name='type', $value='save', $id='');
     
     // FORM INPUT
-    $inputUserName = Helper::cmsInput($type = 'text', $name = 'form[username]' , $id = 'username', $value = @$dataForm['username'], $class = 'form-control');
-    $inputFullName = Helper::cmsInput($type = 'text', $name = 'form[fullname]' , $id = 'fullname', $value = @$dataForm['fullname'], $class = 'form-control');
-    $inputEmail    = Helper::cmsInput($type = 'text', $name = 'form[email]'    , $id = 'email'   , $value = @$dataForm['email'],    $class = 'form-control');
-    $inputPassword = Helper::cmsInput($type = 'text', $name = 'form[password]' , $id = 'password', $value = @$dataForm['password'], $class = 'form-control');
+    $inputUserName = Helper::cmsInput($type = 'text', $name = 'form[username]' , $value = @$dataForm['username'], $id = 'username', $class = 'form-control');
+    $inputFullName = Helper::cmsInput($type = 'text', $name = 'form[fullname]' , $value = @$dataForm['fullname'], $id = 'fullname', $class = 'form-control');
+    $inputEmail    = Helper::cmsInput($type = 'text', $name = 'form[email]'    , $value = @$dataForm['email'],    $id = 'email'   , $class = 'form-control');
+    $inputPassword = Helper::cmsInput($type = 'text', $name = 'form[password]' , $value = @$dataForm['password'], $id = 'password', $class = 'form-control');
     
     $rowUserName   = Helper::cmsRow($lblName = 'Tên Tài Khoảng' , $input = $inputUserName , $option = 'for="username"'  );
     $rowFullName   = Helper::cmsRow($lblName = 'Họ Và Tên'      , $input = $inputFullName , $option = 'for="fullname"'  );
@@ -20,7 +16,7 @@
     
     // SUBMIT BUTTON
     $buttonSumit   = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-solid' , $textOutfit = 'Tạo tài khoản' ,$name = "form[submit]" , $value = 'Tạo tài khoảng', $id = 'submit');
-    $inputToken    = Helper::cmsInput($type = 'hidden', $name = '[form]token', $id = 'token', $value = time());
+    $inputToken    = Helper::cmsInput($type = 'hidden', $name = '[form]token', $value = time(), $id = 'token');
     
     $registerLink  = URL::createLink($module = 'frontend', $controller = 'user', $action = 'register');
 

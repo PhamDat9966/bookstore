@@ -12,6 +12,7 @@ class CategoryController extends Controller
 
     public function listAction()
     {    
+
         ob_start();
         
         // Clear Search
@@ -57,7 +58,6 @@ class CategoryController extends Controller
             }
        }
         
-       //session::delete('page');
         // filter and search
 //         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectCatagoryACP'])) {
 //             $this->filterAndSearchAction();

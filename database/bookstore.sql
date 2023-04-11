@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 06, 2023 lúc 03:45 PM
+-- Thời gian đã tạo: Th4 11, 2023 lúc 06:01 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -67,16 +67,18 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`) VALUES
-(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 10),
-(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '2023-03-30', '1', 1, 10),
-(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 10),
-(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 10),
-(25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 10),
-(26, 'Triếc Học', '08tgxj9s.png', '2023-03-30', '1', '2023-03-30', NULL, 1, 10),
-(27, 'Self Help', 'n3o1p82j.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 10),
-(28, 'Tiểu Sử - Hồi ký', '7p15v6x4.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 10),
-(29, 'Kinh Tế', 'g9u8z3mj.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 10),
-(30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 10);
+(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '2023-04-11', '1', 1, 1),
+(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '0000-00-00', '1', 1, 2),
+(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 3),
+(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 4),
+(25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 5),
+(26, 'Triếc Học', '08tgxj9s.png', '2023-03-30', '1', '2023-03-30', NULL, 1, 6),
+(27, 'Self Help', 'n3o1p82j.jpg', '2023-03-31', '1', '2023-04-11', '1', 0, 7),
+(28, 'Tiểu Sử - Hồi ký', '7p15v6x4.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 8),
+(29, 'Kinh Tế', 'g9u8z3mj.jpg', '2023-03-31', '1', '0000-00-00', '1', 1, 9),
+(30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '0000-00-00', '1', 1, 10),
+(31, 'test001', 'sbxngarw.jpg', '2023-04-11', '1', '0000-00-00', '1', 1, 11),
+(32, 'test002', 'dr9ivkhb.jpg', '2023-04-11', '1', '2023-04-11', NULL, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -113,7 +115,8 @@ INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modifi
 (79, 'founder 05', 1, '2023-03-30', '', '2023-03-30', NULL, '1', NULL, ''),
 (80, 'founder 06', 0, '2023-03-30', '1', '2023-03-30', NULL, '0', NULL, ''),
 (81, 'founder 07', 1, '2023-04-04', '1', '2023-04-04', NULL, '1', NULL, ''),
-(82, 'founder 08', 1, '2023-04-04', '1', '2023-04-04', NULL, '1', NULL, '');
+(82, 'founder 08', 1, '2023-04-04', '1', '2023-04-04', NULL, '1', NULL, ''),
+(83, 'fouder 9999', 1, '2023-04-11', '1', '2023-04-11', NULL, '1', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -188,7 +191,8 @@ INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`
 (35, 'nguyenvanb', 'nguyenvanb@gmail.com', 'Nguyen Van B', '12345', '2023-02-25 22:33:16', NULL, '2023-03-11 09:39:04', '1', '2023-02-25 16:02:16', '::1', 1, 10, 4),
 (36, 'nguyenvanaa', 'nguyenvanaa123@gmail.com', 'Nguyen Van A', '12345', '2023-02-25 22:38:31', NULL, '2023-02-25 22:38:31', NULL, '2023-02-25 16:02:31', '::1', 0, 10, 4),
 (41, 'fouder01', 'phamdat9966@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 4),
-(42, 'fouder02', 'phamdat999666@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 3);
+(42, 'fouder02', 'phamdat999666@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 3),
+(49, 'nguyenvana1234', 'phamdat9999966666@gmail.com', 'PhamDat', '123456', '2023-04-11 05:54:32', '1', '2023-04-11 22:54:32', NULL, '2023-04-11 22:54:32', NULL, 1, 10, 3);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -238,13 +242,13 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT cho bảng `group`
 --
 ALTER TABLE `group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT cho bảng `privilege`
@@ -256,7 +260,7 @@ ALTER TABLE `privilege`
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
