@@ -57,7 +57,7 @@ $buttonClear           = Helper::cmsButtonSubmit($type='submit',$class='btn btn-
 
 if($activeItem    == 0 ) {
     $buttonActive = '';
-    if($this->arrParam['filter'] == 'active'){
+    if(@$this->arrParam['filter'] == 'active'){
         unset($this->arrParam['module']);
         unset($this->arrParam['controller']);
         unset($this->arrParam['action']);
@@ -67,7 +67,7 @@ if($activeItem    == 0 ) {
 }
 if($inactiveItem  == 0)  {
     $buttonInactive = '';
-    if($this->arrParam['filter'] == 'inactive'){
+    if(@$this->arrParam['filter'] == 'inactive'){
         unset($this->arrParam['module']);
         unset($this->arrParam['controller']);
         unset($this->arrParam['action']);

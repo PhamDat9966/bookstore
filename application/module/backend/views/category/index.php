@@ -6,7 +6,7 @@
 $listUserWithGroupACP = $this->listUserGroupACP;
 if(isset($this->arrParam['clear'])) $this->arrParam['search'] = NULL;
 
-$arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'action' => 'Active', 'inactive' => 'Inactive', 'ordering' => 'Ordering'];
+$arrSelectBox = ['0' => 'Bulk Action', 'delete' => 'Delete', 'active' => 'Active', 'inactive' => 'Inactive'];
 
 $selection          = Helper::cmsSelectbox('selectBoxCatagory', 'form-control custom-select', $arrSelectBox, '0', null, $id = 'selectBox');
 $buttonSelection    = Helper::cmsButtonSubmit($type = "submit", $class = 'btn btn-info', $textOutfit = "Apply", $name = "bulk", $value = "bulk", $id = 'bulkApplyCategory');
@@ -54,7 +54,7 @@ if (!empty($this->Items)) {
         }
 
         //$ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
-        $ordering       = Helper::cmsInput('number', $id, 'category-ordering-'.$id.'', $value['ordering'], null,'2', null);
+        $ordering       = Helper::cmsInput('number', $id, 'category-ordering-'.$id.'', $value['ordering'], null, null, 'style="width: 3em"');
 
         $editAction     = Helper::showItemAction('backend', 'category', 'form', $id, 'edit');
         $deleteAction   = Helper::showItemAction('backend', 'category', 'delete', $id, $statusAction = 'delete');
@@ -126,20 +126,20 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                 <div class="container-fluid">
                     <div class="row align-items-center justify-content-between mb-2">
                         <div>
-                            <div class="input-category">
+                            <div class="input-group">
                                 <?php
-                                    //echo $selection;
+                                    echo $selection;
                                 ?>
                                 <span class="input-category-append">
                                     <?php 
-                                        //echo $buttonSelection; 
+                                        echo $buttonSelection; 
                                     ?>
                                 </span>
                             </div>
                         </div>
                         <div>
                             <?php 
-                               // echo $addNewButton; 
+                               echo $addNewButton; 
                             ?>
                         </div>
                     </div>

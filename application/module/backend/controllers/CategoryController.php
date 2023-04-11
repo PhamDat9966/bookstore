@@ -12,6 +12,9 @@ class CategoryController extends Controller
 
     public function listAction()
     {
+//         echo "<pre>listaction";
+//         print_r($this->_arrParam);
+//         echo "</pre>";
         ob_start();
         
         // Clear Search
@@ -39,7 +42,7 @@ class CategoryController extends Controller
                 URL::redirect('backend', 'category', 'deleteMult', NULL , $arrCid);
             }
 
-            if ($this->_arrParam['selectBoxCatagory'] == 'action') {
+            if ($this->_arrParam['selectBoxCatagory'] == 'active') {
                 
                 $strRequest = $arrCid.'&statusChoose=1';
                 URL::redirect('backend', 'category', 'status', NULL ,$strRequest);
@@ -47,8 +50,8 @@ class CategoryController extends Controller
             }
 
             if ($this->_arrParam['selectBoxCatagory'] == 'inactive') {
-                $this->_arrParam['type'] = 0;
-                $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
+                $strRequest = $arrCid.'&statusChoose=0';
+                URL::redirect('backend', 'category', 'status', NULL ,$strRequest);
             }
        }
 

@@ -61,7 +61,7 @@ class CategoryModel extends Model
         $modified    = date('Y-m-d',time());
         
         if($option['task'] == 'change-status'){
-            $status 	= $arrParam['type'];
+            $status 	= $arrParam['statusChoose'];
             if(!empty($arrParam['cid'])){
                 $i=0;
                 $ids = '';
