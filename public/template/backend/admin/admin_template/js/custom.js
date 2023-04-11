@@ -325,7 +325,7 @@ $(document).ready(function(){
     	var selected		= $("#selectBox option:selected").text();
     	
     	if (selected == "Ordering") {
- 	    	$('#group-list-form').find(':checkbox').each(function(){
+ 	    	$('#category-list-form').find(':checkbox').each(function(){
  	    		e.preventDefault();
 	     		Swal.fire({
 				  title				: 'Xác nhận?',

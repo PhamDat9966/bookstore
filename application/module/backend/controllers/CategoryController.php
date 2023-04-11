@@ -2,7 +2,7 @@
 
 class CategoryController extends Controller
 {
-
+    
     public function __construct($arrParams)
     {
         parent::__construct($arrParams);
@@ -155,6 +155,7 @@ class CategoryController extends Controller
                
         // Edit
         if (isset($this->_arrParam['id'])) {
+            
             $this->_view->_title  = 'User Categorys: Edit';
             $this->_view->task    = 'edit';  
             
@@ -177,7 +178,8 @@ class CategoryController extends Controller
                 $pictureHidden  = $this->_arrParam['form']['picture_hidden'];
             }
             
-            //Nạp Trồng - Cho trường hợp chưa submit trên edit nhưng cần giá trị để xuất dữ liệu ra input
+            /*  Nạp Trồng - Từ phiên làm trước đã submit rồi, phiên hiện tại chưa submit 
+             *   trên edit nhưng cần giá trị để xuất dữ liệu ra input  */
             $this->_arrParam['form']          = $this->_model->infoItem($this->_arrParam);
             
             // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
@@ -192,7 +194,7 @@ class CategoryController extends Controller
         if(!empty($_FILES)) $this->_arrParam['form']['picture'] = $_FILES['picture'];
 
         
-        if ($this->_arrParam['form']['token'] > 0) {
+        if (@$this->_arrParam['form']['token'] > 0) {
             
             $taskAction = 'add';
             $queryName  = "SELECT `id` FROM `" . TBL_CATEGORY . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";

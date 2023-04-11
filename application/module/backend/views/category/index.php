@@ -66,7 +66,7 @@ if (!empty($this->Items)) {
                 <td>' . $name . '</td>
                 <td>' . $picture . '</td>
                 <td>' . $status . '</td>
-                <td>' . $ordering . '</td>
+                <td id="td-oder-'.$id.'">' . $ordering . '</td>
                 <td>
                     <p class="mb-0"><i class="far fa-user"></i> ' . $created_by . '</p>
                     <p class="mb-0"><i class="far fa-clock"></i> ' . $created . '</p>
@@ -128,15 +128,19 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                         <div>
                             <div class="input-category">
                                 <?php
-                                    echo $selection;
+                                    //echo $selection;
                                 ?>
                                 <span class="input-category-append">
-                                    <?php echo $buttonSelection; ?>
+                                    <?php 
+                                        //echo $buttonSelection; 
+                                    ?>
                                 </span>
                             </div>
                         </div>
                         <div>
-                            <?= $addNewButton; ?>
+                            <?php 
+                               // echo $addNewButton; 
+                            ?>
                         </div>
                     </div>
                 </div>
