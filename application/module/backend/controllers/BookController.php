@@ -9,52 +9,64 @@ class BookController extends Controller
     {
         parent::__construct($arrParams);
         $this->_view->_tag          = 'book'; //for Sidebar
-        $this->_view->slbGroup      = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 6);
         
     }
 
     public function listAction()
     {   
-        $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
+        ob_start();
+
+        // Clear Search
+        if(isset($this->_arrParam['clear'])) {
+            
+            unset($this->_arrParam['search']);
+            unset($this->_arrParam['clear']);
+            
+            URL::redirect('backend', 'user', 'list', $params = $this->_arrParam);
+        }
+        
+        $this->_view->slbCategory          = $this->_model->categoryInSelectbox($this->_arrParam, $numberGroup = null);
+        // For created_by modufied_by
+        $this->_view->listUserGroupACP     = $this->_model->listUserGroupACP($this->_arrParam);
         
         //Bulk Action
-        if (isset($_GET['selectBoxUser'])) {
+//         if (isset($_GET['selectBoxUser'])) {
             
-            $arrCid  = ''; 
-            if(!empty($this->_arrParam['cid'])){
-                foreach ($this->_arrParam['cid'] as $valueCid){
-                    $arrCid .= "&cid[]=$valueCid";
-                }
-            }
+//             $arrCid  = ''; 
+//             if(!empty($this->_arrParam['cid'])){
+//                 foreach ($this->_arrParam['cid'] as $valueCid){
+//                     $arrCid .= "&cid[]=$valueCid";
+//                 }
+//             }
             
-            if ($_GET['selectBoxUser'] == 'delete') {
-                URL::redirect('backend', 'user', 'deleteMult',NULL, $arrCid);
-            }
+//             if ($_GET['selectBoxUser'] == 'delete') {
+//                 URL::redirect('backend', 'user', 'deleteMult',NULL, $arrCid);
+//             }
 
-            if ($_GET['selectBoxUser'] == 'action') {
+//             if ($_GET['selectBoxUser'] == 'action') {
 
-                $strRequest = $arrCid.'&statusChoose=1';                
-                URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
-            }
+//                 $strRequest = $arrCid.'&statusChoose=1';                
+//                 URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
+//             }
 
-            if ($_GET['selectBoxUser'] == 'inactive') {
+//             if ($_GET['selectBoxUser'] == 'inactive') {
 
-                $strRequest = $arrCid.'&statusChoose=0';
-                URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
-            }
-        }
+//                 $strRequest = $arrCid.'&statusChoose=0';
+//                 URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
+//             }
+//         }
 
         // filter and search
-        if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])) {
-            $this->filterAndSearchAction();
-        }
+//         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])) {
+//             $this->filterAndSearchAction();
+//         }
 
         // charge active, inactive userACB and status
-        if (isset($_GET['id'])) {
+        if (isset($this->_arrParam['id'])) {
 
-            $this->_arrParam['id'] = $_GET['id'];
+            $this->_arrParam['id'] = $this->_arrParam['id'];
 
-            if (isset($_GET['status'])) {
+            if (isset($this->_arrParam['status'])) {
                 $this->statusAction();
             }
 
@@ -62,36 +74,29 @@ class BookController extends Controller
             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
         }
 
-        //Paginator
-        $this->_arrParam['count']  = $this->_model->countFilterSearch();
+        $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
-
+        
         $totalItems                = $this->_arrParam['count']['allStatus'];
-        if (isset($_SESSION['filter'])) {
-            if ($_SESSION['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
-            if ($_SESSION['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
+        if (isset($this->_arrParam['filter'])) {
+            if ($this->_arrParam['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
+            if ($this->_arrParam['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
         }
-
-        $currentPage               = 1;
-        $totalItemsPerPage         = 5;
-        $pageRange                 = 3;
-
-        if (isset($_GET['page'])) {
-            $currentPage           = $_GET['page'];
+        
+        // CURRENT PAGE
+        if (isset($this->_arrParam['page'])) {
+            $this->_pagination['currentPage']           = $this->_arrParam['page'];
         }
-
-        $this->_pagination                               = $this->_model->pagination($totalItems, $totalItemsPerPage, $pageRange, $currentPage);
-        $this->_model->_arrParam['position']             = $this->_pagination['position'];
-        $this->_model->_arrParam['totalItemsPerPage']    = $this->_pagination['totalItemsPerPage'];
-
-        $this->_view->Pagination    = $this->_pagination;
-
+        
+        $this->_paginationResult                         = $this->_model->pagination($totalItems, $this->_pagination ,$arrParam = $this->_arrParam);
+        
+        $this->_view->Pagination    = $this->_paginationResult;
+        
         //end Load
         $this->_view->_title        = 'Book Manager: List';
 
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-        
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
 
         $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
@@ -100,6 +105,7 @@ class BookController extends Controller
         $this->_templateObj->load();
 
         $this->_view->render('book/index', true);
+        ob_end_flush();
     }
 
     public function statusAction()
@@ -307,12 +313,22 @@ class BookController extends Controller
     public function selectGroupForUserAction()
     {
 
-
         $arrSelectGroupForUser          = json_decode($this->_arrParam['selectGroup'], true);
         $this->_arrParam['id']          = $arrSelectGroupForUser['id'];
         $this->_arrParam['group_id']    = $arrSelectGroupForUser['group_id'];
 
         $result = $this->_model->changeGroupForUser($this->_arrParam, array('task' => 'change-ajax-group'));
         echo json_encode($result);
+        
+    }
+    
+    public function errorAction(){
+
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
+        $this->_templateObj->setFileTemplate('error.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('error/error', true);
     }
 }

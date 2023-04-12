@@ -54,6 +54,8 @@ class UserModel extends Model
             }    
         }
         
+        $queryContent[]     = 'ORDER BY `id` ASC';
+        
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
         

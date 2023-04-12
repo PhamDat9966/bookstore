@@ -34,23 +34,27 @@ class BookModel extends Model
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
         $queryContent   = [];
-        $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`ordering`";             
+        $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`ordering`,`c`.`name` AS `category_name`";             
         $queryContent[] = "FROM `$this->_tableName` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
         $queryContent[] = "WHERE `b`.`id` > 0";
         
-        if(!empty($_SESSION['search'])){
-            $keyword            = '"%'.$_SESSION['search'].'%"';
-            $queryContent[]     = "AND (`username` LIKE $keyword OR `email` LIKE $keyword OR `fullname` LIKE $keyword)";
+        if(!empty($arrParam['search'])){
+            $keyword            = '"%'.$arrParam['search'].'%"';
+            $queryContent[]     = "AND (`name` LIKE $keyword)";
         }
         
-        if(isset($_SESSION['filter'])){
-            if($_SESSION['filter'] == 'active') $queryContent[]    = 'AND `u`.`status`= 1';
-            if($_SESSION['filter'] == 'inactive') $queryContent[]    = 'AND `u`.`status`= 0';     
+        if(isset($arrParam['filter'])){
+            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `u`.`status`= 1';
+            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `u`.`status`= 0';
         }
         
-        if(isset($_SESSION['selectGroup'])){
-           $queryContent[]    = "AND `u`.`group_id`= '".$_SESSION['selectGroup']."'";
+        if(isset($arrParam['selectGroup'])){
+            if($arrParam['selectGroup'] != '0'){
+                $queryContent[]    = "AND `u`.`group_id`= '".$arrParam['selectGroup']."'";
+            }
         }
+        
+        $queryContent[]     = 'ORDER BY `id` ASC';
         
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
@@ -63,8 +67,38 @@ class BookModel extends Model
         return $result;
     }
     
+    public function countItemsPaginator($arrParam,$option = null)
+    {
+        //$totalItemsCount = $arrParam['count']['allStatus'];
+        
+        $queryContent   = [];
+        $queryContent[] = "SELECT `id`,COUNT(`id`) AS `count`";
+        $queryContent[] = "FROM `$this->_tableName`";
+        $queryContent[] = "WHERE `id` > 0";
+        
+        if(!empty($arrParam['search'])){
+            $queryContent[]     = "AND `username` LIKE '%". $arrParam['search']."%'";
+        }
+        
+        if(isset($arrParam['filter'])){
+            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `status`= 1';
+            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `status`= 0';
+        }
+        
+        if(isset($arrParam['selectGroup'])){
+            if($arrParam['selectGroup'] != '0'){
+                $queryContent[]    = "AND `group_id`= '".$arrParam['selectGroup']."'";
+            }
+        }
+        
+        echo $queryContent = implode(" ", $queryContent);
+        
+        $result = $this->fetchAll($queryContent);
+        return $result;
+    }
+    
     public function saveItem($arrParam, $option = null){
-               
+        
         $created_by  = $this->_userInfo['info']['id'];
         $modified_by = $this->_userInfo['info']['id'];
         
@@ -107,24 +141,24 @@ class BookModel extends Model
         $queryContent[] = "FROM `".TBL_GROUP."`";
         if($option != null){
             $queryContent[] = "LIMIT 0,".$option."";
-        }    
+        }
         $queryContent = implode(" ", $queryContent);
         $result = $this->fetchAll($queryContent);
         return $result;
     }
     
-    public function itemInSelectbox($arrParam,$numberGroup = null ,$option = null){
+    public function categoryInSelectbox($arrParam,$numberGroup = null ,$option = null){
         if($option == null){
             $query       = [];
             $query[]     = "SELECT `id`,`name`";
-            $query[]     = "FROM `".TBL_GROUP."`";
+            $query[]     = "FROM `".TBL_CATEGORY."`";
             if(!empty($numberGroup)){
                 $query[] = "LIMIT 0,".$numberGroup."";
-            }  
+            }
             $query       = implode(" ", $query);
             $result      = $this->fetchPairs($query);
             return $result;
-        }     
+        }
     }
     
     public function changeGroupForUser($arrParam, $option = null){
@@ -175,32 +209,39 @@ class BookModel extends Model
             return array('id'=>$id,'status'=>$status,'url'=>URL::createLink('backend','group','list',array('id'=>$id,'status'=>$status)));
         }
         
-        if($option['task'] == 'change-ajax-user-status'){    
+        if($option['task'] == 'change-ajax-user-status'){
             $status = ($arrParam['status'] == 0) ? 1 : 0 ;
             $id       = $arrParam['id'];
             $query    = "UPDATE `$this->table` SET `status` = $status,`modified_by` = $modified_by,`modified` = '$modified' WHERE `id`= $id";
             $this->query($query);
-
+            
             return array('id'=>$id,'status'=>$status,'url'=>URL::createLink('backend','group','ajaxStatus',array('id'=>$id,'status'=>$status)));
         }
     }
     
     
     
-    public function pagination($totalItems,$totalItemsPerPage,$pageRange)
+    public function pagination($totalItems, $pagination,$arrParam)
     {
+        unset($arrParam['module']);
+        unset($arrParam['controller']);
+        unset($arrParam['action']);
         
-        $resulfPagination       = [];
-        $currentPage            = (isset($_GET['page'])) ? $_GET['page'] : 1;
-        $this->_cunrrentPage    = $currentPage;
+        $resulfPagination = [];
+        $currentPage = (isset($arrParam['page'])) ? $arrParam['page'] : 1;
+        $this->_cunrrentPage = $currentPage;
         
-        $paginator      = new Pagination($totalItems, $totalItemsPerPage, $pageRange , $currentPage);
-        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'user', 'list'));
-        $position       = ($currentPage - 1) * $totalItemsPerPage;
+        $paginator = new Pagination($totalItems, $pagination);
+        $paginationHTML = $paginator->showPagination(URL::createLink('backend', 'book', 'list', $arrParam));
         
-        $resulfPagination['position']           = $position;
-        $resulfPagination['totalItemsPerPage']  = $totalItemsPerPage;
-        $resulfPagination['paginationHTML']     = $paginationHTML;
+        $position = ($currentPage - 1) * $pagination['totalItemsPerPage'];
+        $resulfPagination['position'] = $position;
+        $resulfPagination['totalItemsPerPage'] = $pagination['totalItemsPerPage'];
+        $resulfPagination['paginationHTML'] = $paginationHTML;
+        
+        // Send for 'public function listItems'
+        $this->_arrParam['position']             = $resulfPagination['position'];
+        $this->_arrParam['totalItemsPerPage']    = $resulfPagination['totalItemsPerPage'];
         
         return $resulfPagination;
     }
@@ -210,43 +251,41 @@ class BookModel extends Model
         $count          = array();
         $searchQuery    = '';
         
-        if((!empty($_SESSION['search'])) && (!empty(is_numeric(@$_SESSION['selectGroup'])))){
+        if((!empty($arrParam['search'])) && (!empty(is_numeric($arrParam['selectGroupACP'])))){
+            $varGroupACP = $arrParam['selectGroupACP'];
             
-            $varSelectGroup_id = @$_SESSION['selectGroup'];
-            $keyword            = '"%'.$_SESSION['search'].'%"';
-            $searchQuery = "(`username` LIKE $keyword OR `email` LIKE $keyword OR `fullname` LIKE $keyword)";
+            $searchQuery = "`name` LIKE '%".$arrParam['search']."%'";
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_id` = $varSelectGroup_id");
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `group_acp` = $varGroupACP");
             $count['allStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1 AND `group_id` = $varSelectGroup_id");
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 1 AND `group_acp` = $varGroupACP");
             $count['activeStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 AND `group_id` = $varSelectGroup_id");
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery AND `status` = 0 AND `group_acp` = $varGroupACP");
             $count['inActiveStatus'] = $this->totalItem();
             
             return $count;
         }
         
-        if(!empty(is_numeric(@$_SESSION['selectGroup']))){
-            $varSelectGroup_id = @$_SESSION['selectGroup'];
+        if(@!empty(is_numeric($arrParam['selectGroupACP']))){
+            $varGroupACP = $arrParam['selectGroupACP'];
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_id` = ".$varSelectGroup_id."");
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `group_acp` = ".$varGroupACP."");
             $count['allStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 1 AND `group_id` = ".$varSelectGroup_id."");
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 1 AND `group_acp` = ".$varGroupACP."");
             $count['activeStatus'] = $this->totalItem();
             
-            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 0 AND `group_id` = ".$varSelectGroup_id."");
+            $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE `status` = 0 AND `group_acp` = ".$varGroupACP."");
             $count['inActiveStatus'] = $this->totalItem();
             
             return $count;
             
         }
         
-        if(!empty($_SESSION['search'])){
-            $keyword            = '"%'.$_SESSION['search'].'%"';
-            $searchQuery = "(`username` LIKE $keyword OR `email` LIKE $keyword OR `fullname` LIKE $keyword)";
+        if(!empty($arrParam['search'])){
+            $searchQuery = "`name` LIKE '%".$arrParam['search']."%'";
             
             $this->query("SELECT COUNT(`id`) AS totalItems FROM `".$this->_tableName."` WHERE $searchQuery");
             $count['allStatus'] = $this->totalItem();
@@ -342,7 +381,7 @@ class BookModel extends Model
     
     public function deleteMultItem($arrParam,$option = null)
     {
-
+        
         if($option == null){
             if(!empty($arrParam['cid'])){
                 $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
@@ -375,8 +414,8 @@ class BookModel extends Model
         
         if($option == null){
             
-            $queryContent[] = "SELECT `id`,`username` AS `name`";
-            $queryContent[] = "FROM `". TBL_USER ."`";
+            $queryContent[] = "SELECT `id`,`username` as `name`";
+            $queryContent[] = "FROM `".TBL_USER."`";
             $queryContent   = implode(" ", $queryContent);
             $result         = $this->fetchPairs($queryContent);
             return $result;

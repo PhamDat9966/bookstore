@@ -1,10 +1,15 @@
 <?php 
 
+echo "<pre>view";
+print_r($this);
+echo "</pre>";
+
 $listUser = '';
 
 //Created selectgroup Array
 $selectGroup = $this->slbGroup;
 
+//For create_by,modified_by
 $listUserWithGroupACP = $this->listUserGroupACP;
 
 // Bulk Action

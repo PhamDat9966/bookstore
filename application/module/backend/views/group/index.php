@@ -49,8 +49,9 @@ if (!empty($this->Items)) {
             $modified_by = $listUserWithGroupACP[$value['modified_by']];
         }
         
-        $ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
-
+        //$ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
+        $ordering       = Helper::cmsInput('number', $id, $value['ordering'],'group-ordering-'.$id.'', null, null, 'style="width: 3em"');
+        
         $editAction     = Helper::showItemAction('backend', 'group', 'form', $id, 'edit');
         $deleteAction   = Helper::showItemAction('backend', 'group', 'delete', $id, $statusAction = 'delete');
 

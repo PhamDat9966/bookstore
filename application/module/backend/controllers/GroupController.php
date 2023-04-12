@@ -139,6 +139,12 @@ class GroupController extends Controller
         $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));
         $this->redirec('backend', 'group', 'list');
     }
+    
+    public function ajaxOrderingAction()
+    {
+        $return = json_encode($this->_model->changeOrdering($this->_arrParam, $option = array('task' => 'change-ajax-ordering')));
+        echo $return;
+    }
 
     public function ajaxGroupACPAction()
     {

@@ -411,6 +411,20 @@ class GroupModel extends Model
         
     }
     
+    public function changeOrdering($arrParam, $option = null){
+        
+        if($option['task'] == 'change-ajax-ordering'){
+            $ojectOrdering = json_decode($arrParam['paramOrdering']);
+            
+            $id             = $ojectOrdering->id;
+            $valueOrdering  = $ojectOrdering->value;
+            $query    = "UPDATE `$this->_tableName` SET `ordering` = $valueOrdering WHERE `id` = '".$id."'";
+            $this->query($query);
+            
+            return array('id'=>$id,'ordering'=>$valueOrdering,'url'=>URL::createLink('backend','category','ajaxOrdering',array('id'=>$id,'ordering'=>$valueOrdering)));
+        }
+        
+    }
 }
     
 

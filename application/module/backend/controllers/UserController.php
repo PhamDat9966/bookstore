@@ -26,6 +26,7 @@ class UserController extends Controller
         }
         
         $this->_view->slbGroup          = $this->_model->itemInSelectbox($this->_arrParam, $numberGroup = 4);
+        // for creat_by,modifiel_by....
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);
         
         //Bulk Action
@@ -61,11 +62,11 @@ class UserController extends Controller
 //         }
 
         // charge active, inactive userACB and status
-        if (isset($_GET['id'])) {
+        if (isset($this->_arrParam['id'])) {
 
-            $this->_arrParam['id'] = $_GET['id'];
+            $this->_arrParam['id'] = $this->_arrParam['id'];
 
-            if (isset($_GET['status'])) {
+            if (isset($this->_arrParam['status'])) {
                 $this->statusAction();
             }
 

@@ -184,6 +184,33 @@ function changeGroupUser(jsonParam){
 	
 }
 
+//AJAX GROUP ORDERING
+$(document).ready(function () {
+    $("#group-list-form").find("input,textarea,select").on('input', function () {
+        const ordering		= {};
+        ordering.id    = this.name;
+        ordering.value = this.value;
+        
+        orderingJSON   =  JSON.stringify(ordering);
+        $.ajax({
+    		url		: 'index.php?module=backend&controller=group&action=ajaxOrdering',
+    		type	: 'GET',
+    	    data:{paramOrdering:orderingJSON},
+    		success	: function(data){
+    				var jsonOject 	= JSON.parse(data);
+    			
+    				var element = '#group-list-form .card-body .table-responsive #group-ordering-' + jsonOject.id;	
+    				
+    				$(element).attr('value',jsonOject.ordering);
+    				
+    				$(element).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
+    				console.log(element);
+    			
+    			}
+    	})
+        
+    });
+});
 
 //AJAX CATEGORY ORDERING
 $(document).ready(function () {

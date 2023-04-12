@@ -1,10 +1,13 @@
 <?php 
 
-$this->searchValue = Session::get('search');
-$listUser = '';
+// echo "<pre>bookview";
+// print_r($this);
+// echo "</pre>";
+
+$listBook= '';
 
 //Created selectgroup Array
-$selectGroup = $this->slbGroup;
+$selectCategory = $this->slbCategory;
 
 $listUserWithGroupACP = $this->listUserGroupACP;
 
@@ -13,6 +16,10 @@ $arrSelectBox       = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active',
 $selection          = Helper::cmsSelectbox('selectBoxUser', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBoxUser');
 $buttonSelection    = Helper::cmsButtonSubmit($type ="submit", $class = 'btn btn-info' ,$textOutfit = "Apply", $name = "bulk" , $value = "bulk" , $id = 'bulkApplyUser');
 
+if(empty($this->Items)){
+    URL::redirect('backend', 'book', 'error');
+}
+
 if(!empty($this->Items)){
     $i=0;
     foreach ($this->Items as $key=>$value){
@@ -20,16 +27,16 @@ if(!empty($this->Items)){
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="'.$id.'">';
         
-        $name           = Helper::highLight(@$this->searchValue, $value['username']);
+        $nameBook         = Helper::highLight(@$this->arrParam['search'], $value['name']);
            
-        $nameGroup      = $value['group_name'];
+        $categoryName     = $value['category_name'];
         
         $created_by     = '';
         $modified_by    = '';
         
-        $dataGroupForUser               = array();
-        $dataGroupForUser['id']         = $id;
-        $dataGroupForUser['group_id']   = $value['group_id'];
+        $dataCategoryForBook                    = array();
+        $dataCategoryForBook['id']              = $id;
+        $dataCategoryForBook['category_id']     = $value['category_id'];
         
         if(in_array($value['created_by'], array_flip($listUserWithGroupACP))){
             $created_by         =   $listUserWithGroupACP[$value['created_by']];
@@ -45,27 +52,26 @@ if(!empty($this->Items)){
          * chuyền chuỗi json có chứa id và group_id về controller->_model để Update
          */
         $dataGroupForUser         = array(); // $id and $ground_id, $group_name
-        $jsonArrSelectGroupForUser = array();// tramform $id and $group_id is json
+        $jsonArrSelectCategoryForBook = array();// tramform $id and $group_id is json
 
         $k=0;
-        foreach ($selectGroup as $keyA=>$valueA){
-            $dataGroupForUser[$k]['id'] = $id;
-            $dataGroupForUser[$k]['group_id'] = $keyA;
-            $jsonArrSelectGroupForUser[json_encode($dataGroupForUser[$k])] = $valueA;
+        foreach ($selectCategory as $keyA=>$valueA){
+            $dataCategoryForBook[$k]['id'] = $id;
+            $dataCategoryForBook[$k]['group_id'] = $keyA;
+            $jsonArrSelectCategoryForBook[json_encode($dataCategoryForBook[$k])] = $valueA;
             $k++;
         }
+
+        $selectGroupForUser     = Helper::cmsSelectboxForBookSelectCategory($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectCategoryForBook,$keySelect = $value['category_name'], $style = null,$idSelectBox = "selectGroupForUser",$option = 'onchange=\'changeGroupUser(this.value)\'');
         
-        $selectGroupForUser     = Helper::cmsSelectboxForUserSelectGroup($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectGroupForUser,$keySelect = $value['group_name'], $style = null,$idSelectBox = "selectGroupForUser",$option = 'onchange=\'changeGroupUser(this.value)\'');
-        $jsonArrSelectGroupForUser = '';
+        $jsonArrSelectCategoryForBook = '';
         $row                = ($i % 2 == 0) ? 'odd' : 'even';
-        
-        
         //<a href="#" class="btn btn-success rounded-circle btn-sm"><i class="fas fa-check"></i></a>
         $status             = '';
         //$groupACP       = Helper::cmsGroupACP($value['group_acp'], URL::createLink('backend','group','ajaxGroupACP',array('id'=>$id,'group_acp'=>$value['group_acp'])),$id);
         //
         
-        $urlstatus          = URL::createLink('backend','user','ajaxUserStatus',array('id'=>$id,'status'=>$value['status']));
+        $urlstatus          = URL::createLink('backend','book','ajaxUserStatus',array('id'=>$id,'status'=>$value['status']));
         $status             = Helper::cmsStatusUser($value['status'], $urlstatus ,$id);
         
         //CREATED:
@@ -93,11 +99,11 @@ if(!empty($this->Items)){
         $generatePassLink   = URL::createLink('backend', 'user', 'form', $parram = array('task'=>'generatepass','id'=>$id));
         $generatePassword   = Helper::cmsButton($url = $generatePassLink, $class = 'btn btn-secondary btn-sm rounded-circle', $textOufit = '<i class="fas fa-key"></i>');
         
-        $listUser      .=
+        $listBook     .=
         '<tr>
             <td>'.$ckb.'</td>
             <td>'.$id.'</td>
-            <td>'.$info.'</td>
+            <td>'.$nameBook.'</td>
             <td>'.$selectGroupForUser.'</td>
             <td>'.$status.'</td>
             <td>
@@ -137,8 +143,8 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 		<div class="row">
 			<div class="col-12">
 				<!-- Search & Filter -->
-				<?php 
-                    require_once 'search-filter/index.php';
+                <?php
+                    require_once MODULE_PATH .'backend'. DS . 'views' . DS . 'search-filter' . DS .'index.php';
                 ?>
                 
 			<form action="#" method="get" name="user-list-form" id="user-list-form">	
@@ -185,20 +191,16 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 									<tr>
 										<th><input type="checkbox"></th>
 										<th>ID</th>
-										<th class="text-left">Name</th>
-										<th>Picture</th>
-										<th>Price</th>
-										<th>Sale Off</th>
-										<th>Category</th>
+										<th class="text-left">Info</th>
+										<th>Group</th>
 										<th>Status</th>
-										<th>Special</th>
-										<th>Ordering</th>
 										<th>Created</th>
+										<th>Modified</th>
 										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php echo $listUser;?>
+									<?php echo $listBook;?>
 								</tbody>
 							</table>
 						</div>
