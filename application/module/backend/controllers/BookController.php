@@ -310,14 +310,13 @@ class BookController extends Controller
         return $randomString;
     }
 
-    public function selectGroupForUserAction()
+    public function selectCategoryForBookAction()
     {
+        $arrCategoryForBook             = json_decode($this->_arrParam['selectGroup'], true);
+        $this->_arrParam['id']          = $arrCategoryForBook['id'];
+        $this->_arrParam['category_id']    = $arrCategoryForBook['category_id'];
 
-        $arrSelectGroupForUser          = json_decode($this->_arrParam['selectGroup'], true);
-        $this->_arrParam['id']          = $arrSelectGroupForUser['id'];
-        $this->_arrParam['group_id']    = $arrSelectGroupForUser['group_id'];
-
-        $result = $this->_model->changeGroupForUser($this->_arrParam, array('task' => 'change-ajax-group'));
+        $result = $this->_model->changeCategoryForBook($this->_arrParam, array('task' => 'change-ajax-category'));
         echo json_encode($result);
         
     }

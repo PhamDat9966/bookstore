@@ -57,12 +57,12 @@ if(!empty($this->Items)){
         $k=0;
         foreach ($selectCategory as $keyA=>$valueA){
             $dataCategoryForBook[$k]['id'] = $id;
-            $dataCategoryForBook[$k]['group_id'] = $keyA;
+            $dataCategoryForBook[$k]['category_id'] = $keyA;
             $jsonArrSelectCategoryForBook[json_encode($dataCategoryForBook[$k])] = $valueA;
             $k++;
         }
 
-        $selectGroupForUser     = Helper::cmsSelectboxForBookSelectCategory($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectCategoryForBook,$keySelect = $value['category_name'], $style = null,$idSelectBox = "selectGroupForUser",$option = 'onchange=\'changeGroupUser(this.value)\'');
+        $selectGroupForUser     = Helper::cmsSelectboxForBookSelectCategory($name="selectCategoryForBook", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectCategoryForBook,$keySelect = $value['category_name'], $style = null,$idSelectBox = "selectCategoryForBook-$id",$option = 'onchange=\'changeCategoryForBook(this.value)\'');
         
         $jsonArrSelectCategoryForBook = '';
         $row                = ($i % 2 == 0) ? 'odd' : 'even';
@@ -147,7 +147,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                     require_once MODULE_PATH .'backend'. DS . 'views' . DS . 'search-filter' . DS .'index.php';
                 ?>
                 
-			<form action="#" method="get" name="user-list-form" id="user-list-form">	
+			<form action="#" method="get" name="category-list-form" id="category-list-form">	
 				<input type="hidden" name="module" value="backend">
                 <input type="hidden" name="controller" value="user">
                 <input type="hidden" name="action" value="list">

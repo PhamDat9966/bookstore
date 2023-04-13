@@ -161,13 +161,14 @@ class BookModel extends Model
         }
     }
     
-    public function changeGroupForUser($arrParam, $option = null){
-        if($option['task'] == 'change-ajax-group'){
-            $GroupForUser   = $arrParam['group_id'];
-            $id             = $arrParam['id'];
-            $query          = "UPDATE `$this->_tableName` SET `group_id` = $GroupForUser WHERE `id` = '".$id."'";
+    public function changeCategoryForBook($arrParam, $option = null){
+        if($option['task'] == 'change-ajax-category'){
+            $categoryForBook    = $arrParam['category_id'];
+            $id                 = $arrParam['id'];
+            $query          = "UPDATE `$this->_tableName` SET `category_id` = '$categoryForBook' WHERE `id` = '".$id."'";
             $this->query($query);
-            return array('message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
+            
+            return array('id'=>$id,'message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
         }
     }
     

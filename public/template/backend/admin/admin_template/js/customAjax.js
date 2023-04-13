@@ -232,10 +232,42 @@ $(document).ready(function () {
     				$(element).attr('value',jsonOject.ordering);
     				
     				$(element).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
-    				console.log(element);
+    				//console.log(element);
     			
     			}
     	})
         
     });
 });
+
+//changeCategory for Book
+function changeCategoryForBook(jsonParam){
+	
+	console.log(jsonParam);
+	
+	$.ajax({
+		url		: 'index.php?module=backend&controller=book&action=selectCategoryForBook',
+		type	: 'GET',
+		data	: {selectGroup:jsonParam},
+		success	: function(data){
+				
+				console.log(data);
+
+				var jsonOject 	= $.parseJSON(data);
+				console.log(jsonOject);
+				
+				var bookCategoryID = '#category-list-form #selectCategoryForBook-' + jsonOject.id;	
+				
+				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>"+jsonOject[1].content+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
+				if($("#inAlert").length > 0){
+					$("#inAlert").remove();
+				}
+				$("#alert").prepend(element);
+				
+				$(bookCategoryID).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
+				
+			}
+	})
+	
+}
+

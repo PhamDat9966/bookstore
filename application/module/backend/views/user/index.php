@@ -1,9 +1,5 @@
 <?php 
 
-echo "<pre>view";
-print_r($this);
-echo "</pre>";
-
 $listUser = '';
 
 //Created selectgroup Array
