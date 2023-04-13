@@ -46,7 +46,7 @@ if(!empty($this->Items)){
             $modified_by         =   $listUserWithGroupACP[$value['modified_by']];
         }
         
-        // SELECT GROUP  FOR USER ---
+        // SELECT CATEGORY  FOR BOOK ---
         /*
          * Mục đích sử dụng Onchange của Selecbox để chuyền value của selecbox về hàm jquery là changeGroupUser có chứa Ajax để 
          * chuyền chuỗi json có chứa id và group_id về controller->_model để Update
@@ -62,14 +62,12 @@ if(!empty($this->Items)){
             $k++;
         }
 
-        $selectGroupForUser     = Helper::cmsSelectboxForBookSelectCategory($name="selectCategoryForBook", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectCategoryForBook,$keySelect = $value['category_name'], $style = null,$idSelectBox = "selectCategoryForBook-$id",$option = 'onchange=\'changeCategoryForBook(this.value)\'');
+        $selectGroupForUser = Helper::cmsSelectboxForBookSelectCategory($name="selectCategoryForBook", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectCategoryForBook,$keySelect = $value['category_name'], $style = null,$idSelectBox = "selectCategoryForBook-$id",$option = 'onchange=\'changeCategoryForBook(this.value)\'');
         
         $jsonArrSelectCategoryForBook = '';
         $row                = ($i % 2 == 0) ? 'odd' : 'even';
-        //<a href="#" class="btn btn-success rounded-circle btn-sm"><i class="fas fa-check"></i></a>
+
         $status             = '';
-        //$groupACP       = Helper::cmsGroupACP($value['group_acp'], URL::createLink('backend','group','ajaxGroupACP',array('id'=>$id,'group_acp'=>$value['group_acp'])),$id);
-        //
         
         $urlstatus          = URL::createLink('backend','book','ajaxUserStatus',array('id'=>$id,'status'=>$value['status']));
         $status             = Helper::cmsStatusUser($value['status'], $urlstatus ,$id);
@@ -90,14 +88,11 @@ if(!empty($this->Items)){
         $modified          .='<i class="far fa-clock"></i>  '.$arrModifiedTime[1].' '.Helper::formatDate('d-m-Y', $arrModifiedTime[0]);
         
         //$editAction         = Helper::showItemAction('backend', 'user', 'form', $id, 'edit');
-        $editPassLink   = URL::createLink('backend', 'user', 'form', $parram = array('task'=>'edit','id'=>$id));
-        $editPassword   = Helper::cmsButton($url = $editPassLink, $class = 'btn btn-sm btn-info rounded-circle', $textOufit = '<i class="fas fa-pen"></i>');
+        $editBookLink   = URL::createLink('backend', 'book', 'form', $parram = array('task'=>'edit','id'=>$id));
+        $editBook       = Helper::cmsButton($url = $editBookLink, $class = 'btn btn-sm btn-info rounded-circle', $textOufit = '<i class="fas fa-pen"></i>');
         
-        $deleteAction       = Helper::showItemAction('backend', 'user', 'delete', $id, $statusAction ='delete');
-        
-        //General Password
-        $generatePassLink   = URL::createLink('backend', 'user', 'form', $parram = array('task'=>'generatepass','id'=>$id));
-        $generatePassword   = Helper::cmsButton($url = $generatePassLink, $class = 'btn btn-secondary btn-sm rounded-circle', $textOufit = '<i class="fas fa-key"></i>');
+        $deleteAction       = Helper::showItemAction('backend', 'book', 'delete', $id, $statusAction ='delete');
+
         
         $listBook     .=
         '<tr>
@@ -113,8 +108,7 @@ if(!empty($this->Items)){
                 <p class="mb-0">'.$modified.'</p>
             </td>
             <td>
-                '.$generatePassword.'
-                '.$editPassword.'
+                '.$editBook.'
                 '.$deleteAction.'
             </td>
         </tr>';

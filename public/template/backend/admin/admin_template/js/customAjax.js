@@ -243,16 +243,12 @@ $(document).ready(function () {
 //changeCategory for Book
 function changeCategoryForBook(jsonParam){
 	
-	console.log(jsonParam);
-	
 	$.ajax({
 		url		: 'index.php?module=backend&controller=book&action=selectCategoryForBook',
 		type	: 'GET',
 		data	: {selectGroup:jsonParam},
 		success	: function(data){
-				
-				console.log(data);
-
+			
 				var jsonOject 	= $.parseJSON(data);
 				console.log(jsonOject);
 				

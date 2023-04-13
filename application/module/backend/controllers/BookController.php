@@ -167,7 +167,7 @@ class BookController extends Controller
         $setNumberGroupLimitControl  = 6;
         $this->_view->slbGroup = $this->_model->createdAndModified($this->_arrParam, $option = $setNumberGroupLimitControl);
 
-        $this->_view->_title        = 'User: Add';
+        $this->_view->_title        = 'Book: Add a book';
 
         // _arrParamOld use When save have error. _arrParamOld save error
         if (isset($this->_arrParam['form'])) {

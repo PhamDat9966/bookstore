@@ -97,7 +97,7 @@
     $selectGroup        = Helper::cmsSelectbox($name = 'form[group_id]', $class ='custom-select', $arrSelectGroup, $keySelect = @$dataForm['group_id'],$style = $groupStyle);
     
     // Row
-    $rowUsername        = Helper::cmsRowForm($lblName = 'Username', $input = $inputUsername,    $require = $usernameRequire);
+    $rowUsername        = Helper::cmsRowForm($lblName = 'Bookname', $input = $inputUsername,    $require = $usernameRequire);
     $rowPassword        = Helper::cmsRowForm($lblName = 'Password', $input = $inputPassword,    $require = true,            $option = @$rowPasswordHidden);
     $rowEmail           = Helper::cmsRowForm($lblName = 'Email',    $input = $inputEmail,       $require = $emailRequire);
     $rowFullname        = Helper::cmsRowForm($lblName = 'Fullname', $input = $inputFullname,    $require = $fullNameRequire);
