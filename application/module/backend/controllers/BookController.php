@@ -28,7 +28,9 @@ class BookController extends Controller
         $this->_view->slbCategory          = $this->_model->categoryInSelectbox($this->_arrParam, $numberGroup = null);
         // For created_by modufied_by
         $this->_view->listUserGroupACP     = $this->_model->listUserGroupACP($this->_arrParam);
-        
+        // Dành cho Ajax modified, modified_by
+        //$this->_model->listUserGroupACP    = $this->_model->listUserGroupACP($this->_arrParam);  
+
         //Bulk Action
 //         if (isset($_GET['selectBoxUser'])) {
             

@@ -1,2 +1,1 @@
--Băt đầu làm đến phần book, chỉnh lại phép nạp trong edit
--Kết nối search-filter trung ở views thay cho các phần search-filter ở user, category, book
+Tại book  tiếp tục tìm cách selector trong bản để thay modified và modified_by vào

@@ -25,6 +25,8 @@ class CategoryController extends Controller
         }
         
         $this->_view->listUserGroupACP  = $this->_model->listUserGroupACP($this->_arrParam);     
+        // Dành cho Ajax modified, modified_by
+        $this->_model->listUserGroupACP = $this->_model->listUserGroupACP($this->_arrParam);     
         
         // page for bulk action
         if(isset($this->_arrParam['page'])){

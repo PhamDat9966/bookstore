@@ -28,7 +28,8 @@ if(!empty($this->Items)){
         $ckb            =  '<input type="checkbox" name="cid[]" value="'.$id.'">';
         
         $nameBook         = Helper::highLight(@$this->arrParam['search'], $value['name']);
-           
+        $picture        = '<img src="'. UPLOAD_URL . 'book' . DS . $value['picture'] . '" width="150" height="150">' ;
+        
         $categoryName     = $value['category_name'];
         
         $created_by     = '';
@@ -99,6 +100,7 @@ if(!empty($this->Items)){
             <td>'.$ckb.'</td>
             <td>'.$id.'</td>
             <td>'.$nameBook.'</td>
+            <td>'.$picture.'</td>
             <td>'.$selectGroupForUser.'</td>
             <td>'.$status.'</td>
             <td>
@@ -185,7 +187,8 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 									<tr>
 										<th><input type="checkbox"></th>
 										<th>ID</th>
-										<th class="text-left">Info</th>
+										<th class="text-left">Book Name</th>
+										<th>Image</th>
 										<th>Group</th>
 										<th>Status</th>
 										<th>Created</th>

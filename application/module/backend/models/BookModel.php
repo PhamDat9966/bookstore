@@ -163,30 +163,18 @@ class BookModel extends Model
     
     public function changeCategoryForBook($arrParam, $option = null){
         
-        $modified_by = $this->_userInfo['info']['id'];
+        $modified_by        = $this->_userInfo['info']['id'];
+        $nameModified_by    = $this->_userInfo['info']['username'];
         $modified    = date('Y-m-d h:i:s',time());
         
         if($option['task'] == 'change-ajax-category'){
 
             $categoryForBook    = $arrParam['category_id'];
             $id                 = $arrParam['id'];
-            $query          = "UPDATE `$this->_tableName` SET `category_id` = '$categoryForBook' WHERE `id` = '".$id."'";
-            
-            
-            // Nếu đổi category thành công thì cập nhật modified_by và modified
+            $query          = "UPDATE `$this->_tableName` SET `category_id` = '$categoryForBook',`modified_by` = '$modified_by',`modified`='$modified' WHERE `id` = '".$id."'";
             if($this->query($query)){
-                
-                $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
-                $arrParam['form']['modified_by'] = $modified_by;
-
-                $queryModified = "UPDATE `$this->_tableName` SET `modified_by` = '$modified_by',`modified`='$modified' WHERE `id` = '".$id."'";
-                $this->query($queryModified);
-
-//                 $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
-//                 $this->update($data, array(array('id',$arrParam['form']['id'])));
+                return array('id'=>$id,'modi'=>array('modified'=>$modified,'modified_by'=>$nameModified_by),'message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
             }
-            
-            return array('id'=>$id,'message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
         }
     }
     

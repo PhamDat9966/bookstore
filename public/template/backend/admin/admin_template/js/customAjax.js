@@ -250,7 +250,12 @@ function changeCategoryForBook(jsonParam){
 		success	: function(data){
 			
 				var jsonOject 	= $.parseJSON(data);
+				var modified    = jsonOject.modi.modified;
+				var modified_by = jsonOject.modi.modified_by;
+				
 				console.log(jsonOject);
+				console.log(modified);
+				console.log(modified_by);
 				
 				var bookCategoryID = '#category-list-form #selectCategoryForBook-' + jsonOject.id;	
 				
