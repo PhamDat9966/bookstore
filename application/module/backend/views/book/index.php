@@ -63,7 +63,7 @@ if(!empty($this->Items)){
             $k++;
         }
 
-        $selectGroupForUser = Helper::cmsSelectboxForBookSelectCategory($name="selectCategoryForBook", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectCategoryForBook,$keySelect = $value['category_name'], $style = null,$idSelectBox = "selectCategoryForBook-$id",$option = 'onchange=\'changeCategoryForBook(this.value)\'');
+        $selectCategoryForBook = Helper::cmsSelectboxForBookSelectCategory($name="selectCategoryForBook", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectCategoryForBook,$keySelect = $value['category_name'], $style = null,$idSelectBox = "selectCategoryForBook-$id",$option = 'onchange=\'changeCategoryForBook(this.value)\'');
         
         $jsonArrSelectCategoryForBook = '';
         $row                = ($i % 2 == 0) ? 'odd' : 'even';
@@ -96,17 +96,17 @@ if(!empty($this->Items)){
 
         
         $listBook     .=
-        '<tr>
+        '<tr id="book-id-'.$id.'">
             <td>'.$ckb.'</td>
             <td>'.$id.'</td>
             <td>'.$nameBook.'</td>
             <td>'.$picture.'</td>
-            <td>'.$selectGroupForUser.'</td>
+            <td id="selectCategoryForBook">'.$selectCategoryForBook.'</td>
             <td>'.$status.'</td>
             <td>
                 <p class="mb-0">'.$created.'</p>
             </td>
-            <td>
+            <td id="modified">
                 <p class="mb-0">'.$modified.'</p>
             </td>
             <td>
@@ -143,13 +143,13 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                     require_once MODULE_PATH .'backend'. DS . 'views' . DS . 'search-filter' . DS .'index.php';
                 ?>
                 
-			<form action="#" method="get" name="category-list-form" id="category-list-form">	
+			<form action="#" method="get" name="book-list-form" id="book-list-form">	
 				<input type="hidden" name="module" value="backend">
                 <input type="hidden" name="controller" value="user">
                 <input type="hidden" name="action" value="list">
 			
 				<!-- List -->
-				<div class="card card-outline card-info">
+				<div class="card card-outline card-info" id="card-list">
 					<div class="card-header">
 						<h3 class="card-title">List</h3>
 

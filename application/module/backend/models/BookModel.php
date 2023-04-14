@@ -173,7 +173,7 @@ class BookModel extends Model
             $id                 = $arrParam['id'];
             $query          = "UPDATE `$this->_tableName` SET `category_id` = '$categoryForBook',`modified_by` = '$modified_by',`modified`='$modified' WHERE `id` = '".$id."'";
             if($this->query($query)){
-                return array('id'=>$id,'modi'=>array('modified'=>$modified,'modified_by'=>$nameModified_by),'message', array('class' => 'success', 'content' => 'Trạng thái Group của User đã được cập nhật'));
+                return array('id'=>$id,'modi'=>array('modified'=>$modified,'modified_by'=>$nameModified_by),'message', array('class' => 'success', 'content' => 'Trạng thái Category của Book đã được cập nhật'));
             }
         }
     }

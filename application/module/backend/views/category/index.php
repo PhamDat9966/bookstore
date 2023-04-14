@@ -52,6 +52,10 @@ if (!empty($this->Items)) {
         if(in_array($value['modified_by'], array_flip($listUserWithGroupACP))){
             $modified_by = $listUserWithGroupACP[$value['modified_by']];
         }
+        
+        $modifiedContent    = '';
+        $modifiedContent    = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';
+        $modifiedContent   .='<i class="far fa-clock"></i>  '.$modified;
 
         //$ordering       = '<input class="text-center" type="text" name="order[' . $id . ']" size="5" value="' . $value['ordering'] . '" class="text-area-order">';
         $ordering       = Helper::cmsInput('number', $id, $value['ordering'],'category-ordering-'.$id.'', null, null, 'style="width: 3em"');
@@ -60,7 +64,7 @@ if (!empty($this->Items)) {
         $deleteAction   = Helper::showItemAction('backend', 'category', 'delete', $id, $statusAction = 'delete');
 
         $listCategory       .=
-            '<tr class=' . $row . '>
+            '<tr class=' . $row . ' id="category-id-'.$id.'">
                 <td>' . $ckb . '</td>
                 <td>' . $id . '</td>
                 <td>' . $name . '</td>
@@ -71,9 +75,8 @@ if (!empty($this->Items)) {
                     <p class="mb-0"><i class="far fa-user"></i> ' . $created_by . '</p>
                     <p class="mb-0"><i class="far fa-clock"></i> ' . $created . '</p>
                 </td>
-                <td>
-                    <p class="mb-0"><i class="far fa-user"></i> ' . $modified_by . '</p>
-                    <p class="mb-0"><i class="far fa-clock"></i> ' . $modified . '</p>
+                <td id="modified">
+                    <p class="mb-0">' . $modifiedContent . '</p>
                 </td>
                 <td>
                     ' . $editAction . '

@@ -226,13 +226,23 @@ $(document).ready(function () {
     	    data:{paramOrdering:orderingJSON},
     		success	: function(data){
     				var jsonOject 	= JSON.parse(data);
-    			
+    				var id			= jsonOject.id;	
+    				var modified    = jsonOject.modi.modified;
+    				var modified_by = jsonOject.modi.modified_by;
+    			    console.log(jsonOject);
     				var element = '#category-list-form .card-body .table-responsive #category-ordering-' + jsonOject.id;	
     				
     				$(element).attr('value',jsonOject.ordering);
     				
     				$(element).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
     				//console.log(element);
+    				
+    				// Cập nhật lại modified
+    				//var modifiedText = '#category-list-form .table-responsive table tbody tr#category-id-'+id+' td#modified'; 
+    				var modifiedText = '#category-list-form tr#category-id-'+id+' td#modified'; // Selector theo id.
+    				var textNew      = '<p class="mb-0"><i class="far fa-user"></i>  '+modified_by+'<br><i class="far fa-clock"></i>  '+modified+'</p>';
+    				$(modifiedText).empty();
+    				$(modifiedText).append(textNew);
     			
     			}
     	})
@@ -252,12 +262,14 @@ function changeCategoryForBook(jsonParam){
 				var jsonOject 	= $.parseJSON(data);
 				var modified    = jsonOject.modi.modified;
 				var modified_by = jsonOject.modi.modified_by;
+				var id 			= jsonOject.id;
 				
 				console.log(jsonOject);
 				console.log(modified);
 				console.log(modified_by);
 				
-				var bookCategoryID = '#category-list-form #selectCategoryForBook-' + jsonOject.id;	
+				var bookCategoryID = '#book-list-form tr#book-id-'+id+' td#selectCategoryForBook #selectCategoryForBook-'+id;	
+				//var bookCategoryID = '#book-list-form #card-list .table-responsive #myTable tbody tr td#selectCategoryForBook #selectCategoryForBook-12';
 				
 				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>"+jsonOject[1].content+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
 				if($("#inAlert").length > 0){
@@ -266,7 +278,12 @@ function changeCategoryForBook(jsonParam){
 				$("#alert").prepend(element);
 				
 				$(bookCategoryID).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
-				
+
+				// Cập nhật lại modified
+				var modifiedContent = '#book-list-form tr#book-id-'+id+' td#modified'; //Selector theo id
+				var textNew      	= '<p class="mb-0"><i class="far fa-user"></i>  '+modified_by+'<br><i class="far fa-clock"></i>  '+modified+'</p>';
+				$(modifiedContent).empty();
+				$(modifiedContent).append(textNew);
 			}
 	})
 	
