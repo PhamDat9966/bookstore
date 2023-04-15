@@ -13,7 +13,7 @@ class BookController extends Controller
     }
 
     public function listAction()
-    {   
+    {          
         ob_start();
 
         // Clear Search
