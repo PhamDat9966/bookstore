@@ -32,7 +32,7 @@ class BookController extends Controller
         //$this->_model->listUserGroupACP    = $this->_model->listUserGroupACP($this->_arrParam);  
 
         //Bulk Action
-        if (isset($this->_arrParam['selectCategory'])) {
+        if (isset($this->_arrParam['selectBoxBook'])) {
             
             $arrCid  = ''; 
             if(!empty($this->_arrParam['cid'])){
@@ -41,17 +41,17 @@ class BookController extends Controller
                 }
             }
             
-            if ($this->_arrParam['selectCategory'] == 'delete') {
+            if ($this->_arrParam['selectBoxBook'] == 'delete') {
                 URL::redirect('backend', 'book', 'deleteMult',NULL, $arrCid);
             }
 
-            if ($this->_arrParam['selectCategory'] == 'action') {
+            if ($this->_arrParam['selectBoxBook'] == 'action') {
 
                 $strRequest = $arrCid.'&statusChoose=1';                
                 URL::redirect('backend', 'book', 'status', NULL ,$strRequest);
             }
 
-            if ($this->_arrParam['selectCategory'] == 'inactive') {
+            if ($this->_arrParam['selectBoxBook'] == 'inactive') {
 
                 $strRequest = $arrCid.'&statusChoose=0';
                 URL::redirect('backend', 'book', 'status', NULL ,$strRequest);

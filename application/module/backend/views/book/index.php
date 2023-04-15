@@ -14,7 +14,7 @@ $listUserWithGroupACP = $this->listUserGroupACP;
 
 // Bulk Action
 $arrSelectBox       = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
-$selection          = Helper::cmsSelectbox('selectBoxUser', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBoxUser');
+$selection          = Helper::cmsSelectbox('selectBoxBook', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBoxBook');
 $buttonSelection    = Helper::cmsButtonSubmit($type ="submit", $class = 'btn btn-info' ,$textOutfit = "Apply", $name = "bulk" , $value = "bulk" , $id = 'bulkApplyUser');
 
 if(empty($this->Items)){
@@ -154,10 +154,10 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
                     require_once MODULE_PATH .'backend'. DS . 'views' . DS . 'search-filter' . DS .'index.php';
                 ?>
                 
-			<form action="#" method="get" name="book-list-form" id="book-list-form">	
-				<input type="hidden" name="module" value="backend">
-                <input type="hidden" name="controller" value="user">
-                <input type="hidden" name="action" value="list">
+			<form action="#" method="post" name="book-list-form" id="book-list-form">	
+<!-- 				<input type="hidden" name="module" value="backend"> -->
+<!--                 <input type="hidden" name="controller" value="user"> -->
+<!--                 <input type="hidden" name="action" value="list"> -->
 			
 				<!-- List -->
 				<div class="card card-outline card-info" id="card-list">
@@ -196,7 +196,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 							<table class="table align-middle text-center table-bordered">
 								<thead>
 									<tr>
-										<th><input type="checkbox"></th>
+										<th><input type="checkbox" name="checkall-toggle"></th>
 										<th>ID</th>
 										<th class="text-left">Book Name</th>
 										<th>Image</th>
