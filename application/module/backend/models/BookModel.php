@@ -34,28 +34,33 @@ class BookModel extends Model
         //$totalItemsCount = $arrParam['count']['allStatus'];
         
         $queryContent   = [];
-        $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`ordering`,`c`.`name` AS `category_name`";             
+        $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";             
         $queryContent[] = "FROM `$this->_tableName` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
         $queryContent[] = "WHERE `b`.`id` > 0";
         
         if(!empty($arrParam['search'])){
             $keyword            = '"%'.$arrParam['search'].'%"';
-            $queryContent[]     = "AND (`name` LIKE $keyword)";
+            $queryContent[]     = "AND (`b`.`name` LIKE $keyword)";
         }
         
         if(isset($arrParam['filter'])){
-            if($arrParam['filter'] == 'active') $queryContent[]    = 'AND `u`.`status`= 1';
-            if($arrParam['filter'] == 'inactive') $queryContent[]    = 'AND `u`.`status`= 0';
+            if($arrParam['filter'] == 'active')     $queryContent[]    = 'AND `b`.`status`= 1';
+            if($arrParam['filter'] == 'inactive')   $queryContent[]    = 'AND `b`.`status`= 0';
         }
         
-        if(isset($arrParam['selectGroup'])){
-            if($arrParam['selectGroup'] != '0'){
-                $queryContent[]    = "AND `u`.`group_id`= '".$arrParam['selectGroup']."'";
+        if(isset($arrParam['selectCategory'])){
+            if($arrParam['selectCategory'] != '0'){
+                $queryContent[]    = "AND `b`.`category_id`= '".$arrParam['selectCategory']."'";
             }
         }
         
-        $queryContent[]     = 'ORDER BY `id` ASC';
+        if(isset($arrParam['selectSpecial'])){
+            if($arrParam['selectSpecial'] == 1)     $queryContent[]    = 'AND `b`.`special`= 1';
+            if($arrParam['selectSpecial'] == 0)     $queryContent[]    = 'AND `b`.`special`= 0';
+        }
         
+        $queryContent[]     = 'ORDER BY `ordering` ASC';
+    
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
         
@@ -65,6 +70,26 @@ class BookModel extends Model
         
         $result = $this->fetchAll($queryContent);
         return $result;
+    }
+    
+    public function changeOrdering($arrParam, $option = null){
+        
+        $modified_by        = $this->_userInfo['info']['id'];
+        $nameModified_by    = $this->_userInfo['info']['username'];
+        $modified           = date('Y-m-d h:i:s',time());
+        $modifiedAjax       = date('h:i:s d-m-Y',time());
+        
+        if($option['task'] == 'change-ajax-ordering'){
+            $ojectOrdering = json_decode($arrParam['paramOrdering']);
+            
+            $id             = $ojectOrdering->id;
+            $valueOrdering  = $ojectOrdering->value;
+            $query    = "UPDATE `$this->_tableName` SET `ordering` = $valueOrdering, `modified_by` = '$modified_by',`modified`='$modified' WHERE `id` = '".$id."'";
+            $this->query($query);
+            
+            return array('id'=>$id,'modi'=>array('modified'=>$modifiedAjax,'modified_by'=>$nameModified_by),'ordering'=>$valueOrdering,'url'=>URL::createLink('backend','category','ajaxOrdering',array('id'=>$id,'ordering'=>$valueOrdering)));
+        }
+        
     }
     
     public function countItemsPaginator($arrParam,$option = null)
@@ -155,6 +180,7 @@ class BookModel extends Model
             if(!empty($numberGroup)){
                 $query[] = "LIMIT 0,".$numberGroup."";
             }
+            $query[]     = 'ORDER BY `ordering` ASC';
             $query       = implode(" ", $query);
             $result      = $this->fetchPairs($query);
             return $result;
@@ -226,6 +252,20 @@ class BookModel extends Model
         }
     }
     
+    public function changeSpecial($arrParam, $option = null){
+        
+        $modified_by = $this->_userInfo['info']['id'];
+        $modified    = date('Y-m-d h:i:s',time());
+        
+        if($option['task'] == 'change-ajax-special'){
+            $special  = ($arrParam['special'] == 0) ? 1 : 0 ;
+            $id       = $arrParam['id'];
+            $query    = "UPDATE `$this->table` SET `special` = $special,`modified_by` = $modified_by,`modified` = '$modified' WHERE `id`= $id";
+            $this->query($query);
+            
+            return array('id'=>$id,'special'=>$special,'url'=>URL::createLink('backend','book','ajaxSpecial',array('id'=>$id,'special'=>$special)));
+        }
+    }
     
     
     public function pagination($totalItems, $pagination,$arrParam)

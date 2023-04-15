@@ -1,4 +1,5 @@
 <?php
+/* CATEGORY */
 // echo "<pre>View";
 // print_r($this->arrParam);
 // echo "</pre>";

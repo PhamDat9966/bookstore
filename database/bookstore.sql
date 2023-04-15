@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 12, 2023 at 09:21 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 15, 2023 lúc 09:33 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bookstore`
+-- Cơ sở dữ liệu: `bookstore`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book`
+-- Cấu trúc bảng cho bảng `book`
 --
 
 CREATE TABLE `book` (
@@ -45,16 +45,16 @@ CREATE TABLE `book` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `book`
+-- Đang đổ dữ liệu cho bảng `book`
 --
 
 INSERT INTO `book` (`id`, `name`, `description`, `price`, `special`, `sale_off`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `category_id`) VALUES
-(1, 'Lập trình PHP', NULL, '300000', 1, 0, NULL, '2023-04-12 12:41:42', 'admin', '2023-04-12 12:41:42', NULL, 0, 10, 24),
-(3, 'Toán Lớp 12', NULL, '10000', 0, 0, NULL, '2023-04-12 12:43:32', NULL, '2023-04-12 12:43:32', NULL, 0, 10, 25),
-(12, 'UnrealScript Game Programming Cookbook', 'Designed for high-level game programming, UnrealScript is used in tandem with the Unreal Engine to provide a scripting language that is ideal for creating your very own unique gameplay experience. By learning how to replicate some of the advanced techniques used in today\'s modern games, you too can take your game to the next level and stand out from the crowd.\r\n\r\nBy providing a series of engaging and practical recipes, this \"UnrealScript Game Programming Cookbook\" will show you how to leverage the advanced functionality within UDK. You\'ll be shown how to implement a wide variety of practical features using the high-level scripting language ranging from designing your own HUD, creating your very own custom tailored weapons, to generating pathfinding solutions, and even meticulously crafting your own AI.', '25000', 0, 20, 'mj5oqp18.jpg', '2013-12-12 00:00:00', 'admin', '2013-12-12 00:00:00', 'admin', 1, 3, 4),
-(13, 'Functional Programming in Scala', 'Functional programming (FP) is a programming style emphasizing functions that return consistent and predictable results regardless of a program\'s state. As a result, functional code is easier to test and reuse, simpler to parallelize, and less prone to bugs. Scala is an emerging JVM language that offers strong support for FP. Its familiar syntax and transparent interoperability with existing Java libraries make Scala a great place to start learning FP.\r\n\r\nFunctional Programming in Scala is a serious tutorial for programmers looking to learn FP and apply it to the everyday business of coding. The book guides readers from basic techniques to advanced topics in a logical, concise, and clear progression. In it, you\'ll find concrete examples and exercises that open up the world of functional programming.', '35000', 0, 3, '7kyub3oi.jpg', '2013-12-12 00:00:00', 'admin', '2013-12-13 00:00:00', 'admin', 1, 1, 3),
-(14, 'iOS 7 Programming Fundamentals', 'If you\'re getting started with iOS development, or want a firmer grasp of the basics, this practical guide provides a clear view of its fundamental building blocksâ€”Objective-C, Xcode, and Cocoa Touch. You\'ll learn object-oriented concepts, understand how to use Apple\'s development tools, and discover how Cocoa provides the underlying functionality iOS apps need to have. Dozens of example projects are available at GitHub.\r\n\r\nOnce you master the fundamentals, you\'ll be ready to tackle the details of iOS app development with author Matt Neuburg\'s companion guide.', '45000', 0, 0, 'm3brd79l.jpg', '2013-12-12 00:00:00', 'admin', '2013-12-12 00:00:00', 'admin', 1, 2, 2),
-(15, 'iOS 7 Programming Cookbook', 'Overcome the vexing issues you\'re likely to face when creating apps for the iPhone, iPad, or iPod touch. With new and thoroughly revised recipes in this updated cookbook, you\'ll quickly learn the steps necessary to work with the iOS 7 SDK, including solutions for bringing real-world physics and movement to your apps with UIKit Dynamics APIs.\r\n\r\nYou\'ll learn hundreds of techniques for storing and protecting data, sending and receiving notifications, enhancing and animating graphics, managing files and folders, and many other options. Each recipe includes sample code you can use right away.', '44000', 0, 0, 'qx5m9u6t.jpg', '2013-12-12 00:00:00', 'admin', '2013-12-13 00:00:00', 'admin', 1, 3, 3),
+(1, 'Lập trình PHP', 'laptrinhphp.png', '300000', 1, 0, 'laptrinhphp.png', '2023-04-12 12:41:42', 'admin', '2023-04-15 08:09:00', '1', 0, 1, 24),
+(3, 'Toán Lớp 12', 'toan12.jpg', '10000', 0, 0, 'toan12.jpg', '2023-04-12 12:43:32', NULL, '2023-04-15 07:47:06', '1', 1, 2, 21),
+(12, 'UnrealScript Game Programming Cookbook', 'Designed for high-level game programming, UnrealScript is used in tandem with the Unreal Engine to provide a scripting language that is ideal for creating your very own unique gameplay experience. By learning how to replicate some of the advanced techniques used in today\'s modern games, you too can take your game to the next level and stand out from the crowd.\r\n\r\nBy providing a series of engaging and practical recipes, this \"UnrealScript Game Programming Cookbook\" will show you how to leverage the advanced functionality within UDK. You\'ll be shown how to implement a wide variety of practical features using the high-level scripting language ranging from designing your own HUD, creating your very own custom tailored weapons, to generating pathfinding solutions, and even meticulously crafting your own AI.', '25000', 0, 20, 'mj5oqp18.jpg', '2013-12-12 00:00:00', 'admin', '2023-04-14 08:42:28', '1', 1, 3, 23),
+(13, 'Functional Programming in Scala', 'Functional programming (FP) is a programming style emphasizing functions that return consistent and predictable results regardless of a program\'s state. As a result, functional code is easier to test and reuse, simpler to parallelize, and less prone to bugs. Scala is an emerging JVM language that offers strong support for FP. Its familiar syntax and transparent interoperability with existing Java libraries make Scala a great place to start learning FP.\r\n\r\nFunctional Programming in Scala is a serious tutorial for programmers looking to learn FP and apply it to the everyday business of coding. The book guides readers from basic techniques to advanced topics in a logical, concise, and clear progression. In it, you\'ll find concrete examples and exercises that open up the world of functional programming.', '35000', 0, 3, '7kyub3oi.jpg', '2013-12-12 00:00:00', 'admin', '2023-04-15 09:31:19', '1', 1, 3, 21),
+(14, 'iOS 7 Programming Fundamentals', 'If you\'re getting started with iOS development, or want a firmer grasp of the basics, this practical guide provides a clear view of its fundamental building blocksâ€”Objective-C, Xcode, and Cocoa Touch. You\'ll learn object-oriented concepts, understand how to use Apple\'s development tools, and discover how Cocoa provides the underlying functionality iOS apps need to have. Dozens of example projects are available at GitHub.\r\n\r\nOnce you master the fundamentals, you\'ll be ready to tackle the details of iOS app development with author Matt Neuburg\'s companion guide.', '45000', 1, 0, 'm3brd79l.jpg', '2013-12-12 00:00:00', 'admin', '2023-04-15 09:30:47', '1', 1, 2, 21),
+(15, 'iOS 7 Programming Cookbook', 'Overcome the vexing issues you\'re likely to face when creating apps for the iPhone, iPad, or iPod touch. With new and thoroughly revised recipes in this updated cookbook, you\'ll quickly learn the steps necessary to work with the iOS 7 SDK, including solutions for bringing real-world physics and movement to your apps with UIKit Dynamics APIs.\r\n\r\nYou\'ll learn hundreds of techniques for storing and protecting data, sending and receiving notifications, enhancing and animating graphics, managing files and folders, and many other options. Each recipe includes sample code you can use right away.', '44000', 1, 0, 'qx5m9u6t.jpg', '2013-12-12 00:00:00', 'admin', '2023-04-15 09:19:00', '1', 1, 3, 23),
 (16, 'Advanced Programming in the UNIX Environment, 3rd Edition', 'For more than twenty years, serious C programmers have relied on one book for practical, in-depth knowledge of the programming interfaces that drive the UNIX and Linux kernels: W. Richard Stevens\' Advanced Programming in the UNIX Environment. Now, once again, Rich\'s colleague Steve Rago has thoroughly updated this classic work. The new third edition supports today\'s leading platforms, reflects new technical advances and best practices, and aligns with Version 4 of the Single UNIX Specification.\r\n\r\nSteve carefully retains the spirit and approach that have made this book so valuable. Building on Rich\'s pioneering work, he begins with files, directories, and processes, carefully laying the groundwork for more advanced techniques, such as signal handling and terminal I/O. He also thoroughly covers threads and multithreaded programming, and socket-based IPC.', '36000', 1, 2, '2yo48fgm.jpg', '2013-12-12 00:00:00', 'admin', '2013-12-13 00:00:00', 'admin', 1, 3, 3),
 (17, 'jMonkeyEngine 3.0 Beginner', 'jMonkeyEngine 3.0 is a powerful set of free Java libraries that allows you to unlock your imagination, create 3D games and stunning graphics. Using jMonkeyEngine\'s library of time-tested methods, this book will allow you to unlock its potential and make the creation of beautiful interactive 3D environments a breeze.\r\n\r\njMonkeyEngine 3.0 Beginner\'s Guide teaches aspiring game developers how to build modern 3D games with Java. This primer on 3D programming is packed with best practices, tips and tricks and loads of example code. Progressing from elementary concepts to advanced effects, budding game developers will have their first game up and running by the end of this book.', '36000', 0, 12, 'cq7k0i4j.jpg', '2013-12-12 00:00:00', 'admin', '2013-12-12 00:00:00', 'admin', 1, 3, 2),
 (18, 'Scala Cookbook', 'Save time and trouble when using Scala to build object-oriented, functional, and concurrent applications. With more than 250 ready-to-use recipes and 700 code examples, this comprehensive cookbook covers the most common problems you\'ll encounter when using the Scala language, libraries, and tools. It\'s ideal not only for experienced Scala developers, but also for programmers learning to use this JVM language.\r\n\r\nAuthor Alvin Alexander (creator of DevDaily.com) provides solutions based on his experience using Scala for highly scalable, component-based applications that support concurrency and distribution.', '46000', 0, 0, 'zpg6a0uw.jpg', '2013-12-12 00:00:00', 'admin', '2013-12-12 00:00:00', 'admin', 1, 10, 4),
@@ -68,7 +68,7 @@ INSERT INTO `book` (`id`, `name`, `description`, `price`, `special`, `sale_off`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -85,15 +85,15 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `showhome`, `ordering`) VALUES
-(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '2023-04-10', '1', 1, 0, 1),
-(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '2023-04-10', '1', 1, 0, 2),
-(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 0, 3),
-(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '2023-03-30', '1', 1, 0, 4),
-(25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', '1', '2023-04-10', '1', 0, 0, 5),
+(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '2023-04-15', '1', 1, 0, 1),
+(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '0000-00-00', '1', 1, 0, 3),
+(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '2023-04-14', '1', 1, 0, 4),
+(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '2023-04-14', '1', 1, 0, 4),
+(25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', '1', '2023-04-14', '1', 0, 0, 4),
 (26, 'Triếc Học', '08tgxj9s.png', '2023-03-30', '1', '2023-04-10', '1', 0, 0, 6),
 (27, 'Self Help', 'n3o1p82j.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 0, 7),
 (28, 'Tiểu Sử - Hồi ký', '7p15v6x4.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 0, 8),
@@ -103,7 +103,7 @@ INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modif
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group`
+-- Cấu trúc bảng cho bảng `group`
 --
 
 CREATE TABLE `group` (
@@ -120,7 +120,7 @@ CREATE TABLE `group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `group`
+-- Đang đổ dữ liệu cho bảng `group`
 --
 
 INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `privilege_id`) VALUES
@@ -140,7 +140,7 @@ INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modifi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `privilege`
+-- Cấu trúc bảng cho bảng `privilege`
 --
 
 CREATE TABLE `privilege` (
@@ -152,7 +152,7 @@ CREATE TABLE `privilege` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `privilege`
+-- Đang đổ dữ liệu cho bảng `privilege`
 --
 
 INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
@@ -177,7 +177,7 @@ INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
@@ -198,11 +198,11 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `user`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `register_date`, `register_ip`, `status`, `ordering`, `group_id`) VALUES
-(1, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', '1', '2023-03-21 09:44:19', '1', '2023-02-25 14:39:22', NULL, 1, 10, 23),
+(1, 'admin', 'admin@gmail.com', 'admin', '12345', '2022-12-28 00:00:00', '1', '2023-03-21 09:44:19', '1', '2023-02-25 14:39:22', NULL, 1, 10, 1),
 (2, 'manager', 'manager@gmail.com', 'Manager', '12345', '2022-12-28 02:55:00', '5', '2023-03-09 03:39:47', '5', '2023-02-25 14:39:22', NULL, 0, 10, 2),
 (3, 'member', 'member@gmail.com', 'Member', '12345', '2022-12-28 08:55:00', '1', '2023-03-09 08:46:07', '1', '2023-02-25 14:39:22', NULL, 0, 10, 3),
 (4, 'register', 'register@gmail.com', 'Register', '12345', '2022-12-28 10:04:00', '5', '2023-04-03 12:10:08', '1', '2023-02-25 14:39:22', NULL, 0, 10, 4),
@@ -213,69 +213,69 @@ INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`
 (42, 'fouder02', 'phamdat999666@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 3);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `book`
+-- Chỉ mục cho bảng `book`
 --
 ALTER TABLE `book`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `group`
+-- Chỉ mục cho bảng `group`
 --
 ALTER TABLE `group`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `privilege`
+-- Chỉ mục cho bảng `privilege`
 --
 ALTER TABLE `privilege`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `book`
+-- AUTO_INCREMENT cho bảng `book`
 --
 ALTER TABLE `book`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `group`
+-- AUTO_INCREMENT cho bảng `group`
 --
 ALTER TABLE `group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
--- AUTO_INCREMENT for table `privilege`
+-- AUTO_INCREMENT cho bảng `privilege`
 --
 ALTER TABLE `privilege`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;

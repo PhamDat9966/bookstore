@@ -1,5 +1,9 @@
 <?php
+
 // THIS IS FILTER AND SEARCH FOR ALL CONTROLLER
+// echo "<pre>filter";
+// print_r($this);
+// echo "</pre>";
 
 //Filter
 $allItem      = @$this->_count['allStatus'];
@@ -92,7 +96,7 @@ $formSearch        = '<div class="input-group">
 $selectBoxFilterSearch = '';
 
 /*---------group----------*/
-if($this->_tag == 'group'){
+if($this->arrParam['controller'] == 'group'){
     $selectGroupACP = 'selectGroupACP';
     if(isset($this->arrParam['selectGroupACP'])){
         $selectGroupACP = $this->arrParam['selectGroupACP'];
@@ -102,7 +106,7 @@ if($this->_tag == 'group'){
 }
 
 /*---------user----------*/
-if($this->_tag == 'user'){
+if($this->arrParam['controller'] == 'user'){
     
     // filter Group ACP
     $selectGroupFirst = '0';
@@ -113,9 +117,47 @@ if($this->_tag == 'user'){
     
     //Created selectgroup Array
     $selectGroupFilter          = $this->slbGroup;
-    $arrGroup                   = array_merge($arrGroup,$selectGroupFilter);
+    //$arrGroup                   = array_merge($arrGroup,$selectGroupFilter);
+    foreach ($selectGroupFilter as $keyGroup=>$valueGroup){
+        $arrGroup[$keyGroup] = $valueGroup;
+    }
     $selectBoxFilterSearch      = Helper::cmsSelectbox('selectGroup', 'form-control custom-select',$arrValue = $arrGroup , $keySelect = $selectGroupFirst, null,$id = 'selectGroup');
 }
+
+if($this->arrParam['controller'] == 'book'){
+    
+    /* filter Category */
+    $selectCategoryFirst = '0';
+    $arrCategory         = array('0'=>'- Select Category -');
+    if(isset($this->arrParam['selectCategory'])){
+        $selectCategoryFirst  = $this->arrParam['selectCategory'];
+    }
+    
+    // Mảng Category làm dữ liệu lọc
+    $selectCategoryFilter          = $this->slbCategory;
+    
+    foreach ($selectCategoryFilter as $keyCategory=>$valueCategory){
+        $arrCategory[$keyCategory] = $valueCategory;
+    }
+    $categoryFilter = Helper::cmsSelectbox('selectCategory', 'form-control custom-select',$arrValue = $arrCategory , $keySelect = $selectCategoryFirst, null,$id = 'selectCategory');
+
+    /* filter Special */
+    $selectSpecial = '- Select Special -';
+    if(isset($this->arrParam['selectSpecial'])){
+        $selectSpecial = $this->arrParam['selectSpecial'];
+    }
+    $arrSpecial        = ['selectSpecial'=>'- Select Special -','0'=>'No','1'=>'Yes'];
+    
+    $selectBoxFilterSearch     = Helper::cmsSelectbox('selectSpecial', 'form-control custom-select', $arrSpecial ,  $keySelect = $selectSpecial, null,$id = 'selectSpecial');
+    /* end filter Special*/
+    
+    $selectBoxFilterSearch      = '<div class="row">
+                                        <div class="col-6">'.$categoryFilter.'</div>
+                                        <div class="col-6">'.$selectBoxFilterSearch.'</div>
+                                   </div>';
+}
+
+
 
 $refreshPage = '<input type="hidden" name="page" value="1">';
 ?>

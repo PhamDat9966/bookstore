@@ -32,8 +32,10 @@
         		<?php 
         		      require_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . $this->_fileView . '.php';
          		?>
-			</div>	
-	       <!-- END WRAPPER -->
+			</div>
+		</div>		
+       <!-- END WRAPPER -->
+	       
 
 	</div><!-- END WRAPPER -->
 	<!-- FOOTER -->

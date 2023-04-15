@@ -25,9 +25,11 @@
 			<?php include_once 'html/page-header.php';?>
 			
 			<!--MAIN CONTENT -->
-				<?php 
-				   include_once 'html/main-group-list.php';
-				?>
+				<div class="container-fluid">
+                	<?php 
+                	  require_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . $this->_fileView . '.php';
+                	?>
+                </div>
 			<!--END MAIN CONTENT -->
 			
 		</div>	

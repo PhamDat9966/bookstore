@@ -1,4 +1,5 @@
 <?php 
+/* BOOK */
 
 // echo "<pre>bookview";
 // print_r($this);
@@ -31,6 +32,9 @@ if(!empty($this->Items)){
         $picture        = '<img src="'. UPLOAD_URL . 'book' . DS . $value['picture'] . '" width="150" height="150">' ;
         
         $categoryName     = $value['category_name'];
+        
+        $price            = $value['price'];
+        $saleOff          = $value['sale_off'] . '%';
         
         $created_by     = '';
         $modified_by    = '';
@@ -67,11 +71,19 @@ if(!empty($this->Items)){
         
         $jsonArrSelectCategoryForBook = '';
         $row                = ($i % 2 == 0) ? 'odd' : 'even';
-
-        $status             = '';
         
+        // STATUS
+        $status             = '';
         $urlstatus          = URL::createLink('backend','book','ajaxUserStatus',array('id'=>$id,'status'=>$value['status']));
         $status             = Helper::cmsStatusUser($value['status'], $urlstatus ,$id);
+        
+        // SPECIAL
+        $special             = '';
+        $urlspecial          = URL::createLink('backend','book','ajaxSpecial',array('id'=>$id,'special'=>$value['special']));
+        $special             = Helper::cmsSpecial($value['special'], $urlspecial  ,$id);
+        
+        // ORDERING
+        $ordering       = Helper::cmsInput('number', $id, $value['ordering'],'book-ordering-'.$id.'', null, null, 'style="width: 3em"');
         
         //CREATED:
         // Time create
@@ -82,11 +94,9 @@ if(!empty($this->Items)){
         
         //MODIFIED
         // Time modified
-        $arrModifiedTime    = explode(' ', $value['modified']);
-        
-        //$modified      = Helper::formatDate('d-m-Y', $value['modified']);
-        $modified           = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';
-        $modified          .='<i class="far fa-clock"></i>  '.$arrModifiedTime[1].' '.Helper::formatDate('d-m-Y', $arrModifiedTime[0]);
+//         $arrModifiedTime    = explode(' ', $value['modified']);
+//         $modified           = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';
+//         $modified          .='<i class="far fa-clock"></i>  '.$arrModifiedTime[1].' '.Helper::formatDate('d-m-Y', $arrModifiedTime[0]);
         
         //$editAction         = Helper::showItemAction('backend', 'user', 'form', $id, 'edit');
         $editBookLink   = URL::createLink('backend', 'book', 'form', $parram = array('task'=>'edit','id'=>$id));
@@ -99,15 +109,16 @@ if(!empty($this->Items)){
         '<tr id="book-id-'.$id.'">
             <td>'.$ckb.'</td>
             <td>'.$id.'</td>
-            <td>'.$nameBook.'</td>
+            <td class="text-left">'.$nameBook.'</td>
             <td>'.$picture.'</td>
+            <td>'.$price.'</td>
+            <td>'.$saleOff.'</td>
             <td id="selectCategoryForBook">'.$selectCategoryForBook.'</td>
             <td>'.$status.'</td>
+            <td>'.$special.'</td>
+            <td id="td-oder-'.$id.'">'.$ordering.'</td>    
             <td>
                 <p class="mb-0">'.$created.'</p>
-            </td>
-            <td id="modified">
-                <p class="mb-0">'.$modified.'</p>
             </td>
             <td>
                 '.$editBook.'
@@ -189,10 +200,13 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 										<th>ID</th>
 										<th class="text-left">Book Name</th>
 										<th>Image</th>
-										<th>Group</th>
+										<th>Price</th>
+										<th>Sale Off</th>
+										<th>Category</th>
 										<th>Status</th>
+										<th>Special</th>
+										<th>Ordering</th>
 										<th>Created</th>
-										<th>Modified</th>
 										<th>Action</th>
 									</tr>
 								</thead>

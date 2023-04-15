@@ -1,4 +1,5 @@
 <?php
+/* GROUP */
 
 $listUserWithGroupACP = $this->listUserGroupACP;
 if(isset($this->arrParam['clear'])) $this->arrParam['search'] = NULL;

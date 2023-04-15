@@ -38,49 +38,6 @@ function changeGroupACP(link){
 	})
 }
 
-
-//$(window).load(function changeGroupACP(link){
-//	
-//	$.ajax({
-//		url		: link,
-//		type	: 'GET',
-//		success	: function(data){	
-//				/*
-//				 * <a href="javascript:changeGroupACP('index.php?module=backend&amp;controller=group&amp;action=ajaxGroupACP&amp;id=4&amp;group_acp=0');" id="GroupACP-4" class="btn btn-danger rounded-circle btn-sm">
-//			            <i class="fas fa-minus"></i>
-//			        </a>
-//				 */
-//			
-//				var dataOject = JSON.parse(data);
-//				var id        = dataOject.id;
-//				var group_acb = dataOject.group_acb;
-//				var url       = dataOject.url;
-//				
-//				var element = 'a#GroupACP-' + id;
-//				var classRemove = 'btn-success';
-//				var classAdd 	= 'btn-danger'
-//				var iclassRemove	= 'fa-check';
-//				var iclassAdd		= 'fa-minus';
-//				
-//				if(group_acb==1){
-//					classRemove 	= 'btn-danger';
-//					classAdd 		= 'btn-success';
-//					iclassRemove	= 'fa-minus';
-//					iclassAdd		= 'fa-check';
-//				}
-//				
-//				$(element).attr('href',"javascript:changeGroupACP('"+url+"')");
-//				$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
-//				$(element).removeClass(classRemove).addClass(classAdd).notify("Cập nhật thành công",{ position:"top", className:"success" });
-//				//$('#GroupACP-' + id).removeClass(classRemove).addClass(classAdd).notify("Cập nhật thành công",{ position:"top", className:"success" });
-//
-//			}
-//	})
-//	
-//})
-
-
-
 function changeStatus(link){
 	$(document).ready(function() {
 		$.ajax({
@@ -287,5 +244,92 @@ function changeCategoryForBook(jsonParam){
 			}
 	})
 	
+}
+
+//AJAX BOOK ORDERING
+$(document).ready(function () {
+    $("#book-list-form").find("input,textarea,select").on('input', function () {
+    	console.log(this);
+    	
+        const ordering		= {};
+        ordering.id    = this.name;
+        ordering.value = this.value;
+        
+        orderingJSON   =  JSON.stringify(ordering);
+        $.ajax({
+    		url		: 'index.php?module=backend&controller=book&action=ajaxOrdering',
+    		type	: 'GET',
+    	    data:{paramOrdering:orderingJSON},
+    		success	: function(data){
+    				var jsonOject 	= JSON.parse(data);
+    				var id			= jsonOject.id;	
+    				var modified    = jsonOject.modi.modified;
+    				var modified_by = jsonOject.modi.modified_by;
+    			    console.log(jsonOject);
+    				var element = '#book-list-form .card-body .table-responsive #book-ordering-' + jsonOject.id;	
+    				
+    				$(element).attr('value',jsonOject.ordering);
+    				
+    				$(element).notify("Ordering đã được cập nhật!",{position:"top center",className:"success",autoHideDelay: 55000});
+    				//console.log(element);
+    				
+    				// Cập nhật lại modified
+    				//var modifiedText = '#category-list-form .table-responsive table tbody tr#category-id-'+id+' td#modified'; 
+    				var modifiedText = '#category-list-form tr#category-id-'+id+' td#modified'; // Selector theo id.
+    				var textNew      = '<p class="mb-0"><i class="far fa-user"></i>  '+modified_by+'<br><i class="far fa-clock"></i>  '+modified+'</p>';
+    				$(modifiedText).empty();
+    				$(modifiedText).append(textNew);
+    				
+    				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>Ordering đã được cập nhật!<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
+    				if($("#inAlert").length > 0){
+    					$("#inAlert").remove();
+    				}
+    				$("#alert").prepend(element);
+    			
+    			}
+    	})
+        
+    });
+});
+
+//Book change Special
+function changeSpecial(link){
+	$.ajax({
+		url		: link,
+		type	: 'GET',
+		success	: function(data){	
+				/*
+				 * <a href="javascript:changeStatus('index.php?module=backend&amp;controller=group&amp;action=ajaxStatus&amp;id=2&amp;status=1');" id="status-2" class="btn btn-success rounded-circle btn-sm oncli">
+					    <i class="fas fa-check"></i>
+					</a>
+				 */
+				console.log(data);
+				
+				var dataOject = JSON.parse(data);
+				var id        = dataOject.id;
+				var special   = dataOject.special;
+				var url       = dataOject.url;
+				
+				var element = '#book-list-form a#special-' + id;
+				classRemove = 'btn-success';
+				classAdd 	= 'btn-danger'
+				iclassRemove	= 'fa-check';
+				iclassAdd		= 'fa-minus';
+				
+				if(special==1){
+					classRemove 	= 'btn-danger';
+					classAdd 		= 'btn-success';
+					iclassRemove	= 'fa-minus';
+					iclassAdd		= 'fa-check';
+				}
+				
+				$(element).attr('href',"javascript:changeSpecial('"+url+"')");
+				
+				//"success");
+				$(element).removeClass(classRemove).addClass(classAdd);
+				$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
+				$('a#special-' + id).notify("Special đã được cập nhật!",{position:"top center",className:"success",autoHideDelay: 55000});
+			}
+	})
 }
 

@@ -32,31 +32,31 @@ class BookController extends Controller
         //$this->_model->listUserGroupACP    = $this->_model->listUserGroupACP($this->_arrParam);  
 
         //Bulk Action
-//         if (isset($_GET['selectBoxUser'])) {
+        if (isset($this->_arrParam['selectCategory'])) {
             
-//             $arrCid  = ''; 
-//             if(!empty($this->_arrParam['cid'])){
-//                 foreach ($this->_arrParam['cid'] as $valueCid){
-//                     $arrCid .= "&cid[]=$valueCid";
-//                 }
-//             }
+            $arrCid  = ''; 
+            if(!empty($this->_arrParam['cid'])){
+                foreach ($this->_arrParam['cid'] as $valueCid){
+                    $arrCid .= "&cid[]=$valueCid";
+                }
+            }
             
-//             if ($_GET['selectBoxUser'] == 'delete') {
-//                 URL::redirect('backend', 'user', 'deleteMult',NULL, $arrCid);
-//             }
+            if ($this->_arrParam['selectCategory'] == 'delete') {
+                URL::redirect('backend', 'book', 'deleteMult',NULL, $arrCid);
+            }
 
-//             if ($_GET['selectBoxUser'] == 'action') {
+            if ($this->_arrParam['selectCategory'] == 'action') {
 
-//                 $strRequest = $arrCid.'&statusChoose=1';                
-//                 URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
-//             }
+                $strRequest = $arrCid.'&statusChoose=1';                
+                URL::redirect('backend', 'book', 'status', NULL ,$strRequest);
+            }
 
-//             if ($_GET['selectBoxUser'] == 'inactive') {
+            if ($this->_arrParam['selectCategory'] == 'inactive') {
 
-//                 $strRequest = $arrCid.'&statusChoose=0';
-//                 URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
-//             }
-//         }
+                $strRequest = $arrCid.'&statusChoose=0';
+                URL::redirect('backend', 'book', 'status', NULL ,$strRequest);
+            }
+        }
 
         // filter and search
 //         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])) {
@@ -75,7 +75,15 @@ class BookController extends Controller
             // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
         }
-
+        
+        //Special
+        if(isset($this->_arrParam['selectSpecial'])){
+            if($this->_arrParam['selectSpecial'] == 'selectSpecial'){
+                unset($this->_arrParam['selectSpecial']);
+            }
+        }
+        
+        //Paginator
         $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
@@ -109,18 +117,30 @@ class BookController extends Controller
         $this->_view->render('book/index', true);
         ob_end_flush();
     }
+    
+    public function ajaxOrderingAction()
+    {
+        $return = json_encode($this->_model->changeOrdering($this->_arrParam, $option = array('task' => 'change-ajax-ordering')));
+        echo $return;
+    }
 
     public function statusAction()
     {
       
         $this->_model->changeStatus($this->_arrParam, array('task' => 'change-status'));       
-        $this->redirec('backend', 'user', 'list');
+        $this->redirec('backend', 'book', 'list');
         
     }
     
     public function ajaxUserStatusAction()
     {
         $return = json_encode($this->_model->changeStatus($this->_arrParam, $option = array('task' => 'change-ajax-user-status')));
+        echo $return;
+    }
+    
+    public function ajaxSpecialAction()
+    {
+        $return = json_encode($this->_model->changeSpecial($this->_arrParam, $option = array('task' => 'change-ajax-special')));
         echo $return;
     }
 

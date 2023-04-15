@@ -350,5 +350,24 @@ class Helper{
 	    
 	    return $xhtml;
 	}
+	
+	// special
+	public static function cmsSpecial($specialValue, $link, $id){
+	    
+	    if($specialValue == 0){
+	        $strSpecial = 'btn-danger';
+	        $icon        =  '<i class="fas fa-minus"></i>';
+	    } else{
+	        $strSpecial = 'btn-success';
+	        $icon        =  '<i class="fas fa-check"></i>';
+	    }
+	    
+	    $xhtml          ='
+        <a href="javascript:changeSpecial(\''.$link.'\');" id="special-'.$id.'" class="btn '.$strSpecial.' rounded-circle btn-sm oncli">
+            '.$icon.'
+        </a>';
+	    
+	    return $xhtml;
+	}
 }
 
