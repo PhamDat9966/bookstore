@@ -1,4 +1,9 @@
 <?php
+
+//     echo "<pre>book view";
+//     print_r($this);
+//     echo "</pre>";
+
     $dataForm           = @$this->arrParam['form'];
     
     $disabled           = '';
@@ -6,10 +11,6 @@
     $hiddenRowForm      = '';
     
     $inputIDHidden          = '';
-    $inputUsernameHidden    = '';
-    $inputPasswordHidden    = '';
-    $inputEmailHidden       = '';   
-    $inputFullNameHidden    = '';  
     
     $statusStyle         = '';   
     $groupStyle          = '';
@@ -18,91 +19,66 @@
     $rowGeneratePassword = '';
     
     $idRequire           = false;
-    $usernameRequire     = true;
-    $emailRequire        = true;
-    $fullNameRequire     = true;
+    $nameRequire         = true;
+    $priceRequire        = true;
+    $saleOffRequire      = true;
     
     $inputID    = '';
     $rowID      =   '';
     
-    $inputHiddenTask     = ''; // For Generalpassword on case Password Empty
-    // Edit with ID and Generate Password
+    // IMAGES
+    $inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture', $value = @$dataForm['picture'], $id  = 'picture', $class = '', $size = NULL, $option = 'onchange="previewPicture()"');
+    $pictureShow        = '<img id="imageShow" src="">';
+    
+    // Edit 
     if(isset($this->arrParam['form']['id'])){
         // disabled
-        $idDis = $usernameDis = $passwordDis = $emailDis = 'disabled';
-        
-        // hiddenInput when disabled Row
-        $passwordType             = 'hidden';
-        $rowPasswordHidden        = 'hidden';
-        
-        $strID            = $this->arrParam['form']['id'];
-        $inputIDHidden    = Helper::cmsInput($type = 'hidden', $name = 'form[id]',$value = @$dataForm['id'],$id = 'id',  $class = 'form-control', $size = null);
-        $inputID          = Helper::cmsInput($type = 'text', $name = 'form[id]', $value = @$dataForm['id'], $id = 'id', $class = 'form-control', $size = null, $option = $idDis);
-        $rowID            = Helper::cmsRowForm($lblName = 'ID', $input = $inputID, $require = $idRequire);
-        
-        $inputUsernameHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[username]'  , $value = @$dataForm['username'] , $id = 'username', $class = 'form-control', $size = null);
-        $inputPasswordHidden      = Helper::cmsInput($type = 'hidden', $name = 'form[password]'  , $value = @$dataForm['password'] , $id = 'password', $class = 'form-control', $size = null);
-        $inputEmailHidden         = Helper::cmsInput($type = 'hidden', $name = 'form[email]'     , $value = @$dataForm['email']    , $id = 'email'   , $class = 'form-control', $size = null);
+        $idDis ='disabled';
         
         $idRequire           = false;
-        $usernameRequire     = false;
-        $emailRequire        = false;
+        $nameRequire         = false;
+        $priceRequire        = false;
+        $saleOffRequire       = false;
         
-        // GeneratePassword
-        if(isset($this->arrParam['task'])){
-            if($this->arrParam['task'] == 'generatepass'){
-                $fullNameDis     = 'disabled';
-                $rowStatusHidden = 'hidden';
-                $rowGroupHidden  = 'hidden';
-                $statusStyle     = 'display:none';   
-                $groupStyle      = 'display:none';
-                $fullNameRequire = false;
-                
-                $inputFullNameHidden        = Helper::cmsInput($type = 'hidden', $name = 'form[fullname]', $value = @$dataForm['fullname'], $id = 'fullname', $class = 'form-control', $size = null);
-                
-                $urlButtonGeneratePassword  = URL::createLink('backend', 'user', 'form', array('id'=>$this->arrParam['form']['id'],'task'=>$this->arrParam['task'],'generateAction'=>'true'));
-                $buttonGeneratePassword     = "<div class='col-2'>".Helper::cmsButton($url = $urlButtonGeneratePassword, $class = 'btn btn-info d-block', $textOufit= '<i class="fas fa-sync-alt"></i> General')."</div>"; 
-                $generatePassword           = "<div class='col-10'>".Helper::cmsInput($type = null, $name = 'form[password]'  , $value = @$dataForm['password'], $id = 'password', $class = 'form-control', $size = null, $option = null)."</div>";
-                $lblGeneratePassword        = "<div class='row'>".$buttonGeneratePassword .$generatePassword."</div>";
-                
-                $rowGeneratePassword        = Helper::cmsRowForm($lblName = 'Password', $input = $lblGeneratePassword,    $require = false, $option = 'class="d-block"');
-                
-                //task Hidden for Form
-                $inputHiddenTask            = '<input type="hidden" name="task" value="'.$this->arrParam['task'].'">';
-                
-            }
-        }
         $inputHiddenTask            = '<input type="hidden" name="task" value="'.$this->arrParam['task'].'">';
-    }
-    
-    $arrSelectGroup             = array();
-    $arrSelectGroup['default']  = '- Select Group -';
-    foreach ($this->slbGroup as $keyG=>$valueG){
-        $arrSelectGroup[$valueG['id']] = $valueG['name'];
+        
+        $pathImage                = UPLOAD_URL .'category'. DS . $dataForm['picture'];
+        $pictureShow              = '<img id="imageShow" src="'.$pathImage.'">';
+        $inputPictureHidden       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_hidden]', $value = @$dataForm['picture'], $id  = 'picture', $class = 'form-control', $size = null);
     }
 
-    $linkSaveClose	    = URL::createLink('backend', 'user', 'form', array('type' => 'save-close'));
-    $linkCancel	        = URL::createLink('backend', 'user', 'list');    
+    $linkSaveClose	    = URL::createLink('backend', 'book', 'form', array('type' => 'save-close'));
+    $linkCancel	        = URL::createLink('backend', 'book', 'list');    
 
-    $inputUsername      = Helper::cmsInput($type = 'text'       , $name = 'form[username]'  , $value = @$dataForm['username'], $id = 'username',    $class = 'form-control', $size = null, $option = @$usernameDis);
-    $inputPassword      = Helper::cmsInput($type = $passwordType, $name = 'form[password]'  , $value = @$dataForm['password'], $id = 'password',    $class = 'form-control', $size = null, $option = @$passwordDis);
-    $inputEmail         = Helper::cmsInput($type = 'text'       , $name = 'form[email]'     , $value = @$dataForm['email']   , $id = 'email'   ,    $class = 'form-control', $size = null, $option = @$emailDis);
-    $inputFullname      = Helper::cmsInput($type = 'text'       , $name = 'form[fullname]'  , $value = @$dataForm['fullname'], $id = 'fullname'   , $class = 'form-control', $size = null, $option = @$fullNameDis);
-      
-    $inputToken		    = Helper::cmsInput($type = 'hidden',$name = 'form[token]', $value = time(),$id = 'token');
-    
+    $inputName          = Helper::cmsInput($type = 'text'       , $name = 'form[name]'  ,     $value = @$dataForm['name'], $id = 'name',    $class = 'form-control', $size = null);
+
+    $inputPrice         = Helper::cmsInput($type = 'text'       , $name = 'form[price]'     , $value = @$dataForm['price']   , $id = 'price'   ,    $class = 'form-control', $size = null);
+    $inputSaleOff       = Helper::cmsInput($type = 'text'       , $name = 'form[sale_off]'  , $value = @$dataForm['sale_off'], $id = 'fullname'   , $class = 'form-control', $size = null);
+          
     $arrSelectStatus    = array('default'=>'- Select Status -', 1 => 'Active', 0 => 'Inactive');
     $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class ='custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'],$style = $statusStyle);
     
-    $selectGroup        = Helper::cmsSelectbox($name = 'form[group_id]', $class ='custom-select', $arrSelectGroup, $keySelect = @$dataForm['group_id'],$style = $groupStyle);
+    $arrSelectSpecial   = array('default'=>'- Select Special -', 1 => 'Active', 0 => 'Inactive');
+    $selectSpecial      = Helper::cmsSelectbox($name = 'form[special]', $class ='custom-select', $arrSelectSpecial, $keySelect = @$dataForm['special'],$style = $statusStyle);
+    
+    // CATEGORY
+    $arrSelectCategory     = array();
+    $temp                  = array('default'  => '- Select Category -');
+    $arrSelectCategory     = $temp + $this->slbCategory;
+
+    $selectCategory        = Helper::cmsSelectbox($name = 'form[category_id]', $class ='custom-select', $arrSelectCategory, $keySelect = @$dataForm['category_id'],$style = $groupStyle);
     
     // Row
-    $rowUsername        = Helper::cmsRowForm($lblName = 'Bookname', $input = $inputUsername,    $require = $usernameRequire);
-    $rowPassword        = Helper::cmsRowForm($lblName = 'Password', $input = $inputPassword,    $require = true,            $option = @$rowPasswordHidden);
-    $rowEmail           = Helper::cmsRowForm($lblName = 'Email',    $input = $inputEmail,       $require = $emailRequire);
-    $rowFullname        = Helper::cmsRowForm($lblName = 'Fullname', $input = $inputFullname,    $require = $fullNameRequire);
-    $rowStatus          = Helper::cmsRowForm($lblName = 'Status',   $input = $selectStatus,     $require = true,            $option = @$rowStatusHidden);
-    $rowGroup           = Helper::cmsRowForm($lblName = 'Group',    $input = $selectGroup,      $require = true,            $option = @$rowGroupHidden);
+    $rowName            = Helper::cmsRowForm($lblName = 'Bookname', $input = $inputName,        $require = $nameRequire);
+    $rowPrice           = Helper::cmsRowForm($lblName = 'Price',    $input = $inputPrice,       $require = $priceRequire);
+    $rowSaleOff         = Helper::cmsRowForm($lblName = 'Sale Off', $input = $inputSaleOff,     $require = $saleOffRequire);
+    
+    $rowStatus          = Helper::cmsRowForm($lblName = 'Status',   $input = $selectStatus,     $require = true,            $option = '');
+    $rowSpecial         = Helper::cmsRowForm($lblName = 'Special',   $input = $selectSpecial,     $require = true,            $option = '');
+    $rowCategory        = Helper::cmsRowForm($lblName = 'Category',    $input = $selectCategory,      $require = true,            $option = '');
+    
+    $rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture . $inputPictureHidden);
+    
     
     $showErrors = '';
     if(!empty($this->errors)){
@@ -116,8 +92,11 @@
     }
 
     $submitButton = Helper::cmsButtonSubmit($type="submit",$class="btn btn-success" ,$textOutfit = "Save");
-    $cancelUrl    = URL::createLink("backend", "user", "list");
+    $cancelUrl    = URL::createLink("backend", "book", "list");
     $cancelButton = Helper::cmsButton($cancelUrl, $class="btn btn-danger", $textOufit = "Cancel");
+    
+    $inputToken		    = Helper::cmsInput($type = 'hidden',$name = 'form[token]', $value = time(),$id = 'token');
+    
     
 ?>
 <div class="content">
@@ -125,11 +104,11 @@
 		<div class="row">
 			<div class="col-12">
 			    <?= $showErrors;?>
-				<form action="#" method="get" name="user-list-form" id="user-list-form">
+				<form action="#" method="post" name="book-list-form" id="book-list-form"  enctype="multipart/form-data">
 	
-            		<input type="hidden" name="module" value="backend">
-                    <input type="hidden" name="controller" value="user">
-                    <input type="hidden" name="action" value="form">
+<!--             		<input type="hidden" name="module" value="backend"> -->
+<!--                     <input type="hidden" name="controller" value="user"> -->
+<!--                     <input type="hidden" name="action" value="form"> -->
                     <input type="hidden" name="type" value="save-close">
 					<?php echo $inputHiddenTask;?>
 					<div class="card card-outline card-info">
@@ -138,30 +117,28 @@
 								<?= $rowID.$inputIDHidden;?>
 							</div>
 						
-							<div class="form-group">
-								<?= $rowUsername.$inputUsernameHidden;?>
+							<div class="form-book">
+								<?= $rowName;?>
 							</div>
-							<div class="form-group">
-								<?= $rowPassword.$inputPasswordHidden;?>
+							<div class="form-book">
+								<?= $rowPrice;?>
 							</div>
-							<div class="form-group">
-								<?= $rowEmail.$inputEmailHidden;?>
+							<div class="form-book">
+								<?= $rowSaleOff;?>
 							</div>
-							<div class="form-group">
-								<?= $rowFullname.$inputFullNameHidden;?>
-							</div>
-							
-							<div class="form-group">
+							<div class="form-book">
 								<?= $rowStatus;?>
 							</div>
-							<div class="form-group">
-								<?= $rowGroup;?>
+							<div class="form-book">
+								<?= $rowCategory;?>
 							</div>
 							
-							<div class="form-group">
-								<?= $rowGeneratePassword;?>
+							<div class="form-book">
+								<?= $rowPicture; ?>
 							</div>
-							
+							<div class="form-book">
+								<?= $pictureShow; ?>
+							</div>
 							
 							<?= $inputToken;?>
 						</div>

@@ -106,11 +106,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 
     <!-- List -->
     <!-- FORM category -->
-    <form action="#" method="get" name="category-list-form" id="category-list-form">
-
-        <input type="hidden" name="module" value="backend">
-        <input type="hidden" name="controller" value="category">
-        <input type="hidden" name="action" value="list">
+    <form action="#" method="post" name="category-list-form" id="category-list-form">
 
         <div class="card card-outline card-info">
             <div class="card-header">
