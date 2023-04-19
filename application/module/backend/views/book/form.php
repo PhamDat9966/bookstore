@@ -176,7 +176,7 @@
 <!-- CKEditor -->
 <script>
     var editor = CKEDITOR.replace('ckEditor');
-    CKFinder.setupCKEditor( editor, null, { type: 'Files', currentFolder: '/bookstore/public/ckfinder/' } );
+    //CKFinder.setupCKEditor( editor, null, { type: 'Files', currentFolder: '/bookstore/public/ckfinder/' } );
     //CKFinder.setupCKEditor( editor, '/bookstore/public/ckfinder/');
 </script>
 
