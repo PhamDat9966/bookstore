@@ -164,6 +164,9 @@ class CategoryController extends Controller
     // ACTION : ADD & EDIT
     public function formAction($option = null)
     {
+        echo "<pre>form";
+        print_r($this->_arrParam);
+        echo "</pre>";
         
         $this->_view->_title        = 'User Categorys: Add';
         $this->_view->task          = 'add'; 
@@ -177,7 +180,7 @@ class CategoryController extends Controller
             $token          = 0;
             $pictureHidden  = '';
             
-            //Loading cho Input trong trường hợp đã Submit
+            //Loading cho Input trong trường hợp đã Submit trước đó nhưng không thành công do lôĩ
             if(isset($this->_arrParam['form']['name'])){
                 $name           = $this->_arrParam['form']['name'];
             }
@@ -200,9 +203,9 @@ class CategoryController extends Controller
             // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
             if(isset($name)) $this->_arrParam['form']['name']       = $name;
             if(isset($status)) $this->_arrParam['form']['status']     = $status;
+            if(isset($pictureHidden)) $this->_arrParam['form']['picture_hidden'] = $pictureHidden;
             $this->_arrParam['form']['token']          = $token;
-            $this->_arrParam['form']['picture_hidden'] = $pictureHidden;
-            
+
             if (empty($this->_arrParam['form'])) URL::redirect('backend', 'category', 'list');
         }
         

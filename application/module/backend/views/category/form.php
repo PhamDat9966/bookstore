@@ -1,4 +1,7 @@
 <?php
+echo "<pre>view";
+print_r($this);
+echo "</pre>";
 
 $linkSaveClose	    = URL::createLink('backend', 'category', 'form', array('type' => 'save-close'));
 $linkCancel	        = URL::createLink('backend', 'category', 'list');

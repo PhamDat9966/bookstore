@@ -129,7 +129,7 @@ if(!empty($this->Items)){
     }
 }
 
-$addNewUrl    = URL::createLink('backend', 'user', 'form');
+$addNewUrl    = URL::createLink('backend', 'book', 'form');
 $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $textOufit = '<i class="fas fa-plus"></i> Add New');
 
 
