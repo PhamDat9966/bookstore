@@ -164,9 +164,6 @@ class CategoryController extends Controller
     // ACTION : ADD & EDIT
     public function formAction($option = null)
     {
-        echo "<pre>form";
-        print_r($this->_arrParam);
-        echo "</pre>";
         
         $this->_view->_title        = 'Categorys: Add';
         $this->_view->task          = 'add'; 
@@ -182,11 +179,7 @@ class CategoryController extends Controller
         // Edit
         if (isset($this->_arrParam['id'])) {
             
-<<<<<<< HEAD
-            $this->_view->_title  = 'User Categorys: Edit';
-=======
             $this->_view->_title  = 'Categorys: Edit';
->>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
             $this->_view->task    = 'edit';  
             
             $token          = 0;
@@ -210,10 +203,6 @@ class CategoryController extends Controller
                 $picture  = $this->_arrParam['form']['picture'];
             }
             
-<<<<<<< HEAD
-            /*  Nạp Trồng - Từ phiên làm trước đã submit rồi, phiên hiện tại chưa submit 
-             *   trên edit nhưng cần giá trị để xuất dữ liệu ra input  */
-=======
             if(isset($this->_arrParam['form']['picture_temp'])){
                 $pictureTemp  = $this->_arrParam['form']['picture_temp'];
             }
@@ -222,7 +211,6 @@ class CategoryController extends Controller
              *   trên edit nhưng cần giá trị để xuất dữ liệu ra input  */
             
             // Khi infoItem được gọi ở đây từ csdl thì đối tượng $this->_arrParam['form'] sẽ bị dữ liệu từ csdl ghi đè
->>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
             $this->_arrParam['form']          = $this->_model->infoItem($this->_arrParam);
 
             // CallBack
@@ -249,7 +237,6 @@ class CategoryController extends Controller
             // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
             if(isset($name)) $this->_arrParam['form']['name']       = $name;
             if(isset($status)) $this->_arrParam['form']['status']     = $status;
-            if(isset($pictureHidden)) $this->_arrParam['form']['picture_hidden'] = $pictureHidden;
             $this->_arrParam['form']['token']          = $token;
 
             if (empty($this->_arrParam['form'])) URL::redirect('backend', 'category', 'list');
@@ -260,12 +247,7 @@ class CategoryController extends Controller
             $this->_arrParam['form']['picture'] = $_FILES['picture'];
         }
 
-<<<<<<< HEAD
-        
-        if (@$this->_arrParam['form']['token'] > 0) {
-=======
         if (@$this->_arrParam['form']['token'] > 0) { 
->>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
             
             //$taskAction = 'add';
             $queryName  = "SELECT `id` FROM `" . TBL_CATEGORY . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";

@@ -2,17 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
-<<<<<<< HEAD
--- Host: 127.0.0.1
--- Generation Time: Apr 18, 2023 at 11:06 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
-=======
 -- Máy chủ: 127.0.0.1
 -- Thời gian đã tạo: Th4 21, 2023 lúc 09:40 AM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
->>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bookstore`
+-- Cơ sở dữ liệu: `bookstore`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book`
+-- Cấu trúc bảng cho bảng `book`
 --
 
 CREATE TABLE `book` (
@@ -53,11 +46,7 @@ CREATE TABLE `book` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
-<<<<<<< HEAD
--- Dumping data for table `book`
-=======
 -- Đang đổ dữ liệu cho bảng `book`
->>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 --
 
 INSERT INTO `book` (`id`, `name`, `shortDescription`, `description`, `price`, `special`, `sale_off`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `category_id`) VALUES
@@ -80,7 +69,7 @@ INSERT INTO `book` (`id`, `name`, `shortDescription`, `description`, `price`, `s
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -97,38 +86,26 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `showhome`, `ordering`) VALUES
-<<<<<<< HEAD
-(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 1),
-(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '0000-00-00', '1', 1, 0, 3),
-(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
-(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
-(25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
-=======
 (21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '2023-04-21', '1', 1, 0, 2),
 (22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '0000-00-00', '1', 1, 0, 3),
 (23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
 (24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
 (25, 'Giáo Khoa - Giáo Trình', 'so7gmbec.jpg', '2023-03-30', '1', '2023-04-21', '1', 1, 0, 4),
->>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 (26, 'Triếc Học', '08tgxj9s.png', '2023-03-30', '1', '2023-04-10', '1', 0, 0, 6),
 (27, 'Self Help', 'n3o1p82j.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 0, 7),
 (28, 'Tiểu Sử - Hồi ký', '7p15v6x4.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 0, 8),
 (29, 'Kinh Tế', 'g9u8z3mj.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 0, 9),
-<<<<<<< HEAD
-(30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 0, 11);
-=======
 (30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 0, 11),
 (32, 'test001', 'qwr6c9iz.jpg', '2023-04-20', '1', '2023-04-20', NULL, 1, 0, 10);
->>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group`
+-- Cấu trúc bảng cho bảng `group`
 --
 
 CREATE TABLE `group` (
@@ -145,7 +122,7 @@ CREATE TABLE `group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `group`
+-- Đang đổ dữ liệu cho bảng `group`
 --
 
 INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `privilege_id`) VALUES
@@ -165,7 +142,7 @@ INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modifi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `privilege`
+-- Cấu trúc bảng cho bảng `privilege`
 --
 
 CREATE TABLE `privilege` (
@@ -177,7 +154,7 @@ CREATE TABLE `privilege` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `privilege`
+-- Đang đổ dữ liệu cho bảng `privilege`
 --
 
 INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
@@ -202,7 +179,7 @@ INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
@@ -223,7 +200,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `user`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `register_date`, `register_ip`, `status`, `ordering`, `group_id`) VALUES
@@ -238,69 +215,69 @@ INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`
 (42, 'fouder02', 'phamdat999666@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 3);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `book`
+-- Chỉ mục cho bảng `book`
 --
 ALTER TABLE `book`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `group`
+-- Chỉ mục cho bảng `group`
 --
 ALTER TABLE `group`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `privilege`
+-- Chỉ mục cho bảng `privilege`
 --
 ALTER TABLE `privilege`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `book`
+-- AUTO_INCREMENT cho bảng `book`
 --
 ALTER TABLE `book`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- AUTO_INCREMENT for table `group`
+-- AUTO_INCREMENT cho bảng `group`
 --
 ALTER TABLE `group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
--- AUTO_INCREMENT for table `privilege`
+-- AUTO_INCREMENT cho bảng `privilege`
 --
 ALTER TABLE `privilege`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
