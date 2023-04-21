@@ -2,10 +2,17 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
+<<<<<<< HEAD
 -- Host: 127.0.0.1
 -- Generation Time: Apr 18, 2023 at 11:06 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
+=======
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 21, 2023 lúc 09:40 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,7 +53,11 @@ CREATE TABLE `book` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+<<<<<<< HEAD
 -- Dumping data for table `book`
+=======
+-- Đang đổ dữ liệu cho bảng `book`
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 --
 
 INSERT INTO `book` (`id`, `name`, `shortDescription`, `description`, `price`, `special`, `sale_off`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `category_id`) VALUES
@@ -90,16 +101,29 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `showhome`, `ordering`) VALUES
+<<<<<<< HEAD
 (21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 1),
 (22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '0000-00-00', '1', 1, 0, 3),
 (23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
 (24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
 (25, 'Giáo Khoa - Giáo Trình', 'g1arq6h5.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
+=======
+(21, 'Bà Mẹ - Em Bé', 'fd8bvqwt.jpg', '2023-03-30', '1', '2023-04-21', '1', 1, 0, 2),
+(22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '0000-00-00', '1', 1, 0, 3),
+(23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
+(24, 'Công Nghệ Thông Tin', 'buo4dk2t.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
+(25, 'Giáo Khoa - Giáo Trình', 'so7gmbec.jpg', '2023-03-30', '1', '2023-04-21', '1', 1, 0, 4),
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 (26, 'Triếc Học', '08tgxj9s.png', '2023-03-30', '1', '2023-04-10', '1', 0, 0, 6),
 (27, 'Self Help', 'n3o1p82j.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 0, 7),
 (28, 'Tiểu Sử - Hồi ký', '7p15v6x4.jpg', '2023-03-31', '1', '2023-03-31', NULL, 1, 0, 8),
 (29, 'Kinh Tế', 'g9u8z3mj.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 0, 9),
+<<<<<<< HEAD
 (30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 0, 11);
+=======
+(30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '2023-03-31', '1', 1, 0, 11),
+(32, 'test001', 'qwr6c9iz.jpg', '2023-04-20', '1', '2023-04-20', NULL, 1, 0, 10);
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 
 -- --------------------------------------------------------
 
@@ -261,7 +285,7 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `group`

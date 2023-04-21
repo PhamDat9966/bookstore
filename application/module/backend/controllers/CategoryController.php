@@ -168,17 +168,30 @@ class CategoryController extends Controller
         print_r($this->_arrParam);
         echo "</pre>";
         
-        $this->_view->_title        = 'User Categorys: Add';
+        $this->_view->_title        = 'Categorys: Add';
         $this->_view->task          = 'add'; 
                
+        if(!empty($_FILES['picture']['name'])){
+            
+            $this->_arrParam['form']['picture_temp'] = $_FILES['picture']['name'];
+            
+            $tempFileUpload = UPLOAD_PATH . 'category' . DS .'temp' . DS . $_FILES['picture']['name'];
+            copy($_FILES['picture']['tmp_name'], $tempFileUpload);
+        }
+
         // Edit
         if (isset($this->_arrParam['id'])) {
             
+<<<<<<< HEAD
             $this->_view->_title  = 'User Categorys: Edit';
+=======
+            $this->_view->_title  = 'Categorys: Edit';
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
             $this->_view->task    = 'edit';  
             
             $token          = 0;
-            $pictureHidden  = '';
+            $picture      = ''; 
+            $pictureTemp  = '';
             
             //Loading cho Input trong trường hợp đã Submit trước đó nhưng không thành công do lôĩ
             if(isset($this->_arrParam['form']['name'])){
@@ -192,13 +205,46 @@ class CategoryController extends Controller
             if(isset($this->_arrParam['form']['token'])){
                 $token          = $this->_arrParam['form']['token'];
             }
-            if(isset($this->_arrParam['form']['picture_hidden'])){
-                $pictureHidden  = $this->_arrParam['form']['picture_hidden'];
+            
+            if(isset($this->_arrParam['form']['picture'])){
+                $picture  = $this->_arrParam['form']['picture'];
             }
             
+<<<<<<< HEAD
             /*  Nạp Trồng - Từ phiên làm trước đã submit rồi, phiên hiện tại chưa submit 
              *   trên edit nhưng cần giá trị để xuất dữ liệu ra input  */
+=======
+            if(isset($this->_arrParam['form']['picture_temp'])){
+                $pictureTemp  = $this->_arrParam['form']['picture_temp'];
+            }
+            
+            /*  Callback - Từ phiên làm trước đã submit rồi, phiên hiện tại chưa submit 
+             *   trên edit nhưng cần giá trị để xuất dữ liệu ra input  */
+            
+            // Khi infoItem được gọi ở đây từ csdl thì đối tượng $this->_arrParam['form'] sẽ bị dữ liệu từ csdl ghi đè
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
             $this->_arrParam['form']          = $this->_model->infoItem($this->_arrParam);
+
+            // CallBack
+            if(!empty($picture)){
+                $this->_arrParam['form']['picture'] = $picture;
+            }
+            
+            if(!empty($pictureTemp)){
+                unset($this->_arrParam['form']['picture']);
+                $this->_arrParam['form']['picture_temp'] = $pictureTemp;
+            }
+       
+            
+            // Image
+            $imageInfo = $this->getImageInfoAction($this->_arrParam['form']['picture'], null);         
+            if(isset($this->_arrParam['form']['picture_temp'])){
+                $imageInfo = $this->getImageInfoAction($this->_arrParam['form']['picture_temp'], 'temp');
+            }
+
+            $this->_arrParam['form']['picture'] = array();
+            $this->_arrParam['form']['picture']['name'] = $imageInfo['basename'];
+            $this->_arrParam['form']['picture']['size'] = $imageInfo['size'];
             
             // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
             if(isset($name)) $this->_arrParam['form']['name']       = $name;
@@ -209,16 +255,23 @@ class CategoryController extends Controller
             if (empty($this->_arrParam['form'])) URL::redirect('backend', 'category', 'list');
         }
         
-        if(!empty($_FILES)) $this->_arrParam['form']['picture'] = $_FILES['picture'];
+        /* -- Ghi đè trong trường hợp có up file mới --*/
+        if(!empty($_FILES['picture']['name'])){
+            $this->_arrParam['form']['picture'] = $_FILES['picture'];
+        }
 
+<<<<<<< HEAD
         
         if (@$this->_arrParam['form']['token'] > 0) {
+=======
+        if (@$this->_arrParam['form']['token'] > 0) { 
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
             
-            $taskAction = 'add';
+            //$taskAction = 'add';
             $queryName  = "SELECT `id` FROM `" . TBL_CATEGORY . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
             
             if(isset($this->_arrParam['form']['id'])){
-                $taskAction      = "edit";
+                //$taskAction      = "edit";
                 $queryName      .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
             }
             
@@ -235,9 +288,11 @@ class CategoryController extends Controller
                 $this->_view->errors    = $validate->showErrors();
             } else {
 
-                //$task = (isset($this->_arrParam['form']['id']) ? 'edit' : 'add');
+                $taskAction = (isset($this->_arrParam['form']['id']) ? 'edit' : 'add');
+                
                 $id = $this->_model->saveItem($this->_arrParam, array('task' => $taskAction));
                 $type = $this->_arrParam['type'];
+                
                 if ($type == 'save-close') URL::redirect('backend', 'category', 'list');
                 //plus
                 if ($type == 'save-new') URL::redirect('backend', 'category', 'form');
@@ -253,6 +308,22 @@ class CategoryController extends Controller
         $this->_templateObj->load();
 
         $this->_view->render('category/form', true);
+    }
+    
+    public function getImageInfoAction($imageName, $option = null){
+        if($option == null){
+            $pathImage          = UPLOAD_PATH .'category'. DS . $imageName;
+            $imageInfo          = pathinfo($pathImage);
+            $imageInfo['size']  = filesize($pathImage);
+            return $imageInfo;
+        }
+        if($option == 'temp'){
+
+            $pathImage          = UPLOAD_PATH .'category'. DS . 'temp' . DS .$imageName;
+            $imageInfo          = pathinfo($pathImage);
+            $imageInfo['size']  = filesize($pathImage);
+            return $imageInfo;
+        }
     }
 
     public function deleteAction()

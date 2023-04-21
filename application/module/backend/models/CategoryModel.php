@@ -107,7 +107,18 @@ class CategoryModel extends Model
     
     public function deleteItem($id,$option = null)
     {
-        $this->delete([$id]);
+//         require_once LIBRARY_EXT_PATH . 'Upload.php';
+//         $uploadObj = new Upload();
+        
+        $arrParam = array('id'=>$id);
+        $infoItem = $this->infoItem($arrParam);
+
+        if($this->delete([$id])){
+            
+            $fileName   =   UPLOAD_PATH . 'category' . DS . $infoItem['picture'];
+            unlink($fileName);
+        }
+        
         Session::set('message', array('class' => 'success', 'content' => 'Xóa thành công!'));
     }
     
@@ -155,9 +166,13 @@ class CategoryModel extends Model
             
             
             $arrParam['form']['picture']    = $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
+            
+            // Giải phóng dữ liệu ở temp
+            $uploadObj->deleteAllTempFile();
+            
             $arrParam['form']['created']    = date('Y-m-d',time());
             $arrParam['form']['created_by'] = $created_by;
-            
+
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->insert($data);
             Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
@@ -169,11 +184,15 @@ class CategoryModel extends Model
             $arrParam['form']['modified']    = date('Y-m-d',time());
             $arrParam['form']['modified_by'] = $modified_by;
             
-            if($arrParam['form']['picture']['name'] == null){
-                unset($arrParam['form']['picture']);
-            }else {
-                $uploadObj->removeFile('category', $arrParam['form']['picture_hidden']);
-                $arrParam['form']['picture'] = $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
+            if(isset($arrParam['form']['picture_temp'])){
+                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMain($arrParam['form']['picture_temp'], 'categoy');
+                
+                // Giải phóng dữ liệu ở temp
+                $uploadObj->deleteAllTempFile();
+                
+            }else{
+                $namePicture                 = $arrParam['form']['picture']['name'];
+                $arrParam['form']['picture'] = $namePicture;
             }
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));     

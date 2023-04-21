@@ -1,7 +1,13 @@
 <?php
+<<<<<<< HEAD
 echo "<pre>view";
 print_r($this);
 echo "</pre>";
+=======
+// echo "<pre>view";
+// print_r($this);
+// echo "</pre>";
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 
 $linkSaveClose	    = URL::createLink('backend', 'category', 'form', array('type' => 'save-close'));
 $linkCancel	        = URL::createLink('backend', 'category', 'list');
@@ -19,27 +25,49 @@ $arrSelectStatus    = array('default' => '- Select Status -', 1 => 'Active', 0 =
 $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class = 'custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'], $style = null);
 
 $rowNameOutput      = '';
-$inputNameHidden    = '';
+$inputNameTemp    = '';
 
 $rowName            = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = true);
 $rowStatus          = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = true);
 
-$inputPictureHidden = '';
+$inputPictureTemp   = '';
 if($this->task == 'edit'){
 
     $inputName      = Helper::cmsInput($type = 'text', $name = 'form[name]', $value = @$dataForm['name'], $id = 'name', $class = 'form-control', $size = null);
     $rowName        = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = false);
     $rowStatus      = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = false);
     
+<<<<<<< HEAD
     $pathImage                = UPLOAD_URL .'category'. DS . $dataForm['picture'];
     $pictureShow              = '<img id="imageShow" src="'.$pathImage.'">';
     $inputPictureHidden       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_hidden]', $value = @$dataForm['picture'], $id  = 'picture', $class = 'form-control', $size = null);
 
+=======
+    $url_image                = UPLOAD_URL .'category'. DS . $dataForm['picture']['name'];
+    
+    if(!empty($dataForm['picture_temp'])){
+        $tempDir       = UPLOAD_PATH . 'category' . DS . 'temp' . DS;
+        $imageFile     = $dataForm['picture_temp']; 
+        $url_image     = UPLOAD_URL .'category'. DS .'temp'. DS . $dataForm['picture_temp'];
+    }
+    
+    $pictureShow              = '<img id="imageShow" src="'.$url_image.'">';
+    
+    $inputImageCallBack     = '';
+    
+    if(isset($dataForm['picture_temp'])){
+        $inputImageCallBack     = $inputPictureTemp       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_temp]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
+        
+    }else{ 
+        $inputImageCallBack     = $inputPictureNonTemp    = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
+        
+    }
+>>>>>>> 8ca0b4a (b24-Backend-hoàn thành Form->Edit với các trường hợp khác nhau có liên quan đến Image.)
 }
 
-$rowNameOutput  = $rowName . $inputNameHidden;
+$rowNameOutput  = $rowName . $inputNameTemp;
 
-$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture . $inputPictureHidden);
+$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture . $inputImageCallBack);
 
 $showErrors = '';
 if (!empty($this->errors)) {
