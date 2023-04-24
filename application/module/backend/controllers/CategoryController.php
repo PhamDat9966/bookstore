@@ -182,7 +182,7 @@ class CategoryController extends Controller
             $this->_view->_title  = 'Categorys: Edit';
             $this->_view->task    = 'edit';  
             
-            $token          = 0;
+            $token        = 0;
             $picture      = ''; 
             $pictureTemp  = '';
             
@@ -236,7 +236,7 @@ class CategoryController extends Controller
             
             // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
             if(isset($name)) $this->_arrParam['form']['name']       = $name;
-            if(isset($status)) $this->_arrParam['form']['status']     = $status;
+            if(isset($status)) $this->_arrParam['form']['status']   = $status;
             $this->_arrParam['form']['token']          = $token;
 
             if (empty($this->_arrParam['form'])) URL::redirect('backend', 'category', 'list');

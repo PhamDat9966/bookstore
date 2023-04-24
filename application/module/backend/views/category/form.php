@@ -31,26 +31,53 @@ if($this->task == 'edit'){
     $rowName        = Helper::cmsRowForm($lblName = 'Name', $input = $inputName, $require = false);
     $rowStatus      = Helper::cmsRowForm($lblName = 'Status', $input = $selectStatus, $require = false);
     
-    $url_image                = UPLOAD_URL .'category'. DS . $dataForm['picture']['name'];
+//     $url_image                = UPLOAD_URL .'category'. DS . $dataForm['picture']['name'];
+    
+//     if(!empty($dataForm['picture_temp'])){
+//         $tempDir       = UPLOAD_PATH . 'category' . DS . 'temp' . DS;
+//         $imageFile     = $dataForm['picture_temp']; 
+//         $url_image     = UPLOAD_URL .'category'. DS .'temp'. DS . $dataForm['picture_temp'];
+//     }
+    
+//     $pictureShow              = '<img id="imageShow" src="'.$url_image.'">';
+    
+//     $inputImageCallBack     = '';
+    
+//     if(isset($dataForm['picture_temp'])){
+//         $inputImageCallBack     = $inputPictureTemp       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_temp]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
+        
+//     }else{ 
+//         $inputImageCallBack     = $inputPictureNonTemp    = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
+        
+//     }
+}
+
+/* show Image trong trường hợp đã có picture_Temp */
+
+if(isset($dataForm['picture_temp'])){
+    
+    $url_image         = UPLOAD_URL .'category'. DS . $dataForm['picture']['name'];
     
     if(!empty($dataForm['picture_temp'])){
         $tempDir       = UPLOAD_PATH . 'category' . DS . 'temp' . DS;
-        $imageFile     = $dataForm['picture_temp']; 
+        $imageFile     = $dataForm['picture_temp'];
         $url_image     = UPLOAD_URL .'category'. DS .'temp'. DS . $dataForm['picture_temp'];
     }
     
-    $pictureShow              = '<img id="imageShow" src="'.$url_image.'">';
-    
-    $inputImageCallBack     = '';
-    
-    if(isset($dataForm['picture_temp'])){
-        $inputImageCallBack     = $inputPictureTemp       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_temp]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
-        
-    }else{ 
-        $inputImageCallBack     = $inputPictureNonTemp    = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
-        
-    }
+    $pictureShow            = '<img id="imageShow" src="'.$url_image.'">';
 }
+
+$inputImageCallBack     = '';
+
+if(isset($dataForm['picture_temp'])){
+    $inputImageCallBack = $inputPictureTemp       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_temp]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
+    
+}else{
+    $inputImageCallBack = $inputPictureNonTemp    = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
+    
+}
+
+/* -------------------------------------------*/
 
 $rowNameOutput  = $rowName . $inputNameTemp;
 
