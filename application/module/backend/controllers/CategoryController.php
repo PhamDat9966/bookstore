@@ -211,8 +211,9 @@ class CategoryController extends Controller
              *   trên edit nhưng cần giá trị để xuất dữ liệu ra input  */
             
             // Khi infoItem được gọi ở đây từ csdl thì đối tượng $this->_arrParam['form'] sẽ bị dữ liệu từ csdl ghi đè
-            $this->_arrParam['form']          = $this->_model->infoItem($this->_arrParam);
-
+            $this->_arrParam['form']                = $this->_model->infoItem($this->_arrParam);
+            $this->_arrParam['form']['picture_old'] = $this->_arrParam['form']['picture'];  
+            
             // CallBack
             if(!empty($picture)){
                 $this->_arrParam['form']['picture'] = $picture;
@@ -246,6 +247,10 @@ class CategoryController extends Controller
         if(!empty($_FILES['picture']['name'])){
             $this->_arrParam['form']['picture'] = $_FILES['picture'];
         }
+        
+        echo "<pre>";
+        print_r($this->_arrParam['form']);
+        echo "</pre>";
 
         if (@$this->_arrParam['form']['token'] > 0) { 
             
@@ -273,6 +278,12 @@ class CategoryController extends Controller
                 $taskAction = (isset($this->_arrParam['form']['id']) ? 'edit' : 'add');
                 
                 $id = $this->_model->saveItem($this->_arrParam, array('task' => $taskAction));
+                
+                /* Giai phong temp */
+                require_once LIBRARY_EXT_PATH . 'Upload.php';
+                $uploadObj = new Upload();
+                $uploadObj->deleteAllTempFile();
+                
                 $type = $this->_arrParam['type'];
                 
                 if ($type == 'save-close') URL::redirect('backend', 'category', 'list');
@@ -290,6 +301,15 @@ class CategoryController extends Controller
         $this->_templateObj->load();
 
         $this->_view->render('category/form', true);
+    }
+    
+    public function cancelAction(){
+        /* Giai phong temp */
+        require_once LIBRARY_EXT_PATH . 'Upload.php';
+        $uploadObj = new Upload();
+        $uploadObj->deleteAllTempFile();
+        
+        URL::redirect('backend', 'category', 'list');
     }
     
     public function getImageInfoAction($imageName, $option = null){

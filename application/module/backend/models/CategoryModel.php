@@ -164,12 +164,15 @@ class CategoryModel extends Model
             $arrParam['form']['created']    = date('Y-m-d',time());
             $arrParam['form']['created_by'] = $created_by;
             
+            if(isset($arrParam['form']['picture_temp'])){
+                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], 'categoy');
+                
+            }else{
+                $namePicture                 = $arrParam['form']['picture']['name'];
+                $arrParam['form']['picture'] = $namePicture;
+            }
             
-            $arrParam['form']['picture']    = $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
-            
-            // Giải phóng dữ liệu ở temp
-            $uploadObj->deleteAllTempFile();
-            
+            //$arrParam['form']['picture']    = $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
             $arrParam['form']['created']    = date('Y-m-d',time());
             $arrParam['form']['created_by'] = $created_by;
 
@@ -185,15 +188,14 @@ class CategoryModel extends Model
             $arrParam['form']['modified_by'] = $modified_by;
             
             if(isset($arrParam['form']['picture_temp'])){
-                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMain($arrParam['form']['picture_temp'], 'categoy');
-                
-                // Giải phóng dữ liệu ở temp
-                $uploadObj->deleteAllTempFile();
+                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], 'categoy');
                 
             }else{
                 $namePicture                 = $arrParam['form']['picture']['name'];
                 $arrParam['form']['picture'] = $namePicture;
             }
+            
+            $uploadObj->removeFile('category', $arrParam['form']['picture_old']);
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));     
             $this->update($data, array(array('id',$arrParam['form']['id'])));

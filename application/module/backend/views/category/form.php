@@ -50,22 +50,21 @@ if($this->task == 'edit'){
 //         $inputImageCallBack     = $inputPictureNonTemp    = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture]', $value = @$dataForm['picture']['name'], $id  = 'picture', $class = 'form-control', $size = null);
         
 //     }
+
 }
 
-/* show Image trong trường hợp đã có picture_Temp */
-
-if(isset($dataForm['picture_temp'])){
-    
+/* show Image trong trường hợp đã có picture*/
+if(isset($this->arrParam['form']['picture'])){
     $url_image         = UPLOAD_URL .'category'. DS . $dataForm['picture']['name'];
-    
-    if(!empty($dataForm['picture_temp'])){
-        $tempDir       = UPLOAD_PATH . 'category' . DS . 'temp' . DS;
-        $imageFile     = $dataForm['picture_temp'];
-        $url_image     = UPLOAD_URL .'category'. DS .'temp'. DS . $dataForm['picture_temp'];
-    }
-    
-    $pictureShow            = '<img id="imageShow" src="'.$url_image.'">';
 }
+
+if(!empty($dataForm['picture_temp'])){
+    $tempDir       = UPLOAD_PATH . 'category' . DS . 'temp' . DS;
+    $imageFile     = $dataForm['picture_temp'];
+    $url_image     = UPLOAD_URL .'category'. DS .'temp'. DS . $dataForm['picture_temp'];
+}
+
+$pictureShow            = '<img id="imageShow" src="'.$url_image.'">';
 
 $inputImageCallBack     = '';
 
@@ -103,7 +102,7 @@ if (isset($this->arrParam['id'])) {
 }
 
 $submitButton = Helper::cmsButtonSubmit($type = "submit", $class = "btn btn-success", $textOutfit = "Save");
-$cancelUrl    = URL::createLink("backend", "category", "list");
+$cancelUrl    = URL::createLink("backend", "category", "cancel");
 $cancelButton = Helper::cmsButton($cancelUrl, $class = "btn btn-danger", $textOufit = "Cancel");
 
 ?>

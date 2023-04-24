@@ -28,18 +28,20 @@ class Upload{
         @unlink($fileName);
     }
     
-    public function moveTempFileGoMain($fileMove, $folderMove, $option = Null){
-        $fileName = $fileMove;
+    public function moveTempFileGoMainFile($fileMove, $folderMove, $option = Null){
+        $fileName          = $fileMove;
+        $fileLocation      = $this->randomString(8) . '.' . pathinfo($fileMove, PATHINFO_EXTENSION); 
+        
         $fileMoveLocation  = UPLOAD_PATH . 'category' . DS . 'temp' . DS . $fileName;
-        $imageFolderMove = UPLOAD_PATH . 'category' . DS . $fileMove;
-        copy($fileMoveLocation,$imageFolderMove);        
-        return $fileName;
+        $imageFolderMove = UPLOAD_PATH . 'category' . DS;
+        copy($fileMoveLocation, $imageFolderMove . $fileLocation);        
+        return $fileLocation;
     }
     
     public function deleteAllTempFile(){      
         $files = glob(UPLOAD_PATH . 'category' . DS . 'temp' . DS .'*'); // get all file names
         foreach($files as $file){ // iterate files
-            if(is_file($file)) {
+            if(@is_array(getimagesize($file))) {
                 unlink($file); // delete file
             }
         }
