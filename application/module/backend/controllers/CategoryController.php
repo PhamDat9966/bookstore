@@ -223,13 +223,11 @@ class CategoryController extends Controller
                 unset($this->_arrParam['form']['picture']);
                 $this->_arrParam['form']['picture_temp'] = $pictureTemp;
             }
-       
-            
-            // Image
-            $imageInfo = $this->getImageInfoAction($this->_arrParam['form']['picture'], null);         
-            if(isset($this->_arrParam['form']['picture_temp'])){
-                $imageInfo = $this->getImageInfoAction($this->_arrParam['form']['picture_temp'], 'temp');
-            }
+
+            /* --- Hàm getImageInfoAction sẽ lấy thông số từ image để validate --- */
+            require_once LIBRARY_EXT_PATH . 'Upload.php';
+            $uploadObj = new Upload();
+            $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam, NULL);
 
             $this->_arrParam['form']['picture'] = array();
             $this->_arrParam['form']['picture']['name'] = $imageInfo['basename'];
@@ -278,7 +276,7 @@ class CategoryController extends Controller
                 /* Giai phong temp */
                 require_once LIBRARY_EXT_PATH . 'Upload.php';
                 $uploadObj = new Upload();
-                $uploadObj->deleteAllTempFile();
+                $uploadObj->deleteAllTempFile($this->_arrParam);
                 
                 $type = $this->_arrParam['type'];
                 

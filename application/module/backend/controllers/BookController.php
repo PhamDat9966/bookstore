@@ -215,7 +215,10 @@ class BookController extends Controller
     // ACTION : ADD & EDIT
     public function formAction($option = null)
     {
-    
+        ob_start();
+//         echo "<pre>";
+//         print_r($this->_arrParam);
+//         echo "</pre>";  
 //         echo "<pre>";
 //         print_r($_FILES);
 //         echo "</pre>";
@@ -232,19 +235,10 @@ class BookController extends Controller
 //         print_r($this->_arrParam);
 //         echo "</pre>";  
         
-        // SelectGroup for User
-        $setNumberGroupLimitControl  = 6;
+        // Category id cho box tại view
         $this->_view->slbCategory          = $this->_model->categoryInSelectbox($this->_arrParam, $numberGroup = null);
         
         $this->_view->_title        = 'Book: Add a book';
-
-        // _arrParamOld use When save have error. _arrParamOld save error
-        if (isset($this->_arrParam['form'])) {
-            $this->_arrParamOld['form'] = $this->_arrParam['form'];
-            if (isset($this->_arrParam['form']['id'])) {
-                $this->_arrParam['id'] = $this->_arrParam['form']['id'];
-            }
-        }
 
         if (isset($this->_arrParam['id'])) {
             $this->_view->_title  = 'Book: Edit';
@@ -311,18 +305,22 @@ class BookController extends Controller
                 $this->_arrParam['form']['picture_temp'] = $pictureTemp;
             }
             
-            
-            // Image
-            $imageInfo = $this->getImageInfoAction($this->_arrParam['form']['picture'], null);
-            if(isset($this->_arrParam['form']['picture_temp'])){
-                $imageInfo = $this->getImageInfoAction($this->_arrParam['form']['picture_temp'], 'temp');
-            }
+            /* --- Hàm getImageInfoAction sẽ lấy thông số từ image để validate --- */
+            require_once LIBRARY_EXT_PATH . 'Upload.php';
+            $uploadObj = new Upload();
+
+//             if(isset($this->_arrParam['form']['picture_temp'])){
+//                 $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam['form']['picture_temp'],$this->_arrParam, 'temp');
+//             } else {
+//                 $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam['form']['picture'],$this->_arrParam, null);
+//             }
+            $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam, NULL);
             
             $this->_arrParam['form']['picture'] = array();
             $this->_arrParam['form']['picture']['name'] = $imageInfo['basename'];
             $this->_arrParam['form']['picture']['size'] = $imageInfo['size'];
             
-            // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
+            /* --- Reload lại những giá trị đã nhập trên input trong trường hợp đã submit --- */
             if(isset($name))             $this->_arrParam['form']['name']             = $name;
             if(isset($shortDescription)) $this->_arrParam['form']['shortDescription'] = $shortDescription;
             if(isset($description))      $this->_arrParam['form']['description']      = $description;
@@ -341,25 +339,25 @@ class BookController extends Controller
             $this->_arrParam['form']['picture'] = $_FILES['picture'];
         }
         
-        /*Tiép tuc ơ dây*/
+        //die("Function is Die");
+        
         if (@$this->_arrParam['form']['token'] > 0) {
             $taskAction          = 'add';
-            $queryUserName       = "SELECT `id` FROM `" . TBL_USER . "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "'";
-            $queryEmailName      = "SELECT `id` FROM `" . TBL_USER . "` WHERE `email`      = '" . $this->_arrParam['form']['email'] . "'";
+            $queryBookName       = "SELECT `id` FROM `" . TBL_BOOK . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
 
             if (isset($this->_arrParam['form']['id'])) {
                 $taskAction      = 'edit';
-                $queryUserName  .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
-                $queryEmailName .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
+                $queryBookName  .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
             }
             
             $validate = new Validate($this->_arrParam['form']);
-            $validate->addRule('username', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryUserName, 'min' => 3, 'max' => 25))
-                    ->addRule('password', 'string', array('min' => 3, 'max' => 255))
-                    ->addRule('email', 'email-notExistRecord', array('database' => $this->_model, 'query' => $queryEmailName, 'min' => 3, 'max' => 25))
-                    ->addRule('fullname', 'string', array('min' => 3, 'max' => 255))
-                    ->addRule('status', 'status', array('deny' => array('default')))
-                    ->addRule('group_id', 'status', array('deny' => array('default')));
+            $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryBookName, 'min' => 3, 'max' => 25))
+                     ->addRule('shortDescription', 'string', array('min' => 0, 'max' => 10000))
+                     ->addRule('description', 'string', array('min' => 0, 'max' => 3000))
+                     ->addRule('price', 'int', array('min' => 0, 'max' => 5000000))
+                     ->addRule('sale_off', 'int', array('min' => 0, 'max' => 100))
+                     ->addRule('status', 'status', array('deny' => array('default')))
+                     ->addRule('picture', 'file', array('min' => 10, 'max' => 1000000, 'extension'=>array('jpg','png','jpeg')), false);
 
             $validate->run();
 
@@ -367,11 +365,6 @@ class BookController extends Controller
 
             if ($validate->isValid() == false) {
                 $this->_view->errors    = $validate->showErrors();
-
-                // When it's show Error but it have generatePassword when refresh
-                if (@$this->_arrParam['task'] == 'generatepass') {
-                    $this->_arrParam['form']['password'] = randomString($length = 12);
-                }
             } else {
 
                 $task = (isset($this->_arrParam['form']['id']) ? 'edit' : 'add');
@@ -381,6 +374,13 @@ class BookController extends Controller
 
                 $id      = $this->_model->saveItem($this->_arrParam, array('task' => $task));
                 $type    = $this->_arrParam['type'];
+                
+                /* Giai phong temp */
+//                 require_once LIBRARY_EXT_PATH . 'Upload.php';
+//                 $uploadObj = new Upload();
+//                 $uploadObj->deleteAllTempFile($this->_arrParam);
+                
+                $type = $this->_arrParam['type'];
 
                 if ($type == 'save-close') URL::redirect('backend', 'book', 'list');
                 //plus
@@ -389,7 +389,7 @@ class BookController extends Controller
             }
         }
 
-        $this->_view->_tag          = 'user';
+        $this->_view->_tag          = 'book';
         $this->_view->arrParam      = $this->_arrParam;
 
         $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
@@ -398,18 +398,21 @@ class BookController extends Controller
         $this->_templateObj->load();
 
         $this->_view->render('book/form', true);
+        ob_end_flush();
     }
     
-    public function getImageInfoAction($imageName, $option = null){
+    public function getImageInfoAction($imageName, $arrParam ,$option = null){
+        $folderLocation = $arrParam['controller'];
+
         if($option == null){
-            $pathImage          = UPLOAD_PATH .'category'. DS . $imageName;
+            $pathImage          = UPLOAD_PATH .$folderLocation. DS . $imageName;
             $imageInfo          = pathinfo($pathImage);
             $imageInfo['size']  = filesize($pathImage);
             return $imageInfo;
         }
         if($option == 'temp'){
             
-            $pathImage          = UPLOAD_PATH .'category'. DS . 'temp' . DS .$imageName;
+            $pathImage          = UPLOAD_PATH . $folderLocation . DS . 'temp' . DS .$imageName;
             $imageInfo          = pathinfo($pathImage);
             $imageInfo['size']  = filesize($pathImage);
             return $imageInfo;

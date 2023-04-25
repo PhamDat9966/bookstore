@@ -1,22 +1,14 @@
 <?php
 
-// echo "<pre>book view";
-// print_r($this->arrParam);
-// echo "</pre>";
-
 $dataForm           = @$this->arrParam['form'];
 
 $disabled           = '';
-$passwordType       = 'text';
 $hiddenRowForm      = '';
 
 $inputIDHidden          = '';
 
 $statusStyle         = '';   
 $groupStyle          = '';
-
-$generatePassword    = '';
-$rowGeneratePassword = '';
 
 $idRequire           = false;
 $nameRequire         = true;

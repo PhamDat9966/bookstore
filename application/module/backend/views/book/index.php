@@ -199,7 +199,7 @@ $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $t
 										<th><input type="checkbox" name="checkall-toggle"></th>
 										<th>ID</th>
 										<th class="text-left">Book Name</th>
-										<th>Image</th>
+										<th>Picture</th>
 										<th>Price</th>
 										<th>Sale Off</th>
 										<th>Category</th>

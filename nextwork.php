@@ -1,2 +1,2 @@
-tiep tuc voi form Book->validate
+tiep tuc voi form book add voi nhieu truong hop 
 

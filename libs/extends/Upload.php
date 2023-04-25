@@ -28,14 +28,58 @@ class Upload{
         @unlink($fileName);
     }
     
-    public function moveTempFileGoMainFile($fileMove, $folderMove, $option = Null){
+    public function moveTempFileGoMainFile($fileMove, $folderMove,$option = Null){
         $fileName          = $fileMove;
-        $fileLocation      = $this->randomString(8) . '.' . pathinfo($fileMove, PATHINFO_EXTENSION); 
+        $newLocation      = $this->randomString(8) . '.' . pathinfo($fileMove, PATHINFO_EXTENSION); 
         
-        $fileMoveLocation  = UPLOAD_PATH . 'category' . DS . 'temp' . DS . $fileName;
-        $imageFolderMove = UPLOAD_PATH . 'category' . DS;
-        copy($fileMoveLocation, $imageFolderMove . $fileLocation);        
-        return $fileLocation;
+        $fileMoveLocation  = UPLOAD_PATH . $folderMove . DS . 'temp' . DS . $fileName;
+        $imageFolderMove = UPLOAD_PATH . $folderMove . DS;
+        copy($fileMoveLocation, $imageFolderMove . $newLocation);        
+        return $newLocation;
+    }
+    
+//     public function getImageInfoAction($imageName, $arrParam ,$option = null){
+        
+//         echo "<pre>getImage";
+//         print_r($arrParam);
+//         echo "</pre>";
+        
+//         die("Function is Die");
+        
+//         $folderLocation = $arrParam['controller'];
+        
+//         if($option == null){
+//             $pathImage          = UPLOAD_PATH .$folderLocation. DS . $imageName;
+//             $imageInfo          = pathinfo($pathImage);
+//             $imageInfo['size']  = filesize($pathImage);
+//             return $imageInfo;
+//         }
+//         if($option == 'temp'){
+            
+//             $pathImage          = UPLOAD_PATH . $folderLocation . DS . 'temp' . DS .$imageName;
+//             $imageInfo          = pathinfo($pathImage);
+//             $imageInfo['size']  = filesize($pathImage);
+//             return $imageInfo;
+//         }
+//     }
+    
+    public function getImageInfoAction($arrParam ,$option = null){
+        
+        $folderLocation = $arrParam['controller'];
+
+        if(isset($arrParam['form']['picture_temp'])){
+            $imageName          = $arrParam['form']['picture_temp'];
+            $pathImage          = UPLOAD_PATH . $folderLocation . DS . 'temp' . DS .$imageName;
+            $imageInfo          = pathinfo($pathImage);
+            $imageInfo['size']  = filesize($pathImage);
+            return $imageInfo;
+        } else {
+            $imageName          = $arrParam['form']['picture'];
+            $pathImage          = UPLOAD_PATH .$folderLocation. DS . $imageName;
+            $imageInfo          = pathinfo($pathImage);
+            $imageInfo['size']  = filesize($pathImage);
+            return $imageInfo;
+        }
     }
     
     public function deleteAllTempFile($arrParam){

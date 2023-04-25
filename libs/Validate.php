@@ -117,9 +117,9 @@ class Validate{
 	
 	// Validate Integer
 	private function validateInt($element, $min = 0, $max = 0){
-		if(!filter_var($this->source[$element], FILTER_VALIDATE_INT, array("options"=>array("min_range"=>$min,"max_range"=>$max)))){
-			$this->setError($element, 'is an invalid number');
-		}
+	    if($this->source[$element]!= 0 && !filter_var($this->source[$element], FILTER_VALIDATE_FLOAT, array("options"=>array("min_range"=>$min,"max_range"=>$max)))){
+	        $this->setError($element, 'is an invalid number');
+	    }
 	}
 	
 	// Validate String

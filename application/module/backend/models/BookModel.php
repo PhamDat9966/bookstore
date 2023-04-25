@@ -10,6 +10,8 @@ class BookModel extends Model
     private $_columns = array(
                                 'id',
                                 'name',
+                                'shortDescription',
+                                'description',
                                 'price',
                                 'sale_off',
                                 'picture',
@@ -124,10 +126,22 @@ class BookModel extends Model
     
     public function saveItem($arrParam, $option = null){
         
+        require_once LIBRARY_EXT_PATH . 'Upload.php';
+        $uploadObj = new Upload();
+        
         $created_by  = $this->_userInfo['info']['id'];
         $modified_by = $this->_userInfo['info']['id'];
         
         if($option['task'] == 'add'){
+            
+            if(isset($arrParam['form']['picture_temp'])){
+                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], $folderMove = $arrParam['controller']);
+                
+            }else{
+                $namePicture                 = $arrParam['form']['picture']['name'];
+                $arrParam['form']['picture'] = $namePicture;
+            }
+            
             $arrParam['form']['created']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['created_by'] = $created_by;
             
@@ -138,25 +152,26 @@ class BookModel extends Model
         }
         
         if($option['task'] == 'edit'){
+            
             $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
             $arrParam['form']['modified_by'] = $modified_by;
             
-            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
+            if(isset($arrParam['form']['picture_temp'])){
+                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], $folderMove = $arrParam['controller']);
+                
+            }else{
+                $namePicture                 = $arrParam['form']['picture']['name'];
+                $arrParam['form']['picture'] = $namePicture;
+            }
             
+            $uploadObj->removeFile('category', $arrParam['form']['picture_old']);
+            
+            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->update($data, array(array('id',$arrParam['form']['id'])));
             Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
             return $arrParam['form']['id'];
         }
-        
-        if($option['task'] == 'generatepass'){
-            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['modified_by'] = $modified_by;
-            
-            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
-            $this->update($data, array(array('id',$arrParam['form']['password'])));
-            Session::set('message', array('class' => 'success', 'content' => 'Dữ liệu được lưu thành công!'));
-            return $arrParam['form']['id'];
-        }
+
     }
     
     public function createdAndModified($arrParam, $option = null){

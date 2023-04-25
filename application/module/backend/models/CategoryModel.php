@@ -165,7 +165,7 @@ class CategoryModel extends Model
             $arrParam['form']['created_by'] = $created_by;
             
             if(isset($arrParam['form']['picture_temp'])){
-                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], 'categoy');
+                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], $folderMove = $arrParam['controller']);
                 
             }else{
                 $namePicture                 = $arrParam['form']['picture']['name'];
@@ -173,8 +173,6 @@ class CategoryModel extends Model
             }
             
             //$arrParam['form']['picture']    = $uploadObj->upload($fileObj = $arrParam['form']['picture'], $folderUpload = 'category');
-            $arrParam['form']['created']    = date('Y-m-d',time());
-            $arrParam['form']['created_by'] = $created_by;
 
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->insert($data);
@@ -188,7 +186,7 @@ class CategoryModel extends Model
             $arrParam['form']['modified_by'] = $modified_by;
             
             if(isset($arrParam['form']['picture_temp'])){
-                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], 'categoy');
+                $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], $folderMove = $arrParam['controller']);
                 
             }else{
                 $namePicture                 = $arrParam['form']['picture']['name'];
