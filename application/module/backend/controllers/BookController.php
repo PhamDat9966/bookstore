@@ -13,7 +13,7 @@ class BookController extends Controller
     }
 
     public function listAction()
-    {          
+    {            
         ob_start();
 
         // Clear Search
@@ -216,9 +216,21 @@ class BookController extends Controller
     public function formAction($option = null)
     {
     
-//         echo "<pre>book Controller";
-//         print_r($this->_arrParam);
+//         echo "<pre>";
+//         print_r($_FILES);
 //         echo "</pre>";
+        
+        if(!empty($_FILES['picture']['name'])){
+
+            $this->_arrParam['form']['picture_temp'] = $_FILES['picture']['name'];
+
+            $tempFileUpload = UPLOAD_PATH . 'book' . DS .'temp' . DS . $_FILES['picture']['name'];
+            copy($_FILES['picture']['tmp_name'], $tempFileUpload);
+        }
+        
+//         echo "<pre>";
+//         print_r($this->_arrParam);
+//         echo "</pre>";  
         
         // SelectGroup for User
         $setNumberGroupLimitControl  = 6;
@@ -235,40 +247,101 @@ class BookController extends Controller
         }
 
         if (isset($this->_arrParam['id'])) {
-            $this->_view->_title  = 'User: Edit';
+            $this->_view->_title  = 'Book: Edit';
 
             // For Case Save-close with Password = empty
             if (isset($this->_arrParam['form']['id'])) {
                 $this->_arrParam['id'] = $this->_arrParam['form']['id'];
             }
-
-            $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
-
-            // GeneratePassword
-            if (isset($this->_arrParam['task'])) {
-                if ($this->_arrParam['task'] == 'generatepass') {
-
-                    $this->_view->_title                    = 'User: Change Password';
-                    $this->_arrParam['form']['task']        = 'generatepass';
-                    $this->_view->arrParam['form']['task']  = 'generatepass';
-                    $this->_view->arrParam                  = $this->_arrParam;
-
-                    require_once LIBRARY_PATH . DS . "functions.php";
-                    $this->_arrParam['form']['password'] = randomString($length = 12);
-                    // Call Again
-                    $this->_arrParam['task'] == 'generatepass';
-                    $this->_view->_title      = 'User: Change Password';
-                }
+            //Load cho Input trong trường hợp đã Submit trước đó nhưng không thành công do lôĩ vào các biến tạm
+            if(isset($this->_arrParam['form']['name'])){
+                $name               = $this->_arrParam['form']['name'];
+            }
+            
+            if(isset($this->_arrParam['form']['shortDescription'])){
+                $shortDescription   = $this->_arrParam['form']['shortDescription'];
+            }
+            
+            if(isset($this->_arrParam['form']['description'])){
+                $description        = $this->_arrParam['form']['description'];
+            }
+            
+            if(isset($this->_arrParam['form']['price'])){
+                $price              = $this->_arrParam['form']['price'];
+            }
+            
+            if(isset($this->_arrParam['form']['sale_off'])){
+                $sale_off           = $this->_arrParam['form']['sale_off'];
             }
 
-            if (empty($this->_arrParam['form'])) URL::redirect('backend', 'user', 'list');
+            if(isset($this->_arrParam['form']['status'])){
+                $status             = $this->_arrParam['form']['status'];
+            }
+            
+            if(isset($this->_arrParam['form']['category_id'])){
+                $category_id        = $this->_arrParam['form']['category_id'];
+            }
+            
+            if(isset($this->_arrParam['form']['token'])){
+                $token              = $this->_arrParam['form']['token'];
+            }
+            
+            if(isset($this->_arrParam['form']['picture'])){
+                $picture            = $this->_arrParam['form']['picture'];
+            }
+            
+            if(isset($this->_arrParam['form']['picture_temp'])){
+                $pictureTemp        = $this->_arrParam['form']['picture_temp'];
+            }
+            
+            /*  Callback - Từ phiên làm trước đã submit rồi, phiên hiện tại chưa submit
+             *   trên edit nhưng cần giá trị để xuất dữ liệu ra input  */
+            
+            // Khi infoItem được gọi ở đây từ csdl thì đối tượng $this->_arrParam['form'] sẽ bị dữ liệu từ csdl ghi đè
+            $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
+            $this->_arrParam['form']['picture_old'] = $this->_arrParam['form']['picture'];
+            
+            // CallBack lại trường hợp có biến tạm
+            if(!empty($picture)){
+                $this->_arrParam['form']['picture'] = $picture;
+            }
+            
+            if(!empty($pictureTemp)){
+                unset($this->_arrParam['form']['picture']);
+                $this->_arrParam['form']['picture_temp'] = $pictureTemp;
+            }
+            
+            
+            // Image
+            $imageInfo = $this->getImageInfoAction($this->_arrParam['form']['picture'], null);
+            if(isset($this->_arrParam['form']['picture_temp'])){
+                $imageInfo = $this->getImageInfoAction($this->_arrParam['form']['picture_temp'], 'temp');
+            }
+            
+            $this->_arrParam['form']['picture'] = array();
+            $this->_arrParam['form']['picture']['name'] = $imageInfo['basename'];
+            $this->_arrParam['form']['picture']['size'] = $imageInfo['size'];
+            
+            // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
+            if(isset($name))             $this->_arrParam['form']['name']             = $name;
+            if(isset($shortDescription)) $this->_arrParam['form']['shortDescription'] = $shortDescription;
+            if(isset($description))      $this->_arrParam['form']['description']      = $description;
+            if(isset($price))            $this->_arrParam['form']['price']            = $price;
+            if(isset($sale_off))         $this->_arrParam['form']['sale_off']         = $sale_off;
+            if(isset($status))           $this->_arrParam['form']['status']           = $status;
+            if(isset($category_id))      $this->_arrParam['form']['category_id']      = $category_id;
+            
+            $this->_arrParam['form']['token']          = $token;
+            
+            if (empty($this->_arrParam['form'])) URL::redirect('backend', 'book', 'list');
         }
-
-
-        if (isset($this->_arrParamOld)) {
-            $this->_arrParam['form'] = $this->_arrParamOld['form'];
+        
+        /* -- Ghi đè trong trường hợp có up file mới --*/
+        if(!empty($_FILES['picture']['name'])){
+            $this->_arrParam['form']['picture'] = $_FILES['picture'];
         }
-
+        
+        /*Tiép tuc ơ dây*/
         if (@$this->_arrParam['form']['token'] > 0) {
             $taskAction          = 'add';
             $queryUserName       = "SELECT `id` FROM `" . TBL_USER . "` WHERE `username`   = '" . $this->_arrParam['form']['username'] . "'";
@@ -326,18 +399,21 @@ class BookController extends Controller
 
         $this->_view->render('book/form', true);
     }
-
-    public function generatePasswordAction()
-    {
-
-        require_once LIBRARY_PATH . DS . "functions.php";
-        $this->_arrParam['form']['password'] = randomString($length = 12);
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('user-form.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-
-        $this->_view->render('user/form', true);
+    
+    public function getImageInfoAction($imageName, $option = null){
+        if($option == null){
+            $pathImage          = UPLOAD_PATH .'category'. DS . $imageName;
+            $imageInfo          = pathinfo($pathImage);
+            $imageInfo['size']  = filesize($pathImage);
+            return $imageInfo;
+        }
+        if($option == 'temp'){
+            
+            $pathImage          = UPLOAD_PATH .'category'. DS . 'temp' . DS .$imageName;
+            $imageInfo          = pathinfo($pathImage);
+            $imageInfo['size']  = filesize($pathImage);
+            return $imageInfo;
+        }
     }
 
     public function deleteAction()
@@ -386,5 +462,14 @@ class BookController extends Controller
         $this->_templateObj->load();
         
         $this->_view->render('error/error', true);
+    }
+    
+    public function cancelAction(){
+        /* Giai phong temp */
+        require_once LIBRARY_EXT_PATH . 'Upload.php';
+        $uploadObj = new Upload();
+        $uploadObj->deleteAllTempFile($this->_arrParam);
+        
+        URL::redirect('backend', 'book', 'list');
     }
 }

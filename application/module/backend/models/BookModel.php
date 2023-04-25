@@ -434,9 +434,9 @@ class BookModel extends Model
     public function infoItem($arrParam,$option = null){
         if($option == null){
             $queryContent   = [];
-            $queryContent[] = "SELECT `id`,`username`,`email`,`fullname`,`password`,`status`,`group_id`";
-            $queryContent[] = "FROM `$this->_tableName`";
-            $queryContent[] = "WHERE `id` = '" . $arrParam['id'] . "'";
+            $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`price`,`b`.`sale_off`,`b`.`picture`,`b`.`status`,`b`.`category_id`,`c`.`name` AS `category_name`";
+            $queryContent[] = "FROM `$this->_tableName` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
+            $queryContent[] = "WHERE `b`.`id` > 0";
             $queryContent = implode(" ", $queryContent);
             
             $result = $this->fetchRow($queryContent);

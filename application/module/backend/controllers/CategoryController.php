@@ -247,10 +247,6 @@ class CategoryController extends Controller
         if(!empty($_FILES['picture']['name'])){
             $this->_arrParam['form']['picture'] = $_FILES['picture'];
         }
-        
-        echo "<pre>";
-        print_r($this->_arrParam['form']);
-        echo "</pre>";
 
         if (@$this->_arrParam['form']['token'] > 0) { 
             
@@ -307,7 +303,7 @@ class CategoryController extends Controller
         /* Giai phong temp */
         require_once LIBRARY_EXT_PATH . 'Upload.php';
         $uploadObj = new Upload();
-        $uploadObj->deleteAllTempFile();
+        $uploadObj->deleteAllTempFile($this->_arrParam);
         
         URL::redirect('backend', 'category', 'list');
     }

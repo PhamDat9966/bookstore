@@ -38,8 +38,8 @@ class Upload{
         return $fileLocation;
     }
     
-    public function deleteAllTempFile(){      
-        $files = glob(UPLOAD_PATH . 'category' . DS . 'temp' . DS .'*'); // get all file names
+    public function deleteAllTempFile($arrParam){
+        $files = glob(UPLOAD_PATH . $arrParam['controller'] . DS . 'temp' . DS .'*'); // get all file names
         foreach($files as $file){ // iterate files
             if(@is_array(getimagesize($file))) {
                 unlink($file); // delete file

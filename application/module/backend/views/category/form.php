@@ -1,7 +1,7 @@
 <?php
-// echo "<pre>view";
-// print_r($this);
-// echo "</pre>";
+echo "<pre>view";
+print_r($this->arrParam);
+echo "</pre>";
 
 $linkSaveClose	    = URL::createLink('backend', 'category', 'form', array('type' => 'save-close'));
 $linkCancel	        = URL::createLink('backend', 'category', 'list');
@@ -12,8 +12,13 @@ $inputName          = Helper::cmsInput($type = 'text'  , $name = 'form[name]', $
 $inputToken		    = Helper::cmsInput($type = 'hidden', $name = 'form[token]', $value = time(), $id  = 'token');
 
 //Picture
+$width       = '500px';
+$height      = '500px';
+$showImgSize = 'width="'.$width.'" height="'.$height.'"';
+//echo $noImage     = UPLOAD_URL.'noImage.png';   
+
 $inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture', $value = @$dataForm['picture'], $id  = 'picture', $class = '', $size = NULL, $option = 'onchange="previewPicture()"');
-$pictureShow        = '<img id="imageShow" src="">';
+$pictureShow        = '<img id="imageShow" src="" '.$showImgSize.'>';
 
 $arrSelectStatus    = array('default' => '- Select Status -', 1 => 'Active', 0 => 'Inactive');
 $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class = 'custom-select', $arrSelectStatus, $keySelect = @$dataForm['status'], $style = null);
@@ -64,7 +69,11 @@ if(!empty($dataForm['picture_temp'])){
     $url_image     = UPLOAD_URL .'category'. DS .'temp'. DS . $dataForm['picture_temp'];
 }
 
-$pictureShow            = '<img id="imageShow" src="'.$url_image.'">';
+if(empty($url_image)){
+    $url_image     = UPLOAD_URL.'noImage.png';
+}
+
+$pictureShow            = '<img id="imageShow" src="'.$url_image.'" '.$showImgSize.'>';
 
 $inputImageCallBack     = '';
 
@@ -76,11 +85,11 @@ if(isset($dataForm['picture_temp'])){
     
 }
 
-/* -------------------------------------------*/
-
 $rowNameOutput  = $rowName . $inputNameTemp;
 
 $rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture . $inputImageCallBack);
+
+/* -------------------------------------------*/
 
 $showErrors = '';
 if (!empty($this->errors)) {
