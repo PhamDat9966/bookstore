@@ -27,7 +27,7 @@ $height      = '500px';
 $showImgSize = 'width="'.$width.'" height="'.$height.'"';
 //echo $noImage     = UPLOAD_URL.'noImage.png';
 
-$inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture', $value = @$dataForm['picture'], $id  = 'picture', $class = '', $size = NULL, $option = 'onchange="previewPicture()"');
+$inputPicture       = @Helper::cmsInput($typeFile = 'file'  , $nameFile = 'picture', $valueFile = $dataForm['picture'] , $idFile  = 'picture', $classFile = '', $sizeFile = NULL, $optionFile = 'onchange="previewPicture()"');
 $pictureShow        = '<img id="imageShow" src="" '.$showImgSize.'>';
 
 $rowNameOutput      = '';
@@ -47,9 +47,9 @@ if(isset($this->arrParam['form']['id'])){
     
     $inputHiddenTask            = '<input type="hidden" name="task" value="'.$this->arrParam['task'].'">';
     
-    $pathImage                = UPLOAD_URL .'category'. DS . $dataForm['picture'];
-    $pictureShow              = '<img id="imageShow" src="'.$pathImage.'">';
-    $inputPictureHidden       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_hidden]', $value = @$dataForm['picture'], $id  = 'picture', $class = 'form-control', $size = null);
+//     $pathImage                = UPLOAD_URL .'category'. DS . @$dataForm['picture'];
+//     $pictureShow              = '<img id="imageShow" src="'.$pathImage.'">';
+//     $inputPictureHidden       = Helper::cmsInput($type = 'hidden'  , $name = 'form[picture_hidden]', $value = @$dataForm['picture'], $id  = 'picture', $class = 'form-control', $size = null);
 }
 
 $linkSaveClose	    = URL::createLink('backend', 'book', 'form', array('type' => 'save-close'));
@@ -57,11 +57,14 @@ $linkCancel	        = URL::createLink('backend', 'book', 'list');
 
 /* Name Book */
 $inputName          = Helper::cmsInput($type = 'text', $name = 'form[name]',$value = @$dataForm['name'], $id = 'name',$class = 'form-control', $size = null);    
+
 /* ShortDescription */
+$dataForm['shortDescription'] = (!empty($dataForm['shortDescription'])) ? $dataForm['shortDescription'] : '';
 $inputShortDescription  ='<textarea name="form[shortDescription]" class="form-control" rows="12" placeholder="Enter ..." style="height: 120px;">
                            '.$dataForm['shortDescription'].'
                           </textarea>';
 /* Description */
+$dataForm['description'] = (!empty($dataForm['description'])) ? $dataForm['description'] : '';
 $inputDescription       ='<textarea name="form[description]" class="form-control ckEditor" id="ckEditor" rows="12" placeholder="Enter ...">
                             '.$dataForm['description'].'
                          </textarea>'; 
@@ -76,17 +79,15 @@ $selectStatus       = Helper::cmsSelectbox($name = 'form[status]', $class ='cust
 $arrSelectSpecial   = array('default'=>'- Select Special -', 1 => 'Active', 0 => 'Inactive');
 $selectSpecial      = Helper::cmsSelectbox($name = 'form[special]', $class ='custom-select', $arrSelectSpecial, $keySelect = @$dataForm['special'],$style = $statusStyle);
 
-// CATEGORY
+// CATEGORY FOR BOOK
 $arrSelectCategory     = array();
 $temp                  = array('default'  => '- Select Category -');
 $arrSelectCategory     = $temp + $this->slbCategory;
 
-$selectCategory        = Helper::cmsSelectbox($name = 'form[category_id]', $class ='custom-select', $arrSelectCategory, $keySelect = @$dataForm['category_id'],$style = $groupStyle);
+$selectCategory        = Helper::cmsSelectbox('form[category_id]','custom-select', $arrSelectCategory, @$dataForm['category_id'], $groupStyle);
 
 // Row
 $rowName            = Helper::cmsRowForm($lblName = 'Bookname', $input = $inputName,$require = $nameRequire);
-
-
 $rowShortDescription = Helper::cmsRowForm($lblName = 'Short Description', $input = $inputShortDescription, $require = $shortDescriptionRequire);
 $rowDescription      = Helper::cmsRowForm($lblName = 'Description', $input = $inputDescription, $require = $descriptionRequire);
 
@@ -94,9 +95,9 @@ $rowPrice           = Helper::cmsRowForm($lblName = 'Price',    $input = $inputP
 $rowSaleOff         = Helper::cmsRowForm($lblName = 'Sale Off', $input = $inputSaleOff,     $require = $saleOffRequire);
 
 $rowStatus          = Helper::cmsRowForm($lblName = 'Status',   $input = $selectStatus,     $require = true,            $option = '');
-$rowSpecial         = Helper::cmsRowForm($lblName = 'Special',   $input = $selectSpecial,     $require = true,            $option = '');
-$rowCategory        = Helper::cmsRowForm($lblName = 'Category',    $input = $selectCategory,      $require = true,            $option = '');
+$rowSpecial         = Helper::cmsRowForm($lblName = 'Special',  $input = $selectSpecial,    $require = true,            $option = '');
 
+$rowCategory        = Helper::cmsRowForm('Category', $selectCategory, true, $option = '');
 
 
 /* show Image trong trường hợp đã có picture*/
@@ -110,7 +111,7 @@ if(!empty($dataForm['picture_temp'])){
     $url_image     = UPLOAD_URL .'book'. DS .'temp'. DS . $dataForm['picture_temp'];
 }
 
-if(empty($url_image)){
+if(empty($dataForm['picture']['name']) || empty($dataForm['picture']['size'])){
     $url_image     = UPLOAD_URL.'noImage.png';
 }
 
@@ -128,7 +129,7 @@ if(isset($dataForm['picture_temp'])){
 
 $rowNameOutput  = $rowName . $inputNameTemp;
 
-$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $input = $inputPicture . $inputImageCallBack);
+$rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $inputImage = $inputPicture . $inputImageCallBack);
 
 /* -------------------------------------------*/
 

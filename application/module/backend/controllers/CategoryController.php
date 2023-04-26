@@ -223,15 +223,6 @@ class CategoryController extends Controller
                 unset($this->_arrParam['form']['picture']);
                 $this->_arrParam['form']['picture_temp'] = $pictureTemp;
             }
-
-            /* --- Hàm getImageInfoAction sẽ lấy thông số từ image để validate --- */
-            require_once LIBRARY_EXT_PATH . 'Upload.php';
-            $uploadObj = new Upload();
-            $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam, NULL);
-
-            $this->_arrParam['form']['picture'] = array();
-            $this->_arrParam['form']['picture']['name'] = $imageInfo['basename'];
-            $this->_arrParam['form']['picture']['size'] = $imageInfo['size'];
             
             // Reload lại những giá trị đã nhập trên input trong trường hợp đã submit
             if(isset($name)) $this->_arrParam['form']['name']       = $name;
@@ -241,13 +232,24 @@ class CategoryController extends Controller
             if (empty($this->_arrParam['form'])) URL::redirect('backend', 'category', 'list');
         }
         
-        /* -- Ghi đè trong trường hợp có up file mới --*/
+        
+        /* LẤY THÔNG TIN ẢNH CÓ SẴN LÀ picture_temp */
+        /* --- Hàm getImageInfoAction sẽ lấy thông số từ image để validate --- */
+        require_once LIBRARY_EXT_PATH . 'Upload.php';
+        $uploadObj = new Upload();
+        /* --- Trong  getImageInfoAction nếu trường hợp có $this->picture_temp thì nó sẽ chọn picture_temp để lấy thông tin--- */
+        $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam, NULL);
+        
+        $this->_arrParam['form']['picture'] = array();
+        $this->_arrParam['form']['picture']['name'] = $imageInfo['basename'];
+        $this->_arrParam['form']['picture']['size'] = $imageInfo['size'];
+        
+        /* -- Ghi đè thông tin ảnh trong trường hợp có up file mới --*/
         if(!empty($_FILES['picture']['name'])){
             $this->_arrParam['form']['picture'] = $_FILES['picture'];
         }
 
         if (@$this->_arrParam['form']['token'] > 0) { 
-            
             //$taskAction = 'add';
             $queryName  = "SELECT `id` FROM `" . TBL_CATEGORY . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
             
@@ -270,7 +272,6 @@ class CategoryController extends Controller
             } else {
 
                 $taskAction = (isset($this->_arrParam['form']['id']) ? 'edit' : 'add');
-                
                 $id = $this->_model->saveItem($this->_arrParam, array('task' => $taskAction));
                 
                 /* Giai phong temp */

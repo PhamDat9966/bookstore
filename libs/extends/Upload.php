@@ -73,11 +73,15 @@ class Upload{
             $imageInfo          = pathinfo($pathImage);
             $imageInfo['size']  = filesize($pathImage);
             return $imageInfo;
-        } else {
+        } else if(isset($arrParam['form']['picture'])) {
             $imageName          = $arrParam['form']['picture'];
             $pathImage          = UPLOAD_PATH .$folderLocation. DS . $imageName;
             $imageInfo          = pathinfo($pathImage);
             $imageInfo['size']  = filesize($pathImage);
+            return $imageInfo;
+        } else{
+            $imageInfo['basename']  = '';
+            $imageInfo['size']      = '';
             return $imageInfo;
         }
     }

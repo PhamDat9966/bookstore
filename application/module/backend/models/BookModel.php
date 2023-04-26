@@ -146,6 +146,7 @@ class BookModel extends Model
             $arrParam['form']['created_by'] = $created_by;
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
+            
             $this->insert($data);
             Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
             return $this->lastID();

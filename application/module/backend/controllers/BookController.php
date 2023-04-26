@@ -216,6 +216,7 @@ class BookController extends Controller
     public function formAction($option = null)
     {
         ob_start();
+        
 //         echo "<pre>";
 //         print_r($this->_arrParam);
 //         echo "</pre>";  
@@ -305,21 +306,6 @@ class BookController extends Controller
                 $this->_arrParam['form']['picture_temp'] = $pictureTemp;
             }
             
-            /* --- Hàm getImageInfoAction sẽ lấy thông số từ image để validate --- */
-            require_once LIBRARY_EXT_PATH . 'Upload.php';
-            $uploadObj = new Upload();
-
-//             if(isset($this->_arrParam['form']['picture_temp'])){
-//                 $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam['form']['picture_temp'],$this->_arrParam, 'temp');
-//             } else {
-//                 $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam['form']['picture'],$this->_arrParam, null);
-//             }
-            $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam, NULL);
-            
-            $this->_arrParam['form']['picture'] = array();
-            $this->_arrParam['form']['picture']['name'] = $imageInfo['basename'];
-            $this->_arrParam['form']['picture']['size'] = $imageInfo['size'];
-            
             /* --- Reload lại những giá trị đã nhập trên input trong trường hợp đã submit --- */
             if(isset($name))             $this->_arrParam['form']['name']             = $name;
             if(isset($shortDescription)) $this->_arrParam['form']['shortDescription'] = $shortDescription;
@@ -329,17 +315,27 @@ class BookController extends Controller
             if(isset($status))           $this->_arrParam['form']['status']           = $status;
             if(isset($category_id))      $this->_arrParam['form']['category_id']      = $category_id;
             
-            $this->_arrParam['form']['token']          = $token;
+            @$this->_arrParam['form']['token']          = $token;
             
             if (empty($this->_arrParam['form'])) URL::redirect('backend', 'book', 'list');
         }
+        
+        /* LẤY THÔNG TIN ẢNH CÓ SẴN LÀ picture_temp */
+        /* --- Hàm getImageInfoAction sẽ lấy thông số từ image để validate --- */
+        require_once LIBRARY_EXT_PATH . 'Upload.php';
+        $uploadObj = new Upload();
+        /* --- Trong  getImageInfoAction sẽ nhận mảng $this->_arrParam nếu trường hợp 
+         * có $this->picture_temp thì nó sẽ chọn picture_temp để lấy thông tin--- */
+        $imageInfo = $uploadObj->getImageInfoAction($this->_arrParam, NULL);
+        
+        $this->_arrParam['form']['picture'] = array();
+        $this->_arrParam['form']['picture']['name'] = $imageInfo['basename'];
+        $this->_arrParam['form']['picture']['size'] = $imageInfo['size'];
         
         /* -- Ghi đè trong trường hợp có up file mới --*/
         if(!empty($_FILES['picture']['name'])){
             $this->_arrParam['form']['picture'] = $_FILES['picture'];
         }
-        
-        //die("Function is Die");
         
         if (@$this->_arrParam['form']['token'] > 0) {
             $taskAction          = 'add';
@@ -351,12 +347,14 @@ class BookController extends Controller
             }
             
             $validate = new Validate($this->_arrParam['form']);
+            
             $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryBookName, 'min' => 3, 'max' => 25))
                      ->addRule('shortDescription', 'string', array('min' => 0, 'max' => 10000))
                      ->addRule('description', 'string', array('min' => 0, 'max' => 3000))
                      ->addRule('price', 'int', array('min' => 0, 'max' => 5000000))
                      ->addRule('sale_off', 'int', array('min' => 0, 'max' => 100))
                      ->addRule('status', 'status', array('deny' => array('default')))
+                     ->addRule('category_id', 'status', array('deny' => array('default')))
                      ->addRule('picture', 'file', array('min' => 10, 'max' => 1000000, 'extension'=>array('jpg','png','jpeg')), false);
 
             $validate->run();
@@ -376,9 +374,9 @@ class BookController extends Controller
                 $type    = $this->_arrParam['type'];
                 
                 /* Giai phong temp */
-//                 require_once LIBRARY_EXT_PATH . 'Upload.php';
-//                 $uploadObj = new Upload();
-//                 $uploadObj->deleteAllTempFile($this->_arrParam);
+                require_once LIBRARY_EXT_PATH . 'Upload.php';
+                $uploadObj = new Upload();
+                $uploadObj->deleteAllTempFile($this->_arrParam);
                 
                 $type = $this->_arrParam['type'];
 

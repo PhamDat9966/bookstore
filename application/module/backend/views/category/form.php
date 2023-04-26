@@ -1,4 +1,5 @@
 <?php
+
 $linkSaveClose	    = URL::createLink('backend', 'category', 'form', array('type' => 'save-close'));
 $linkCancel	        = URL::createLink('backend', 'category', 'list');
 
@@ -13,7 +14,7 @@ $height      = '500px';
 $showImgSize = 'width="'.$width.'" height="'.$height.'"';
 //echo $noImage     = UPLOAD_URL.'noImage.png';   
 
-$inputPicture       = Helper::cmsInput($type = 'file'  , $name = 'picture', $value = @$dataForm['picture'], $id  = 'picture', $class = '', $size = NULL, $option = 'onchange="previewPicture()"');
+$inputPicture       = @Helper::cmsInput($typePic = 'file'  , $namePic = 'picture', $valuePic = $dataForm['picture'], $idPic  = 'picture', $classPic = '', $sizePic = NULL, $optionPic = 'onchange="previewPicture()"');
 $pictureShow        = '<img id="imageShow" src="" '.$showImgSize.'>';
 
 $arrSelectStatus    = array('default' => '- Select Status -', 1 => 'Active', 0 => 'Inactive');
@@ -65,7 +66,7 @@ if(!empty($dataForm['picture_temp'])){
     $url_image     = UPLOAD_URL .'category'. DS .'temp'. DS . $dataForm['picture_temp'];
 }
 
-if(empty($url_image)){
+if(empty($dataForm['picture']['name']) || empty($dataForm['picture']['size'])){
     $url_image     = UPLOAD_URL.'noImage.png';
 }
 
