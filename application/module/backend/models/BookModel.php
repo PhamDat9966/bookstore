@@ -2,26 +2,26 @@
 
 class BookModel extends Model
 {
-    public $_arrParam;
-    public $_saveParam = [];
-    protected $_tableName = TBL_BOOK;
-    public    $_cunrrentPage      = 1;
-    private $_userInfo;
-    private $_columns = array(
-                                'id',
-                                'name',
-                                'shortDescription',
-                                'description',
-                                'price',
-                                'sale_off',
-                                'picture',
-                                'created',
-                                'created_by',
-                                'modified',
-                                'modified_by',
-                                'status',
-                                'category_id'
-                        );
+    public      $_arrParam;
+    public      $_saveParam = [];
+    protected   $_tableName = TBL_BOOK;
+    public      $_cunrrentPage      = 1;
+    private     $_userInfo;
+    private     $_columns = array(
+                                    'id',
+                                    'name',
+                                    'shortDescription',
+                                    'description',
+                                    'price',
+                                    'sale_off',
+                                    'picture',
+                                    'created',
+                                    'created_by',
+                                    'modified',
+                                    'modified_by',
+                                    'status',
+                                    'category_id'
+                                );
     
     public function __construct()
     {
@@ -452,7 +452,7 @@ class BookModel extends Model
             $queryContent   = [];
             $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`price`,`b`.`sale_off`,`b`.`picture`,`b`.`status`,`b`.`category_id`,`c`.`name` AS `category_name`";
             $queryContent[] = "FROM `$this->_tableName` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
-            $queryContent[] = "WHERE `b`.`id` > 0";
+            $queryContent[] = "WHERE `b`.`id` = ".$arrParam['id']."";
             $queryContent = implode(" ", $queryContent);
             
             $result = $this->fetchRow($queryContent);

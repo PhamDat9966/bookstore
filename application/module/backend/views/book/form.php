@@ -61,7 +61,7 @@ $inputName          = Helper::cmsInput($type = 'text', $name = 'form[name]',$val
 /* ShortDescription */
 $dataForm['shortDescription'] = (!empty($dataForm['shortDescription'])) ? $dataForm['shortDescription'] : '';
 $inputShortDescription  ='<textarea name="form[shortDescription]" class="form-control" rows="12" placeholder="Enter ..." style="height: 120px;">
-                           '.$dataForm['shortDescription'].'
+                           '.trim($dataForm['shortDescription']).'
                           </textarea>';
 /* Description */
 $dataForm['description'] = (!empty($dataForm['description'])) ? $dataForm['description'] : '';
@@ -100,7 +100,10 @@ $rowSpecial         = Helper::cmsRowForm($lblName = 'Special',  $input = $select
 $rowCategory        = Helper::cmsRowForm('Category', $selectCategory, true, $option = '');
 
 
-/* show Image trong trường hợp đã có picture*/
+/* 
+ * show Image ra view trong trường hợp đã có sẵn picture trong public/file/../temp hoặc trong ở public/files/.. 
+ */
+
 if(isset($this->arrParam['form']['picture'])){
     $url_image         = UPLOAD_URL .'book'. DS . $dataForm['picture']['name'];
 }
@@ -131,7 +134,7 @@ $rowNameOutput  = $rowName . $inputNameTemp;
 
 $rowPicture         = Helper::cmsRowFormPicture($lblName = 'Picture', $inputImage = $inputPicture . $inputImageCallBack);
 
-/* -------------------------------------------*/
+/* --------------------- end show Image ----------------------*/
 
 
 $showErrors = '';

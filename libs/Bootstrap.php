@@ -5,11 +5,13 @@ class Bootstrap{
     private $_controllerOject;
     
     public function init(){
+        
         $this->setParam();
-        @$controllerName   =  ucfirst($this->_params['controller']) . 'Controller';
-        @$filePath         =  MODULE_PATH . $this->_params['module'] . DS . 'controllers' . DS . $controllerName  . '.php';   
+        $controllerName   =  ucfirst($this->_params['controller']) . 'Controller';
+        $filePath         =  MODULE_PATH . $this->_params['module'] . DS . 'controllers' . DS . $controllerName  . '.php';   
         
         if(file_exists($filePath)){
+            
             $this->loadExistingController($filePath, $controllerName);
             $this->callMethod();
             
@@ -23,7 +25,7 @@ class Bootstrap{
     // CALL METHOD
     public function callMethod(){
  
-        $actionName         = $this->_params['action'].'Action';
+        $actionName     = $this->_params['action'].'Action';
         
         if(method_exists($this->_controllerOject, $actionName) == true){
 
@@ -116,9 +118,9 @@ class Bootstrap{
         
         $this->_params = array_merge($_GET,$_POST);
 
-        $this->_params['module'] 		= isset($this->_params['module']) ? $this->_params['module'] : DEFAULT_MODULE;
-        $this->_params['controller'] 	= isset($this->_params['controller']) ? $this->_params['controller'] : DEFAULT_CONTROLLER;
-        $this->_params['action'] 		= isset($this->_params['action']) ? $this->_params['action'] : DEFAULT_ACTION;
+        $this->_params['module'] 		= isset($this->_params['module']) ?      $this->_params['module'] :     DEFAULT_MODULE;
+        $this->_params['controller'] 	= isset($this->_params['controller']) ?  $this->_params['controller'] : DEFAULT_CONTROLLER;
+        $this->_params['action'] 		= isset($this->_params['action']) ?      $this->_params['action'] :     DEFAULT_ACTION;
     }
     
     // LOAD DEFAULT CONTROLLER

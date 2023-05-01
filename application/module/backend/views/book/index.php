@@ -1,10 +1,6 @@
 <?php 
 /* BOOK */
 
-// echo "<pre>bookview";
-// print_r($this);
-// echo "</pre>";
-
 $listBook= '';
 
 //Created selectgroup Array

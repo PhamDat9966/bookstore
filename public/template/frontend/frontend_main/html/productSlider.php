@@ -1,4 +1,6 @@
 <?php
+    //require_once MODULE_PATH . $this->arrParam['module'] . DS . 'view' . DS . $this->arrParam['action'] . DS . 'productSlider.php';
+    
     $strSpecial1       = '\\';
     $strSpecial2       = "/";
     $imageURL          = str_replace($strSpecial1 ,$strSpecial2, $imageURL); 

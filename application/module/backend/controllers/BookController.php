@@ -15,7 +15,7 @@ class BookController extends Controller
     public function listAction()
     {            
         ob_start();
-
+            
         // Clear Search
         if(isset($this->_arrParam['clear'])) {
             
@@ -217,13 +217,6 @@ class BookController extends Controller
     {
         ob_start();
         
-//         echo "<pre>";
-//         print_r($this->_arrParam);
-//         echo "</pre>";  
-//         echo "<pre>";
-//         print_r($_FILES);
-//         echo "</pre>";
-        
         if(!empty($_FILES['picture']['name'])){
 
             $this->_arrParam['form']['picture_temp'] = $_FILES['picture']['name'];
@@ -231,10 +224,6 @@ class BookController extends Controller
             $tempFileUpload = UPLOAD_PATH . 'book' . DS .'temp' . DS . $_FILES['picture']['name'];
             copy($_FILES['picture']['tmp_name'], $tempFileUpload);
         }
-        
-//         echo "<pre>";
-//         print_r($this->_arrParam);
-//         echo "</pre>";  
         
         // Category id cho box tại view
         $this->_view->slbCategory          = $this->_model->categoryInSelectbox($this->_arrParam, $numberGroup = null);
