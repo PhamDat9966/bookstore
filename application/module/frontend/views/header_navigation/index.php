@@ -5,7 +5,7 @@
     //Link
 	$linkHome			      = URL::createLink('frontend','index','index');
 	$linkBook			      = URL::createLink('frontend','index','list');
-	$linkCatalory		      = URL::createLink('frontend','index','category');
+	$linkCatalory		      = URL::createLink('frontend','category','index');
 	$linkAdminControlPanel	  = URL::createLink('backend','index','index');
 	
 	$userObj   = Session::get('user');
@@ -53,11 +53,11 @@
 	$modul          = new Model();
 	$query          = 'SELECT `id`,`name` FROM `category` WHERE `status`= 1 ORDER BY `ordering` ASC';
 	$listCategory   = $modul->fetchPairs($query);
-	
 	$category_child_list = array();
 	foreach ($listCategory as $keyCats=>$valueCats){
+	    
 	    $category_child_list['class'] = '';
-	    $category_child_list['link']  = 'abcdef.html';
+	    $category_child_list['link']  = URL::createLink('frontend', 'category', 'info', array('category_id'=>$keyCats));
 	    $category_child_list['name']  = $valueCats;
 	    $arrayMenu['category']['child-list'][] = $category_child_list;
 	    

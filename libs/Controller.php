@@ -59,5 +59,9 @@ class Controller{
 	    header("location: index.php?module=$module&controller=$controller&action=$action$pageLink");
 	    exit();
 	}
+	
+	public function setPaginationTotalItemsPerPage($arrParam){
+	    return $this->_pagination['totalItemsPerPage'] = $arrParam['totalItemsPerPage'];
+	}
 
 }

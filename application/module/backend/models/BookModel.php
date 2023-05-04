@@ -142,8 +142,11 @@ class BookModel extends Model
                 $arrParam['form']['picture'] = $namePicture;
             }
             
-            $arrParam['form']['created']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['created_by'] = $created_by;
+            $arrParam['form']['created']          = date('Y-m-d h:i:s',time());
+            $arrParam['form']['created_by']       = $created_by;
+            $arrParam['form']['name']             = mysqli_real_escape_string($this->connect,$arrParam['form']['name']);
+            $arrParam['form']['shortDescription'] = mysqli_real_escape_string($this->connect,$arrParam['form']['shortDescription']);
+            $arrParam['form']['description']      = mysqli_real_escape_string($this->connect,$arrParam['form']['description']);
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             
@@ -154,8 +157,11 @@ class BookModel extends Model
         
         if($option['task'] == 'edit'){
             
-            $arrParam['form']['modified']    = date('Y-m-d h:i:s',time());
-            $arrParam['form']['modified_by'] = $modified_by;
+            $arrParam['form']['modified']         = date('Y-m-d h:i:s',time());
+            $arrParam['form']['modified_by']      = $modified_by;
+            $arrParam['form']['name']             = mysqli_real_escape_string($this->connect,$arrParam['form']['name']);
+            $arrParam['form']['shortDescription'] = mysqli_real_escape_string($this->connect,$arrParam['form']['shortDescription']);
+            $arrParam['form']['description']      = mysqli_real_escape_string($this->connect,$arrParam['form']['description']);
             
             if(isset($arrParam['form']['picture_temp'])){
                 $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], $folderMove = $arrParam['controller']);
