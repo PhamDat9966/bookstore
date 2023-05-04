@@ -79,3 +79,83 @@ function getUrlParam(key) {
     let searchParams = new URLSearchParams(window.location.search);
     return searchParams.get(key);
 }
+
+function quickViewFunction(id){
+	console.log(id);
+	var link    = 'index.php?module=frontend&controller=book&action=quickView';
+	//Ajax
+	$.ajax({
+		url		: link,
+		type	: 'GET',
+		data	: {id:id},
+		success	: function(data){	
+				/*
+				 * <a href="javascript:changeGroupACP('index.php?module=backend&amp;controller=group&amp;action=ajaxGroupACP&amp;id=4&amp;group_acp=0');" id="GroupACP-4" class="btn btn-danger rounded-circle btn-sm">
+			            <i class="fas fa-minus"></i>
+			        </a>
+				 */
+				console.log(data);
+				
+				var dataOject = JSON.parse(data);
+//				
+				console.log(dataOject);
+				var name     = dataOject.name;
+				console.log(name);
+				var id        		 = dataOject.id;
+				var shortDescription = dataOject.shortDescription;
+				var picture			 =  dataOject.picture;
+				
+					
+				$('#book-name').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+				$('#book-name').append(name);	// Add text
+				
+				$('#book-description').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+				$('#book-description').append(shortDescription);	// Add text
+				
+				$("#quick-view-img").attr("src",picture);
+				
+				//price
+//				var saleOff            = '';
+//			    var price              = dataOject.price;
+//			    var priceNotSaleOFF    = '';
+//
+//			    if(dataOject.sale_off > 0){
+//			        saleOff         = dataOject.sale_off;
+//			        priceNotSaleOFF = price;   
+//			        price           = price * saleOff / 100;
+//			        
+//			    }
+//				
+//				$('#price').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+//				$('#price').append(price+' đ');	// Add text
+//			    
+//				$('#price-not-off').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+//				$('#price-not-off').append(priceNotSaleOFF+' đ');	// Add text
+				
+				
+
+				
+//				var group_acb = dataOject.group_acb;
+//				var url       = dataOject.url;
+//				
+//				var element = 'a#GroupACP-' + id;
+//				var classRemove = 'btn-success';
+//				var classAdd 	= 'btn-danger'
+//				var iclassRemove	= 'fa-check';
+//				var iclassAdd		= 'fa-minus';
+//				
+//				if(group_acb==1){
+//					classRemove 	= 'btn-danger';
+//					classAdd 		= 'btn-success';
+//					iclassRemove	= 'fa-minus';
+//					iclassAdd		= 'fa-check';
+//				}
+//				
+//				$(element).attr('href',"javascript:changeGroupACP('"+url+"')");
+//				$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
+//				$(element).removeClass(classRemove).addClass(classAdd).notify("Cập nhật thành công",{ position:"top", className:"success" });
+//				//$('#GroupACP-' + id).removeClass(classRemove).addClass(classAdd).notify("Cập nhật thành công",{ position:"top", className:"success" });
+
+			}
+	})
+}

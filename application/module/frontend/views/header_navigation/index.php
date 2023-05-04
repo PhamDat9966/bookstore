@@ -57,7 +57,8 @@
 	foreach ($listCategory as $keyCats=>$valueCats){
 	    
 	    $category_child_list['class'] = '';
-	    $category_child_list['link']  = URL::createLink('frontend', 'category', 'info', array('category_id'=>$keyCats));
+	    $category_child_list['link']  = URL::createLink('frontend', 'book', 'list', array('category_id'=>$keyCats));
+	    //$category_child_list['link']  = URL::createLink('frontend', 'category', 'info', array('category_id'=>$keyCats));
 	    $category_child_list['name']  = $valueCats;
 	    $arrayMenu['category']['child-list'][] = $category_child_list;
 	    
