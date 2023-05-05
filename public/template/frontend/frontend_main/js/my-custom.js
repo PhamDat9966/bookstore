@@ -115,25 +115,26 @@ function quickViewFunction(id){
 				$("#quick-view-img").attr("src",picture);
 				
 				//price
-//				var saleOff            = '';
-//			    var price              = dataOject.price;
-//			    var priceNotSaleOFF    = '';
-//
-//			    if(dataOject.sale_off > 0){
-//			        saleOff         = dataOject.sale_off;
-//			        priceNotSaleOFF = price;   
-//			        price           = price * saleOff / 100;
-//			        
-//			    }
-//				
-//				$('#price').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
-//				$('#price').append(price+' đ');	// Add text
-//			    
-//				$('#price-not-off').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
-//				$('#price-not-off').append(priceNotSaleOFF+' đ');	// Add text
-				
-				
+				var saleOff            = dataOject.sale_off;
+			    var priceHaveSaleOFF   = dataOject.price;
+			    var priceNotSaleOFF    = '';
 
+			    if(saleOff > 0){
+			    	
+			        priceNotSaleOFF  = dataOject.price+' đ';   
+			        priceHaveSaleOFF = (dataOject.price * (100 - saleOff) / 100) + ' đ';
+			        
+			    }else{
+				    var priceHaveSaleOFF   = dataOject.price + ' đ';
+				    var priceNotSaleOFF    = '';
+			    }
+				
+				$('#book-price').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+				$('#book-price').append(priceHaveSaleOFF);	// Add text
+			    
+				$('#price-not-off').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+				$('#price-not-off').append(priceNotSaleOFF);	// Add text
+			 
 				
 //				var group_acb = dataOject.group_acb;
 //				var url       = dataOject.url;

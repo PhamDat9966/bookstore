@@ -17,7 +17,7 @@ foreach ($this->Items as $valueInfoBook){
         $saleOff        = '<span class="lable4 badge badge-danger"> -'.$valueInfoBook['sale_off'].'%</span>';
         
         $priceNotSaleOFF= '<del>'.number_format($price).' đ</del>';   
-        $price          = number_format($price * $valueInfoBook['sale_off'] / 100);
+        $price          = number_format($price * (100 - $valueInfoBook['sale_off']) / 100);
         $price          = $price.' đ ';
     } else{
         $price              = number_format($price);
@@ -441,7 +441,7 @@ foreach ($this->Items as $valueInfoBook){
                         <div class="product-right" id="quick-view-content">
                             <h2 class="book-name" id="book-name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
                                 distinctio.</h2>
-                            <h3 class="book-price" id="price">26.910 ₫ <del id="price-not-off">39.000 ₫</del></h3>
+                            <h3 class="book-price"><span id="book-price">>26.910 ₫</span> <del id="price-not-off">39.000 ₫</del></h3>
                             <div class="border-product">
                                 <div class="book-description" id="book-description">Lorem ipsum dolor sit amet consectetur, adipisicing
                                     elit. Unde quae cupiditate delectus laudantium odio molestiae deleniti facilis

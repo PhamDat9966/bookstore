@@ -94,6 +94,7 @@ class BookController extends Controller{
         $result['picture']           = UPLOAD_URL .'book' . DS .$return[0]['picture'];
         $result['sale_off']          = $return[0]['sale_off'];
         $result['price']             = $return[0]['price'];
+
         $result = json_encode($result);
         echo $result;
     }

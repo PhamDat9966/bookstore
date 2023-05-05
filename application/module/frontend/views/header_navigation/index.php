@@ -81,7 +81,11 @@
 	       $xhtml .='<li class="'.$value['class'].'"><a href="'.$value['link'].'">'.$value['name'].'</a>';
 	           $xhtml .='<ul>';
     	       foreach ($value['child-list'] as $keyC=>$valueC){
-    	           $xhtml .= '<li class="'.$valueC['class'].'"><a href="'.$valueC['link'].'">'.$valueC['name'].'</a></li>';
+    	           $xhtml .= '<li class="'.$valueC['class'].'">
+                                <a href="'.$valueC['link'].'">
+                                    '.$valueC['name'].'
+                                </a>
+                            </li>';
     	       }
 	           $xhtml .='</ul>';
 	       $xhtml .='</li>';
