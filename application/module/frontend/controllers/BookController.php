@@ -46,11 +46,7 @@ class BookController extends Controller{
     }
     
     public  function listAction(){
-        
-//         echo "<pre>";
-//         print_r($this->_arrParam);
-//         echo "</pre>";
-        
+
         $this->_view->_title    = "There are Books into one Category";
         
         //Paginator
@@ -73,8 +69,9 @@ class BookController extends Controller{
         
         $this->_view->Pagination    = $this->_paginationResult;
         
-        //$this->_view->Items     = $this->_model->listItems($this->_arrParam);
-        $this->_view->Items  = $this->_model->listItems($this->_arrParam);
+        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
+        $this->_view->categoryName  = $this->_model->infoItem($this->_arrParam,array('task'=>'get-cat-name'));
+        
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
         $this->_templateObj->setFileTemplate('book_list.php');
         $this->_templateObj->setFileConfig('template.ini');
@@ -84,19 +81,10 @@ class BookController extends Controller{
     }
     
     public  function quickViewAction(){
-        $result   = array(); 
-        $return   =  $this->_model->quickViewItem($this->_arrParam);
-        
-        $result['id']                = $return[0]['id'];
-        $result['name']              = $return[0]['name'];    
-        $result['shortDescription']  = $return[0]['shortDescription'];
-        $result['description']       = $return[0]['description'];
-        $result['picture']           = UPLOAD_URL .'book' . DS .$return[0]['picture'];
-        $result['sale_off']          = $return[0]['sale_off'];
-        $result['price']             = $return[0]['price'];
-
-        $result = json_encode($result);
-        echo $result;
+        $return                      =  $this->_model->quickViewItem($this->_arrParam);
+        $return['picture']           = UPLOAD_URL .'book' . DS .$return['picture'];
+        $return   = json_encode($return);
+        echo $return;
     }
     
 }

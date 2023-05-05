@@ -16,26 +16,7 @@ class BookModel extends Model
         $this->setTable($this->_tableName);
         
     }
-    
-//     public function listItems($arrParam,$option = null)
-//     {
-//         //$totalItemsCount = $arrParam['count']['allStatus'];
-        
-//         $queryContent   = [];
-//         $queryContent[] = "SELECT `id`,`name`,`picture`";
-//         $queryContent[] = "FROM `$this->_tableName`";
-//         $queryContent[] = "WHERE `status`  = 1";
-        
-//         $position           = $this->_arrParam['position'];
-//         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
-        
-//         $queryContent[] = "LIMIT $position,$totalItemsPerPage";
-        
-//         $queryContent = implode(" ", $queryContent);
-//         $result = $this->fetchAll($queryContent);
-//         return $result;
-//     }
-    
+
     public function listItems($arrParam,$option = NULL){
         $queryContent   = [];
         $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
@@ -61,24 +42,32 @@ class BookModel extends Model
         $queryContent[] = "FROM `$this->_tableName`";
         $queryContent[] = "WHERE `id` = ".$arrParam['id']."";
         $queryContent = implode(" ", $queryContent);
-        $result = $this->fetchAll($queryContent);
+        $result = $this->fetchRow($queryContent);
         return $result;
         
     }
     
-    public function saveItem($arrParam, $option = null){
-        
-        if($option['task'] == 'save-register'){
-            
-            $arrParam['form']['register_date']  =   date("Y-m-d H:m:s",time());
-            $arrParam['form']['register_ip']    =   $_SERVER['REMOTE_ADDR'];
-            $arrParam['form']['status']         =   0;
-            
-            $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
-            $this->insert($data);
-            Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
-            return $this->lastID();
-        }
+    public function infoItem($arrParam, $option = null){
+       if($option == null){
+            $queryContent   = [];
+            $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
+            $queryContent[] = "FROM `$this->_tableName`";
+            $queryContent[] = "WHERE `id` = ".$arrParam['id']."";
+            $queryContent = implode(" ", $queryContent);
+            $result = $this->fetchAll($queryContent);
+            return $result;
+       }
+       
+       if($option['task'] == 'get-cat-name'){
+           
+           $queryContent   = [];
+           $queryContent[] = "SELECT `name`";
+           $queryContent[] = "FROM `".TBL_CATEGORY."`";
+           $queryContent[] = "WHERE `id` = ".$arrParam['category_id']."";
+           $queryContent   = implode(" ", $queryContent);
+           $result         = $this->fetchRow($queryContent);
+           return $result['name'];
+       }
     }
     
     public function countFilterSearch($arrParam){
