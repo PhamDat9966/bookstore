@@ -121,14 +121,24 @@ function quickViewFunction(id){
 
 			    if(saleOff > 0){
 			    	
-			        priceNotSaleOFF  = dataOject.price+' đ';   
-			        priceHaveSaleOFF = (dataOject.price * (100 - saleOff) / 100) + ' đ';
+			        priceNotSaleOFF  = dataOject.price;   
+			        priceHaveSaleOFF = (dataOject.price * (100 - saleOff) / 100);
 			        
 			    }else{
-				    var priceHaveSaleOFF   = dataOject.price + ' đ';
+				    var priceHaveSaleOFF   = dataOject.price;
 				    var priceNotSaleOFF    = '';
 			    }
-				
+			    
+			    // Thêm dấu phẩy vào hàng nghìn
+			    const formatter = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
+			    priceHaveSaleOFF = formatter.format(priceHaveSaleOFF)+' đ';
+			    
+			    if(priceNotSaleOFF == 0){
+			    	priceNotSaleOFF = '';
+			    }else{
+			    	priceNotSaleOFF = formatter.format(priceNotSaleOFF)+' đ';
+			    }
+			    
 				$('#book-price').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
 				$('#book-price').append(priceHaveSaleOFF);	// Add text
 			    

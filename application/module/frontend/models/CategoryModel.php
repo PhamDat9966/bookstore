@@ -36,24 +36,6 @@ class CategoryModel extends Model
         return $result;
     }
     
-    public function infoItem($arrParam,$option = NULL){
-        $queryContent   = [];
-        $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
-        $queryContent[] = "FROM `".TBL_BOOK."` AS `b` LEFT JOIN `".$this->_tableName."` AS `c` ON `b`.`category_id` = `c`.`id`";
-        $queryContent[] = "WHERE `b`.`id` > 0";
-        $queryContent[] = "AND `b`.`category_id` = ".$arrParam['category_id']."";
-        
-        $position           = $this->_arrParam['position'];
-        $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
-        
-        $queryContent[] = "LIMIT $position,$totalItemsPerPage";
-        
-        $queryContent = implode(" ", $queryContent);
-        
-        $result = $this->fetchAll($queryContent);
-        return $result;
-    }
-    
     public function saveItem($arrParam, $option = null){
         
         if($option['task'] == 'save-register'){

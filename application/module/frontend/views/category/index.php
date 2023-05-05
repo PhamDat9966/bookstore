@@ -13,20 +13,20 @@ foreach ($this->Items as $keyCats=>$valueCats){
     $strSpecial2        = "/";
     $imgURL           = str_replace($strSpecial1 ,$strSpecial2, $imgURL);
     
-    $urlCategory      = URL::createLink('frontend', 'category', 'info', array('category_id'=>$valueCats['id']));  
+    $urlCategory      = URL::createLink('frontend', 'book', 'list', array('category_id'=>$valueCats['id']));  
     
     $xhtml .= '<div class="product-box">
-                <div class="img-wrapper">
-                    <div class="front">
-                        <a href="'.$urlCategory.'"><img src="' .$imgURL. '" class="img-fluid blur-up lazyload bg-img" alt=""></a>
+                    <div class="img-wrapper">
+                        <div class="front">
+                            <a href="'.$urlCategory.'"><img src="' .$imgURL. '" class="img-fluid blur-up lazyload bg-img" alt=""></a>
+                        </div>
                     </div>
-                </div>
-                <div class="product-detail">
-                    <a href="'.$urlCategory.'">
-                        <h4>'.$valueCats['name'].'</h4>
-                    </a>
-                </div>
-            </div>';
+                    <div class="product-detail">
+                        <a href="'.$urlCategory.'">
+                            <h4>'.$valueCats['name'].'</h4>
+                        </a>
+                    </div>
+                </div>';
 }
 
 $pagination = $this->Pagination['paginationHTML'];
