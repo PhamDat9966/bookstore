@@ -17,22 +17,27 @@ class BookModel extends Model
         
     }
 
-    public function listItems($arrParam,$option = NULL){
-        $queryContent   = [];
-        $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
-        $queryContent[] = "FROM `".$this->_tableName."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
-        $queryContent[] = "WHERE `b`.`id` > 0";
-        $queryContent[] = "AND `b`.`category_id` = ".$arrParam['category_id']."";
+    public function listItem($arrParam,$option = NULL){
+        if($option['task'] == 'book-in-cat'){
+            $queryContent   = [];
+            $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
+            $queryContent[] = "FROM `".$this->_tableName."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
+            $queryContent[] = "WHERE `b`.`id` > 0";
+            if(isset($arrParam['category_id'])){
+                $queryContent[] = "AND `b`.`category_id` = ".$arrParam['category_id']."";
+            }
+            $queryContent[]     = 'ORDER BY `ordering` ASC';
+            
+            $position           = $this->_arrParam['position'];
+            $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
+            $queryContent[]     = "LIMIT $position,$totalItemsPerPage";
+            
+            $queryContent       = implode(" ", $queryContent);
+            
+            $result = $this->fetchAll($queryContent);
+            return $result;
+        }
         
-        $position           = $this->_arrParam['position'];
-        $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];
-        
-        $queryContent[] = "LIMIT $position,$totalItemsPerPage";
-        
-        $queryContent = implode(" ", $queryContent);
-        
-        $result = $this->fetchAll($queryContent);
-        return $result;
     }
     
     public function quickViewItem($arrParam, $option = null){
@@ -171,7 +176,7 @@ class BookModel extends Model
         $this->_cunrrentPage = $currentPage;
         
         $paginator = new Pagination($totalItems, $pagination);
-        $paginationHTML = $paginator->showPagination(URL::createLink('frontend', 'category', 'index', $arrParam));
+        $paginationHTML = $paginator->showPagination(URL::createLink('frontend', 'book', 'list', $arrParam));
         
         $position = ($currentPage - 1) * $pagination['totalItemsPerPage'];
         $resulfPagination['position'] = $position;

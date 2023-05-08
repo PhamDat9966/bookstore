@@ -1,8 +1,3 @@
-<?php         
-        //Giao Hàng Miễn Phí 
-        //Hỗ Trợ 24/7
-        //Ưu Đãi và Khuyễn Mãi 
-?>        
 <div class="container">
     <section class="service border-section small-section">
         <div class="row">

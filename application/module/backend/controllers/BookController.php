@@ -337,7 +337,7 @@ class BookController extends Controller
             
             $validate = new Validate($this->_arrParam['form']);
             
-            $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryBookName, 'min' => 3, 'max' => 25))
+            $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryBookName, 'min' => 3, 'max' => 50))
                      ->addRule('shortDescription', 'string', array('min' => 0, 'max' => 10000))
                      ->addRule('description', 'string', array('min' => 0, 'max' => 3000))
                      ->addRule('price', 'int', array('min' => 0, 'max' => 5000000))

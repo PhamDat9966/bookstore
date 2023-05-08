@@ -1,6 +1,6 @@
 <?php 
-echo "<h3>".__METHOD__."</h3>";
 
-echo "<pre>view Frontend";
-print_r($this);
-echo "</pre>";
+require_once 'index_homeSlider.php';
+require_once 'index_bookProduct.php';
+require_once 'index_serviceLayout.php';
+require_once 'index_categoryProduct.php';

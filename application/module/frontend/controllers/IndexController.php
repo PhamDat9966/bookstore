@@ -122,13 +122,12 @@ class IndexController extends Controller{
     }
     
     public function indexAction(){
-//         echo "<pre>";
-//         print_r($this);
-//         echo "</pre>";
         $this->_view->arrParam  =  $this->_arrParam; 
         
         $this->_view->_title        = 'Book Manager: List';
-        $this->_view->Items         = $this->_model->listBooks($this->_arrParam);
+        $this->_view->bookProduct   = $this->_model->listItem($this->_arrParam,array('task'=>'book-product'));
+        $this->_view->bookCategoryProduct = $this->_model->listItem($this->_arrParam,array('task'=>'book-category-product'));
+        $this->_view->categoryShowHome = $this->_model->categoryShowHome($this->_arrParam,null);
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
         $this->_templateObj->setFileTemplate('index.php');

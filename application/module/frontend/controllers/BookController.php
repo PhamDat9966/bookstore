@@ -3,7 +3,7 @@
 class BookController extends Controller{
     
     public $_statusReturn;
-    protected  $_totalItemsPerPage = 5; //  Đặt số category xuất ra ở listCategory - Ở đây là 15, tạm thời là 5.Cần thêm vào csdl
+    protected  $_totalItemsPerPage = 15; //  Đặt số category xuất ra ở listCategory - Ở đây là 15, tạm thời là 5.Cần thêm vào csdl
     
     public function __construct($arrParams)
     {
@@ -64,13 +64,15 @@ class BookController extends Controller{
         if (isset($this->_arrParam['page'])) {
             $this->_pagination['currentPage']           = $this->_arrParam['page'];
         }
-        
         $this->_paginationResult                         = $this->_model->pagination($totalItems, $this->_pagination ,$arrParam = $this->_arrParam);
-        
         $this->_view->Pagination    = $this->_paginationResult;
         
-        $this->_view->Items         = $this->_model->listItems($this->_arrParam);
-        $this->_view->categoryName  = $this->_model->infoItem($this->_arrParam,array('task'=>'get-cat-name'));
+        $this->_view->Items         = $this->_model->listItem($this->_arrParam,array('task'=>'book-in-cat'));
+        
+        $this->_view->categoryName  = 'TẤT CẢ SÁCH'; 
+        if(isset($this->_arrParam['category_id'])){
+            $this->_view->categoryName  = $this->_model->infoItem($this->_arrParam,array('task'=>'get-cat-name'));
+        }
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
         $this->_templateObj->setFileTemplate('book_list.php');

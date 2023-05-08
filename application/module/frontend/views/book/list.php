@@ -1,5 +1,9 @@
 <?php 
 
+// echo "<pre>";
+// print_r($this);
+// echo "</pre>";
+
 $xhtmlInfoCategory  = '';
 $xhtmlQuickView     = '';
 
@@ -56,7 +60,7 @@ foreach ($this->Items as $valueInfoBook){
                                     <a href="item.html" title="'.$nameBook.'">
                                         <h6>'.$nameBook.'</h6>
                                     </a>
-                                    <p>'.$description.'</p>
+                                    <p>'.$shortDescription.'</p>
                                     <h4 class="text-lowercase">'.$price.$priceNotSaleOFF.'</h4>
                                 </div>
                             </div>
@@ -65,6 +69,7 @@ foreach ($this->Items as $valueInfoBook){
 }
 
 $nameCategory = $this->categoryName;
+$navigation   = $this->Pagination['paginationHTML'];
 ?>
 <div class="breadcrumb-section">
 	<div class="container">
@@ -387,24 +392,9 @@ $nameCategory = $this->categoryName;
 													<div class="col-xl-6 col-md-6 col-sm-12">
 														<nav aria-label="Page navigation">
 															<nav>
-																<ul class="pagination">
-																	<li class="page-item disabled"><a href=""
-																		class="page-link"><i class="fa fa-angle-double-left"></i></a>
-																	</li>
-																	<li class="page-item disabled"><a href=""
-																		class="page-link"><i class="fa fa-angle-left"></i></a>
-																	</li>
-																	<li class="page-item active"><a class="page-link">1</a>
-																	</li>
-																	<li class="page-item"><a class="page-link" href="#">2</a>
-																	</li>
-																	<li class="page-item"><a class="page-link" href="#">3</a>
-																	</li>
-																	<li class="page-item"><a class="page-link" href="#"><i
-																			class="fa fa-angle-right"></i></a></li>
-																	<li class="page-item"><a class="page-link" href="#"><i
-																			class="fa fa-angle-double-right"></i></a></li>
-																</ul>
+																<?php 
+																    echo $navigation;
+																?>
 															</nav>
 														</nav>
 													</div>

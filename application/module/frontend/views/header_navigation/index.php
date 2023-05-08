@@ -4,7 +4,7 @@
     
     //Link
 	$linkHome			      = URL::createLink('frontend','index','index');
-	$linkBook			      = URL::createLink('frontend','index','list');
+	$linkBook			      = URL::createLink('frontend','book','list');
 	$linkCatalory		      = URL::createLink('frontend','category','index');
 	$linkAdminControlPanel	  = URL::createLink('backend','index','index');
 	
@@ -39,7 +39,7 @@
 //                 	    )
 // 	);
 	
-	$arrayMenu['category']   = array('class'=>'index-category','link'=>$linkCatalory,           'name'=>'Danh mục',
+	$arrayMenu['category']   = array('class'=>'index-category','link'=>$linkCatalory,'name'=>'Danh mục',
                             	    'child-list'=>array(
 //                             	        array('class'=>'','link'=>'abc.html','name'=>'Bà mẹ - Em bé'),
 //                             	        array('class'=>'','link'=>'def.html','name'=>'Chính Trị - Pháp Lý'),
