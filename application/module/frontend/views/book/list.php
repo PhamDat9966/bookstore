@@ -1,9 +1,5 @@
 <?php 
 
-// echo "<pre>";
-// print_r($this);
-// echo "</pre>";
-
 $xhtmlInfoCategory  = '';
 $xhtmlQuickView     = '';
 
@@ -93,6 +89,27 @@ $navigation   = $this->Pagination['paginationHTML'];
 		</div>
 	</div>
 </div>
+<?php 
+//LEFT MENU
+$listCategoryMenu = $this->category_menu; //Từ header_navigation
+$categoryID       = '';
+if(isset($this->arrParam['category_id'])){
+    $categoryID       = $this->arrParam['category_id'];
+}
+
+$activeMenu       = '';
+
+$xhtmlCategoryList = '';
+foreach ($listCategoryMenu as $keyCategory=>$valueCategory){
+    $linkCategory   = URL::createLink('frontend', 'book', 'list', array('category_id'=>$keyCategory));
+    $activeMenu     = ($categoryID == $keyCategory)? 'my-text-primary' : 'text-dark';
+    $xhtmlCategoryList .= '<div
+							class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
+							<a class="'.$activeMenu.'" href="'.$linkCategory.'">'.$valueCategory.'</a>
+						</div>';
+}
+
+?>
 <section class="section-b-space j-box ratio_asos">
 	<div class="collection-wrapper">
 		<div class="container">
@@ -109,106 +126,14 @@ $navigation   = $this->Pagination['paginationHTML'];
 							<h3 class="collapse-block-title">Danh mục</h3>
 							<div class="collection-collapse-block-content">
 								<div class="collection-brand-filter">
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="my-text-primary" href="list.html">Bà mẹ - Em bé</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Chính Trị - Pháp Lý</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Học Ngoại Ngữ</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Công Nghệ Thông Tin</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Giáo Khoa - Giáo Trình</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Khoa Học - Kỹ Thuật</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Kiến Thức Tổng Hợp</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Lịch Sử</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Nông - Lâm - Ngư Nghiệp</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Tham Khảo</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark " href="list.html">Thường Thức - Gia Đình</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Tâm Lý - Giới
-											Tính</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Tôn Giáo - Tâm
-											Linh</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Văn Hóa - Địa
-											Lý - Du Lịch</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Y Học</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Kinh Tế</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Kỹ Năng Sống</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Thiếu Nhi</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Truyện Tranh -
-											Manga - Comic</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Tạp chí -
-											Catalogue</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Từ Điển</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
-										<a class="text-dark more-item" href="list.html">Điện Ảnh -
-											Nhạc - Họa</a>
-									</div>
-									<div
-										class="custom-control custom-checkbox collection-filter-checkbox pl-0 text-center">
-										<span class="text-dark font-weight-bold" id="btn-view-more">Xem
-											thêm</span>
-									</div>
+									<?php 
+									   echo $xhtmlCategoryList;
+									?>
 								</div>
+    					        <div
+                                    class="custom-control custom-checkbox collection-filter-checkbox pl-0 text-center">
+                                    <span class="text-dark font-weight-bold" id="btn-view-more">Xem thêm</span>
+                                </div>
 							</div>
 						</div>
 					</div>

@@ -25,6 +25,7 @@ class CategoryModel extends Model
         $queryContent[] = "SELECT `id`,`name`,`picture`";
         $queryContent[] = "FROM `$this->_tableName`";
         $queryContent[] = "WHERE `status`  = 1";
+        $queryContent[] = 'ORDER BY `ordering` ASC';
         
         $position           = $this->_arrParam['position'];
         $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];

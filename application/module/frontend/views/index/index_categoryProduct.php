@@ -60,6 +60,7 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
         );
         
         $jsonQuickView      = json_encode($arrQuickView);
+        $jsonQuickView      = htmlentities($jsonQuickView);
         
         if($keyCatList == $valueBookInCat['category_id']){
             $xhtmlCategoryInfo .=   '<div class="product-box">
@@ -74,7 +75,7 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
                                             </div>
                                             <div class="cart-info cart-wrap">
                                                 <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                                                <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.htmlentities($jsonQuickView).')"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
+                                                <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$jsonQuickView.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                                             </div>
                                         </div>
                                         <div class="product-detail">

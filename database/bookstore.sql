@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 10, 2023 lúc 02:34 AM
+-- Thời gian đã tạo: Th5 10, 2023 lúc 10:52 AM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -95,16 +95,19 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `showhome`, `ordering`) VALUES
-(21, 'Bà Mẹ - Em Bé', 'a7p5umvo.jpg', '2023-03-30', '1', '2023-04-25', '1', 1, 1, 2),
+(21, 'Bà Mẹ - Em Bé', 'a7p5umvo.jpg', '2023-03-30', '1', '2023-05-10', '1', 1, 1, 1),
 (22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '0000-00-00', '1', 1, 0, 3),
 (23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 0, 4),
 (24, 'Công Nghệ Thông Tin', '0uxgyp2q.jpg', '2023-03-30', '1', '2023-04-25', '1', 1, 1, 4),
-(25, 'Giáo Khoa - Giáo Trình', 'so7gmbec.jpg', '2023-03-30', '1', '2023-04-24', '1', 1, 1, 4),
+(25, 'Giáo Khoa - Giáo Trình', 'so7gmbec.jpg', '2023-03-30', '1', '2023-05-10', '1', 1, 1, 5),
 (26, 'Triếc Học', '08tgxj9s.png', '2023-03-30', '1', '2023-04-25', '1', 1, 0, 6),
-(27, 'Self Help', 'n3o1p82j.jpg', '2023-03-31', '1', '2023-04-25', '1', 1, 1, 7),
+(27, 'Self Help', 'n3o1p82j.jpg', '2023-03-31', '1', '2023-04-25', '1', 1, 0, 7),
 (28, 'Tiểu Sử - Hồi ký', '7p15v6x4.jpg', '2023-03-31', '1', '2023-05-05', '1', 1, 0, 8),
 (29, 'Kinh Tế', 'g9u8z3mj.jpg', '2023-03-31', '1', '2023-05-05', '1', 1, 0, 9),
-(30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '2023-05-05', '1', 1, 0, 11);
+(30, 'Tâm Lý - Kỹ Năng Sống', '4ouje3ln.jpg', '2023-03-31', '1', '2023-05-05', '1', 1, 0, 11),
+(48, 'Lịch Sử', '07dbc5if.jpg', '2023-05-10', '1', '2023-05-10', '1', 1, 1, 4),
+(49, 'Kiến Trúc Tổng Hợp', 'ur70ncg4.jpg', '2023-05-10', '1', '2023-05-10', NULL, 1, 0, 10),
+(50, 'Y Học', 'myxaignf.jpg', '2023-05-10', '1', '2023-05-10', '1', 1, 0, 5);
 
 -- --------------------------------------------------------
 
@@ -266,7 +269,7 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT cho bảng `group`

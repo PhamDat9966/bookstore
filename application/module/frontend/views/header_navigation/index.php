@@ -1,5 +1,6 @@
 <?php 
-    
+    $logoLink = URL::createLink('frontend', 'index', 'index');    
+
     $imageURL   = $this->_urlImg;
     
     //Link
@@ -28,7 +29,7 @@
 	// Default
 	$arrayMenu     = array();
 	$arrayMenu[]   = array('class'=>'index-index','link'=>$linkHome,'name'=>'Trang chủ');
-	$arrayMenu[]   = array('class'=>'index-list', 'link'=>$linkBook,'name'=>'Sách');	
+	$arrayMenu[]   = array('class'=>'book-list', 'link'=>$linkBook,'name'=>'Sách');	
 // 	$arrayMenu[]   = array('class'=>'index-category','link'=>$linkCatalory,           'name'=>'Danh mục',
 //                 	    'child-list'=>array(
 //                 	        array('class'=>'','link'=>'abc.html','name'=>'Bà mẹ - Em bé'),
@@ -39,7 +40,7 @@
 //                 	    )
 // 	);
 	
-	$arrayMenu['category']   = array('class'=>'index-category','link'=>$linkCatalory,'name'=>'Danh mục',
+	$arrayMenu['category']   = array('class'=>'category-index','link'=>$linkCatalory,'name'=>'Danh mục',
                             	    'child-list'=>array(
 //                             	        array('class'=>'','link'=>'abc.html','name'=>'Bà mẹ - Em bé'),
 //                             	        array('class'=>'','link'=>'def.html','name'=>'Chính Trị - Pháp Lý'),
@@ -53,6 +54,8 @@
 	$modul          = new Model();
 	$query          = 'SELECT `id`,`name` FROM `category` WHERE `status`= 1 ORDER BY `ordering` ASC';
 	$listCategory   = $modul->fetchPairs($query);
+	$this->category_menu = $listCategory;
+	
 	$category_child_list = array();
 	foreach ($listCategory as $keyCats=>$valueCats){
 	    
@@ -68,20 +71,27 @@
 	    $arrayMenu[]   = array('class'=>'','link'=>$linkAdminControlPanel,'name'=>'Admin Control Panel');
 	}
 	
+	/*Xuất menu*/
     $xhtml = '<ul id="main-menu" class="sm pixelstrap sm-horizontal">
 				<li>
 					<div class="mobile-back text-right">
 						Back<i class="fa fa-angle-right pl-2" aria-hidden="true"></i>
 					</div>
-				</li>';   
+				</li>';  
+    
+    $activeControl = $this->arrParam['controller'].'-'.$this->arrParam['action'];
+    $activeClass   = ''; 
     
 	foreach ($arrayMenu as $key=>$value){
+        if($activeControl == $value['class']){
+            $activeClass = 'my-menu-link active'; // Active
+        }
 	    
 	    if(isset($value['child-list'])){
-	       $xhtml .='<li class="'.$value['class'].'"><a href="'.$value['link'].'">'.$value['name'].'</a>';
+	       $xhtml .='<li class="'.$value['class'].' '.$activeClass.'"><a href="'.$value['link'].'">'.$value['name'].'</a>';
 	           $xhtml .='<ul>';
     	       foreach ($value['child-list'] as $keyC=>$valueC){
-    	           $xhtml .= '<li class="'.$valueC['class'].'">
+    	           $xhtml .= '<li class="'.$valueC['class'].' '.$activeClass.'">
                                 <a href="'.$valueC['link'].'">
                                     '.$valueC['name'].'
                                 </a>
@@ -90,7 +100,7 @@
 	           $xhtml .='</ul>';
 	       $xhtml .='</li>';
 	    }else{
-	       $xhtml .='<li class="'.$value['class'].'"><a href="'.$value['link'].'">'.$value['name'].'</a></li>';
+	       $xhtml .='<li class="'.$value['class'].' '.$activeClass.'"><a href="'.$value['link'].'">'.$value['name'].'</a></li>';
 	    }   
 	    
 	}
@@ -145,7 +155,7 @@
 				<div class="main-menu">
 					<div class="menu-left">
 						<div class="brand-logo">
-							<a href="index.html">
+							<a href="<?php echo $logoLink;?>">
 								<h2 class="mb-0" style="color: #5fcbc4">BookStore</h2>
 							</a>
 						</div>
