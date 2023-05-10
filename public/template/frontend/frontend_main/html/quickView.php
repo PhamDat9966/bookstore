@@ -1,19 +1,21 @@
+<!-- Quick view -->
 <div class="modal fade bd-example-modal-lg theme-modal" id="quick-view" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content quick-view-modal">
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
                 <div class="row">
+                	<!--content quick view -->
                     <div class="col-lg-6 col-xs-12">
-                        <div class="quick-view-img"><img src="<?php echo $this->_urlImg; ?>/quick-view-bg.jpg" alt="" class="w-100 img-fluid blur-up lazyload book-picture"></div>
+                        <div class="quick-view-img"><img id="quick-view-img" src="<?php echo $this->_urlImg; ?>/quick-view-bg.jpg" alt="" class="w-100 img-fluid blur-up lazyload book-picture"></div>
                     </div>
                     <div class="col-lg-6 rtl-text">
-                        <div class="product-right">
-                            <h2 class="book-name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
+                        <div class="product-right" id="quick-view-content">
+                            <h2 class="book-name" id="book-name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
                                 distinctio.</h2>
-                            <h3 class="book-price">26.910 ₫ <del>39.000 ₫</del></h3>
+                            <h3 class="book-price"><span id="book-price">>26.910 ₫</span> <del id="price-not-off">39.000 ₫</del></h3>
                             <div class="border-product">
-                                <div class="book-description">Lorem ipsum dolor sit amet consectetur, adipisicing
+                                <div class="book-description" id="book-description">Lorem ipsum dolor sit amet consectetur, adipisicing
                                     elit. Unde quae cupiditate delectus laudantium odio molestiae deleniti facilis
                                     itaque ut vero architecto nulla officiis in nam qui, doloremque iste. Incidunt,
                                     in?</div>
@@ -42,8 +44,10 @@
                             </div>
                         </div>
                     </div>
+                    <!--end content quick view -->
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- End Quick view -->

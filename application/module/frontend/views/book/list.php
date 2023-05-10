@@ -32,7 +32,18 @@ foreach ($this->Items as $valueInfoBook){
     $strSpecial1        = '\\';
     $strSpecial2        = "/";
     $picture            = str_replace($strSpecial1 ,$strSpecial2, $picture);
+    
 
+    //$urlQuickView       = 'index.php?module=frontend&controller=book&action=quickView';
+    $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
+    $arrQuickView       = array(
+                                'id'=>$id,
+                                'url'=>$urlQuickView
+                          );
+    
+    $jsonQuickView      = json_encode($arrQuickView);
+
+    
     $xhtmlInfoCategory .='<div class="col-xl-3 col-6 col-grid-box">
                             <div class="product-box">
                                 <div class="img-wrapper">
@@ -46,7 +57,7 @@ foreach ($this->Items as $valueInfoBook){
                                     </div>
                                     <div class="cart-info cart-wrap">
                                         <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$id.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view" ></i></a>
+                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.htmlentities($jsonQuickView).')"><i class="ti-search" data-toggle="modal" data-target="#quick-view" ></i></a>
                                     </div>
                                 </div>
                                 <div class="product-detail">

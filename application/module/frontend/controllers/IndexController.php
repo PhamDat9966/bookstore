@@ -68,7 +68,12 @@ class IndexController extends Controller{
         $this->_view->render('index/login', true);// views folder
         
     }
-    
+    public  function quickViewAction(){
+        $return                      =  $this->_model->quickViewItem($this->_arrParam);
+        $return['picture']           = UPLOAD_URL .'book' . DS .$return['picture'];
+        $return   = json_encode($return);
+        echo $return;
+    }
     public  function registerAction(){
         
         $userInfo   = array();

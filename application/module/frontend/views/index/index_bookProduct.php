@@ -12,6 +12,7 @@
     
     $xhtmlBookProduct = '';
     foreach ($this->bookProduct as $keyBook=>$valueBook){
+        $id               = $valueBook['id'];
         $nameBook         = $valueBook['name'];
         
         $picture          = UPLOAD_URL .'book' . DS . $valueBook['picture'];
@@ -32,6 +33,15 @@
             $price              = number_format($price);
         }
         
+        // Quick View
+        $urlQuickView       = URL::createLink('frontend', 'index', 'quickView');
+        $arrQuickView       = array(
+            'id'=>$id,
+            'url'=>$urlQuickView
+        );
+        
+        $jsonQuickView      = json_encode($arrQuickView);
+        
         $xhtmlBookProduct .='<div class="product-box">
                                 <div class="img-wrapper">
                                     <div class="lable-block">
@@ -45,7 +55,7 @@
                                     </div>
                                     <div class="cart-info cart-wrap">
                                         <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                                        <a href="#" title="Quick View"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
+                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.htmlentities($jsonQuickView).')"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                                     </div>
                                 </div>
                                 <div class="product-detail">

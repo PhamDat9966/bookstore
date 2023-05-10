@@ -79,6 +79,18 @@ class IndexModel extends Model
         }
     }
     
+    public function quickViewItem($arrParam, $option = null){
+        
+        $queryContent   = [];
+        $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
+        $queryContent[] = "FROM `".TBL_BOOK."`";
+        $queryContent[] = "WHERE `id` = ".$arrParam['id']."";
+        $queryContent = implode(" ", $queryContent);
+        $result = $this->fetchRow($queryContent);
+        return $result;
+        
+    }
+    
     public function categoryShowHome($arrParam,$option = NULL){
         if($option == NULL){
             $queryContent   = [];
