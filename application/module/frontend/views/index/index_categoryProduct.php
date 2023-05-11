@@ -39,6 +39,9 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
         $picture          = str_replace($strSpecial1 ,$strSpecial2, $picture);
         
         $shortDescription = $valueBookInCat['shortDescription'];
+        
+        $shortDescription =  mb_strimwidth($valueBookInCat['shortDescription'], 0, 100, '...');
+        
         $sale_off         = $valueBookInCat['sale_off'];
         
         $price            = $valueBookInCat['price'];

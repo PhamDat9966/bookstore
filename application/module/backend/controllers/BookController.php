@@ -203,7 +203,7 @@ class BookController extends Controller
             echo ' [OK] Fileinfo extension is enabled.';
         }
         
-        /*
+        /* Hàm gdfixAction() trên để kiểm tra php.ini cho ckeditor và ckfinder nếu trường hợp không run được
          * Nếu có báo "[ERROR] GD extension is NOT enabled"
          *  
          *  Vào php.ini file
@@ -239,7 +239,8 @@ class BookController extends Controller
             }
             //Load cho Input trong trường hợp đã Submit trước đó nhưng không thành công do lôĩ vào các biến tạm
             if(isset($this->_arrParam['form']['name'])){
-                $name               = $this->_arrParam['form']['name'];
+                //$this->_arrParam['form']['name'] = mysqli_real_escape_string($this->_model->connect,$this->_arrParam['form']['name']);
+                $name                            = $this->_arrParam['form']['name'];
             }
             
             if(isset($this->_arrParam['form']['shortDescription'])){
@@ -290,12 +291,12 @@ class BookController extends Controller
                 $this->_arrParam['form']['picture'] = $picture;
             }
             
-            if(!empty($pictureTemp)){
+            if(isset($pictureTemp)){
                 unset($this->_arrParam['form']['picture']);
                 $this->_arrParam['form']['picture_temp'] = $pictureTemp;
             }
             
-            /* --- Reload lại những giá trị đã nhập trên input trong trường hợp đã submit --- */
+            /* --- Reload lại những giá trị đã nhập trên input trong trường hợp đã submit trước đó--- */
             if(isset($name))             $this->_arrParam['form']['name']             = $name;
             if(isset($shortDescription)) $this->_arrParam['form']['shortDescription'] = $shortDescription;
             if(isset($description))      $this->_arrParam['form']['description']      = $description;
@@ -327,19 +328,19 @@ class BookController extends Controller
         }
         
         if (@$this->_arrParam['form']['token'] > 0) {
+            $this->_arrParam['form']['name'] = mysqli_real_escape_string($this->_model->connect,$this->_arrParam['form']['name']);
             $taskAction          = 'add';
             $queryBookName       = "SELECT `id` FROM `" . TBL_BOOK . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
-
             if (isset($this->_arrParam['form']['id'])) {
                 $taskAction      = 'edit';
                 $queryBookName  .= " AND `id` != '" . $this->_arrParam['form']['id'] . "'";
             }
-            
+           
             $validate = new Validate($this->_arrParam['form']);
             
-            $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryBookName, 'min' => 3, 'max' => 50))
+            $validate->addRule('name', 'string-notExistRecord', array('database' => $this->_model, 'query' => $queryBookName, 'min' => 3, 'max' => 100))
                      ->addRule('shortDescription', 'string', array('min' => 0, 'max' => 10000))
-                     ->addRule('description', 'string', array('min' => 0, 'max' => 3000))
+                     ->addRule('description', 'string', array('min' => 0, 'max' => 30000))
                      ->addRule('price', 'int', array('min' => 0, 'max' => 5000000))
                      ->addRule('sale_off', 'int', array('min' => 0, 'max' => 100))
                      ->addRule('status', 'status', array('deny' => array('default')))

@@ -144,7 +144,7 @@ class BookModel extends Model
             
             $arrParam['form']['created']          = date('Y-m-d h:i:s',time());
             $arrParam['form']['created_by']       = $created_by;
-            $arrParam['form']['name']             = mysqli_real_escape_string($this->connect,$arrParam['form']['name']);
+            //$arrParam['form']['name']             = mysqli_real_escape_string($this->connect,$arrParam['form']['name']);
             $arrParam['form']['shortDescription'] = mysqli_real_escape_string($this->connect,$arrParam['form']['shortDescription']);
             $arrParam['form']['description']      = mysqli_real_escape_string($this->connect,$arrParam['form']['description']);
             
@@ -159,19 +159,20 @@ class BookModel extends Model
             
             $arrParam['form']['modified']         = date('Y-m-d h:i:s',time());
             $arrParam['form']['modified_by']      = $modified_by;
-            $arrParam['form']['name']             = mysqli_real_escape_string($this->connect,$arrParam['form']['name']);
+            //$arrParam['form']['name']             = mysqli_real_escape_string($this->connect,$arrParam['form']['name']);
             $arrParam['form']['shortDescription'] = mysqli_real_escape_string($this->connect,$arrParam['form']['shortDescription']);
             $arrParam['form']['description']      = mysqli_real_escape_string($this->connect,$arrParam['form']['description']);
             
             if(isset($arrParam['form']['picture_temp'])){
+                /*Cập nhật ảnh mới*/
                 $arrParam['form']['picture'] =  $uploadObj->moveTempFileGoMainFile($arrParam['form']['picture_temp'], $folderMove = $arrParam['controller']);
-                
+                /*Xóa ảnh cũ*/
+                $uploadObj->removeFile('book', $arrParam['form']['picture_old']);
             }else{
+                /*Trường hợp không thay đổi ảnh cũ*/
                 $namePicture                 = $arrParam['form']['picture']['name'];
                 $arrParam['form']['picture'] = $namePicture;
             }
-            
-            $uploadObj->removeFile('category', $arrParam['form']['picture_old']);
             
             $data   = array_intersect_key($arrParam['form'], array_flip($this->_columns));
             $this->update($data, array(array('id',$arrParam['form']['id'])));

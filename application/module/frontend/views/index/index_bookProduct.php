@@ -20,7 +20,8 @@
         $strSpecial2       = "/";
         $picture          = str_replace($strSpecial1 ,$strSpecial2, $picture); 
         
-        $shortDescription = $valueBook['shortDescription'];
+        $shortDescription =  mb_strimwidth($valueBook['shortDescription'], 0, 100, "...");
+        
         $sale_off         = $valueBook['sale_off'];
         
         $price              = $valueBook['price'];
@@ -67,7 +68,7 @@
                                         <i class="fa fa-star"></i>
                                     </div>
                                     <a href="item.html"
-                                        title="'.$shortDescription.'"</h6>
+                                        title="'.$shortDescription.'"<h6>'.$shortDescription.'</h6>
                                     </a>
                                     <h4 class="text-lowercase">'.$price.' <del>'.$priceNotSaleOFF.'</del></h4>
                                 </div>

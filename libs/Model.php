@@ -2,7 +2,7 @@
 
 class Model{
     
-    protected $connect;
+    public $connect;
     protected $database;
     protected $table;
     protected $resultQuery;

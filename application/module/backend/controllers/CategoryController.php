@@ -250,6 +250,7 @@ class CategoryController extends Controller
         }
 
         if (@$this->_arrParam['form']['token'] > 0) { 
+            $this->_arrParam['form']['name'] = mysqli_real_escape_string($this->_model->connect,$this->_arrParam['form']['name']);
             //$taskAction = 'add';
             $queryName  = "SELECT `id` FROM `" . TBL_CATEGORY . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
             
