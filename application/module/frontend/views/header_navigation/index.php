@@ -59,10 +59,9 @@
 	$category_child_list = array();
 	foreach ($listCategory as $keyCats=>$valueCats){
 	    
-	    $category_child_list['class'] = '';
-	    $category_child_list['link']  = URL::createLink('frontend', 'book', 'list', array('category_id'=>$keyCats));
-	    //$category_child_list['link']  = URL::createLink('frontend', 'category', 'info', array('category_id'=>$keyCats));
-	    $category_child_list['name']  = $valueCats;
+	    $category_child_list['class']          = 'category-index'.'-'.$keyCats;
+	    $category_child_list['link']           = URL::createLink('frontend', 'book', 'list', array('category_id'=>$keyCats));
+	    $category_child_list['name']           = $valueCats;
 	    $arrayMenu['category']['child-list'][] = $category_child_list;
 	    
 	}
@@ -87,11 +86,13 @@
             $activeClass = 'my-menu-link active'; // Active
         }
 	    
-	    if(isset($value['child-list'])){
+        $category_child_activeClass = '';
+	    if(isset($value['child-list'])){           
 	       $xhtml .='<li class="'.$value['class'].' '.$activeClass.'"><a href="'.$value['link'].'">'.$value['name'].'</a>';
 	           $xhtml .='<ul>';
     	       foreach ($value['child-list'] as $keyC=>$valueC){
-    	           $xhtml .= '<li class="'.$valueC['class'].' '.$activeClass.'">
+    	           
+    	           $xhtml .= '<li class="'.$valueC['class'].'">
                                 <a href="'.$valueC['link'].'">
                                     '.$valueC['name'].'
                                 </a>

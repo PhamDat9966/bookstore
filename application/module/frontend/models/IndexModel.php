@@ -32,7 +32,7 @@ class IndexModel extends Model
     }
     
     public function listItem($arrParam,$option = NULL){
-        if($option['task'] == 'book-product'){
+        if($option['task'] == 'book-special'){
             $queryContent   = [];
             $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
             $queryContent[] = "FROM `".TBL_BOOK."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";

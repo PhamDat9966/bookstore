@@ -139,130 +139,81 @@ foreach ($listCategoryMenu as $keyCategory=>$valueCategory){
 							</div>
 						</div>
 					</div>
+<?php 
+    $dataBookSpecial  = $this->bookSpecial;
+    
+    $xhtmlBookSpecial = '';
+    
+    $numberBookShow     = 0;
+    foreach ($dataBookSpecial as $keySpecial=>$valueSpecial){
+        if($numberBookShow == 4){
+            break;
+        }
+        $idSpecial      = $valueSpecial['id'];
+        $nameSpecial    = $valueSpecial['name'];
+        $urlSpecial     = URL::createLink('frontend', 'book', 'info',array('id'=>$idSpecial));
+        
+        $pictureSpecial     = UPLOAD_URL .'book' . DS . $valueSpecial['picture'];
+        $strSpecial1        = '\\';
+        $strSpecial2        = "/";
+        $pictureSpecial     = str_replace($strSpecial1 ,$strSpecial2, $pictureSpecial);
+        
 
+        $priceSpecial              = $valueSpecial['price'];
+        if($valueSpecial['sale_off'] > 0){
+            $priceSpecial           = number_format($priceSpecial * (100 - $valueSpecial['sale_off']) / 100).' đ ';;
+        } else{
+            $priceSpecial           = number_format($priceSpecial).' đ ';;
+        }
+        
+        $xhtmlBookSpecial .='<div class="media">
+									<a href="'.$urlSpecial.'"> <img class="img-fluid blur-up lazyload"
+										src="'.$pictureSpecial.'" alt="'.$nameSpecial.'"></a>
+									<div class="media-body align-self-center">
+										<div class="rating">
+											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star"></i>
+										</div>
+
+										<a href="'.$urlSpecial.'" title="'.$nameSpecial.'">
+											<h6>'.$nameSpecial.'</h6>
+										</a>
+										<h4 class="text-lowercase">'.$priceSpecial.'</h4>
+									</div>
+								</div>';
+       $numberBookShow++; 
+    }
+?>
 					<div class="theme-card">
 						<h5 class="title-border">Sách nổi bật</h5>
 						<div class="offer-slider slide-1">
 							<div>
-								<div class="media">
-									<a href="item.html"> <img class="img-fluid blur-up lazyload"
-										src="images/product.jpg" alt="Cẩm Nang Cấu Trúc Tiếng Anh"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
-
-										<a href="item.html" title="Cẩm Nang Cấu Trúc Tiếng Anh">
-											<h6>Cẩm Nang Cấu Trúc Tiếng Anh</h6>
-										</a>
-										<h4 class="text-lowercase">48,020 đ</h4>
-									</div>
-								</div>
-								<div class="media">
-									<a href="item.html"> <img class="img-fluid blur-up lazyload"
-										src="images/product.jpg" alt="Cẩm Nang Cấu Trúc Tiếng Anh"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
-
-										<a href="item.html" title="Cẩm Nang Cấu Trúc Tiếng Anh">
-											<h6>Cẩm Nang Cấu Trúc Tiếng Anh</h6>
-										</a>
-										<h4 class="text-lowercase">48,020 đ</h4>
-									</div>
-								</div>
-								<div class="media">
-									<a href="item.html"> <img class="img-fluid blur-up lazyload"
-										src="images/product.jpg" alt="Cẩm Nang Cấu Trúc Tiếng Anh"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
-
-										<a href="item.html" title="Cẩm Nang Cấu Trúc Tiếng Anh">
-											<h6>Cẩm Nang Cấu Trúc Tiếng Anh</h6>
-										</a>
-										<h4 class="text-lowercase">48,020 đ</h4>
-									</div>
-								</div>
-								<div class="media">
-									<a href="item.html"> <img class="img-fluid blur-up lazyload"
-										src="images/product.jpg" alt="Cẩm Nang Cấu Trúc Tiếng Anh"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
-
-										<a href="item.html" title="Cẩm Nang Cấu Trúc Tiếng Anh">
-											<h6>Cẩm Nang Cấu Trúc Tiếng Anh</h6>
-										</a>
-										<h4 class="text-lowercase">48,020 đ</h4>
-									</div>
-								</div>
-							</div>
-							<div>
-								<div class="media">
-									<a href="item.html"> <img class="img-fluid blur-up lazyload"
-										src="images/product.jpg" alt="Cẩm Nang Cấu Trúc Tiếng Anh"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
-
-										<a href="item.html" title="Cẩm Nang Cấu Trúc Tiếng Anh">
-											<h6>Cẩm Nang Cấu Trúc Tiếng Anh</h6>
-										</a>
-										<h4 class="text-lowercase">48,020 đ</h4>
-									</div>
-								</div>
-								<div class="media">
-									<a href="item.html"> <img class="img-fluid blur-up lazyload"
-										src="images/product.jpg" alt="Cẩm Nang Cấu Trúc Tiếng Anh"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
-
-										<a href="item.html" title="Cẩm Nang Cấu Trúc Tiếng Anh">
-											<h6>Cẩm Nang Cấu Trúc Tiếng Anh</h6>
-										</a>
-										<h4 class="text-lowercase">48,020 đ</h4>
-									</div>
-								</div>
-								<div class="media">
-									<a href="item.html"> <img class="img-fluid blur-up lazyload"
-										src="images/product.jpg" alt="Cẩm Nang Cấu Trúc Tiếng Anh"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
-
-										<a href="item.html" title="Cẩm Nang Cấu Trúc Tiếng Anh">
-											<h6>Cẩm Nang Cấu Trúc Tiếng Anh</h6>
-										</a>
-										<h4 class="text-lowercase">48,020 đ</h4>
-									</div>
-								</div>
+								<?php 
+								    echo $xhtmlBookSpecial;
+								?>
 							</div>
 						</div>
 					</div>
 					<!-- silde-bar colleps block end here -->
 				</div>
+<?php 
+//FILTER AND SEARCH
+$arrDocking = array(2,3,4,6);
+$xhtmlDocking = '';
+foreach ($arrDocking as $valueDocking){
+    $icon         = UPLOAD_URL . 'icon' . DS . $valueDocking.'.png';
+    $strSpecial1       = '\\';
+    $strSpecial2       = "/";
+    $icon         = str_replace($strSpecial1 ,$strSpecial2, $icon);
+    $xhtmlDocking .= '<li class="my-layout-view" data-number="'.$valueDocking.'">
+                        <img src="'.$icon.'" alt="" class="product-'.$valueDocking.'-layout-view">
+                    </li>';
+}
+
+?>				
+				
+				
 				<div class="collection-content col">
 					<div class="page-main-content">
 						<div class="row">
@@ -288,18 +239,9 @@ foreach ($listCategoryMenu as $keyCategory=>$valueCategory){
 													</div>
 													<div class="collection-grid-view">
 														<ul>
-															<li class="my-layout-view" data-number="2"><img
-																src="images/icon/2.png" alt=""
-																class="product-2-layout-view"></li>
-															<li class="my-layout-view" data-number="3"><img
-																src="images/icon/3.png" alt=""
-																class="product-3-layout-view"></li>
-															<li class="my-layout-view active" data-number="4"><img
-																src="images/icon/4.png" alt=""
-																class="product-4-layout-view"></li>
-															<li class="my-layout-view" data-number="6"><img
-																src="images/icon/6.png" alt=""
-																class="product-6-layout-view"></li>
+															<?php 
+															     echo $xhtmlDocking;
+															?>
 														</ul>
 													</div>
 													<div class="product-page-filter">

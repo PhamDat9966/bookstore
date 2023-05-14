@@ -38,6 +38,19 @@ class BookModel extends Model
             return $result;
         }
         
+        if($option['task'] == 'book-special'){
+            $queryContent   = [];
+            $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
+            $queryContent[] = "FROM `".$this->_tableName."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
+            $queryContent[] = "WHERE `b`.`status` = 1 AND `b`.`special` = 1";
+            $queryContent[]     = 'ORDER BY `ordering` ASC';
+            
+            $queryContent       = implode(" ", $queryContent);
+            
+            $result = $this->fetchAll($queryContent);
+            return $result;
+        }
+        
     }
     
     public function quickViewItem($arrParam, $option = null){
