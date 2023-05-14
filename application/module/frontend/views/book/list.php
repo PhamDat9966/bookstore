@@ -1,5 +1,6 @@
 <?php 
 
+$urlBookInfo        = '';
 $xhtmlInfoCategory  = '';
 $xhtmlQuickView     = '';
 
@@ -30,7 +31,8 @@ foreach ($this->Items as $valueInfoBook){
     $picture            = str_replace($strSpecial1 ,$strSpecial2, $picture);
     
 
-    //$urlQuickView       = 'index.php?module=frontend&controller=book&action=quickView';
+    $urlBookInfo        = URL::createLink('frontend', 'book', 'info',array('id'=>$id));
+    
     $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
     $arrQuickView       = array(
                                 'id'=>$id,
@@ -47,7 +49,7 @@ foreach ($this->Items as $valueInfoBook){
                                         '.$saleOff.'
                                     </div>
                                     <div class="front">
-                                        <a href="item.html" class="bg-size blur-up lazyloaded" style="background-image: url(&quot;'.$picture.'&quot;); background-size: cover; background-position: center center; display: block;">
+                                        <a href="'.$urlBookInfo.'" class="bg-size blur-up lazyloaded" style="background-image: url(&quot;'.$picture.'&quot;); background-size: cover; background-position: center center; display: block;">
                                             <img src="'.$picture.'" class="img-fluid blur-up lazyload bg-img" alt="" style="display: none;">
                                         </a>
                                     </div>
@@ -72,7 +74,7 @@ foreach ($this->Items as $valueInfoBook){
                                 </div>
                             </div>
                         </div>';
-    
+
 }
 
 $nameCategory = $this->categoryName;

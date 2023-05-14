@@ -45,6 +45,21 @@ class BookController extends Controller{
         $this->_view->render('book/index', true);
     }
     
+    public  function infoAction(){
+        
+        $this->_view->_title    = "This is Book";
+        
+        $this->_view->Pagination    = $this->_paginationResult;
+        $this->_view->Book  = $this->_model->infoItem($this->_arrParam,array('task'=>'get-book-info'));
+        
+        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
+        $this->_templateObj->setFileTemplate('info.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('book/info', true);
+    }
+    
     public  function listAction(){
 
         $this->_view->_title    = "There are Books into one Category";

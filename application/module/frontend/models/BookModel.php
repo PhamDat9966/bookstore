@@ -63,6 +63,16 @@ class BookModel extends Model
             return $result;
        }
        
+       if($option['task'] == 'get-book-info'){
+           $queryContent   = [];
+           $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
+           $queryContent[] = "FROM `$this->_tableName`";
+           $queryContent[] = "WHERE `id` = ".$arrParam['id']."";
+           $queryContent   = implode(" ", $queryContent);
+           $result         = $this->fetchRow($queryContent);
+           return $result;
+       }
+       
        if($option['task'] == 'get-cat-name'){
            
            $queryContent   = [];
@@ -73,6 +83,7 @@ class BookModel extends Model
            $result         = $this->fetchRow($queryContent);
            return $result['name'];
        }
+       
     }
     
     public function countFilterSearch($arrParam){
