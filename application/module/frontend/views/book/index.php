@@ -13,7 +13,7 @@ foreach ($this->Items as $keyCats=>$valueCats){
     $strSpecial2        = "/";
     $imgURL           = str_replace($strSpecial1 ,$strSpecial2, $imgURL);
     
-    $urlCategory      = URL::createLink('frontend', 'category', 'info', array('category_id'=>$valueCats['id']));  
+    $urlCategory      = URL::createLink('frontend', 'category', 'detail', array('category_id'=>$valueCats['id']));  
     
     $xhtml .= '<div class="product-box">
                 <div class="img-wrapper">

@@ -65,8 +65,8 @@ class BookModel extends Model
         
     }
     
-    public function infoItem($arrParam, $option = null){
-       if($option == null){
+    public function detailItem($arrParam, $option = null){
+        if($option == null){
             $queryContent   = [];
             $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
             $queryContent[] = "FROM `$this->_tableName`";
@@ -74,29 +74,39 @@ class BookModel extends Model
             $queryContent = implode(" ", $queryContent);
             $result = $this->fetchAll($queryContent);
             return $result;
-       }
-       
-       if($option['task'] == 'get-book-info'){
-           $queryContent   = [];
-           $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
-           $queryContent[] = "FROM `$this->_tableName`";
-           $queryContent[] = "WHERE `id` = ".$arrParam['id']."";
-           $queryContent   = implode(" ", $queryContent);
-           $result         = $this->fetchRow($queryContent);
-           return $result;
-       }
-       
-       if($option['task'] == 'get-cat-name'){
-           
-           $queryContent   = [];
-           $queryContent[] = "SELECT `name`";
-           $queryContent[] = "FROM `".TBL_CATEGORY."`";
-           $queryContent[] = "WHERE `id` = ".$arrParam['category_id']."";
-           $queryContent   = implode(" ", $queryContent);
-           $result         = $this->fetchRow($queryContent);
-           return $result['name'];
-       }
-       
+        }
+        
+        if($option['task'] == 'quick-view'){
+            $queryContent   = [];
+            $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
+            $queryContent[] = "FROM `$this->_tableName`";
+            $queryContent[] = "WHERE `id` = ".$arrParam['book_id']."";
+            $queryContent = implode(" ", $queryContent);
+            $result = $this->fetchRow($queryContent);
+            return $result;
+        }
+        
+        if($option['task'] == 'get-book-info'){
+            $queryContent   = [];
+            $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
+            $queryContent[] = "FROM `$this->_tableName`";
+            $queryContent[] = "WHERE `id` = ".$arrParam['book_id']."";
+            $queryContent   = implode(" ", $queryContent);
+            $result         = $this->fetchRow($queryContent);
+            return $result;
+        }
+        
+        if($option['task'] == 'get-cat-name'){
+            
+            $queryContent   = [];
+            $queryContent[] = "SELECT `name`";
+            $queryContent[] = "FROM `".TBL_CATEGORY."`";
+            $queryContent[] = "WHERE `id` = ".$arrParam['category_id']."";
+            $queryContent   = implode(" ", $queryContent);
+            $result         = $this->fetchRow($queryContent);
+            return $result['name'];
+        }
+        
     }
     
     public function countFilterSearch($arrParam){

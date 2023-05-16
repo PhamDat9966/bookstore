@@ -29,11 +29,13 @@
             $price              = number_format($price);
         }
         
+        $urlBookSpecialInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
+        
         // Quick View
-        $urlQuickView       = URL::createLink('frontend', 'index', 'quickView');
+        $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
         $arrQuickView       = array(
-            'id'=>$id,
-            'url'=>$urlQuickView
+            'book_id'=>$id,
+            'url'    =>$urlQuickView
         );
         
         $jsonQuickView      = json_encode($arrQuickView);
@@ -45,7 +47,7 @@
                                         <span class="lable4 badge badge-danger"> -'.$sale_off.'%</span>
                                     </div>
                                     <div class="front">
-                                        <a href="item.html">
+                                        <a href="'.$urlBookSpecialInfo.'">
                                             <img src="'.$picture.'" class="img-fluid blur-up lazyload bg-img"
                                                 alt="product">
                                         </a>
@@ -63,7 +65,7 @@
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                     </div>
-                                    <a href="item.html"
+                                    <a href="'.$urlBookSpecialInfo.'"
                                         title="'.$shortDescription.'"<h6>'.$shortDescription.'</h6>
                                     </a>
                                     <h4 class="text-lowercase">'.$price.' <del>'.$priceNotSaleOFF.'</del></h4>

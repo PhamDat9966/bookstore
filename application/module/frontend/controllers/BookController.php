@@ -3,7 +3,7 @@
 class BookController extends Controller{
     
     public $_statusReturn;
-    protected  $_totalItemsPerPage = 15; //  Đặt số category xuất ra ở listCategory - Ở đây là 15, tạm thời là 5.Cần thêm vào csdl
+    protected  $_totalItemsPerPage = 13; //  Đặt số category xuất ra ở listCategory - Ở đây là 15, tạm thời là 5.Cần thêm vào csdl
     
     public function __construct($arrParams)
     {
@@ -45,19 +45,19 @@ class BookController extends Controller{
         $this->_view->render('book/index', true);
     }
     
-    public  function infoAction(){
+    public  function detailAction(){
         
         $this->_view->_title    = "This is Book";
         
         $this->_view->Pagination    = $this->_paginationResult;
-        $this->_view->Book  = $this->_model->infoItem($this->_arrParam,array('task'=>'get-book-info'));
+        $this->_view->Book  = $this->_model->detailItem($this->_arrParam,array('task'=>'get-book-info'));
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('info.php');
+        $this->_templateObj->setFileTemplate('detail.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
         
-        $this->_view->render('book/info', true);
+        $this->_view->render('book/detail', true);
     }
     
     public  function listAction(){
@@ -87,7 +87,7 @@ class BookController extends Controller{
         
         $this->_view->categoryName  = 'TẤT CẢ SÁCH'; 
         if(isset($this->_arrParam['category_id'])){
-            $this->_view->categoryName  = $this->_model->infoItem($this->_arrParam,array('task'=>'get-cat-name'));
+            $this->_view->categoryName  = $this->_model->detailItem($this->_arrParam,array('task'=>'get-cat-name'));
         }
 
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
@@ -99,8 +99,9 @@ class BookController extends Controller{
     }
     
     public  function quickViewAction(){
-        $return                      =  $this->_model->quickViewItem($this->_arrParam);
-        $return['picture']           = UPLOAD_URL .'book' . DS .$return['picture'];
+        //$return                      =  $this->_model->quickViewItem($this->_arrParam,array('task'=>'quick-view'));
+        $return                      =  $this->_model->detailItem($this->_arrParam,array('task'=>'quick-view'));
+        $return['picture']           =  UPLOAD_URL .'book' . DS .$return['picture'];
         $return   = json_encode($return);
         echo $return;
     }

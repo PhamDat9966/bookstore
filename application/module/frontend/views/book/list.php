@@ -31,11 +31,11 @@ foreach ($this->Items as $valueInfoBook){
     $picture            = str_replace($strSpecial1 ,$strSpecial2, $picture);
     
 
-    $urlBookInfo        = URL::createLink('frontend', 'book', 'info',array('id'=>$id));
+    $urlBookInfo        = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
     
     $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
     $arrQuickView       = array(
-                                'id'=>$id,
+                                'book_id'=>$id,
                                 'url'=>$urlQuickView
                           );
     
@@ -151,7 +151,7 @@ foreach ($listCategoryMenu as $keyCategory=>$valueCategory){
         }
         $idSpecial      = $valueSpecial['id'];
         $nameSpecial    = $valueSpecial['name'];
-        $urlSpecial     = URL::createLink('frontend', 'book', 'info',array('id'=>$idSpecial));
+        $urlSpecial     = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$idSpecial));
         
         $pictureSpecial     = UPLOAD_URL .'book' . DS . $valueSpecial['picture'];
         $strSpecial1        = '\\';
