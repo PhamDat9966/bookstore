@@ -79,3 +79,16 @@ function generateRandomString($length = 10) {
     }
     return $randomString;
 }
+
+// shuffle Array với value cũng là 1 mảng
+function mixArray($arrMix){
+    $arrKey = array_keys($arrMix);                         //Lấy mảng chứa key
+    shuffle($arrKey);                                      // Sáo chộn mảng chưa key
+    array_flip($arrKey);                                   // Đảo vị trí key và value
+    $return = array_combine($arrKey, $arrMix);              // ghép lại mảng có key đã đảo và mảng chứa value cần lấy
+    ksort($return);                                         // Sắp xếp lại mảng theo key thứ tự 1,2,3....
+    return $return;                                        
+}
+
+
+

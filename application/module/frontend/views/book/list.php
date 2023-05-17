@@ -40,7 +40,7 @@ foreach ($this->Items as $valueInfoBook){
                           );
     
     $jsonQuickView      = json_encode($arrQuickView);
-
+    $jsonQuickView      = htmlentities($jsonQuickView);
     
     $xhtmlInfoCategory .='<div class="col-xl-3 col-6 col-grid-box">
                             <div class="product-box">
@@ -55,7 +55,7 @@ foreach ($this->Items as $valueInfoBook){
                                     </div>
                                     <div class="cart-info cart-wrap">
                                         <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.htmlentities($jsonQuickView).')"><i class="ti-search" data-toggle="modal" data-target="#quick-view" ></i></a>
+                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$jsonQuickView.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view" ></i></a>
                                     </div>
                                 </div>
                                 <div class="product-detail">
@@ -139,62 +139,12 @@ foreach ($listCategoryMenu as $keyCategory=>$valueCategory){
 							</div>
 						</div>
 					</div>
-<?php 
-    $dataBookSpecial  = $this->bookSpecial;
-    
-    $xhtmlBookSpecial = '';
-    
-    $numberBookShow     = 0;
-    foreach ($dataBookSpecial as $keySpecial=>$valueSpecial){
-        if($numberBookShow == 4){
-            break;
-        }
-        $idSpecial      = $valueSpecial['id'];
-        $nameSpecial    = $valueSpecial['name'];
-        $urlSpecial     = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$idSpecial));
-        
-        $pictureSpecial     = UPLOAD_URL .'book' . DS . $valueSpecial['picture'];
-        $strSpecial1        = '\\';
-        $strSpecial2        = "/";
-        $pictureSpecial     = str_replace($strSpecial1 ,$strSpecial2, $pictureSpecial);
-        
-
-        $priceSpecial              = $valueSpecial['price'];
-        if($valueSpecial['sale_off'] > 0){
-            $priceSpecial           = number_format($priceSpecial * (100 - $valueSpecial['sale_off']) / 100).' đ ';;
-        } else{
-            $priceSpecial           = number_format($priceSpecial).' đ ';;
-        }
-        
-        $xhtmlBookSpecial .='<div class="media">
-									<a href="'.$urlSpecial.'"> <img class="img-fluid blur-up lazyload"
-										src="'.$pictureSpecial.'" alt="'.$nameSpecial.'"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
-
-										<a href="'.$urlSpecial.'" title="'.$nameSpecial.'">
-											<h6>'.$nameSpecial.'</h6>
-										</a>
-										<h4 class="text-lowercase">'.$priceSpecial.'</h4>
-									</div>
-								</div>';
-       $numberBookShow++; 
-    }
-?>
-					<div class="theme-card">
-						<h5 class="title-border">Sách nổi bật</h5>
-						<div class="offer-slider slide-1">
-							<div>
-								<?php 
-								    echo $xhtmlBookSpecial;
-								?>
-							</div>
-						</div>
-					</div>
+					
+					<!-- SPECIAL BOOK  -->
+    					<?php 
+    					    require_once BLOCK_PATH . 'bookSpecial.php';
+    					?>
+	
 					<!-- silde-bar colleps block end here -->
 				</div>
 <?php 

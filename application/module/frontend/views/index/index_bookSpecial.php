@@ -3,10 +3,14 @@
     $strSpecial1       = '\\';
     $strSpecial2       = "/";
     $imageURL          = str_replace($strSpecial1 ,$strSpecial2, $imageURL); 
-
+    
+    $dataSpecialBookBanner = $this->bookSpecial;
+    /*Trộn mảng book Special*/
+    require_once LIBRARY_PATH . 'functions.php';
+    $dataSpecialBookBanner = mixArray($dataSpecialBookBanner); 
     
     $xhtmlBookProduct = '';
-    foreach ($this->bookSpecial as $keyBook=>$valueBook){
+    foreach ($dataSpecialBookBanner as $keyBook=>$valueBook){
         $id               = $valueBook['id'];
         $nameBook         = $valueBook['name'];
         
