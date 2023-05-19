@@ -29,7 +29,11 @@ if($bookInfo['sale_off'] > 0){
 $shortDescription   = $bookInfo['shortDescription'];
 $description        = $bookInfo['description'];
 
-$linkOrder          = URL::createLink('frontend', 'user', 'order',array('book_id'=>$bookInfo['id'],'price'=>$priceReal));
+$linkOrder          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$bookInfo['id'],'price'=>$priceReal));
+$linkOrder          = json_encode($linkOrder);
+$linkOrderJSON      = htmlentities($linkOrder);
+
+$ajaxClickOrder     = '<a id="" href="#" onclick="ajaxOrder(\''.$linkOrderJSON.'\')" class="btn btn-solid ml-0"><i class="fa fa-cart-plus"></i> Chọn mua</a>';
 
 ?>
 
@@ -88,8 +92,9 @@ $linkOrder          = URL::createLink('frontend', 'user', 'order',array('book_id
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- ODER BUTTON -->
                                     <div class="product-buttons">
-                                        <a href="<?php echo $linkOrder;?>" class="btn btn-solid ml-0"><i class="fa fa-cart-plus"></i> Chọn mua</a>
+                                        <?php echo $ajaxClickOrder;?>
                                     </div>
                                     <div class="border-product">
                                     	<?php echo $shortDescription;?>

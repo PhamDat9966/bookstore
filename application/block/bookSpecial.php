@@ -12,7 +12,7 @@ $resulf             = $model->fetchAll($queryContent);
 
 //Trộn mảng Kết quả cho ra 1 mảng ngẫu nhiên mới với mảng cũ
 require_once LIBRARY_PATH . 'functions.php';
-$dataBookSpecial = mixArray($resulf);
+$dataBookSpecial    = mixArray($resulf);
 
 $xhtmlBookSpecial   = '';
 
@@ -39,23 +39,23 @@ foreach ($dataBookSpecial as $keySpecial=>$valueSpecial){
     }
     
     $xhtmlBookSpecial .='<div class="media">
-									<a href="'.$urlSpecial.'"> <img class="img-fluid blur-up lazyload"
-										src="'.$pictureSpecial.'" alt="'.$nameSpecial.'"></a>
-									<div class="media-body align-self-center">
-										<div class="rating">
-											<i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i> 
-                                            <i class="fa fa-star"></i> 
-                                            <i class="fa fa-star"></i> 
-                                            <i class="fa fa-star"></i>
-										</div>
-										    
-										<a href="'.$urlSpecial.'" title="'.$nameSpecial.'">
-											<h6>'.$nameSpecial.'</h6>
-										</a>
-										<h4 class="text-lowercase">'.$priceSpecial.'</h4>
-									</div>
-								</div>';
+							<a href="'.$urlSpecial.'"> <img class="img-fluid blur-up lazyload"
+								src="'.$pictureSpecial.'" alt="'.$nameSpecial.'"></a>
+							<div class="media-body align-self-center">
+								<div class="rating">
+									<i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i>
+								</div>
+								    
+								<a href="'.$urlSpecial.'" title="'.$nameSpecial.'">
+									<h6>'.$nameSpecial.'</h6>
+								</a>
+								<h4 class="text-lowercase">'.$priceSpecial.'</h4>
+							</div>
+						</div>';
     $numberBookShow++;
 }
 ?>

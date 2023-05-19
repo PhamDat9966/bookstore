@@ -15,8 +15,8 @@ $cartLink  = URL::createLink('frontend', 'user', 'cart');
 	<div>
 		<a href="<?php echo $cartLink;?>" id="cart" class="position-relative"> <img
 			src="<?php echo $imageURL;?>" class="img-fluid blur-up lazyload"
-			alt="cart"> <i class="ti-shopping-cart"></i> <span
-			class="badge badge-warning"><?php echo $totalItems;?></span>
+			alt="cart"> <i class="ti-shopping-cart"></i> 
+			<span id="totalItemCart" class="badge badge-warning"><?php echo $totalItems;?></span>
 		</a>
 	</div>
 </li>
