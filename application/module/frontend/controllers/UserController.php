@@ -57,9 +57,7 @@ class UserController extends Controller{
     }   
     
     public  function ajaxOrderAction(){
-//         echo "<pre>";
-//         print_r($this->_arrParam);
-//         echo "</pre>";
+
         $cart   = Session::get('cart');
         $bookID = $this->_arrParam['book_id'];
         $price  = $this->_arrParam['price'];
@@ -78,9 +76,6 @@ class UserController extends Controller{
         }
         
         Session::set('cart', $cart);
-//         echo "<pre>";
-//         print_r($cart);
-//         echo "</pre>";
         echo json_encode($cart);
         
     } 

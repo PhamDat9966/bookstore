@@ -25,15 +25,28 @@
         
         $price              = $valueBook['price'];
         $priceNotSaleOFF    = '';
+        $priceReal          = 0;
         if($valueBook['sale_off'] > 0){
+            $priceReal      = $price * (100 - $valueBook['sale_off']) / 100;
             $priceNotSaleOFF= '<del>'.number_format($price).' đ</del>';
             $price          = number_format($price * (100 - $valueBook['sale_off']) / 100);
             $price          = $price.' đ ';
         } else{
             $price              = number_format($price);
+            $priceReal      = $price;
         }
         
         $urlBookSpecialInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
+        
+        /* Ajax Order*/
+        $linkOrderSpecial          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal));
+        $linkOrderSpecial          = json_encode($linkOrderSpecial);
+        $linkOrderJSONSpecial      = htmlentities($linkOrderSpecial);
+        
+        /* Ajax Order Trường hợp chưa đăng nhập */
+        if(!isset($_SESSION['user'])){
+            $linkOrderJSONSpecial = Null;
+        }
         
         // Quick View
         $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
@@ -57,7 +70,7 @@
                                         </a>
                                     </div>
                                     <div class="cart-info cart-wrap">
-                                        <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
+                                        <a href="#" onclick="ajaxOrder(\''.$linkOrderJSONSpecial.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>
                                         <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$jsonQuickView.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                                     </div>
                                 </div>

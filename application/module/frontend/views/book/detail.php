@@ -33,7 +33,13 @@ $linkOrder          = URL::createLink('frontend', 'user', 'ajaxOrder',array('boo
 $linkOrder          = json_encode($linkOrder);
 $linkOrderJSON      = htmlentities($linkOrder);
 
-$ajaxClickOrder     = '<a id="" href="#" onclick="ajaxOrder(\''.$linkOrderJSON.'\')" class="btn btn-solid ml-0"><i class="fa fa-cart-plus"></i> Chọn mua</a>';
+/* Trường hợp chưa đăng nhập */
+if(!isset($_SESSION['user'])){
+    $linkOrderJSON = Null;
+}
+
+$ajaxClickOrder     = '<a id="" href="#" onclick="ajaxOrder(\''.$linkOrderJSON.'\')" class="btn btn-solid ml-0" data-value="@Request.RequestContext.HttpContext.Session[\''.$_SESSION['user'].'\']">
+                            <i class="fa fa-cart-plus"></i> Chọn mua</a>';
 
 ?>
 

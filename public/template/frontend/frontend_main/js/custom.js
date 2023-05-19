@@ -18,25 +18,17 @@ function quickViewFunction(htmlentitiesJSON){
 	var ObjectJSON  = htmlentitiesJSON;
 	var book_id		= ObjectJSON.book_id;
 	var link		= ObjectJSON.url;
-	//var link    = 'index.php?module=frontend&controller=book&action=quickView';
 	//Ajax
 	$.ajax({
 		url		: link,
 		type	: 'GET',
 		data	: {book_id:book_id},
 		success	: function(data){	
-				/*
-				 * <a href="javascript:changeGroupACP('index.php?module=backend&amp;controller=group&amp;action=ajaxGroupACP&amp;id=4&amp;group_acp=0');" id="GroupACP-4" class="btn btn-danger rounded-circle btn-sm">
-			            <i class="fas fa-minus"></i>
-			        </a>
-				 */
+
 				console.log(data);
 				
-				var dataOject = JSON.parse(data);
-//				
-				console.log(dataOject);
+				var dataOject = JSON.parse(data);			
 				var name     = dataOject.name;
-				console.log(name);
 				var id        		 = dataOject.id;
 				var shortDescription = dataOject.shortDescription;
 				var picture			 =  dataOject.picture;
@@ -87,6 +79,10 @@ function quickViewFunction(htmlentitiesJSON){
 
 //ODER AJAX
 function ajaxOrder($linkOrderJSON){
+	if($linkOrderJSON == ''){
+		alert('Vui lòng đăng nhập để tiến hành mua hàng');
+		window.location = "index.php?module=frontend&controller=index&action=login";
+	}
 	var link = JSON.parse($linkOrderJSON);   
 
 	$.ajax({

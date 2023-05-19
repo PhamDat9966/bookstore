@@ -31,7 +31,7 @@ function changeGroupACP(link){
 					$(element).attr('href',"javascript:changeGroupACP('"+url+"')");
 					$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
 					$(element).removeClass(classRemove).addClass(classAdd).notify("Cập nhật thành công",{ position:"top", className:"success" });
-					//$('#GroupACP-' + id).removeClass(classRemove).addClass(classAdd).notify("Cập nhật thành công",{ position:"top", className:"success" });
+				
 
 				}
 		})

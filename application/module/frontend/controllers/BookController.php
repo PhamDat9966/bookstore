@@ -48,8 +48,6 @@ class BookController extends Controller{
     public  function detailAction(){
         
         $this->_view->_title    = "This is Book";
-        
-        $this->_view->Pagination    = $this->_paginationResult;
         $this->_view->Book  = $this->_model->detailItem($this->_arrParam,array('task'=>'get-book-info'));
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');

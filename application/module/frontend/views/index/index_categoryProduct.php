@@ -48,11 +48,13 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
         $priceNotSaleOFF  = '';
         
         if($valueBookInCat['sale_off'] > 0){
+            $priceReal      = $price * (100 - $valueBookInCat['sale_off']) / 100;
             $priceNotSaleOFF= '<del>'.number_format($price).' đ</del>';
             $price          = number_format($price * (100 - $valueBookInCat['sale_off']) / 100);
             $price          = $price.' đ ';
         } else{
-            $price              = number_format($price);
+            $price          = number_format($price);
+            $priceReal      = $price;
         }
         
         $urlBookProductInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
@@ -67,6 +69,16 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
         $jsonQuickView      = json_encode($arrQuickView);
         $jsonQuickView      = htmlentities($jsonQuickView);
         
+        /* Ajax Order*/
+        $linkOrderProduct          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal));
+        $linkOrderProduct          = json_encode($linkOrderProduct);
+        $linkOrderJSONProduct      = htmlentities($linkOrderProduct);
+        
+        /* Ajax Order Trường hợp chưa đăng nhập */
+        if(!isset($_SESSION['user'])){
+            $linkOrderJSONProduct = Null;
+        }
+        
         if($keyCatList == $valueBookInCat['category_id']){
             $xhtmlCategoryInfo .=   '<div class="product-box">
                                         <div class="img-wrapper">
@@ -79,7 +91,7 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
                                                 </a>
                                             </div>
                                             <div class="cart-info cart-wrap">
-                                                <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
+                                                <a href="#" onclick="ajaxOrder(\''.$linkOrderJSONProduct.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>
                                                 <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$jsonQuickView.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                                             </div>
                                         </div>
