@@ -58,19 +58,24 @@ class UserController extends Controller{
     
     public  function ajaxOrderAction(){
 
+        $quatity = 0;
+        if(isset($this->_arrParam['quantity'])){
+            $quatity = $this->_arrParam['quantity'];    
+        }
+        
         $cart   = Session::get('cart');
         $bookID = $this->_arrParam['book_id'];
         $price  = $this->_arrParam['price'];
         
         if(empty($cart)){
-            $cart['quatity'][$bookID]   = 1;
+            $cart['quatity'][$bookID]   = $quatity;
             $cart['price'][$bookID]     = $price;
         }else{
             if(key_exists($bookID, $cart['quatity'])){
-                $cart['quatity'][$bookID]     += 1;
+                $cart['quatity'][$bookID]     += $quatity;
                 $cart['price'][$bookID]        = $price * $cart['quatity'][$bookID];
             }else {
-                $cart['quatity'][$bookID]   = 1;
+                $cart['quatity'][$bookID]   = $quatity;
                 $cart['price'][$bookID]     = $price;
             }
         }

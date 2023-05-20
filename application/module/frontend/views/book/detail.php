@@ -38,9 +38,10 @@ if(!isset($_SESSION['user'])){
     $linkOrderJSON = Null;
 }
 
-$ajaxClickOrder     = '<a id="" href="#" onclick="ajaxOrder(\''.$linkOrderJSON.'\')" class="btn btn-solid ml-0" data-value="@Request.RequestContext.HttpContext.Session[\''.$_SESSION['user'].'\']">
+$ajaxClickOrder     = '<a id="" href="#" onclick="ajaxOrder(\''.$linkOrderJSON.'\')" class="btn btn-solid ml-0" data-toggle="modal" data-target="#quick-view">
                             <i class="fa fa-cart-plus"></i> Chọn mua</a>';
 
+require_once 'quickViewWhenCompleteOrder.php';
 ?>
 
 <div class="breadcrumb-section">
@@ -89,7 +90,7 @@ $ajaxClickOrder     = '<a id="" href="#" onclick="ajaxOrder(\''.$linkOrderJSON.'
                                                         <i class="ti-angle-left"></i>
                                                     </button> 
                                                 </span>
-                                                <input type="text" name="quantity" class="form-control input-number" value="1">
+                                                <input id="input-quantity"  type="text" name="quantity" class="form-control input-number" value="1">
                                                 <span class="input-group-prepend">
                                                     <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
                                                         <i class="ti-angle-right"></i>

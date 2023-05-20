@@ -58,25 +58,25 @@ if (!empty($this->Items)) {
 
         $listGroup         .=
             '<tr class=' . $row . '>
-            <td>' . $ckb . '</td>
-            <td>' . $id . '</td>
-            <td>' . $name . '</td>
-            <td>' . $groupACP . '</td>
-            <td>' . $status . '</td>
-            <td>' . $ordering . '</td>
-            <td>
-                <p class="mb-0"><i class="far fa-user"></i> ' . $created_by . '</p>
-                <p class="mb-0"><i class="far fa-clock"></i> ' . $created . '</p>
-            </td>
-            <td>
-                <p class="mb-0"><i class="far fa-user"></i> ' . $modified_by . '</p>
-                <p class="mb-0"><i class="far fa-clock"></i> ' . $modified . '</p>
-            </td>
-            <td>
-                ' . $editAction . '
-                ' . $deleteAction . '
-            </td>
-        </tr>';
+                <td>' . $ckb . '</td>
+                <td>' . $id . '</td>
+                <td>' . $name . '</td>
+                <td>' . $groupACP . '</td>
+                <td>' . $status . '</td>
+                <td>' . $ordering . '</td>
+                <td>
+                    <p class="mb-0"><i class="far fa-user"></i> ' . $created_by . '</p>
+                    <p class="mb-0"><i class="far fa-clock"></i> ' . $created . '</p>
+                </td>
+                <td>
+                    <p class="mb-0"><i class="far fa-user"></i> ' . $modified_by . '</p>
+                    <p class="mb-0"><i class="far fa-clock"></i> ' . $modified . '</p>
+                </td>
+                <td>
+                    ' . $editAction . '
+                    ' . $deleteAction . '
+                </td>
+            </tr>';
         $i++;
     }
 }
