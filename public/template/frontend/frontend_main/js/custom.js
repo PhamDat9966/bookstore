@@ -117,15 +117,26 @@ function ajaxOrder($linkOrderJSON){
 				 
 				 $('#quick-view-complete-order').css({ 'display': 'block','padding-right':'17px'});
 				 
+//				 $('#quick-view-complete-order').css({'background-color':'#000000','opacity':0.6});
+//				 $('#quick-view-order-body').css({'background-color':'#ffffff','opacity':1.0});
+				 
 				 setTimeout(function(){
 					 $('#quick-view-complete-order').addClass('hidden');
 					 $('#quick-view-complete-order').removeAttr("style");
 					 $('#quick-view-complete-order').attr("aria-hidden", "true");
 					 
 					 $('#quick-view-complete-order').css({ 'display': 'none'});
-					}, 2000);	
+					}, 4000);	
 		}
 	})
+}
+
+function hiddentOrder(){
+	 $('#quick-view-complete-order').addClass('hidden');
+	 $('#quick-view-complete-order').removeAttr("style");
+	 $('#quick-view-complete-order').attr("aria-hidden", "true");
+	 
+	 $('#quick-view-complete-order').css({ 'display': 'none'});
 }
 
 

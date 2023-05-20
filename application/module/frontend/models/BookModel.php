@@ -88,7 +88,7 @@ class BookModel extends Model
         
         if($option['task'] == 'get-book-info'){
             $queryContent   = [];
-            $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
+            $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`,`category_id`";
             $queryContent[] = "FROM `$this->_tableName`";
             $queryContent[] = "WHERE `id` = ".$arrParam['book_id']."";
             $queryContent   = implode(" ", $queryContent);
