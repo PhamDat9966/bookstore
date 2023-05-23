@@ -89,7 +89,18 @@
                                 </div>
                             </div>'; 
         
-        $ajaxClickOrderQuickViewSpecial     = '<a onclick="ajaxOrderQuickView(\''.$jsonQuickViewSpecial.'\')" href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>';
+        
+        // Order Tại QuickView: Thẻ chọn mua
+        $linkOrderSPE          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal));
+        $linkOrderSPE          = json_encode($linkOrderSPE);
+        $linkOrderjsonSPE      = htmlentities($linkOrderSPE);
+        
+        /* Trường hợp chưa đăng nhập */
+        if(!isset($_SESSION['user'])){
+            $linkOrderjsonSPE = Null;
+        }
+        
+        $ajaxClickOrderQuickViewSPE     = '<a onclick="ajaxOrderQuickView(\''.$linkOrderjsonSPE.'\')" href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>';
         
     }
     
@@ -159,7 +170,7 @@
                             </div>
                             <div class="product-buttons">
                                 <?php 
-                                    echo $ajaxClickOrderQuickViewSpecial;
+                                echo $ajaxClickOrderQuickViewSPE;
                                 ?>
                                 <a href="item.html" class="btn btn-solid mb-1 btn-view-book-detail">Xem chi tiết</a>
                             </div>

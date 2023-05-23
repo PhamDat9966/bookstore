@@ -63,7 +63,7 @@
 
     <!-- Quick-view modal popup start-->
     <?php
-        include_once 'html/quickView.php';
+        //include_once 'html/quickView.php';
     ?>    
     <!-- Quick-view modal popup end-->
 

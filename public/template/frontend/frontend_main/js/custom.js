@@ -111,11 +111,11 @@ function ajaxOrder($linkOrderJSON){
 				$('#totalItemCart').notify("Sản phẩm đã được thêm vào giỏ hàng!",{ position:"bottom	right", className:"success" });
 				
 				//Quick view
-				$('#quick-view-complete-order').modal('toggle');  // Chuyển đổi: Mở quickView theo modal
-				 
+				//$('#quick-view-complete-order').modal('toggle');  // Chuyển đổi: Mở quickView theo modal
+				$('#quick-view-complete-order').modal('show');  
 				setTimeout(function(){
-					$('#quick-view-complete-order').modal('toggle'); // Chuyển đổi: Đóng quick-view-complete-order Theo modal
-				 
+					//$('#quick-view-complete-order').modal('toggle'); // Chuyển đổi: Đóng quick-view-complete-order Theo modal
+					$('#quick-view-complete-order').modal('hide'); // Chuyển đổi: Đóng quick-view-complete-order Theo modal
 				}, 4000);	
 		}
 	})

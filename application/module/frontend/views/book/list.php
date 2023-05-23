@@ -90,7 +90,6 @@ foreach ($this->Items as $valueInfoBook){
     
     $ajaxClickOrderQuickView     = '<a onclick="ajaxOrderQuickView(\''.$linkOrderJSON.'\')" href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>';
     
-
 }
 
 $nameCategory = $this->categoryName;

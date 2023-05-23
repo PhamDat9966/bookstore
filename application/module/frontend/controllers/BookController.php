@@ -97,6 +97,9 @@ class BookController extends Controller{
     }
     
     public  function quickViewAction(){
+//         echo "<pre>";
+//         print_r($this->_arrParam);
+//         echo "</pre>";
         //$return                      =  $this->_model->quickViewItem($this->_arrParam,array('task'=>'quick-view'));
         $return                      =  $this->_model->detailItem($this->_arrParam,array('task'=>'quick-view'));
         $return['picture']           =  UPLOAD_URL .'book' . DS .$return['picture'];
