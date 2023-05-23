@@ -111,22 +111,51 @@ function ajaxOrder($linkOrderJSON){
 				$('#totalItemCart').notify("Sản phẩm đã được thêm vào giỏ hàng!",{ position:"bottom	right", className:"success" });
 				
 				//Quick view
-				 $('#quick-view-complete-order').addClass('show');
-				 $('#quick-view-complete-order').removeAttr("style");
-				 $('#quick-view-complete-order').removeAttr("aria-hidden");
+				$('#quick-view-complete-order').modal('toggle');  // Chuyển đổi: Mở quickView theo modal
 				 
-				 $('#quick-view-complete-order').css({ 'display': 'block','padding-right':'17px'});
+				setTimeout(function(){
+					$('#quick-view-complete-order').modal('toggle'); // Chuyển đổi: Đóng quick-view-complete-order Theo modal
 				 
-//				 $('#quick-view-complete-order').css({'background-color':'#000000','opacity':0.6});
-//				 $('#quick-view-order-body').css({'background-color':'#ffffff','opacity':1.0});
+				}, 4000);	
+		}
+	})
+}
+
+//ODER AJAX
+function ajaxOrderQuickView($linkOrderJSON){
+	if($linkOrderJSON == ''){
+		alert('Vui lòng đăng nhập để tiến hành mua hàng');
+		window.location = "index.php?module=frontend&controller=index&action=login";
+	}
+	
+	var quantity = $("#input-quantity").val();	// Số lượng lấy tại <input id="input-quantity"  type="text" name="quantity" class="form-control input-number" value="1">
+	console.log(quantity);
+	console.log($linkOrderJSON);
+	
+	var link = JSON.parse($linkOrderJSON);
+	console.log(link);
+	
+	$.ajax({
+		url		: link,
+		type	: 'GET',
+		data	:{quantity:quantity},
+		success	: function(data){	
+				console.log(data);
+				var dataOject = JSON.parse(data); 
+
+				var total = 0;
+				var quatityOject = dataOject.quatity;
+				
+				for (var property in quatityOject) {
+				    total += Number(quatityOject[property]);
+				}
+				
+				$('#totalItemCart').contents().filter((_, el) => el.nodeType === 3).remove();  // Remove text
+				$('#totalItemCart').append(total);											   // Add total	
+				$('#totalItemCart').notify("Sản phẩm đã được thêm vào giỏ hàng!",{ position:"bottom	right", className:"success" });
 				 
-				 setTimeout(function(){
-					 $('#quick-view-complete-order').addClass('hidden');
-					 $('#quick-view-complete-order').removeAttr("style");
-					 $('#quick-view-complete-order').attr("aria-hidden", "true");
-					 
-					 $('#quick-view-complete-order').css({ 'display': 'none'});
-					}, 4000);	
+				$('#quick-view').modal('toggle'); // Chuyển đổi: Đóng quickView Theo modal
+				 
 		}
 	})
 }

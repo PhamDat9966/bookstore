@@ -14,14 +14,17 @@ foreach ($this->Items as $valueInfoBook){
     $saleOff            = '';
     $price              = $valueInfoBook['price'];
     $priceNotSaleOFF    = '';
+    $priceReal          = 0;
     if($valueInfoBook['sale_off'] > 0){
+        $priceReal      = $price * (100 - $valueInfoBook['sale_off']) / 100;
         $saleOff        = '<span class="lable4 badge badge-danger"> -'.$valueInfoBook['sale_off'].'%</span>';
         
         $priceNotSaleOFF= '<del>'.number_format($price).' đ</del>';   
         $price          = number_format($price * (100 - $valueInfoBook['sale_off']) / 100);
         $price          = $price.' đ ';
     } else{
-        $price              = number_format($price);
+        $priceReal      = $price;
+        $price          = number_format($price);
     }
 
     //PICTURE
@@ -74,6 +77,19 @@ foreach ($this->Items as $valueInfoBook){
                                 </div>
                             </div>
                         </div>';
+    
+    // Order Tại QuickView: Thẻ chọn mua
+    $linkOrder          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$valueInfoBook['id'],'price'=>$priceReal));
+    $linkOrder          = json_encode($linkOrder);
+    $linkOrderJSON      = htmlentities($linkOrder);
+    
+    /* Trường hợp chưa đăng nhập */
+    if(!isset($_SESSION['user'])){
+        $linkOrderJSON = Null;
+    }
+    
+    $ajaxClickOrderQuickView     = '<a onclick="ajaxOrderQuickView(\''.$linkOrderJSON.'\')" href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>';
+    
 
 }
 
@@ -278,7 +294,7 @@ foreach ($arrDocking as $valueDocking){
                                                 <i class="ti-angle-left"></i>
                                             </button>
                                         </span>
-                                        <input type="text" name="quantity" class="form-control input-number" value="1">
+                                        <input type="text" id="input-quantity" name="quantity" class="form-control input-number" value="1">
                                         <span class="input-group-prepend">
                                             <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
                                                 <i class="ti-angle-right"></i>
@@ -288,7 +304,9 @@ foreach ($arrDocking as $valueDocking){
                                 </div>
                             </div>
                             <div class="product-buttons">
-                                <a href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>
+                                <?php 
+                                   echo $ajaxClickOrderQuickView;
+                                ?>
                                 <a href="item.html" class="btn btn-solid mb-1 btn-view-book-detail">Xem chi tiết</a>
                             </div>
                         </div>
