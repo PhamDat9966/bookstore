@@ -25,7 +25,7 @@ function quickViewFunction(htmlentitiesJSON){
 		data	: {book_id:book_id},
 		success	: function(data){	
 
-				console.log(data);
+				//console.log(data);
 				
 				var dataOject = JSON.parse(data);			
 				var name     = dataOject.name;
@@ -73,6 +73,117 @@ function quickViewFunction(htmlentitiesJSON){
 				$('#price-not-off').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
 				$('#price-not-off').append(priceNotSaleOFF);	// Add text
 			 
+			}
+	})
+}
+
+//Book Quick view Special 
+function quickViewSpecialFunction(htmlentitiesJSON){
+	console.log(htmlentitiesJSON);
+	var ObjectJSON  = htmlentitiesJSON;
+	var book_id		= ObjectJSON.book_id;
+	var link		= ObjectJSON.url;
+	 
+	//Ajax
+	$.ajax({
+		url		: link,
+		type	: 'GET',
+		data	: {book_id:book_id},
+		success	: function(data){	
+
+				//console.log(data);
+				
+				var dataOject = JSON.parse(data);			
+				var name     = dataOject.name;
+				var id        		 = dataOject.id;
+				var shortDescription = dataOject.shortDescription;
+				var picture			 =  dataOject.picture;
+				
+					
+				$('#book-name-special').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+				$('#book-name-special').append(name);	// Add text
+				
+				$('#book-description-special').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+				$('#book-description-special').append(shortDescription);	// Add text
+				
+				$("#quick-view-img-special").attr("src",picture);
+				
+
+				/*SET Name input*/
+				$("#input-quatity-special").attr('name','quatity-'+id);
+				
+				
+				//price
+				var saleOff            = dataOject.sale_off;
+			    var priceHaveSaleOFF   = dataOject.price;
+			    var priceNotSaleOFF    = '';
+			    var priceReal		   = 0;		
+			    if(saleOff > 0){
+			    	
+			        priceNotSaleOFF  = dataOject.price;   
+			        priceHaveSaleOFF = (dataOject.price * (100 - saleOff) / 100);
+			        priceReal        = priceHaveSaleOFF;
+			    }else{
+				    var priceHaveSaleOFF   = dataOject.price;
+				    var priceNotSaleOFF    = '';
+				    priceReal        = priceHaveSaleOFF;
+			    }
+			    
+			    // Thêm dấu phẩy vào hàng nghìn
+			    const formatter = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
+			    priceHaveSaleOFF = formatter.format(priceHaveSaleOFF)+' đ';
+			    
+			    if(priceNotSaleOFF == 0){
+			    	priceNotSaleOFF = '';
+			    }else{
+			    	priceNotSaleOFF = formatter.format(priceNotSaleOFF)+' đ';
+			    }
+			    
+				$('#book-price-special').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+				$('#book-price-special').append(priceHaveSaleOFF);	// Add text
+			    
+				$('#price-not-off-special').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
+				$('#price-not-off-special').append(priceNotSaleOFF);	// Add text
+				
+				var linkOrderAtQuickView = 'index.php?module=frontend&controller=user&action=ajaxOrder&book_id='+id+'&price='+priceReal+'';
+
+				$("#order-at-quick-view").click(function(){
+					
+					//Lấy giá trị input theo name
+					var nameInput      = 'quatity-'+id;
+					var quatitySpecial = $('input[name='+nameInput+']').val();
+					
+					console.log(quatitySpecial);
+						//	input-quantity-special
+					$('#quick-view-special').modal('hide'); 
+					
+					//Ajax Lần 2 tại order
+					$.ajax({
+						url		: linkOrderAtQuickView,
+						type	: 'GET',
+						data	: {quatity:quatitySpecial},
+						success	: function(dataorder){		
+							//alert('OK');
+							console.log(dataorder);
+							var dataOuput = JSON.parse(dataorder);	
+							console.log(dataOuput);
+							
+							
+							var total = 0;
+							var quatityOject = dataOuput.quatity;
+							for (var property in quatityOject) {
+							    total += Number(quatityOject[property]);
+							}
+							
+							console.log(total);
+							$('#totalItemCart').contents().filter((_, el) => el.nodeType === 3).remove();  // Remove text
+							$('#totalItemCart').append(total);											   // Add total	
+							$('#totalItemCart').notify("Sản phẩm đã được thêm vào giỏ hàng!",{ position:"bottom	right", className:"success" });
+
+						}
+					})
+					
+				});
 			}
 	})
 }

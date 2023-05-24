@@ -61,6 +61,26 @@ class UserModel extends Model
         }
     }
     
+    public function cartItem($arrParam, $option = null){
+        $strCart = '';
+        foreach ($arrParam['cartKEY'] as $value){
+            $strCart .=$value.',';
+        }
+        
+        $strCart = substr_replace($strCart ,"",-1);
+        
+        if($option == null){
+            $queryContent   = [];
+            $queryContent[] = "SELECT `id`,`name`,`picture`";
+            $queryContent[] = "FROM `".TBL_BOOK."`";
+            $queryContent[] = "WHERE `id` IN(".$strCart.")";
+            echo $queryContent       = implode(" ", $queryContent);
+            $result = $this->fetchAll($queryContent);
+            return $result;
+        }
+    }
+    
+    
 }
 
 

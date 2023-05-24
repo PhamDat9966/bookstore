@@ -19,8 +19,6 @@ if($bookInfo['sale_off'] > 0){
     $price             .= '<h4><del>'.number_format($priceNotSaleOFF).' đ</del><span> '.$sale_book_Off.'</span></h4>';
     $price             .= '<h3>'.number_format($priceReal).' đ </h3>';
     
-    //<h4><del>50,000 đ</del><span> -10%</span></h4>
-    //<h3>45,000 đ </h3>
 } else{
     $priceReal       = $bookInfo['price'];
     $price          .= '<h3>'.number_format($priceReal).' đ</h3>';
@@ -249,12 +247,7 @@ require_once 'quickViewWhenCompleteOrder.php';
 					<!-- BOOK SPECIAL -->
 					<?php require_once BLOCK_PATH . 'bookSpecial.php';?>
 
-<?php 
-/*SÁCH MỚI*/
-//require_once BLOCK_PATH . 'bookNew.php';
-
-?>
-
+					<!-- BOOK NEW -->
                     <div class="theme-card mt-4">
                         <h5 class="title-border">Sách mới</h5>
                         <div class="offer-slider slide-1">

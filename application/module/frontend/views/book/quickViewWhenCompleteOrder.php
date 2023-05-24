@@ -1,10 +1,10 @@
 <?php
-// echo "<pre>";
-// print_r($bookInfo);
-// echo "</pre>";
+
 $bookComp     = $this->Book;
 $bookNameComp = $bookComp['name'];
-$pictureComp  = UPLOAD_URL .'book' . DS . $bookComp['picture'];;
+$pictureComp  = UPLOAD_URL .'book' . DS . $bookComp['picture'];
+$cartLink     = URL::createLink('frontend', 'user', 'cart');
+
 ?>
 <div class="modal fade bd-example-modal-lg theme-modal" id="quick-view-complete-order" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
     <div id="background-quick-view-order" class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -20,7 +20,7 @@ $pictureComp  = UPLOAD_URL .'book' . DS . $bookComp['picture'];;
                             <div class="pt-5">
                                 <p style="font-size: 18px;">Sản Phẩm <strong><?php echo $bookNameComp;?></strong> đã được thêm vào giỏ hàng</p>
                                 <div class="product-buttons mt-2">
-                                    <a href="#" class="btn btn-solid mb-1 btn-add-to-cart">Xem Giỏ Hàng</a>
+                                    <a href="<?php echo $cartLink;?>" class="btn btn-solid mb-1 btn-add-to-cart">Xem Giỏ Hàng</a>
                                     <a href="#" class="btn btn-solid mb-1 btn-view-book-detail">Tiếp Tục Mua Sắm</a>
                                 </div>
                             </div>

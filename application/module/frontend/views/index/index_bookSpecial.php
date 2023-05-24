@@ -32,8 +32,8 @@
             $price          = number_format($price * (100 - $valueBook['sale_off']) / 100);
             $price          = $price.' đ ';
         } else{
-            $price              = number_format($price);
             $priceReal      = $price;
+            $price              = number_format($price);   
         }
         
         $urlBookSpecialInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="cart-info cart-wrap">
                                         <a href="#" onclick="ajaxOrder(\''.$linkOrderJSONSpecial.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$jsonQuickViewSpecial.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
+                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewSpecialFunction('.$jsonQuickViewSpecial.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view-special"></i></a>
                                     </div>
                                 </div>
                                 <div class="product-detail">
@@ -88,20 +88,7 @@
                                     <h4 class="text-lowercase">'.$price.' <del>'.$priceNotSaleOFF.'</del></h4>
                                 </div>
                             </div>'; 
-        
-        
-        // Order Tại QuickView: Thẻ chọn mua
-        $linkOrderSPE          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal));
-        $linkOrderSPE          = json_encode($linkOrderSPE);
-        $linkOrderjsonSPE      = htmlentities($linkOrderSPE);
-        
-        /* Trường hợp chưa đăng nhập */
-        if(!isset($_SESSION['user'])){
-            $linkOrderjsonSPE = Null;
-        }
-        
-        $ajaxClickOrderQuickViewSPE     = '<a onclick="ajaxOrderQuickView(\''.$linkOrderjsonSPE.'\')" href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>';
-        
+                
     }
     
 ?>
@@ -129,7 +116,7 @@
     <!-- Product slider end -->
     
 <!-- Quick view -->
-<div class="modal fade bd-example-modal-lg theme-modal" id="quick-view" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg theme-modal" id="quick-view-special" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content quick-view-modal">
             <div class="modal-body">
@@ -137,15 +124,15 @@
                 <div class="row">
                 	<!--content quick view -->
                     <div class="col-lg-6 col-xs-12">
-                        <div class="quick-view-img"><img id="quick-view-img" src="<?php echo $this->_urlImg; ?>/quick-view-bg.jpg" alt="" class="w-100 img-fluid blur-up lazyload book-picture"></div>
+                        <div class="quick-view-img"><img id="quick-view-img-special" src="<?php echo $this->_urlImg; ?>/quick-view-bg.jpg" alt="" class="w-100 img-fluid blur-up lazyload book-picture"></div>
                     </div>
                     <div class="col-lg-6 rtl-text">
-                        <div class="product-right" id="quick-view-content">
-                            <h2 class="book-name" id="book-name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
+                        <div class="product-right" id="quick-view-content-special">
+                            <h2 class="book-name" id="book-name-special">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
                                 distinctio.</h2>
-                            <h3 class="book-price"><span id="book-price">>26.910 ₫</span> <del id="price-not-off">39.000 ₫</del></h3>
+                            <h3 class="book-price"><span id="book-price-special">>26.910 ₫</span> <del id="price-not-off">39.000 ₫</del></h3>
                             <div class="border-product">
-                                <div class="book-description" id="book-description">Lorem ipsum dolor sit amet consectetur, adipisicing
+                                <div class="book-description" id="book-description-special">Lorem ipsum dolor sit amet consectetur, adipisicing
                                     elit. Unde quae cupiditate delectus laudantium odio molestiae deleniti facilis
                                     itaque ut vero architecto nulla officiis in nam qui, doloremque iste. Incidunt,
                                     in?</div>
@@ -159,7 +146,7 @@
                                                 <i class="ti-angle-left"></i>
                                             </button>
                                         </span>
-                                        <input type="text" id="input-quantity" name="quantity" class="form-control input-number" value="1">
+                                        <input type="text" id="input-quatity-special" name="quatity" class="form-control input-number" value="1">
                                         <span class="input-group-prepend">
                                             <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
                                                 <i class="ti-angle-right"></i>
@@ -169,9 +156,7 @@
                                 </div>
                             </div>
                             <div class="product-buttons">
-                                <?php 
-                                echo $ajaxClickOrderQuickViewSPE;
-                                ?>
+                                <a id="order-at-quick-view" onclick="ajaxOrderQuickView()" href="#" class="btn btn-solid mb-1 btn-add-to-cart">Chọn Mua</a>
                                 <a href="item.html" class="btn btn-solid mb-1 btn-view-book-detail">Xem chi tiết</a>
                             </div>
                         </div>
