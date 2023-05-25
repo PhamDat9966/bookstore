@@ -26,6 +26,18 @@ class UserController extends Controller{
         
         $cart = Session::get('cart');
         
+        foreach ($cart['quatity'] as $keyCart=>$valueCart){
+            if($valueCart == 0){
+                unset($cart['quatity'][$keyCart]);
+            }
+        }
+        
+        foreach ($cart['price'] as $keyCart=>$valueCart){
+            if($valueCart == 0){
+                unset($cart['price'][$keyCart]);
+            }
+        }
+        
         $this->_arrParam['cartKEY'] = array_keys($cart['quatity']);
         
         $this->_view->arrParam['cartList'] = $this->_model->cartItem($this->_arrParam);
@@ -64,10 +76,6 @@ class UserController extends Controller{
     
     public  function ajaxOrderAction(){
 
-//         echo "<pre>";
-//         print_r($this->_arrParam);
-//         echo "</pre>";
-        
         $quatity = 0;
         if(isset($this->_arrParam['quatity'])){
             $quatity = $this->_arrParam['quatity'];    

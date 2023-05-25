@@ -42,19 +42,24 @@ function quickViewFunction(htmlentitiesJSON){
 				
 				$("#quick-view-img").attr("src",picture);
 				
+				/*SET Name input*/
+				$("#input-quatity").attr('name','quatity-'+id);
+				
 				//price
 				var saleOff            = dataOject.sale_off;
 			    var priceHaveSaleOFF   = dataOject.price;
 			    var priceNotSaleOFF    = '';
-
+			    var priceReal		   = 0;	
+			    
 			    if(saleOff > 0){
 			    	
 			        priceNotSaleOFF  = dataOject.price;   
 			        priceHaveSaleOFF = (dataOject.price * (100 - saleOff) / 100);
-			        
+			        priceReal        = priceHaveSaleOFF;
 			    }else{
 				    var priceHaveSaleOFF   = dataOject.price;
 				    var priceNotSaleOFF    = '';
+				    priceReal        	   = priceHaveSaleOFF;
 			    }
 			    
 			    // Thêm dấu phẩy vào hàng nghìn
@@ -72,7 +77,46 @@ function quickViewFunction(htmlentitiesJSON){
 			    
 				$('#price-not-off').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
 				$('#price-not-off').append(priceNotSaleOFF);	// Add text
-			 
+				
+				var linkOrderAtQuickView = 'index.php?module=frontend&controller=user&action=ajaxOrder&book_id='+id+'&price='+priceReal+'';
+				
+				$("#order-at-quick-view-book").click(function(){
+					//alert('click');				
+					//Lấy giá trị input theo name
+					/*Để sử lý vấn đề nếu chọn xem nhiều của sổ lúc thêm vào giỏ hàng nó không bị thêm 
+					 * trồng những book đã xem trước đó*/
+					var nameInputBook      = 'quatity-'+id;
+					var quatity      	   = $('input[name='+nameInputBook+']').val(); // Chỉ lấy value tại nơi được xét
+					
+					$('#quick-view').modal('hide'); 
+					
+					//Ajax Lần 2 tại order
+					$.ajax({
+						url		: linkOrderAtQuickView,
+						type	: 'GET',
+						data	: {quatity:quatity},
+						success	: function(dataorder){		
+							//alert('OK');
+							console.log(dataorder);
+							var dataOuput = JSON.parse(dataorder);	
+							console.log(dataOuput);
+							
+							
+							var total = 0;
+							var quatityOject = dataOuput.quatity;
+							for (var property in quatityOject) {
+							    total += Number(quatityOject[property]);
+							}
+							
+							console.log(total);
+							$('#totalItemCart').contents().filter((_, el) => el.nodeType === 3).remove();  // Remove text
+							$('#totalItemCart').append(total);											   // Add total	
+							$('#totalItemCart').notify("Sản phẩm đã được thêm vào giỏ hàng!",{ position:"bottom	right", className:"success" });
+	
+						}
+					})
+					
+				});
 			}
 	})
 }

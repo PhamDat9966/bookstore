@@ -1,27 +1,28 @@
 <?php
-// echo "<pre>";
-// print_r($_SESSION);
-// echo "</pre>";
 
-echo "<pre>";
-print_r($this);
-echo "</pre>";
 $cartList = $this->arrParam['cartList'];
 $cart     = $this->arrParam['cart'];
 
 $xhtmlCart = '';
+$totalAllPriceBook = 0;
+
 foreach ($cartList as $keyCart=>$valueCart){
     $id         = $valueCart['id'];
     $name       = $valueCart['name'];
     $picture    = UPLOAD_URL .'book' . DS . $valueCart['picture'];
     
-    $quatity    = $cart['quatity'][$id];
-    $price      = $cart['price'][$id];
+    $quatity        = $cart['quatity'][$id];
+    $priceTotal     = $cart['price'][$id];
+    $totalAllPriceBook += $priceTotal;
+    $priceFormat = number_format($priceTotal);
     
-    $totalPrice = $quatity * $price;
-    
-    $priceFormat = number_format($price);
-    $totalPriceFormat = number_format($totalPrice);
+    $priceOneBook = 0;
+    if($valueCart['sale_off'] > 0){
+        $priceOneBook      = $valueCart['price'] * (100 - $valueCart['sale_off']) / 100;
+        $priceOneBook      = number_format($priceOneBook);
+    } else{
+        $priceOneBook      = number_format($valueCart['price']);
+    }
     
     $xhtmlCart .= '<tr>
                         <td>
@@ -39,7 +40,7 @@ foreach ($cartList as $keyCart=>$valueCart){
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
-                                    <h2 class="td-color text-lowercase">'.$priceFormat.' đ</h2>
+                                    <h2 class="td-color text-lowercase">'.$priceTotal.' đ</h2>
                                 </div>
                                 <div class="col-xs-3">
                                     <h2 class="td-color text-lowercase">
@@ -49,18 +50,18 @@ foreach ($cartList as $keyCart=>$valueCart){
                             </div>
                         </td>
                         <td>
-                            <h2 class="text-lowercase">'.$totalPriceFormat.' đ</h2>
+                            <h2 class="text-lowercase">'.$priceOneBook.' đ</h2>
                         </td>
                         <td>
                             <div class="qty-box">
                                 <div class="input-group">
-                                    <input type="number" name="quantity" value="1" class="form-control input-number" id="quantity-10" min="1">
+                                    <input type="number" name="quantity" value="'.$quatity.'" class="form-control input-number" id="quantity-10" min="1">
                                 </div>
                             </div>
                         </td>
                         <td><a href="#" class="icon"><i class="ti-close"></i></a></td>
                         <td>
-                            <h2 class="td-color text-lowercase">48,300 đ</h2>
+                            <h2 class="td-color text-lowercase">'.$priceFormat.' đ</h2>
                         </td>
                     </tr>
                     <input type="hidden" name="form[book_id][]" value="10" id="input_book_id_10">
@@ -113,7 +114,7 @@ foreach ($cartList as $keyCart=>$valueCart){
                             <tr>
                                 <td>Tổng :</td>
                                 <td>
-                                    <h2 class="text-lowercase">96,320 đ</h2>
+                                    <h2 class="text-lowercase"><?php echo (isset($totalAllPriceBook))?number_format($totalAllPriceBook):'';?></h2>
                                 </td>
                             </tr>
                         </tfoot>

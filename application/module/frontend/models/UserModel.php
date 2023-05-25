@@ -71,10 +71,10 @@ class UserModel extends Model
         
         if($option == null){
             $queryContent   = [];
-            $queryContent[] = "SELECT `id`,`name`,`picture`";
+            $queryContent[] = "SELECT `id`,`name`,`picture`,`price`,`sale_off`";
             $queryContent[] = "FROM `".TBL_BOOK."`";
             $queryContent[] = "WHERE `id` IN(".$strCart.")";
-            echo $queryContent       = implode(" ", $queryContent);
+            $queryContent       = implode(" ", $queryContent);
             $result = $this->fetchAll($queryContent);
             return $result;
         }
