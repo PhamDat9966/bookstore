@@ -11,7 +11,7 @@ foreach ($cartList as $keyCart=>$valueCart){
     $name       = $valueCart['name'];
     $picture    = UPLOAD_URL .'book' . DS . $valueCart['picture'];
     
-    $quatity        = $cart['quatity'][$id];
+    $quatity        = $cart['quantity'][$id];
     $priceTotal     = $cart['price'][$id];
     $totalAllPriceBook += $priceTotal;
     $priceFormat = number_format($priceTotal);

@@ -45,6 +45,11 @@ foreach ($this->Items as $valueInfoBook){
     $jsonQuickView      = json_encode($arrQuickView);
     $jsonQuickView      = htmlentities($jsonQuickView);
     
+    /* Ajax Order add cart*/
+    $linkOrderJSONDetail      = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal,'quantity'=>1));
+    $linkOrderJSONDetail      = json_encode($linkOrderJSONDetail);
+    $linkOrderJSONDetail      = htmlentities($linkOrderJSONDetail);
+    
     $xhtmlInfoCategory .='<div class="col-xl-3 col-6 col-grid-box">
                             <div class="product-box">
                                 <div class="img-wrapper">
@@ -57,7 +62,7 @@ foreach ($this->Items as $valueInfoBook){
                                         </a>
                                     </div>
                                     <div class="cart-info cart-wrap">
-                                        <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
+                                        <a href="#" onclick="ajaxOrder(\''.$linkOrderJSONDetail.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>
                                         <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$jsonQuickView.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view" ></i></a>
                                     </div>
                                 </div>
@@ -262,62 +267,10 @@ foreach ($arrDocking as $valueDocking){
 	</div>
 </section>
 
-<!-- Quick view -->
-<div class="modal fade bd-example-modal-lg theme-modal" id="quick-view" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content quick-view-modal">
-            <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-                <div class="row">
-                	<!--content quick view -->
-                    <div class="col-lg-6 col-xs-12">
-                        <div class="quick-view-img"><img id="quick-view-img" src="<?php echo $this->_urlImg; ?>/quick-view-bg.jpg" alt="" class="w-100 img-fluid blur-up lazyload book-picture"></div>
-                    </div>
-                    <div class="col-lg-6 rtl-text">
-                        <div class="product-right" id="quick-view-content">
-                            <h2 class="book-name" id="book-name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
-                                distinctio.</h2>
-                            <h3 class="book-price"><span id="book-price">>26.910 ₫</span> <del id="price-not-off">39.000 ₫</del></h3>
-                            <div class="border-product">
-                                <div class="book-description" id="book-description">Lorem ipsum dolor sit amet consectetur, adipisicing
-                                    elit. Unde quae cupiditate delectus laudantium odio molestiae deleniti facilis
-                                    itaque ut vero architecto nulla officiis in nam qui, doloremque iste. Incidunt,
-                                    in?</div>
-                            </div>
-                            <div class="product-description border-product">
-                                <h6 class="product-title">Số lượng</h6>
-                                <div class="qty-box">
-                                    <div class="input-group">
-                                        <span class="input-group-prepend">
-                                            <button type="button" class="btn quantity-left-minus" data-type="minus" data-field="">
-                                                <i class="ti-angle-left"></i>
-                                            </button>
-                                        </span>
-                                        <input type="text" id="input-quantity" name="quantity" class="form-control input-number" value="1">
-                                        <span class="input-group-prepend">
-                                            <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
-                                                <i class="ti-angle-right"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-buttons">
-                                <?php 
-                                   echo $ajaxClickOrderQuickView;
-                                ?>
-                                <a href="item.html" class="btn btn-solid mb-1 btn-view-book-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end content quick view -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Quick view -->
-
+<?php
+    /*----------QUICK VIEW---------------*/
+    require_once BLOCK_PATH . 'quickView.php';
+?>
 
 
 

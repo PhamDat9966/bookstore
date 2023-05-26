@@ -43,7 +43,7 @@ function quickViewFunction(htmlentitiesJSON){
 				$("#quick-view-img").attr("src",picture);
 				
 				/*SET Name input*/
-				$("#input-quatity").attr('name','quatity-'+id);
+				$("#input-quantity").attr('name','quantity-'+id);
 				
 				//price
 				var saleOff            = dataOject.sale_off;
@@ -85,8 +85,8 @@ function quickViewFunction(htmlentitiesJSON){
 					//Lấy giá trị input theo name
 					/*Để sử lý vấn đề nếu chọn xem nhiều của sổ lúc thêm vào giỏ hàng nó không bị thêm 
 					 * trồng những book đã xem trước đó*/
-					var nameInputBook      = 'quatity-'+id;
-					var quatity      	   = $('input[name='+nameInputBook+']').val(); // Chỉ lấy value tại nơi được xét
+					var nameInputBook      = 'quantity-'+id;
+					var quantity      	   = $('input[name='+nameInputBook+']').val(); // Chỉ lấy value tại nơi được xét
 					
 					$('#quick-view').modal('hide'); 
 					
@@ -94,7 +94,7 @@ function quickViewFunction(htmlentitiesJSON){
 					$.ajax({
 						url		: linkOrderAtQuickView,
 						type	: 'GET',
-						data	: {quatity:quatity},
+						data	: {quantity:quantity},
 						success	: function(dataorder){		
 							//alert('OK');
 							console.log(dataorder);
@@ -103,9 +103,9 @@ function quickViewFunction(htmlentitiesJSON){
 							
 							
 							var total = 0;
-							var quatityOject = dataOuput.quatity;
-							for (var property in quatityOject) {
-							    total += Number(quatityOject[property]);
+							var quantityOject = dataOuput.quantity;
+							for (var property in quantityOject) {
+							    total += Number(quantityOject[property]);
 							}
 							
 							console.log(total);
@@ -121,116 +121,6 @@ function quickViewFunction(htmlentitiesJSON){
 	})
 }
 
-//Book Quick view Special 
-function quickViewSpecialFunction(htmlentitiesJSON){
-	console.log(htmlentitiesJSON);
-	var ObjectJSON  = htmlentitiesJSON;
-	var book_id		= ObjectJSON.book_id;
-	var link		= ObjectJSON.url;
-	 
-	//Ajax
-	$.ajax({
-		url		: link,
-		type	: 'GET',
-		data	: {book_id:book_id},
-		success	: function(data){	
-
-				//console.log(data);
-				
-				var dataOject = JSON.parse(data);			
-				var name     = dataOject.name;
-				var id        		 = dataOject.id;
-				var shortDescription = dataOject.shortDescription;
-				var picture			 =  dataOject.picture;
-				
-					
-				$('#book-name-special').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
-				$('#book-name-special').append(name);	// Add text
-				
-				$('#book-description-special').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
-				$('#book-description-special').append(shortDescription);	// Add text
-				
-				$("#quick-view-img-special").attr("src",picture);
-				
-
-				/*SET Name input*/
-				$("#input-quatity-special").attr('name','quatity-'+id);
-				
-				
-				//price
-				var saleOff            = dataOject.sale_off;
-			    var priceHaveSaleOFF   = dataOject.price;
-			    var priceNotSaleOFF    = '';
-			    var priceReal		   = 0;		
-			    if(saleOff > 0){
-			    	
-			        priceNotSaleOFF  = dataOject.price;   
-			        priceHaveSaleOFF = (dataOject.price * (100 - saleOff) / 100);
-			        priceReal        = priceHaveSaleOFF;
-			    }else{
-				    var priceHaveSaleOFF   = dataOject.price;
-				    var priceNotSaleOFF    = '';
-				    priceReal        = priceHaveSaleOFF;
-			    }
-			    
-			    // Thêm dấu phẩy vào hàng nghìn
-			    const formatter = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
-			    priceHaveSaleOFF = formatter.format(priceHaveSaleOFF)+' đ';
-			    
-			    if(priceNotSaleOFF == 0){
-			    	priceNotSaleOFF = '';
-			    }else{
-			    	priceNotSaleOFF = formatter.format(priceNotSaleOFF)+' đ';
-			    }
-			    
-				$('#book-price-special').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
-				$('#book-price-special').append(priceHaveSaleOFF);	// Add text
-			    
-				$('#price-not-off-special').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
-				$('#price-not-off-special').append(priceNotSaleOFF);	// Add text
-				
-				var linkOrderAtQuickView = 'index.php?module=frontend&controller=user&action=ajaxOrder&book_id='+id+'&price='+priceReal+'';
-
-				$("#order-at-quick-view").click(function(){
-					
-					//Lấy giá trị input theo name
-					var nameInput      = 'quatity-'+id;
-					var quatitySpecial = $('input[name='+nameInput+']').val();
-					
-					console.log(quatitySpecial);
-						//	input-quantity-special
-					$('#quick-view-special').modal('hide'); 
-					
-					//Ajax Lần 2 tại order
-					$.ajax({
-						url		: linkOrderAtQuickView,
-						type	: 'GET',
-						data	: {quatity:quatitySpecial},
-						success	: function(dataorder){		
-							//alert('OK');
-							console.log(dataorder);
-							var dataOuput = JSON.parse(dataorder);	
-							console.log(dataOuput);
-							
-							
-							var total = 0;
-							var quatityOject = dataOuput.quatity;
-							for (var property in quatityOject) {
-							    total += Number(quatityOject[property]);
-							}
-							
-							console.log(total);
-							$('#totalItemCart').contents().filter((_, el) => el.nodeType === 3).remove();  // Remove text
-							$('#totalItemCart').append(total);											   // Add total	
-							$('#totalItemCart').notify("Sản phẩm đã được thêm vào giỏ hàng!",{ position:"bottom	right", className:"success" });
-
-						}
-					})
-					
-				});
-			}
-	})
-}
 
 //ODER AJAX
 function ajaxOrder($linkOrderJSON){
@@ -255,10 +145,10 @@ function ajaxOrder($linkOrderJSON){
 				var dataOject = JSON.parse(data); 
 
 				var total = 0;
-				var quatityOject = dataOject.quatity;
+				var quantityOject = dataOject.quantity;
 				
-				for (var property in quatityOject) {
-				    total += Number(quatityOject[property]);
+				for (var property in quantityOject) {
+				    total += Number(quantityOject[property]);
 				}
 				
 				$('#totalItemCart').contents().filter((_, el) => el.nodeType === 3).remove();  // Remove text
@@ -272,45 +162,6 @@ function ajaxOrder($linkOrderJSON){
 					//$('#quick-view-complete-order').modal('toggle'); // Chuyển đổi: Đóng quick-view-complete-order Theo modal
 					$('#quick-view-complete-order').modal('hide'); // Chuyển đổi: Đóng quick-view-complete-order Theo modal
 				}, 4000);	
-		}
-	})
-}
-
-//ODER AJAX
-function ajaxOrderQuickView($linkOrderJSON){
-	if($linkOrderJSON == ''){
-		alert('Vui lòng đăng nhập để tiến hành mua hàng');
-		window.location = "index.php?module=frontend&controller=index&action=login";
-	}
-	
-	var quantity = $("#input-quantity").val();	// Số lượng lấy tại <input id="input-quantity"  type="text" name="quantity" class="form-control input-number" value="1">
-	console.log(quantity);
-	console.log($linkOrderJSON);
-	
-	var link = JSON.parse($linkOrderJSON);
-	console.log(link);
-	
-	$.ajax({
-		url		: link,
-		type	: 'GET',
-		data	:{quantity:quantity},
-		success	: function(data){	
-				console.log(data);
-				var dataOject = JSON.parse(data); 
-
-				var total = 0;
-				var quatityOject = dataOject.quatity;
-				
-				for (var property in quatityOject) {
-				    total += Number(quatityOject[property]);
-				}
-				
-				$('#totalItemCart').contents().filter((_, el) => el.nodeType === 3).remove();  // Remove text
-				$('#totalItemCart').append(total);											   // Add total	
-				$('#totalItemCart').notify("Sản phẩm đã được thêm vào giỏ hàng!",{ position:"bottom	right", className:"success" });
-				 
-				$('#quick-view').modal('toggle'); // Chuyển đổi: Đóng quickView Theo modal
-				 
 		}
 	})
 }

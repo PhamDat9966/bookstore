@@ -26,7 +26,7 @@ class UserController extends Controller{
         
         $cart = Session::get('cart');
         
-        foreach ($cart['quatity'] as $keyCart=>$valueCart){
+        foreach ($cart['quantity'] as $keyCart=>$valueCart){
             if($valueCart == 0){
                 unset($cart['quatity'][$keyCart]);
             }
@@ -38,7 +38,7 @@ class UserController extends Controller{
             }
         }
         
-        $this->_arrParam['cartKEY'] = array_keys($cart['quatity']);
+        $this->_arrParam['cartKEY'] = array_keys($cart['quantity']);
         
         $this->_view->arrParam['cartList'] = $this->_model->cartItem($this->_arrParam);
         $this->_view->arrParam['cart']  = $cart;
@@ -76,9 +76,9 @@ class UserController extends Controller{
     
     public  function ajaxOrderAction(){
 
-        $quatity = 0;
-        if(isset($this->_arrParam['quatity'])){
-            $quatity = $this->_arrParam['quatity'];    
+        $quantity = 0;
+        if(isset($this->_arrParam['quantity'])){
+            $quantity = $this->_arrParam['quantity'];    
         }
         
         $cart   = Session::get('cart');
@@ -86,15 +86,15 @@ class UserController extends Controller{
         $price  = $this->_arrParam['price'];
         
         if(empty($cart)){
-            $cart['quatity'][$bookID]   = $quatity;
-            $cart['price'][$bookID]     = $price*$quatity;
+            $cart['quantity'][$bookID]   = $quantity;
+            $cart['price'][$bookID]     = $price*$quantity;
         }else{
-            if(key_exists($bookID, $cart['quatity'])){
-                $cart['quatity'][$bookID]     += $quatity;
-                $cart['price'][$bookID]        = $price * $cart['quatity'][$bookID];
+            if(key_exists($bookID, $cart['quantity'])){
+                $cart['quantity'][$bookID]     += $quantity;
+                $cart['price'][$bookID]        = $price * $cart['quantity'][$bookID];
             }else {
-                $cart['quatity'][$bookID]   = $quatity;
-                $cart['price'][$bookID]     = $price*$cart['quatity'][$bookID];
+                $cart['quantity'][$bookID]   = $quantity;
+                $cart['price'][$bookID]     = $price*$cart['quantity'][$bookID];
             }
         }
         

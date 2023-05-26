@@ -34,6 +34,11 @@
             $price              = number_format($price);
         }
         
+        /* Ajax Order at Icon*/
+        $linkOrderProduct          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal,'quantity'=>1));
+        $linkOrderProduct          = json_encode($linkOrderProduct);
+        $linkOrderProduct          = htmlentities($linkOrderProduct );
+        
         // Quick View
         $urlQuickView       = URL::createLink('frontend', 'index', 'quickView');
         $arrQuickView       = array(
@@ -55,7 +60,7 @@
                                         </a>
                                     </div>
                                     <div class="cart-info cart-wrap">
-                                        <a href="#" title="Add to cart"><i class="ti-shopping-cart"></i></a>
+                                        <a href="#" onclick="ajaxOrder(\''.$linkOrderProduct.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>
                                         <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.htmlentities($jsonQuickView).')"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
                                     </div>
                                 </div>

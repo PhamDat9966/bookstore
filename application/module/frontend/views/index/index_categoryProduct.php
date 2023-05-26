@@ -70,7 +70,7 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
         $jsonQuickView      = htmlentities($jsonQuickView);
         
         /* Ajax Order*/
-        $linkOrderProduct          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal));
+        $linkOrderProduct          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal,'quantity'=>1));
         $linkOrderProduct          = json_encode($linkOrderProduct);
         $linkOrderJSONProduct      = htmlentities($linkOrderProduct);
         

@@ -1,10 +1,11 @@
 <?php
 
 $cart = Session::get('cart');
+
 $imageURL = UPLOAD_URL.'cart.png';
 $totalItems = 0;
 if(!empty($cart)){
-    $totalItems = array_sum($cart['quatity']);
+    $totalItems = array_sum($cart['quantity']);
     $totalPrice = array_sum($cart['price']); 
 }
 
