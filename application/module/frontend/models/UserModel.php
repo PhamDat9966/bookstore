@@ -80,6 +80,38 @@ class UserModel extends Model
         }
     }
     
+    public function listItem($arrParam,$option = NULL){
+        if($option['task'] == 'book-in-cart'){
+            
+            $cart   = Session::get('cart');
+            $result = array();   
+            
+            if(!empty($cart)){
+                
+                $ids    = "(";
+                foreach ($cart['quantity'] as $key=>$value) $ids .= "'$key', ";
+                $ids   .= "'0')"; 
+                
+                $queryContent   = [];
+                $queryContent[] = "SELECT `id`,`name`,`picture`";
+                $queryContent[] = "FROM `" . TBL_BOOK . "`";
+                $queryContent[] = "WHERE `status` = 1 AND `id` IN $ids";
+                $queryContent[] = "ORDER BY `ordering` ASC";
+                $queryContent = implode(" ", $queryContent);
+                
+                $result = $this->fetchAll($queryContent);
+                
+                foreach ($result as $key=>$value){
+                    $result[$key]['quantity']       = $cart['quantity'][$value['id']];
+                    $result[$key]['totalprice']     = $cart['price'][$value['id']];
+                    $result[$key]['price']          = $result[$key]['totalprice']/$result[$key]['quantity'];
+                }
+
+            }
+            
+            return $result;
+        }
+    }    
     
 }
 

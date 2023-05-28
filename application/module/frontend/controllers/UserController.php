@@ -22,25 +22,23 @@ class UserController extends Controller{
     }
     
     public  function cartAction(){
-        $this->_view->_title = "This is User: IndexAction";
+        $this->_view->_title = "My Cart";
         
         $cart = Session::get('cart');
         
         foreach ($cart['quantity'] as $keyCart=>$valueCart){
             if($valueCart == 0){
-                unset($cart['quatity'][$keyCart]);
-            }
-        }
-        
-        foreach ($cart['price'] as $keyCart=>$valueCart){
-            if($valueCart == 0){
+                unset($cart['quantity'][$keyCart]);
                 unset($cart['price'][$keyCart]);
             }
         }
+        Session::set('cart', $cart);
         
-        $this->_arrParam['cartKEY'] = array_keys($cart['quantity']);
+        //$this->_arrParam['cartKEY'] = array_keys($cart['quantity']);
         
-        $this->_view->arrParam['cartList'] = $this->_model->cartItem($this->_arrParam);
+        //$this->_view->arrParam['cartList'] = $this->_model->cartItem($this->_arrParam);
+        $this->_view->Items = $this->_model->listItem($this->_arrParam,array('task'=>'book-in-cart'));
+        
         $this->_view->arrParam['cart']  = $cart;
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');

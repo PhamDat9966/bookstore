@@ -25,8 +25,6 @@ function quickViewFunction(htmlentitiesJSON){
 		data	: {book_id:book_id},
 		success	: function(data){	
 
-				//console.log(data);
-				
 				var dataOject = JSON.parse(data);			
 				var name     = dataOject.name;
 				var id        		 = dataOject.id;
@@ -166,13 +164,13 @@ function ajaxOrder($linkOrderJSON){
 	})
 }
 
-function hiddentOrder(){
-	 $('#quick-view-complete-order').addClass('hidden');
-	 $('#quick-view-complete-order').removeAttr("style");
-	 $('#quick-view-complete-order').attr("aria-hidden", "true");
-	 
-	 $('#quick-view-complete-order').css({ 'display': 'none'});
-}
+//function hiddentOrder(){
+//	 $('#quick-view-complete-order').addClass('hidden');
+//	 $('#quick-view-complete-order').removeAttr("style");
+//	 $('#quick-view-complete-order').attr("aria-hidden", "true");
+//	 
+//	 $('#quick-view-complete-order').css({ 'display': 'none'});
+//}
 
 
 
