@@ -1,10 +1,11 @@
 <?php 
-    
+    $logoLink = URL::createLink('frontend', 'index', 'index');    
+
     $imageURL   = $this->_urlImg;
     
     //Link
 	$linkHome			      = URL::createLink('frontend','index','index');
-	$linkBook			      = URL::createLink('frontend','index','list');
+	$linkBook			      = URL::createLink('frontend','book','list');
 	$linkCatalory		      = URL::createLink('frontend','category','index');
 	$linkAdminControlPanel	  = URL::createLink('backend','index','index');
 	
@@ -28,7 +29,7 @@
 	// Default
 	$arrayMenu     = array();
 	$arrayMenu[]   = array('class'=>'index-index','link'=>$linkHome,'name'=>'Trang chủ');
-	$arrayMenu[]   = array('class'=>'index-list', 'link'=>$linkBook,'name'=>'Sách');	
+	$arrayMenu[]   = array('class'=>'book-list', 'link'=>$linkBook,'name'=>'Sách');	
 // 	$arrayMenu[]   = array('class'=>'index-category','link'=>$linkCatalory,           'name'=>'Danh mục',
 //                 	    'child-list'=>array(
 //                 	        array('class'=>'','link'=>'abc.html','name'=>'Bà mẹ - Em bé'),
@@ -39,7 +40,7 @@
 //                 	    )
 // 	);
 	
-	$arrayMenu['category']   = array('class'=>'index-category','link'=>$linkCatalory,           'name'=>'Danh mục',
+	$arrayMenu['category']   = array('class'=>'category-index','link'=>$linkCatalory,'name'=>'Danh mục',
                             	    'child-list'=>array(
 //                             	        array('class'=>'','link'=>'abc.html','name'=>'Bà mẹ - Em bé'),
 //                             	        array('class'=>'','link'=>'def.html','name'=>'Chính Trị - Pháp Lý'),
@@ -53,14 +54,14 @@
 	$modul          = new Model();
 	$query          = 'SELECT `id`,`name` FROM `category` WHERE `status`= 1 ORDER BY `ordering` ASC';
 	$listCategory   = $modul->fetchPairs($query);
+	$this->category_menu = $listCategory;
 	
 	$category_child_list = array();
 	foreach ($listCategory as $keyCats=>$valueCats){
-	    $category_child_list['class'] = '';
-	    $category_child_list['link']  = 'abcdef.html';
-	    //$category_child_list['link']  =  URL::createLink('frontend', 'category', 'info', array('category_id'=>$valueCats['id']));
 	    
-	    $category_child_list['name']  = $valueCats;
+	    $category_child_list['class']          = 'category-index'.'-'.$keyCats;
+	    $category_child_list['link']           = URL::createLink('frontend', 'book', 'list', array('category_id'=>$keyCats));
+	    $category_child_list['name']           = $valueCats;
 	    $arrayMenu['category']['child-list'][] = $category_child_list;
 	    
 	}
@@ -69,25 +70,38 @@
 	    $arrayMenu[]   = array('class'=>'','link'=>$linkAdminControlPanel,'name'=>'Admin Control Panel');
 	}
 	
+	/*Xuất menu*/
     $xhtml = '<ul id="main-menu" class="sm pixelstrap sm-horizontal">
 				<li>
 					<div class="mobile-back text-right">
 						Back<i class="fa fa-angle-right pl-2" aria-hidden="true"></i>
 					</div>
-				</li>';   
+				</li>';  
+    
+    $activeControl = $this->arrParam['controller'].'-'.$this->arrParam['action'];
+    $activeClass   = ''; 
     
 	foreach ($arrayMenu as $key=>$value){
+        if($activeControl == $value['class']){
+            $activeClass = 'my-menu-link active'; // Active
+        }
 	    
-	    if(isset($value['child-list'])){
-	       $xhtml .='<li class="'.$value['class'].'"><a href="'.$value['link'].'">'.$value['name'].'</a>';
+        $category_child_activeClass = '';
+	    if(isset($value['child-list'])){           
+	       $xhtml .='<li class="'.$value['class'].' '.$activeClass.'"><a href="'.$value['link'].'">'.$value['name'].'</a>';
 	           $xhtml .='<ul>';
     	       foreach ($value['child-list'] as $keyC=>$valueC){
-    	           $xhtml .= '<li class="'.$valueC['class'].'"><a href="'.$valueC['link'].'">'.$valueC['name'].'</a></li>';
+    	           
+    	           $xhtml .= '<li class="'.$valueC['class'].'">
+                                <a href="'.$valueC['link'].'">
+                                    '.$valueC['name'].'
+                                </a>
+                            </li>';
     	       }
 	           $xhtml .='</ul>';
 	       $xhtml .='</li>';
 	    }else{
-	       $xhtml .='<li class="'.$value['class'].'"><a href="'.$value['link'].'">'.$value['name'].'</a></li>';
+	       $xhtml .='<li class="'.$value['class'].' '.$activeClass.'"><a href="'.$value['link'].'">'.$value['name'].'</a></li>';
 	    }   
 	    
 	}
@@ -100,7 +114,7 @@
 	
 	// Login TRUE
 	$linkLogout		          = URL::createLink('frontend','index','logout');
-	$linkUserInfo			  = URL::createLink('frontend','index','profile');
+	$linkUserInfo			  = URL::createLink('frontend','user','profile');
 	
 	$arrayAccount         = array();  
 	
@@ -142,7 +156,7 @@
 				<div class="main-menu">
 					<div class="menu-left">
 						<div class="brand-logo">
-							<a href="index.html">
+							<a href="<?php echo $logoLink;?>">
 								<h2 class="mb-0" style="color: #5fcbc4">BookStore</h2>
 							</a>
 						</div>
@@ -194,15 +208,9 @@
 											</div>
 										</div>
 									</li>
-									<li class="onhover-div mobile-cart">
-										<div>
-											<a href="cart.html" id="cart" class="position-relative"> <img
-												src="<?php echo $imageURL;?>/cart.png" class="img-fluid blur-up lazyload"
-												alt="cart"> <i class="ti-shopping-cart"></i> <span
-												class="badge badge-warning">0</span>
-											</a>
-										</div>
-									</li>
+									<?php 
+									   require_once BLOCK_PATH.'cart.php';
+									?>
 								</ul>
 							</div>
 						</div>

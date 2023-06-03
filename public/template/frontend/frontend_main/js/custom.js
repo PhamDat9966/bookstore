@@ -7,9 +7,7 @@ $(document).ready(function(){
 	var controller 	= (getUrlVar('controller') == '' ) ? 'index' : getUrlVar('controller');
 	var action 		= (getUrlVar('action') == '' ) ? 'index' : getUrlVar('action');
 	var classSelect = controller + '-' + action;
-	
-	// Add class active link ko sáng, tạm thời sử dụng class của bootstrap
-	//$('ul#main-menu li.' + classSelect + ' a').addClass('text-primary');
+
 	$('ul#main-menu li.' + classSelect + ' a').addClass('my-menu-link active');
 });
 
@@ -78,13 +76,13 @@ function quickViewFunction(htmlentitiesJSON){
 				
 				var linkOrderAtQuickView = 'index.php?module=frontend&controller=user&action=ajaxOrder&book_id='+id+'&price='+priceReal+'';
 				
-				$("#order-at-quick-view-book").click(function(){
-					//alert('click');				
+				$("#order-at-quick-view-book").click(function(){			
 					//Lấy giá trị input theo name
 					/*Để sử lý vấn đề nếu chọn xem nhiều của sổ lúc thêm vào giỏ hàng nó không bị thêm 
 					 * trồng những book đã xem trước đó*/
 					var nameInputBook      = 'quantity-'+id;
-					var quantity      	   = $('input[name='+nameInputBook+']').val(); // Chỉ lấy value tại nơi được xét
+					var quantity      	   = $('input[name='+nameInputBook+']').val();
+					/* Chỉ lấy value tại nơi được order tại input=>name - Còn những nơi khác nếu có bị nhập vào thì mặc định có value = 0 */
 					
 					$('#quick-view').modal('hide'); 
 					
@@ -94,12 +92,8 @@ function quickViewFunction(htmlentitiesJSON){
 						type	: 'GET',
 						data	: {quantity:quantity},
 						success	: function(dataorder){		
-							//alert('OK');
-							console.log(dataorder);
+							
 							var dataOuput = JSON.parse(dataorder);	
-							console.log(dataOuput);
-							
-							
 							var total = 0;
 							var quantityOject = dataOuput.quantity;
 							for (var property in quantityOject) {

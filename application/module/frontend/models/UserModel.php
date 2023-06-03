@@ -6,6 +6,7 @@ class UserModel extends Model
     public $_saveParam = [];
     protected $_tableName = TBL_USER;
     public    $_cunrrentPage      = 1;
+    private  $_userInfo;
     
     private $_columns = array(
                                 'id',
@@ -28,6 +29,9 @@ class UserModel extends Model
     {
         parent::__construct();
         $this->setTable($this->_tableName);
+        
+        $userObj         = Session::get('user');
+        $this->_userInfo = $userObj['info'];
         
     }
     
@@ -59,7 +63,37 @@ class UserModel extends Model
             Session::set('message', array('class' => 'success', 'content' => 'Đã thêm dữ liệu thành công!'));
             return $this->lastID();
         }
+        
+        if($option['task'] == 'submit-cart'){
+            
+            $id         = $this->randomString(7);
+            $username   = $this->_userInfo['username'];
+            $books      = json_encode($arrParam['form']['book_id']);
+            $prices     = json_encode($arrParam['form']['price']);
+            $quantities = json_encode($arrParam['form']['quantity']);
+            $names      = json_encode($arrParam['form']['name']);
+            $pictures   = json_encode($arrParam['form']['picture']);
+            $date       = date('Y-m-d H:i:s', time());
+            
+            $status     = 0;
+            
+            $query = "INSERT INTO `".TBL_CART."` (`id`,`username`,`books`,`prices`,`quantities`,`names`,`pictures`,`status`,`date`)
+                      VALUES ('$id','$username','$books','$prices','$quantities','$names','$pictures','$status','$date')";
+            $this->query($query);
+        }
     }
+    
+    private function randomString($length = 5)
+    {
+        
+        $arrCharacter = array_merge( range('a', 'z'), range(0, 9), range('A', 'Z'));
+        $arrCharacter = implode('', $arrCharacter);
+        $arrCharacter = str_shuffle($arrCharacter);
+        
+        $result        = substr($arrCharacter, 0, $length);
+        return $result;
+    }
+    
     
     public function cartItem($arrParam, $option = null){
         $strCart = '';
@@ -109,6 +143,21 @@ class UserModel extends Model
 
             }
             
+            return $result;
+        }
+        
+        if($option['task'] == 'history-cart'){
+            
+            $username       = $this->_userInfo['username'];
+            
+            $queryContent   = [];
+            $queryContent[] = "SELECT `id`,`username`,`books`,`prices`,`quantities`,`names`,`pictures`,`status`,`date`";
+            $queryContent[] = "FROM `" . TBL_CART . "`";
+            $queryContent[] = "WHERE `username` = '$username'";
+            $queryContent[] = "ORDER BY `date` ASC";
+            $queryContent   = implode(" ", $queryContent);
+            
+            $result = $this->fetchAll($queryContent);
             return $result;
         }
     }    

@@ -25,21 +25,19 @@ class UserController extends Controller{
         $this->_view->_title = "My Cart";
         
         $cart = Session::get('cart');
-        
-        foreach ($cart['quantity'] as $keyCart=>$valueCart){
-            if($valueCart == 0){
-                unset($cart['quantity'][$keyCart]);
-                unset($cart['price'][$keyCart]);
+
+        if(!empty($cart['quantity'])){
+            foreach ($cart['quantity'] as $keyCart=>$valueCart){
+                if($valueCart == 0){
+                    unset($cart['quantity'][$keyCart]);
+                    unset($cart['price'][$keyCart]);
+                }
             }
         }
+        
         Session::set('cart', $cart);
         
-        //$this->_arrParam['cartKEY'] = array_keys($cart['quantity']);
-        
-        //$this->_view->arrParam['cartList'] = $this->_model->cartItem($this->_arrParam);
         $this->_view->Items = $this->_model->listItem($this->_arrParam,array('task'=>'book-in-cart'));
-        
-        $this->_view->arrParam['cart']  = $cart;
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
         $this->_templateObj->setFileTemplate('user-cart.php');
@@ -101,11 +99,48 @@ class UserController extends Controller{
         
     } 
     
-    public  function unOrderAction(){
+    public function unOrderAction(){
         
         Session::delete('cart');
         
     } 
+    
+    public function buyAction(){
+        $this->_model->saveItem($this->_arrParam,array('task'=>'submit-cart'));
+        Session::delete('cart');
+        URL::redirect('frontend', 'user', 'history');
+    } 
+    
+    public function profileAction(){
+        
+        $this->_view->_title        = 'Profile';
+        
+        $this->_view->arrParam  =  $this->_arrParam;
+        
+        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
+        $this->_templateObj->setFileTemplate('profile.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('user/profile', true);// views folder
+        
+    }
+    
+    public function historyAction(){
+        
+        $this->_view->_title        = 'History';
+        
+        $this->_view->arrParam  =  $this->_arrParam;
+        $this->_view->Items = $this->_model->listItem($this->_arrParam,array('task'=>'history-cart'));
+        
+        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
+        $this->_view->render('user/history', true);// views folder
+        
+    }
 }
 
 

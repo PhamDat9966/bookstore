@@ -141,21 +141,6 @@ class IndexController extends Controller{
         
         $this->_view->render('index/index', true);// views folder
     }
-    
-    public function profileAction(){
-        
-        $this->_view->_title        = 'Profile';
-        
-        $this->_view->arrParam  =  $this->_arrParam;
-        
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('profile.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
-        $this->_view->render('index/profile', true);// views folder
-        
-    }
 
     public function listAction(){
 

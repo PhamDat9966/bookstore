@@ -22,8 +22,8 @@
 
     <!-- header start -->
 	<?php
-	   include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . 'header_navigation' . DS .'index.php';
-	   //include_once BLOCK_PATH . 'header_navigation.php';
+	   //include_once MODULE_PATH . $this->_moduleName . DS . 'views' . DS . 'header_navigation' . DS .'index.php';
+	   include_once BLOCK_PATH . 'header_navigation.php';
 	?>
     <!-- header end -->
 

@@ -1,5 +1,4 @@
 <!-- Quick view Dùng trung cho tất cả-->
-
 <div class="modal fade bd-example-modal-lg theme-modal" id="quick-view"
 	tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-centered"
