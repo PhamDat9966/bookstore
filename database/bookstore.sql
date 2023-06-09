@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 24, 2023 at 05:10 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th6 09, 2023 lúc 10:09 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bookstore`
+-- Cơ sở dữ liệu: `bookstore`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book`
+-- Cấu trúc bảng cho bảng `book`
 --
 
 CREATE TABLE `book` (
@@ -46,7 +46,7 @@ CREATE TABLE `book` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `book`
+-- Đang đổ dữ liệu cho bảng `book`
 --
 
 INSERT INTO `book` (`id`, `name`, `shortDescription`, `description`, `price`, `special`, `sale_off`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `category_id`) VALUES
@@ -65,7 +65,7 @@ INSERT INTO `book` (`id`, `name`, `shortDescription`, `description`, `price`, `s
 (22, 'C Programming for Arduino', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard', 'Physical computing allows us to build interactive physical systems by using software & hardware in order to sense and respond to the real world. C Programming for Arduino will show you how to harness powerful capabilities like sensing, feedbacks, programming and even wiring and developing your own autonomous systems.\r\n\r\nC Programming for Arduino contains everything you need to directly start wiring and coding your own electronic project. You\'ll learn C and how to code several types of firmware for your Arduino, and then move on to design small typical systems to understand how handling buttons, leds, LCD, network modules and much more.', '38000', 1, 0, 'siochmyg.jpg', '2013-12-12 00:00:00', '1', '2023-05-08 09:35:28', '1', 1, 2, 24),
 (23, 'Advanced Network Programming - Principles and Techniques', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard', 'The field of network programming is so large, and developing so rapidly, that it can appear almost overwhelming to those new to the discipline.\r\n\r\nAnswering the need for an accessible overview of the field, this text/reference presents a manageable introduction to both the theoretical and practical aspects of computer networks and network programming. Clearly structured and easy to follow, the book describes cutting-edge developments in network architectures, communication protocols, and programming techniques and models, supported by code examples for hands-on practice with creating network-based applications.', '43000', 1, 10, 'vradhky9.jpg', '2013-12-12 00:00:00', '1', '2023-04-25 04:53:29', '1', 0, 3, 3),
 (24, 'Programming Logics', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard', 'This Festschrift volume, published in memory of Harald Ganzinger, contains 17 papers from colleagues all over the world and covers all the fields to which Harald Ganzinger dedicated his work during his academic career.\r\n\r\nThe volume begins with a complete account of Harald Ganzinger\'s work and then turns its focus to the research of his former colleagues, students, and friends who pay tribute to him through their writing. Their individual papers span a broad range of topics, including programming language semantics, analysis and verification, first-order and higher-order theorem proving, unification theory, non-classical logics, reasoning modulo theories, and applications of automated reasoning in biology.', '32000', 0, 1, 'sbx52yne.jpg', '2013-12-12 00:00:00', '1', '2023-05-08 09:35:32', '1', 1, 2, 24),
-(25, 'Để con được ốm', '                           Lorem Ipsum is simply dummy text of the printing and typesetting industry\r\n                          ', '<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#39;lorem ipsum&#39; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>\r\n\r\n<p><img alt=\"\" src=\"/ckfinder/userfiles/images/smartmath.jpg\" style=\"height:500px; width:391px\" /></p>\r\n', '50000', 1, 20, '8nkbif7j.jpg', '2023-04-25 09:29:58', '1', '2023-05-08 09:34:10', '1', 1, 10, 21),
+(25, 'Để con được ốm', 'Để con được ốm', '<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#39;lorem ipsum&#39; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>\r\n\r\n<p><img alt=\"\" src=\"/ckfinder/userfiles/images/smartmath.jpg\" style=\"height:500px; width:391px\" /></p>\r\n', '50000', 1, 20, '8nkbif7j.jpg', '2023-04-25 09:29:58', '1', '2023-05-08 09:34:10', '1', 1, 10, 21),
 (26, 'CNTT001', '                           \r\n                          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum', '<p><img alt=\"\" src=\"/ckfinder/userfiles/images/smartmath.jpg\" style=\"height:500px; width:391px\" />&nbsp;sdasdasdasd&aacute; asdasdasdasd dsdasdasdasd&nbsp; dsadasdasdas</p>\r\n', '200000', 0, 0, '9q73eiva.jpg', '2023-04-26 08:56:59', '1', '2023-04-27 01:56:59', NULL, 1, 10, 24),
 (27, 'Nuôi con', '                           Nuôi Con\r\n                          ', '<p>Nu&ocirc;i Con</p>\r\n', '80000', 0, 20, 'i2v6o809.jpg', '2023-05-08 09:36:27', '1', '2023-05-08 09:37:06', '1', 1, 10, 21),
 (28, 'Cẩm Nang Bà Mẹ Và Em Bé', '                           Cẩm Nang Bà Mẹ Và Em Bé\r\n                          ', '<p>Cẩm Nang B&agrave; Mẹ V&agrave; Em B&eacute;</p>\r\n', '50000', 0, 10, 'feqkru8o.jpg', '2023-05-08 09:40:44', '1', '2023-05-08 14:40:44', NULL, 1, 10, 21),
@@ -75,12 +75,41 @@ INSERT INTO `book` (`id`, `name`, `shortDescription`, `description`, `price`, `s
 (32, 'english streamline 3', '                           Streamline English là một trong những quyển sách học tiếng anh được sử dụng rộng rãi cho hầu hết các trường đại học trên toàn thế giới. Bộ tài liệu Streamline này sẽ giúp bạn học định hướng từ những bước đầu cơ bản nhất cho đến các bậc nâng cao mà không khiến bạn bị “ngợp”. Atlan.edu.vn hôm nay sẽ giới thiệu đến bạn đọc bộ Streamline English 4 quyển dưới đây.\r\n                          ', '<h2>Th&ocirc;ng tin cơ bản của 4 quyển Streamline English</h2>\r\n\r\n<h3>Streamline English Departures</h3>\r\n\r\n<ul>\r\n	<li>Số trang: quyển 1 c&oacute; 98 trang</li>\r\n	<li>Dạng s&aacute;ch: Streamline English Departures PDF</li>\r\n	<li>Dạng &acirc;m thanh: mp3</li>\r\n</ul>\r\n\r\n<p><img alt=\"Steamline english Departures\" src=\"https://atlan.edu.vn/wp-content/uploads/2022/10/steamline-english-departures.jpg\" style=\"height:918px; width:650px\" /></p>\r\n\r\n<p>S&aacute;ch Streamline English Departures | Nguồn ảnh: Internet</p>\r\n\r\n<h3>Streamline English Connections</h3>\r\n\r\n<ul>\r\n	<li>Số trang: quyển 2 c&oacute; 102 trang</li>\r\n	<li>Dạng s&aacute;ch: Streamline English Connections PDF</li>\r\n	<li>Dạng &acirc;m thanh: mp3</li>\r\n</ul>\r\n\r\n<p><img alt=\"Steamline english Connections\" src=\"https://atlan.edu.vn/wp-content/uploads/2022/10/steamline-english-connections.jpg\" style=\"height:913px; width:650px\" /></p>\r\n\r\n<p>Gi&aacute;o tr&igrave;nh Streamline English Connections | Nguồn ảnh: Internet</p>\r\n\r\n<h3>Streamline English Destinations</h3>\r\n\r\n<ul>\r\n	<li>Số trang: quyển 3 c&oacute; 103 trang</li>\r\n	<li>Dạng s&aacute;ch: Streamline English Destinations PDF</li>\r\n	<li>Dạng &acirc;m thanh: mp3</li>\r\n</ul>\r\n\r\n<p><img alt=\"Steamline english Destinations\" src=\"https://atlan.edu.vn/wp-content/uploads/2022/10/steamline-english-destinations.jpg\" style=\"height:926px; width:650px\" /></p>\r\n\r\n<p>T&agrave;i liệu Streamline English Destinations | Nguồn ảnh: Internet</p>\r\n\r\n<h3>Streamline English Directions</h3>\r\n\r\n<ul>\r\n	<li>Số trang: quyển 4 c&oacute; 132 trang</li>\r\n	<li>Định dạng s&aacute;ch: Streamline English Directions PDF</li>\r\n	<li>Định dạng &acirc;m thanh: mp3</li>\r\n</ul>\r\n\r\n<p><img alt=\"Steamline english Directions\" src=\"https://atlan.edu.vn/wp-content/uploads/2022/10/steamline-english-directions.jpg\" style=\"height:1021px; width:650px\" /></p>\r\n\r\n<p>S&aacute;ch Streamline English Directions | Nguồn ảnh: Internet</p>\r\n\r\n<h2>S&aacute;ch tiếng anh&nbsp;Streamline English c&oacute; g&igrave; nổi bật?</h2>\r\n\r\n<p><strong>Streamline English</strong>&nbsp;l&agrave; được biết đến l&agrave; bộ gi&aacute;o tr&igrave;nh học tiếng anh giao tiếp với 4 quyển cơ bản như: Departures, Destinations , Connections v&agrave; Directions. Mỗi cuốn đều bao gồm c&oacute; file audio v&agrave; một ebook.</p>\r\n\r\n<p>Với&nbsp;<strong>bộ t&agrave;i liệu streamline 4 cuốn</strong>&nbsp;sẽ hướng dẫn v&agrave; cung cấp đến bạn học tiếng Anh đầy đủ những kiến thức về giao tiếp từ đơn giản nhất cho đến n&acirc;ng cao, bằng những b&agrave;i học với chủ đề đơn giản như Goodbye, Hello,&hellip; cho đến những chủ đề giao tiếp h&agrave;ng ng&agrave;y phức tạp như c&aacute;c bản tin, b&agrave;i b&aacute;o.</p>\r\n\r\n<p>Trong mỗi b&agrave;i học đều được tr&igrave;nh b&agrave;y cụ thể, c&oacute; hướng dẫn chi tiết, r&otilde; r&agrave;ng về cấu tr&uacute;c ngữ ph&aacute;p, c&acirc;u c&uacute; ph&ugrave; hợp với ngữ cảnh, c&aacute;ch sử dụng từ loại. Hơn hết, đi k&egrave;m theo đ&oacute; l&agrave; những v&iacute; dụ minh họa sinh động c&ugrave;ng file audio để người học c&oacute; thể được nghe chuẩn hơn.</p>\r\n\r\n<p><strong>Bộ s&aacute;ch Streamline English</strong>&nbsp;rất được c&aacute;c người học giao tiếp tiếng Anh h&agrave;i l&ograve;ng. Nếu luyện tập chăm chỉ theo đ&uacute;ng với t&agrave;i liệu n&agrave;y, người học sẽ nhanh ch&oacute;ng n&acirc;ng cao cũng như cải thiện được 4 kỹ năng cơ bản Nghe &ndash; Đọc &ndash; N&oacute;i &ndash; Viết.</p>\r\n', '100000', 0, 20, '85dx04sy.jpg', '2023-05-11 08:31:20', '1', '2023-05-11 13:31:20', NULL, 1, 10, 23),
 (33, 'English Streamline 4', '                           \r\n                          Streamline English là một trong những quyển sách học tiếng anh được sử dụng rộng rãi cho hầu hết các trường đại học trên toàn thế giới. Bộ tài liệu Streamline này sẽ giúp bạn học định hướng từ những bước đầu cơ bản nhất cho đến các bậc nâng cao mà không khiến bạn bị “ngợp”. Atlan.edu.vn hôm nay sẽ giới thiệu đến bạn đọc bộ Streamline English 4 quyển dưới đây.', '<h2>Th&ocirc;ng tin cơ bản của 4 quyển Streamline English</h2>\r\n\r\n<h3>Streamline English Departures</h3>\r\n\r\n<ul>\r\n	<li>Số trang: quyển 1 c&oacute; 98 trang</li>\r\n	<li>Dạng s&aacute;ch: Streamline English Departures PDF</li>\r\n	<li>Dạng &acirc;m thanh: mp3</li>\r\n</ul>\r\n\r\n<p><img alt=\"Steamline english Departures\" src=\"https://atlan.edu.vn/wp-content/uploads/2022/10/steamline-english-departures.jpg\" style=\"height:918px; width:650px\" /></p>\r\n\r\n<p>S&aacute;ch Streamline English Departures | Nguồn ảnh: Internet</p>\r\n\r\n<h3>Streamline English Connections</h3>\r\n\r\n<ul>\r\n	<li>Số trang: quyển 2 c&oacute; 102 trang</li>\r\n	<li>Dạng s&aacute;ch: Streamline English Connections PDF</li>\r\n	<li>Dạng &acirc;m thanh: mp3</li>\r\n</ul>\r\n\r\n<p><img alt=\"Steamline english Connections\" src=\"https://atlan.edu.vn/wp-content/uploads/2022/10/steamline-english-connections.jpg\" style=\"height:913px; width:650px\" /></p>\r\n\r\n<p>Gi&aacute;o tr&igrave;nh Streamline English Connections | Nguồn ảnh: Internet</p>\r\n\r\n<h3>Streamline English Destinations</h3>\r\n\r\n<ul>\r\n	<li>Số trang: quyển 3 c&oacute; 103 trang</li>\r\n	<li>Dạng s&aacute;ch: Streamline English Destinations PDF</li>\r\n	<li>Dạng &acirc;m thanh: mp3</li>\r\n</ul>\r\n\r\n<p><img alt=\"Steamline english Destinations\" src=\"https://atlan.edu.vn/wp-content/uploads/2022/10/steamline-english-destinations.jpg\" style=\"height:926px; width:650px\" /></p>\r\n\r\n<p>T&agrave;i liệu Streamline English Destinations | Nguồn ảnh: Internet</p>\r\n\r\n<h3>Streamline English Directions</h3>\r\n\r\n<ul>\r\n	<li>Số trang: quyển 4 c&oacute; 132 trang</li>\r\n	<li>Định dạng s&aacute;ch: Streamline English Directions PDF</li>\r\n	<li>Định dạng &acirc;m thanh: mp3</li>\r\n</ul>\r\n\r\n<p><img alt=\"Steamline english Directions\" src=\"https://atlan.edu.vn/wp-content/uploads/2022/10/steamline-english-directions.jpg\" style=\"height:1021px; width:650px\" /></p>\r\n\r\n<p>S&aacute;ch Streamline English Directions | Nguồn ảnh: Internet</p>\r\n\r\n<h2>S&aacute;ch tiếng anh&nbsp;Streamline English c&oacute; g&igrave; nổi bật?</h2>\r\n\r\n<p><strong>Streamline English</strong>&nbsp;l&agrave; được biết đến l&agrave; bộ gi&aacute;o tr&igrave;nh học tiếng anh giao tiếp với 4 quyển cơ bản như: Departures, Destinations , Connections v&agrave; Directions. Mỗi cuốn đều bao gồm c&oacute; file audio v&agrave; một ebook.</p>\r\n\r\n<p>Với&nbsp;<strong>bộ t&agrave;i liệu streamline 4 cuốn</strong>&nbsp;sẽ hướng dẫn v&agrave; cung cấp đến bạn học tiếng Anh đầy đủ những kiến thức về giao tiếp từ đơn giản nhất cho đến n&acirc;ng cao, bằng những b&agrave;i học với chủ đề đơn giản như Goodbye, Hello,&hellip; cho đến những chủ đề giao tiếp h&agrave;ng ng&agrave;y phức tạp như c&aacute;c bản tin, b&agrave;i b&aacute;o.</p>\r\n\r\n<p>Trong mỗi b&agrave;i học đều được tr&igrave;nh b&agrave;y cụ thể, c&oacute; hướng dẫn chi tiết, r&otilde; r&agrave;ng về cấu tr&uacute;c ngữ ph&aacute;p, c&acirc;u c&uacute; ph&ugrave; hợp với ngữ cảnh, c&aacute;ch sử dụng từ loại. Hơn hết, đi k&egrave;m theo đ&oacute; l&agrave; những v&iacute; dụ minh họa sinh động c&ugrave;ng file audio để người học c&oacute; thể được nghe chuẩn hơn.</p>\r\n\r\n<p><strong>Bộ s&aacute;ch Streamline English</strong>&nbsp;rất được c&aacute;c người học giao tiếp tiếng Anh h&agrave;i l&ograve;ng. Nếu luyện tập chăm chỉ theo đ&uacute;ng với t&agrave;i liệu n&agrave;y, người học sẽ nhanh ch&oacute;ng n&acirc;ng cao cũng như cải thiện được 4 kỹ năng cơ bản Nghe &ndash; Đọc &ndash; N&oacute;i &ndash; Viết.</p>\r\n', '100000', 0, 20, 'a2wbh56j.jpg', '2023-05-11 08:34:22', '1', '2023-05-11 13:34:22', NULL, 1, 10, 23),
 (34, 'Lịch Sử Việt Nam', '                           \r\n                         Lời Nhà xuất bản\r\n\r\nLời tái bản\r\n\r\nLời đầu sách\r\n\r\nBảng chữ tắt\r\n\r\n- Chế độ Công Xã Nguyên Thủy\r\n\r\n- Dưới sự áp bức của các triều đại Trung Quốc\r\n\r\n- Bước đầu của nhà nước phong kiến tự chủ\r\n\r\n- Nguy cơ của Nhà nước phong kiến ở thế kỷ XIV\r\n\r\n- Bước phát triển mới của nhà nước phong kiến tập quyền\r\n\r\n- Sự suy đốn của nhà nước phong kiến ở thế kỷ XVII - XVIII\r\n\r\n- Sự sụp đổ của các thế lực phong kiến cũ - nhà Tây Sơn\r\n\r\n- Sự phục hưng của nhà nước phong kiến thống nhất - Nhà Nguyễn\r\n\r\n- Bước suy vong của nhà nước phong kiến\r\n\r\nĐoạn kết\r\n\r\nNiên biểu đối chiếu\r\n\r\nMinh họa và địa đồ', '<p style=\"text-align:justify\"><img alt=\"\" src=\"/ckfinder/userfiles/images/lichsuvietnam.jpg\" style=\"float:left; height:320px; width:320px\" />Đ&acirc;y l&agrave; cuốn s&aacute;ch d&agrave;nh cho những ai muốn t&igrave;m hiểu về lịch sử Việt Nam một c&aacute;ch bao qu&aacute;t v&agrave; to&agrave;n diện nhất. Cuốn s&aacute;ch được t&aacute;c giả Đ&agrave;o Duy Anh tr&igrave;nh b&agrave;y một c&aacute;ch tỉ mỉ những nghi&ecirc;n cứu từ lịch sử, địa l&yacute; đến kinh tế, x&atilde; hội&hellip; của đất nước Việt Nam ta qua nhiều thời kỳ. Lịch sử Việt Nam từ nguồn gốc đến thế kỷ XIX được xuất bản lần đầu ti&ecirc;n v&agrave;o năm 1949 v&agrave; được sửa đổi, bổ sung v&agrave;o năm 1952 để mang đến cho độc giả những ấn phẩm chất lượng v&agrave; s&acirc;u sắc hơn phi&ecirc;n bản trước đ&oacute;.&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Nếu bạn muốn t&igrave;m hiểu s&acirc;u hơn về thời kỳ c&ocirc;ng x&atilde; nguy&ecirc;n thủy, thời kỳ nh&acirc;n d&acirc;n ta sống dưới sự &aacute;p bức của Trung Quốc, thời kỳ phong kiến&hellip; th&igrave; đ&acirc;y chắc chắn l&agrave; cuốn s&aacute;ch d&agrave;nh cho bạn. Đ&acirc;y kh&ocirc;ng phải l&agrave; một cuốn s&aacute;ch kh&ocirc; khan với những th&ocirc;ng tin kh&oacute; nhớ, đ&acirc;y l&agrave; một thước phim t&aacute;i hiện lịch sử với những cuộc đấu tranh kh&ocirc;ng ngừng nghỉ của nh&acirc;n d&acirc;n v&igrave; độc lập, tự do v&agrave; hạnh ph&uacute;c, để c&oacute; được cuộc sống sung t&uacute;c, ấm no.&nbsp;</p>\r\n\r\n<p>L&agrave; người Việt Nam mang trong m&igrave;nh d&ograve;ng m&aacute;u Lạc Hồng trong huyết quản c&oacute; ai trong ch&uacute;ng ta kh&ocirc;ng từng một lần th&aacute;n phục một vị anh h&ugrave;ng n&agrave;o đ&oacute; trong lịch sử? Những danh tướng ấy đi s&acirc;u v&agrave;o những c&acirc;u chuyện cổ t&iacute;ch mẹ kể, đi s&acirc;u v&agrave;o những giai điệu văn h&oacute;a d&acirc;n tộc. Cuốn s&aacute;ch n&agrave;y kể cho ta về những danh tướng đ&atilde; c&oacute; c&ocirc;ng gi&uacute;p nước, giải ph&oacute;ng giặc ngoại x&acirc;m.&nbsp;</p>\r\n\r\n<p>Từ danh tướng Nguyễn Bặc trung qu&acirc;n &aacute;i quốc đến danh tướng đ&acirc;m gi&aacute;o v&agrave;o đ&ugrave;i kh&ocirc;ng mảy may đau đớn như Phạm Ngũ L&atilde;o, từ danh tướng Yết Ki&ecirc;u với biệt t&agrave;i thủy chiến đến đại tướng V&otilde; Nguy&ecirc;n Gi&aacute;p với nhiều trận đ&aacute;nh &ldquo; lừng lẫy năm ch&acirc;u, chấn động địa cầu&rdquo;... Tất cả được t&aacute;i hiện trong cuốn s&aacute;ch Những danh tướng trong lịch sử Việt Nam. H&atilde;y thử &ldquo; tr&ograve; chuyện&rdquo; c&ugrave;ng những danh tướng ấy để học th&ecirc;m được nhiều b&agrave;i học qu&yacute; gi&aacute; bạn nh&eacute;!&nbsp;</p>\r\n', '118000', 0, 20, 'b6umqyfc.jpg', '2023-05-11 09:01:32', '1', '2023-05-11 14:01:32', NULL, 1, 10, 48),
-(35, 'Napoleon\'s Waterloo Army: Uniforms and Equipment', '                           In just eight weeks, Napoleon assembled 128,000 soldiers in the French Army of the North and on 15 June moved into Belgium (then a part of the kingdom of the Netherlands). Before the large Russian and Austrian armies could invade France, Napoleon hoped to defeat two coalition armies, an Anglo-Dutch-Belgian-German force under the Duke of Wellington, and a Prussian army led by Prince von Blücher. He nearly succeeded.\r\n                          ', '<p>When Napoleon returned to Paris after exile on the Island of Elba, he appealed to the European heads of state to be allowed to rule France in peace. His appeal was rejected and the Emperor of the French knew he would have to fight to keep his throne.<br />\r\n<br />\r\nIn just eight weeks, Napoleon assembled 128,000 soldiers in the French Army of the North and on 15 June moved into Belgium (then a part of the kingdom of the Netherlands). Before the large Russian and Austrian armies could invade France, Napoleon hoped to defeat two coalition armies, an Anglo-Dutch-Belgian-German force under the Duke of Wellington, and a Prussian army led by Prince von Bl&uuml;cher. He nearly succeeded.<br />\r\n<br />\r\nPaul Dawson&rsquo;s examination of the troops who fought at Ligny, Quatre-Bras and Waterloo, is based on thousands of pages of French archival documents and translations. With hundreds of photographs of original artifacts, supplemented with scores of lavish color illustrations, and dozens of paintings by the renowned military artist Keith Rocco,&nbsp;Napoleon&rsquo;s Waterloo Army&nbsp;is the most comprehensive, and extensive, study ever made of the French field army of 1815, and its uniforms, arms and equipment.</p>\r\n', '120000', 0, 10, '0ghwp4lx.jpg', '2023-05-11 09:41:01', '1', '2023-05-11 11:24:48', '1', 1, 10, 48);
+(35, 'Napoleon\'s Waterloo Army: Uniforms and Equipment', '                           In just eight weeks, Napoleon assembled 128,000 soldiers in the French Army of the North and on 15 June moved into Belgium (then a part of the kingdom of the Netherlands). Before the large Russian and Austrian armies could invade France, Napoleon hoped to defeat two coalition armies, an Anglo-Dutch-Belgian-German force under the Duke of Wellington, and a Prussian army led by Prince von Blücher. He nearly succeeded.\r\n                          ', '<p>When Napoleon returned to Paris after exile on the Island of Elba, he appealed to the European heads of state to be allowed to rule France in peace. His appeal was rejected and the Emperor of the French knew he would have to fight to keep his throne.<br />\r\n<br />\r\nIn just eight weeks, Napoleon assembled 128,000 soldiers in the French Army of the North and on 15 June moved into Belgium (then a part of the kingdom of the Netherlands). Before the large Russian and Austrian armies could invade France, Napoleon hoped to defeat two coalition armies, an Anglo-Dutch-Belgian-German force under the Duke of Wellington, and a Prussian army led by Prince von Bl&uuml;cher. He nearly succeeded.<br />\r\n<br />\r\nPaul Dawson&rsquo;s examination of the troops who fought at Ligny, Quatre-Bras and Waterloo, is based on thousands of pages of French archival documents and translations. With hundreds of photographs of original artifacts, supplemented with scores of lavish color illustrations, and dozens of paintings by the renowned military artist Keith Rocco,&nbsp;Napoleon&rsquo;s Waterloo Army&nbsp;is the most comprehensive, and extensive, study ever made of the French field army of 1815, and its uniforms, arms and equipment.</p>\r\n', '120000', 0, 10, '0ghwp4lx.jpg', '2023-05-11 09:41:01', '1', '2023-05-11 11:24:48', '1', 1, 10, 48),
+(37, 'Lịch Sử Của Sách', '                           \r\n                          adsdasssssssssssssss ', '<p>dsadasdsadasdsadsad đ&acirc;sdasdasdasd</p>\r\n', '200000', 0, 20, '3xb9w7z8.jpg', '2023-05-29 11:03:36', '1', '2023-05-30 04:03:36', NULL, 1, 10, 48);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` varchar(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `books` text NOT NULL,
+  `prices` text NOT NULL,
+  `quantities` text NOT NULL,
+  `names` text NOT NULL,
+  `pictures` text NOT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cart`
+--
+
+INSERT INTO `cart` (`id`, `username`, `books`, `prices`, `quantities`, `names`, `pictures`, `status`, `date`) VALUES
+('IKRoiMc', 'admin', '[\"35\"]', '[\"108000\"]', '[\"1\"]', '[\"Napoleon\"]', '[\"0ghwp4lx.jpg\"]', 0, '2023-06-03 11:05:39'),
+('OYV0qu3', 'admin', '[\"14\",\"17\",\"32\"]', '[\"45000\",\"31680\",\"80000\"]', '[\"3\",\"1\",\"3\"]', '[\"iOS 7 Programming Fundamentals\",\"jMonkeyEngine 3.0 Beginner\",\"english streamline 3\"]', '[\"t8u20xje.jpg\",\"cq7k0i4j.jpg\",\"85dx04sy.jpg\"]', 0, '2023-06-03 11:02:47'),
+('SVr9YPF', 'admin', '[\"22\",\"12\",\"17\",\"33\"]', '[\"38000\",\"20000\",\"31680\",\"80000\"]', '[\"1\",\"3\",\"1\",\"3\"]', '[\"C Programming for Arduino\",\"UnrealScript Game Programming Cookbook\",\"jMonkeyEngine 3.0 Beginner\",\"English Streamline 4\"]', '[\"siochmyg.jpg\",\"mj5oqp18.jpg\",\"cq7k0i4j.jpg\",\"a2wbh56j.jpg\"]', 0, '2023-05-31 12:02:08'),
+('UgA7v5T', 'nguyenvana', '[\"3\",\"14\",\"16\",\"35\"]', '[\"10000\",\"45000\",\"27000\",\"108000\"]', '[\"1\",\"2\",\"1\",\"2\"]', '[\"Tou00e1n Lu1edbp 12\",\"iOS 7 Programming Fundamentals\",\"Advanced Programming in the UNIX Environment, 3rd Edition\",\"Napoleon\"]', '[\"s0xn1hem.jpg\",\"t8u20xje.jpg\",\"2yo48fgm.jpg\",\"0ghwp4lx.jpg\"]', 0, '2023-06-06 09:09:18');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -97,11 +126,11 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modified`, `modified_by`, `status`, `showhome`, `ordering`) VALUES
-(21, 'Bà Mẹ - Em Bé', 'a7p5umvo.jpg', '2023-03-30', '1', '2023-05-10', '1', 1, 1, 1),
+(21, 'Bà Mẹ - Em Bé', 'a7p5umvo.jpg', '2023-03-30', '1', '2023-05-24', '1', 0, 1, 1),
 (22, 'Chính Trị - Pháp Luật', 'v9zusgh6.jpg', '2023-03-30', '5', '0000-00-00', '1', 1, 0, 3),
 (23, 'Học Ngoại Ngữ', 'wqz91l0d.jpg', '2023-03-30', '1', '0000-00-00', '1', 1, 1, 4),
 (24, 'Công Nghệ Thông Tin', '0uxgyp2q.jpg', '2023-03-30', '1', '2023-04-25', '1', 1, 1, 4),
@@ -118,7 +147,7 @@ INSERT INTO `category` (`id`, `name`, `picture`, `created`, `created_by`, `modif
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group`
+-- Cấu trúc bảng cho bảng `group`
 --
 
 CREATE TABLE `group` (
@@ -135,7 +164,7 @@ CREATE TABLE `group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `group`
+-- Đang đổ dữ liệu cho bảng `group`
 --
 
 INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`, `privilege_id`) VALUES
@@ -155,7 +184,7 @@ INSERT INTO `group` (`id`, `name`, `group_acp`, `created`, `created_by`, `modifi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `privilege`
+-- Cấu trúc bảng cho bảng `privilege`
 --
 
 CREATE TABLE `privilege` (
@@ -167,7 +196,7 @@ CREATE TABLE `privilege` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `privilege`
+-- Đang đổ dữ liệu cho bảng `privilege`
 --
 
 INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
@@ -192,7 +221,7 @@ INSERT INTO `privilege` (`id`, `name`, `module`, `controller`, `action`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
@@ -213,7 +242,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `user`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`, `created_by`, `modified`, `modified_by`, `register_date`, `register_ip`, `status`, `ordering`, `group_id`) VALUES
@@ -228,69 +257,75 @@ INSERT INTO `user` (`id`, `username`, `email`, `fullname`, `password`, `created`
 (42, 'fouder02', 'phamdat999666@gmail.com', 'admin123', '123456', '2023-03-18 08:12:00', '2', '2023-03-18 14:12:00', NULL, '2023-03-18 14:12:00', NULL, 0, 10, 3);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `book`
+-- Chỉ mục cho bảng `book`
 --
 ALTER TABLE `book`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `group`
+-- Chỉ mục cho bảng `group`
 --
 ALTER TABLE `group`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `privilege`
+-- Chỉ mục cho bảng `privilege`
 --
 ALTER TABLE `privilege`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `book`
+-- AUTO_INCREMENT cho bảng `book`
 --
 ALTER TABLE `book`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
--- AUTO_INCREMENT for table `group`
+-- AUTO_INCREMENT cho bảng `group`
 --
 ALTER TABLE `group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
--- AUTO_INCREMENT for table `privilege`
+-- AUTO_INCREMENT cho bảng `privilege`
 --
 ALTER TABLE `privilege`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;

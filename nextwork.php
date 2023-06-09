@@ -1,3 +1,2 @@
-Đã xong quickView cho index frontend
-Chiều nay xem video.
-
+- Làm 2 phần search và filter cho frontend
+- Tại order thì lập trình thêm dấu x

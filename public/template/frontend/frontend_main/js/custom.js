@@ -158,16 +158,28 @@ function ajaxOrder($linkOrderJSON){
 	})
 }
 
-//function hiddentOrder(){
-//	 $('#quick-view-complete-order').addClass('hidden');
-//	 $('#quick-view-complete-order').removeAttr("style");
-//	 $('#quick-view-complete-order').attr("aria-hidden", "true");
-//	 
-//	 $('#quick-view-complete-order').css({ 'display': 'none'});
-//}
+// ORDER 
 
+function deleteItemOrder(id){
+	var idItem = id;
+	var link   = "index.php?module=frontend&controller=user&action=ajaxDeleteItemOrder";;
+	$.ajax({
+		url		: link,
+		type	: 'GET',
+		data	:{id:idItem},
+		success	: function(data){	
 
-
+				var dateOject = JSON.parse(data); 
+				var id       		= dateOject.id;
+				var totalquantity 	= dateOject.totalQuantity;
+				
+				$('tr#order-'+id+'').remove();
+				$("#totalItemCart").text(totalquantity);
+				$('#totalItemCart').notify("Sản phẩm đã được đưa ra khỏi giỏ hàng!",{ position:"bottom	right", className:"success" });
+		}
+	})
+	
+}
 
 
 

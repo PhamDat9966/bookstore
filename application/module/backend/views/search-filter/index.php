@@ -1,9 +1,7 @@
 <?php
 
 // THIS IS FILTER AND SEARCH FOR ALL CONTROLLER
-// echo "<pre>filter";
-// print_r($this);
-// echo "</pre>";
+
 
 //Filter
 $allItem      = @$this->_count['allStatus'];
@@ -156,8 +154,6 @@ if($this->arrParam['controller'] == 'book'){
                                         <div class="col-6">'.$selectBoxFilterSearch.'</div>
                                    </div>';
 }
-
-
 
 $refreshPage = '<input type="hidden" name="page" value="1">';
 ?>

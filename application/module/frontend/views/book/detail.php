@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 $bookInfo   = $this->Book;
 
 $title_page = $bookInfo['name'];

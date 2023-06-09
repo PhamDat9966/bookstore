@@ -9,7 +9,7 @@ foreach ($this->Items as $valueInfoBook){
     $id                 = $valueInfoBook['id'];
     $nameBook           = $valueInfoBook['name'];
     $shortDescription   = $valueInfoBook['shortDescription'];
-    $description        = $valueInfoBook['description'];
+    //$description        = $valueInfoBook['description'];
     
     $saleOff            = '';
     $price              = $valueInfoBook['price'];
@@ -181,6 +181,14 @@ foreach ($arrDocking as $valueDocking){
                     </li>';
 }
 
+$totalItem      = $this->_count['totalItem'];
+$position       = $this->Pagination['position'];
+$endPosition    = $this->Pagination['position'] + $this->Pagination['totalItemsPerPage'];
+
+if($endPosition > $totalItem){
+    $endPosition = $totalItem;
+}
+$positionStart   = $position + 1;// posion là 0, vậy không show số không ra phần resutf
 ?>				
 				
 				
@@ -250,7 +258,7 @@ foreach ($arrDocking as $valueDocking){
 													</div>
 													<div class="col-xl-6 col-md-6 col-sm-12">
 														<div class="product-search-count-bottom">
-															<h5>Showing Items 1-12 of 55 Result</h5>
+															<h5>Showing Items <?php echo $positionStart;?>-<?php echo $endPosition;?> of <?php echo $totalItem;?> Result</h5>
 														</div>
 													</div>
 												</div>

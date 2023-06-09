@@ -26,7 +26,7 @@ if(!empty($this->Items)){
         $inputName          = Helper::cmsInput('hidden', 'form[name][]',$value['name'] ,'input_name_' . $value['id']); 
         $inputPicture       = Helper::cmsInput('hidden', 'form[picture][]',$value['picture'] ,'input_picture_' . $value['id']); 
         
-        $xhtmlCart .= '<tr>
+        $xhtmlCart .= '<tr id="order-'.$id.'">
                         <td>
                             <a href="item.html"><img
                                     src="'.$picture.'"
@@ -61,7 +61,7 @@ if(!empty($this->Items)){
                                 </div>
                             </div>
                         </td>
-                        <td><a href="#" class="icon"><i class="ti-close"></i></a></td>
+                        <td><a onclick="deleteItemOrder('.$id.')" href="#" class="icon"><i class="ti-close"></i></a></td>
                         <td>
                             <h2 class="td-color text-lowercase">'.$priceTotal.' đ</h2>
                         </td>

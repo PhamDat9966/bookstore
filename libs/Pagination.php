@@ -57,7 +57,7 @@ class Pagination
 
 					if ($startPage < 1) {
 						$endPage	= $endPage + 1;
-						$startPage = 1;
+						$startPage  = 1;
 					}
 
 					if ($endPage > $this->totalPage) {

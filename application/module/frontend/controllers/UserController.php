@@ -70,6 +70,33 @@ class UserController extends Controller{
         URL::redirect('frontend', 'book', 'detail', array('book_id'=>$bookID));
     }   
     
+    public  function ajaxDeleteItemOrderAction(){
+//         echo "<pre>";
+//         print_r($this->_arrParam);
+//         echo "</pre>";
+        $return = array();
+        $quantity = 0;
+
+        $cart = Session::get('cart');
+        $totalQuantity = array_sum($cart['quantity']);
+        
+        if(isset($this->_arrParam['id'])){
+            
+           $id       = $this->_arrParam['id'];
+           $quantity = $cart['quantity'][$id];
+           unset($_SESSION['cart']['quantity'][$id]);
+           unset($_SESSION['cart']['price'][$id]);
+           
+           $totalQuantity = $totalQuantity - $quantity;
+           
+           $return['id']             = $id;
+           $return['totalQuantity']  = $totalQuantity;
+           
+        }
+        echo json_encode($return);
+        
+    } 
+    
     public  function ajaxOrderAction(){
 
         $quantity = 0;

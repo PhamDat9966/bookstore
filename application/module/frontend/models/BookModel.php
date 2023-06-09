@@ -20,12 +20,13 @@ class BookModel extends Model
     public function listItem($arrParam,$option = NULL){
         if($option['task'] == 'book-in-cat'){
             $queryContent   = [];
-            $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`description`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
+            $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
             $queryContent[] = "FROM `".$this->_tableName."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
-            $queryContent[] = "WHERE `b`.`id` > 0";
+            $queryContent[] = "WHERE `b`.`status` = 1";
             if(isset($arrParam['category_id'])){
                 $queryContent[] = "AND `b`.`category_id` = ".$arrParam['category_id']."";
             }
+            
             $queryContent[]     = 'ORDER BY `ordering` ASC';
             
             $position           = $this->_arrParam['position'];
@@ -114,88 +115,27 @@ class BookModel extends Model
         $count          = array();
         $searchQuery    = '';
         
-        // ALL STATUS
-        $queryContentallStatus   = [];
-        $queryContentallStatus[] = "SELECT COUNT(`id`) AS totalItems";
-        $queryContentallStatus[] = "FROM `$this->_tableName`";
-        $queryContentallStatus[] = "WHERE `id` > 0";
+        // STATUS = 1
+        $queryContent   = [];
+        $queryContent[] = "SELECT COUNT(`id`) AS totalItems";
+        $queryContent[] = "FROM `$this->_tableName`";
+        $queryContent[] = "WHERE `status` = 1";
         
         if(!empty($arrParam['search'])){
-            $keyword            = '"%'.$arrParam['search'].'%"';
-            $queryContentallStatus[]     = "AND (`name` LIKE $keyword)";
+            $keyword                    = '"%'.$arrParam['search'].'%"';
+            $queryContent[]    = "AND (`name` LIKE $keyword)";
         }
         
-        if(isset($arrParam['selectCategory'])){
-            if($arrParam['selectCategory'] != '0'){
-                $queryContentallStatus[]    = "AND `category_id`= '".$arrParam['selectCategory']."'";
+        if(isset($arrParam['category_id'])){
+            if($arrParam['category_id'] != '0'){
+                $queryContent[]    = "AND `category_id`= '".$arrParam['category_id']."'";
             }
         }
         
-        if(isset($arrParam['selectSpecial'])){
-            if($arrParam['selectSpecial'] == 1)     $queryContentallStatus[]    = 'AND `special`= 1';
-            if($arrParam['selectSpecial'] == 0)     $queryContentallStatus[]    = 'AND `special`= 0';
-        }
-        
-        $queryContentallStatus = implode(" ", $queryContentallStatus);
-        $this->query($queryContentallStatus);
-        $count['allStatus'] = $this->totalItem();
-        
-        // ACTIVE
-        $queryContentActive   = [];
-        $queryContentActive[] = "SELECT COUNT(`id`) AS totalItems";
-        $queryContentActive[] = "FROM `$this->_tableName`";
-        $queryContentActive[] = "WHERE `id` > 0";
-        
-        if(!empty($arrParam['search'])){
-            $keyword            = '"%'.$arrParam['search'].'%"';
-            $queryContentActive[]     = "AND (`name` LIKE $keyword)";
-        }
-        
-        $queryContentActive[]    = 'AND `status`= 1';
-        
-        if(isset($arrParam['selectCategory'])){
-            if($arrParam['selectCategory'] != '0'){
-                $queryContentActive[]    = "AND `category_id`= '".$arrParam['selectCategory']."'";
-            }
-        }
-        
-        if(isset($arrParam['selectSpecial'])){
-            if($arrParam['selectSpecial'] == 1)     $queryContentActive[]    = 'AND `special`= 1';
-            if($arrParam['selectSpecial'] == 0)     $queryContentActive[]    = 'AND `special`= 0';
-        }
-        
-        $queryContentActive = implode(" ", $queryContentActive);
-        $this->query($queryContentActive);
-        $count['activeStatus'] = $this->totalItem();
-        
-        // INACTIVE
-        $queryContentInActive   = [];
-        $queryContentInActive[] = "SELECT COUNT(`id`) AS totalItems";
-        $queryContentInActive[] = "FROM `$this->_tableName`";
-        $queryContentInActive[] = "WHERE `id` > 0";
-        
-        if(!empty($arrParam['search'])){
-            $keyword            = '"%'.$arrParam['search'].'%"';
-            $queryContentInActive[]     = "AND (`name` LIKE $keyword)";
-        }
-        
-        $queryContentInActive[]    = 'AND `status`= 0';
-        
-        if(isset($arrParam['selectCategory'])){
-            if($arrParam['selectCategory'] != '0'){
-                $queryContentInActive[]    = "AND `category_id`= '".$arrParam['selectCategory']."'";
-            }
-        }
-        
-        if(isset($arrParam['selectSpecial'])){
-            if($arrParam['selectSpecial'] == 1)     $queryContentInActive[]    = 'AND `special`= 1';
-            if($arrParam['selectSpecial'] == 0)     $queryContentInActive[]    = 'AND `special`= 0';
-        }
-        
-        $queryContentInActive = implode(" ", $queryContentInActive);
-        $this->query($queryContentInActive);
-        $count['inActiveStatus'] = $this->totalItem();
-        
+        $queryContent = implode(" ", $queryContent);
+        $this->query($queryContent);
+        $count['totalItem'] = $this->totalItem();
+
         return $count;
     }
     

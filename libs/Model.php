@@ -195,6 +195,9 @@ class Model{
         $result = array();
         if(!empty($query)){
             $resultQuery = $this->query($query);
+            
+            //for ($result = array (); $row = mysqli_fetch_assoc($resultQuery); $result[] = $row); // Một cách viết khác của vòng lặp while
+            
             if(mysqli_num_rows($resultQuery) > 0){
                 while($row = mysqli_fetch_assoc($resultQuery)){
                     $result[] = $row;
