@@ -126,6 +126,30 @@ class UserController extends Controller{
         
     } 
     
+    public  function ajaxQuantityAction(){
+//         echo "<pre>";
+//         print_r($this->_arrParam);
+//         echo "</pre>";
+
+        $ojectQuantity  = json_decode($this->_arrParam['paramQuantity']);
+        
+        $id             = $ojectQuantity->id;
+        $quantity       = $ojectQuantity->value;
+        
+        $queryContent = "SELECT `id`,`price`,`sale_off` FROM `".TBL_BOOK."` WHERE `id`=$id";
+        $result = $this->_model->fetchRow($queryContent);
+        
+        $totalPriceItem     = ($result['price'] - $result['price']*$result['sale_off']/100)*$quantity;      
+        
+        $_SESSION['cart']['quantity'][$id]  = $quantity;
+        $_SESSION['cart']['price'][$id]     = $totalPriceItem;
+        
+        $totalPriceAllItem  = array_sum($_SESSION['cart']['price']);
+        $allQuantity        = array_sum($_SESSION['cart']['quantity']);
+        $return = json_encode(array('id'=>$id,'quantity'=>$quantity,'allQuantity'=>$allQuantity,'totalPriceItem'=>$totalPriceItem,'totalPriceAllItem'=>$totalPriceAllItem));
+        echo $return;
+    } 
+    
     public function unOrderAction(){
         
         Session::delete('cart');

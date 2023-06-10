@@ -159,7 +159,6 @@ function ajaxOrder($linkOrderJSON){
 }
 
 // ORDER 
-
 function deleteItemOrder(id){
 	var idItem = id;
 	var link   = "index.php?module=frontend&controller=user&action=ajaxDeleteItemOrder";;
@@ -181,7 +180,60 @@ function deleteItemOrder(id){
 	
 }
 
+//ORDER SELECT BOX
+$(document).ready(function () {
+    $("#cart-form").find("input,textarea,select").on('input', function () {
+    	console.log(this);
+    	
+        const quantity		= {};
+        quantity.id    = this.name;
+        quantity.value = this.value;
+        
+        quantityJSON   =  JSON.stringify(quantity);
+        console.log(quantityJSON);
+        $.ajax({
+    		url		: 'index.php?module=frontend&controller=user&action=ajaxQuantity',
+    		type	: 'GET',
+    	    data:{paramQuantity:quantityJSON},
+    		success	: function(data){
 
+    				var jsonOject 			= JSON.parse(data);
+    				var id					= jsonOject.id;	
+    				var quantity    		= jsonOject.quantity;
+    				var allQuantity    		= jsonOject.allQuantity;
+    				var totalPriceItem		= jsonOject.totalPriceItem;
+    				var totalPriceAllItem	= jsonOject.totalPriceAllItem;
+
+    				totalPriceItem  	= addCommas(totalPriceItem)+' đ';
+    				totalPriceAllItem	= addCommas(totalPriceAllItem)+' đ';
+    				var element = '#cart-form #quantity-' + jsonOject.id;	 				
+    				$(element).attr('value',jsonOject.quantity);    				
+    				$(element).notify("Số lượng đã được cập nhật!",{position:"bottom center",className:"success",autoHideDelay: 3000});
+    				
+    				$('#cart-form #totalPrice-'+id+'').text(totalPriceItem);
+    				$('#cart-form #totalPriceAllItem').text(totalPriceAllItem);
+    				$("#totalItemCart").text(allQuantity);
+    				
+
+    			}
+    	})
+        
+    });
+});
+
+// hàm để Number format
+function addCommas(nStr)
+{
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
+}
 
 
 

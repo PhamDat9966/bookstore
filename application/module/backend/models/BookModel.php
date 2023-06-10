@@ -118,7 +118,7 @@ class BookModel extends Model
             }
         }
         
-        echo $queryContent = implode(" ", $queryContent);
+        $queryContent = implode(" ", $queryContent);
         
         $result = $this->fetchAll($queryContent);
         return $result;

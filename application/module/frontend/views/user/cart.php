@@ -1,5 +1,4 @@
 <?php
-
 $cartList           = $this->Items;
 $xhtmlCart          = '';
 $totalAllPriceBook  = 0;
@@ -57,13 +56,13 @@ if(!empty($this->Items)){
                         <td>
                             <div class="qty-box">
                                 <div class="input-group">
-                                    <input type="number" name="quantity" value="'.$quatity.'" class="form-control input-number" id="quantity-10" min="1">
+                                    <input id="quantity-'.$id.'" type="number" name="'.$id.'" value="'.$quatity.'" class="form-control input-number" id="quantity-10" min="1">
                                 </div>
                             </div>
                         </td>
                         <td><a onclick="deleteItemOrder('.$id.')" href="#" class="icon"><i class="ti-close"></i></a></td>
                         <td>
-                            <h2 class="td-color text-lowercase">'.$priceTotal.' đ</h2>
+                            <h2 id="totalPrice-'.$id.'" class="td-color text-lowercase">'.$priceTotal.' đ</h2>
                         </td>
                     </tr>';
         
@@ -99,7 +98,7 @@ if(!empty($this->Items)){
     </div>
 </div>
 <!-- CART CONTENT -->
-<form action="<?php echo $linkSubmitForm;?>" method="POST" name="admin-form" id="admin-form">
+<form action="<?php echo $linkSubmitForm;?>" method="POST" name="cart-form" id="cart-form">
     <section class="cart-section section-b-space">
         <div class="container">
         	<?php
@@ -145,7 +144,7 @@ if(!empty($this->Items)){
                                 <tr>
                                     <td>Tổng :</td>
                                     <td>
-                                        <h2 class="text-lowercase"><?php echo (isset($totalAllPriceBook))?number_format($totalAllPriceBook):'';?></h2>
+                                        <h2 id="totalPriceAllItem" class="text-lowercase"><?php echo (isset($totalAllPriceBook))?number_format($totalAllPriceBook):'';?></h2>
                                     </td>
                                 </tr>
                             </tfoot>
