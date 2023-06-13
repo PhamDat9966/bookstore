@@ -235,8 +235,20 @@ function addCommas(nStr)
 	return x1 + x2;
 }
 
+// Form search  Enter submit
+//$('#search-input').live("keypress", function(e) {
+//    var code = (e.keyCode ? e.keyCode : e.which);
+//    if (code == 13) {
+//       e.preventDefault();
+//       e.stopPropagation();
+//       $(this).closest('form').submit();
+//    }
+// });
 
-
+//$("#search-form").submit(function( event ) {
+//  event.preventDefault();
+//// your code here
+//});
 
 
 

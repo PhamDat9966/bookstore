@@ -1,2 +1,1 @@
-- Làm 2 phần search và filter cho frontend
-- Tại order thì lập trình thêm dấu x
+-Lập trình highlight có dấu

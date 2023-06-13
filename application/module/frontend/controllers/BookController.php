@@ -88,6 +88,9 @@ class BookController extends Controller{
         if(isset($this->_arrParam['category_id'])){
             $this->_view->categoryName  = $this->_model->detailItem($this->_arrParam,array('task'=>'get-cat-name'));
         }
+        if(isset($this->_arrParam['search'])){
+            $this->_view->categoryName  = 'KẾT QUẢ TÌM KIẾM';
+        }
         
         $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
         $this->_templateObj->setFileTemplate('book_list.php');

@@ -21,6 +21,7 @@ if (!empty($this->Items)) {
 
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="' . $id . '">';
+        
         $name           = Helper::highLight(@$this->arrParam['search'], $value['name']);
 
         $row            = ($i % 2 == 0) ? 'odd' : 'even';

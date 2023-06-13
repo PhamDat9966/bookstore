@@ -24,7 +24,16 @@ if(!empty($this->Items)){
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="'.$id.'">';
         
-        $nameBook         = Helper::highLight(@$this->arrParam['search'], $value['name']);
+        require_once LIBRARY_EXT_PATH .'highlight.php';
+        $highLight          = new Highlighter();
+        $highLight->setTag('mark');
+        
+        
+        $arrSearch          = array();
+        $arrSearch[]        = @$this->arrParam['search'];
+        $nameBook           = $highLight->highlight($value['name'], $arrSearch);
+        //$nameBook         = Helper::highLight(@$this->arrParam['search'], $value['name']);
+        
         $picture        = '<img src="'. UPLOAD_URL . 'book' . DS . $value['picture'] . '" width="150" height="150">' ;
         
         $categoryName     = $value['category_name'];

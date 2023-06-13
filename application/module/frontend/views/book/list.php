@@ -7,7 +7,16 @@ $xhtmlQuickView     = '';
 foreach ($this->Items as $valueInfoBook){
     
     $id                 = $valueInfoBook['id'];
-    $nameBook           = $valueInfoBook['name'];
+    //$nameBook           = $valueInfoBook['name'];
+    
+    require_once LIBRARY_EXT_PATH .'highlight.php';
+    $highLight          = new Highlighter();
+    $highLight->setTag('mark');
+
+    $arrSearch          = array();
+    $arrSearch[]        = @$this->arrParam['search'];
+    $nameBook           = $highLight->highlight($valueInfoBook['name'], $arrSearch);
+    
     $shortDescription   = $valueInfoBook['shortDescription'];
     //$description        = $valueInfoBook['description'];
     

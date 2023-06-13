@@ -23,8 +23,13 @@ class BookModel extends Model
             $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
             $queryContent[] = "FROM `".$this->_tableName."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
             $queryContent[] = "WHERE `b`.`status` = 1";
+            
             if(isset($arrParam['category_id'])){
                 $queryContent[] = "AND `b`.`category_id` = ".$arrParam['category_id']."";
+            }
+            if(isset($arrParam['search'])){
+                $keyword            = '"%'.$arrParam['search'].'%"';
+                $queryContent[]     = "AND (`b`.`name` LIKE $keyword)";
             }
             
             $queryContent[]     = 'ORDER BY `ordering` ASC';
