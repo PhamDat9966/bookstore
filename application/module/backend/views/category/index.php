@@ -28,8 +28,7 @@ if (!empty($this->Items)) {
         require_once LIBRARY_EXT_PATH .'highlight.php';
         $highLight          = new Highlighter();
         $highLight->setTag('mark');
-        
-        
+             
         $arrSearch          = array();
         $arrSearch[]        = @$this->arrParam['search'];
         $name               = $highLight->highlight($value['name'], $arrSearch);

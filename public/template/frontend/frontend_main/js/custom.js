@@ -167,13 +167,15 @@ function deleteItemOrder(id){
 		type	: 'GET',
 		data	:{id:idItem},
 		success	: function(data){	
-
-				var dateOject = JSON.parse(data); 
-				var id       		= dateOject.id;
-				var totalquantity 	= dateOject.totalQuantity;
+				console.log(data);
+				var dateOject 			= JSON.parse(data); 
+				var id       			= dateOject.id;
+				var totalquantity 		= dateOject.totalQuantity;
+				var totalPriceAllItem	= dateOject.totalPriceAllItem;
 				
 				$('tr#order-'+id+'').remove();
 				$("#totalItemCart").text(totalquantity);
+				$('#cart-form #totalPriceAllItem').text(totalPriceAllItem);
 				$('#totalItemCart').notify("Sản phẩm đã được đưa ra khỏi giỏ hàng!",{ position:"bottom	right", className:"success" });
 		}
 	})

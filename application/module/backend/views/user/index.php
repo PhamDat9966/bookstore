@@ -24,10 +24,16 @@ if(!empty($this->Items)){
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="'.$id.'">';
         
-        $name           = Helper::highLight(@$this->arrParam['search'], $value['username']);
-        $fullName       = Helper::highLight(@$this->arrParam['search'], $value['fullname']);
-        $email          = Helper::highLight(@$this->arrParam['search'], $value['email']);
+        require_once LIBRARY_EXT_PATH .'highlight.php';
+        $highLight          = new Highlighter();
+        $highLight->setTag('mark');
         
+        $arrSearch      = array();
+        $arrSearch[]    = @$this->arrParam['search'];
+        $name           = $highLight->highlight($value['username'], $arrSearch);
+        $fullName       = $highLight->highlight($value['fullname'], $arrSearch);
+        $email          = $highLight->highlight($value['email'], $arrSearch);
+
         $info           = '<p class="mb-0 text-left">
                             <b>Username: </b>'.$name.'<br/>
                             <b>FullName: </b>'.$fullName.'<br/>

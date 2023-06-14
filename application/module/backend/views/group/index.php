@@ -22,8 +22,14 @@ if (!empty($this->Items)) {
         $id             =  $value['id'];
         $ckb            =  '<input type="checkbox" name="cid[]" value="' . $id . '">';
         
-        $name           = Helper::highLight(@$this->arrParam['search'], $value['name']);
-
+        require_once LIBRARY_EXT_PATH .'highlight.php';
+        $highLight          = new Highlighter();
+        $highLight->setTag('mark');
+        
+        $arrSearch          = array();
+        $arrSearch[]        = @$this->arrParam['search'];
+        $name               = $highLight->highlight($value['name'], $arrSearch);
+        
         $row            = ($i % 2 == 0) ? 'odd' : 'even';
 
         $groupACP       = '';

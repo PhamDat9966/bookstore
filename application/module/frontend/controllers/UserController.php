@@ -89,9 +89,9 @@ class UserController extends Controller{
            
            $totalQuantity = $totalQuantity - $quantity;
            
-           $return['id']             = $id;
-           $return['totalQuantity']  = $totalQuantity;
-           
+           $return['id']                = $id;
+           $return['totalQuantity']     = $totalQuantity;
+           $return['totalPriceAllItem'] = array_sum($_SESSION['cart']['price']);
         }
         echo json_encode($return);
         
