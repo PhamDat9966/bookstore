@@ -19,8 +19,9 @@ class BookModel extends Model
 
     public function listItem($arrParam,$option = NULL){
         if($option['task'] == 'book-in-cat'){
+
             $queryContent   = [];
-            $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
+            $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,(`b`.`price`-`b`.`price`*`b`.`sale_off`/100) AS `priceReal`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
             $queryContent[] = "FROM `".$this->_tableName."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
             $queryContent[] = "WHERE `b`.`status` = 1";
             
@@ -37,11 +38,12 @@ class BookModel extends Model
             }
             
             if(isset($arrParam['sort'])){
+                //$priceReal  =                  
                 
                 if($arrParam['sort'] == 'price_asc'){
-                    $queryContent[]     = 'ORDER BY `price` ASC';
+                    $queryContent[]     = 'ORDER BY `priceReal` ASC';
                 } elseif ($arrParam['sort'] == 'price_desc'){
-                    $queryContent[]     = 'ORDER BY `price` DESC';
+                    $queryContent[]     = 'ORDER BY `priceReal` DESC';
                 }
                 
                 if($arrParam['sort'] == 'latest'){
@@ -58,7 +60,6 @@ class BookModel extends Model
             $queryContent[]     = "LIMIT $position,$totalItemsPerPage";
             
             $queryContent       = implode(" ", $queryContent);
-            
             $result = $this->fetchAll($queryContent);
             return $result;
         }
@@ -77,6 +78,7 @@ class BookModel extends Model
         }
         
     }
+    
     
     public function quickViewItem($arrParam, $option = null){
         
