@@ -127,6 +127,7 @@ class IndexController extends Controller{
     }
     
     public function indexAction(){
+
         $this->_view->arrParam  =  $this->_arrParam; 
         
         $this->_view->_title        = 'Book Manager: List';

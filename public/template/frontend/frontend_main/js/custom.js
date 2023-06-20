@@ -16,6 +16,9 @@ function quickViewFunction(htmlentitiesJSON){
 	var ObjectJSON  = htmlentitiesJSON;
 	var book_id		= ObjectJSON.book_id;
 	var link		= ObjectJSON.url;
+
+//	var obj = <?php echo $this->arrParam['action'];?>;
+//	console.log(obj);
 	//Ajax
 	$.ajax({
 		url		: link,
@@ -122,12 +125,8 @@ function ajaxOrder($linkOrderJSON){
 	}
 	
 	var quantity = $("#input-quantity").val();	// Số lượng lấy tại <input id="input-quantity"  type="text" name="quantity" class="form-control input-number" value="1">
-	console.log(quantity);
-	console.log($linkOrderJSON);
-	
 	var link = JSON.parse($linkOrderJSON);
-	console.log(link);
-	
+
 	$.ajax({
 		url		: link,
 		type	: 'GET',
@@ -252,6 +251,28 @@ function addCommas(nStr)
 //// your code here
 //});
 
+//function sortBookList(sort)
+//{
+//	console.log(sort);
+//    alert(sort.value);
+//    var sorlVal = sort.value;
+//    //var link = 'index.php?module=frontend&controller=book&action=list';
+//    
+//    $.ajax({
+//		url		: 'index.php?module=frontend&controller=book&action=list',
+//		type	: 'GET',
+//	    data:{sort:sorlVal},
+//		success	: function(data){
+//				
+//				console.log(data);
+//
+//			}
+//	})
+//}
+
+//$('select #sort').on('change', function() {
+//	  alert( this.value );
+//});
 
 
 

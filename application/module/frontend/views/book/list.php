@@ -231,16 +231,19 @@ $positionStart   = $position + 1;// posion là 0, vậy không show số không 
 															?>
 														</ul>
 													</div>
-													<div class="product-page-filter">
-														<form action="" id="sort-form" method="GET">
-															<select id="sort" name="sort">
-																<option value="default" selected>- Sắp xếp -</option>
-																<option value="price_asc">Giá tăng dần</option>
-																<option value="price_desc">Giá giảm dần</option>
-																<option value="latest">Mới nhất</option>
-															</select>
-														</form>
-													</div>
+													<?php 
+													   require_once BLOCK_PATH . 'sortForm.php';
+													?>
+<!-- 													<div class="product-page-filter"> -->
+<!-- 														<form action="" id="sort-form" method="GET"> -->
+<!-- 															<select id="sort" name="sort"> -->
+<!-- 																<option value="default" selected>- Sắp xếp -</option> -->
+<!-- 																<option value="price_asc">Giá tăng dần</option> -->
+<!-- 																<option value="price_desc">Giá giảm dần</option> -->
+<!-- 																<option value="latest">Mới nhất</option> -->
+<!-- 															</select> -->
+<!-- 														</form> -->
+<!-- 													</div> -->
 												</div>
 											</div>
 										</div>

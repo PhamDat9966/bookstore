@@ -32,7 +32,26 @@ class BookModel extends Model
                 $queryContent[]     = "AND (`b`.`name` LIKE $keyword)";
             }
             
-            $queryContent[]     = 'ORDER BY `ordering` ASC';
+            if($arrParam['sort'] == 'default'){
+                unset($arrParam['sort']);
+            }
+            
+            if(isset($arrParam['sort'])){
+                
+                if($arrParam['sort'] == 'price_asc'){
+                    $queryContent[]     = 'ORDER BY `price` ASC';
+                } elseif ($arrParam['sort'] == 'price_desc'){
+                    $queryContent[]     = 'ORDER BY `price` DESC';
+                }
+                
+                if($arrParam['sort'] == 'latest'){
+                    $queryContent[]     = 'ORDER BY `created` DESC';
+                }
+                
+                
+            } else{
+                $queryContent[]     = 'ORDER BY `ordering` ASC';
+            }
             
             $position           = $this->_arrParam['position'];
             $totalItemsPerPage  = $this->_arrParam['totalItemsPerPage'];

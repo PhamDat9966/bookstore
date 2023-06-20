@@ -122,6 +122,21 @@ class Helper{
         return $xhtml;
     }
     
+    public static function cmsSelectboxFrontend($name,$class, $arrValue, $keySelect = 'default', $style = null,$id = null, $option = null){
+        
+        
+        $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" id="'.$id.'" '.$option.'>';
+        foreach($arrValue as $key => $value){
+            if($key == $keySelect){
+                $xhtml .= '<option selected="selected" value ='.$key.'>'.$value.'</option>';
+            }else{
+                $xhtml .= '<option value = "'.$key.'">'.$value.'</option>';
+            }
+        }
+        $xhtml .= '</select>';
+        return $xhtml;
+    }
+    
     // Select Group for one User from SelectBox
     public static function cmsSelectboxForUserSelectGroup($name,$class, $arrValue, $valueSelected = 'default', $style = null,$id = null, $option = null){
         

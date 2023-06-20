@@ -71,9 +71,7 @@ class UserController extends Controller{
     }   
     
     public  function ajaxDeleteItemOrderAction(){
-//         echo "<pre>";
-//         print_r($this->_arrParam);
-//         echo "</pre>";
+
         $return = array();
         $quantity = 0;
 
@@ -127,9 +125,6 @@ class UserController extends Controller{
     } 
     
     public  function ajaxQuantityAction(){
-//         echo "<pre>";
-//         print_r($this->_arrParam);
-//         echo "</pre>";
 
         $ojectQuantity  = json_decode($this->_arrParam['paramQuantity']);
         
