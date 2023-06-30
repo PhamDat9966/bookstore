@@ -1,5 +1,3 @@
-<?php
-?>
 
 <div class="tab-content-cls">
 	<div id="tab-category-21" class="tab-content active default">

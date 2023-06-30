@@ -17,21 +17,17 @@ function quickViewFunction(htmlentitiesJSON){
 	var book_id		= ObjectJSON.book_id;
 	var link		= ObjectJSON.url;
 
-//	var obj = <?php echo $this->arrParam['action'];?>;
-//	console.log(obj);
-	//Ajax
 	$.ajax({
 		url		: link,
 		type	: 'GET',
 		data	: {book_id:book_id},
 		success	: function(data){	
-
-				var dataOject = JSON.parse(data);			
-				var name     = dataOject.name;
+				var dataOject 		 = JSON.parse(data);
+				console.log(dataOject);
+				var name     		 = dataOject.name;
 				var id        		 = dataOject.id;
 				var shortDescription = dataOject.shortDescription;
 				var picture			 =  dataOject.picture;
-				
 					
 				$('#book-name').contents().filter((_, el) => el.nodeType === 3).remove(); // Remove text
 				$('#book-name').append(name);	// Add text
@@ -41,7 +37,7 @@ function quickViewFunction(htmlentitiesJSON){
 				
 				$("#quick-view-img").attr("src",picture);
 				
-				/*SET Name input*/
+				/*Quan trọng: ----SET Name input------*/
 				$("#input-quantity").attr('name','quantity-'+id);
 				
 				//price
@@ -51,7 +47,6 @@ function quickViewFunction(htmlentitiesJSON){
 			    var priceReal		   = 0;	
 			    
 			    if(saleOff > 0){
-			    	
 			        priceNotSaleOFF  = dataOject.price;   
 			        priceHaveSaleOFF = (dataOject.price * (100 - saleOff) / 100);
 			        priceReal        = priceHaveSaleOFF;
@@ -61,7 +56,7 @@ function quickViewFunction(htmlentitiesJSON){
 				    priceReal        	   = priceHaveSaleOFF;
 			    }
 			    
-			    // Thêm dấu phẩy vào hàng nghìn
+			    // Thêm dấu phẩy vào hàng nghìn và 'đ' phía sau
 			    const formatter = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
 			    priceHaveSaleOFF = formatter.format(priceHaveSaleOFF)+' đ';
 			    
@@ -97,6 +92,7 @@ function quickViewFunction(htmlentitiesJSON){
 						success	: function(dataorder){		
 							
 							var dataOuput = JSON.parse(dataorder);	
+							console.log(dataOuput);
 							var total = 0;
 							var quantityOject = dataOuput.quantity;
 							for (var property in quantityOject) {
@@ -115,7 +111,6 @@ function quickViewFunction(htmlentitiesJSON){
 			}
 	})
 }
-
 
 //ODER AJAX
 function ajaxOrder($linkOrderJSON){

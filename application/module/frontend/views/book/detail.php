@@ -4,7 +4,8 @@ $bookInfo   = $this->Book;
 
 $title_page = $bookInfo['name'];
 $name       = $bookInfo['name'];
-$picture    = UPLOAD_URL .'book' . DS . $bookInfo['picture'];
+
+$picture       = Helper::createImageShort('book', $bookInfo['picture'],array('class'=>'img-fluid w-100 blur-up lazyload image_zoom_cls-0')); 
 
 $sale_book_Off    = '';
 if($bookInfo['sale_off']>0){
@@ -70,8 +71,9 @@ require_once 'quickViewWhenCompleteOrder.php';
                         <div class="row">
                             <div class="col-lg-4 col-xl-4">
                                 <div class="product-slick">
-                                    <div><img src="<?php echo $picture;?>" alt=""
-                                            class="img-fluid w-100 blur-up lazyload image_zoom_cls-0"></div>
+                                    <div>
+                                    	<?php echo $picture;?>
+                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-8 col-xl-8 rtl-text">

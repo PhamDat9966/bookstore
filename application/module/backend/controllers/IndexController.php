@@ -60,9 +60,7 @@ class IndexController extends Controller
 
     public function indexAction()
     {
-//         echo "<pre>";
-//         print_r($this->_arrParam);
-//         echo "</pre>";
+
         $this->_view->_tag  = 'dashboard';
 
         $this->_view->_arrParam       = $this->_model->countFilterSearch();

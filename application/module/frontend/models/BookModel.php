@@ -33,7 +33,7 @@ class BookModel extends Model
                 $queryContent[]     = "AND (`b`.`name` LIKE $keyword)";
             }
             
-            if($arrParam['sort'] == 'default'){
+            if(@$arrParam['sort'] == 'default'){
                 unset($arrParam['sort']);
             }
             

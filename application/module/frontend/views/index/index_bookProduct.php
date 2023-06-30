@@ -1,5 +1,4 @@
 <?php
-    //require_once MODULE_PATH . $this->arrParam['module'] . DS . 'view' . DS . $this->arrParam['action'] . DS . 'productSlider.php';
     
 //     echo "<pre>";
 //     print_r($this);
@@ -14,11 +13,8 @@
     foreach ($this->bookProduct as $keyBook=>$valueBook){
         $id               = $valueBook['id'];
         $nameBook         = $valueBook['name'];
-        
-        $picture          = UPLOAD_URL .'book' . DS . $valueBook['picture'];
-        $strSpecial1       = '\\';
-        $strSpecial2       = "/";
-        $picture          = str_replace($strSpecial1 ,$strSpecial2, $picture); 
+         
+        $pictureURL         = Helper::createImageURL('book', $valueBook['picture']);
         
         $shortDescription =  mb_strimwidth($valueBook['shortDescription'], 0, 100, "...");
         
@@ -55,7 +51,7 @@
                                     </div>
                                     <div class="front">
                                         <a href="item.html">
-                                            <img src="'.$picture.'" class="img-fluid blur-up lazyload bg-img"
+                                            <img src="'.$pictureURL.'" class="img-fluid blur-up lazyload bg-img"
                                                 alt="product">
                                         </a>
                                     </div>

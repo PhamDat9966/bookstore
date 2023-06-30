@@ -16,56 +16,6 @@ class Helper{
         $xhtml = '<button type="'.$type.'" id="'.$id.'" name="'.$name.'" value="'.$value.'" class="'.$class.'">'.$textOutfit.'</button>';
         return $xhtml;
     }
-
-    //Button Input
-    // public static function cmsButtonSubmit( $type, $class = 'btn btn-info' , $textOutfit ,$name = null , $value = null, $id = null  ){
-    //     //class: default secondary danger
-        
-    //     $nameButton = '';
-    //     if(isset($name)){
-    //         $nameButton = "name='$name'";
-    //     }
-        
-    //     $valueButton = '';
-    //     if(isset($value)){
-    //         $valueButton = "value='$value'";
-    //     }
-        
-    //     $classButton = '';
-    //     if($class == 'btn btn-info'){
-    //         $classButton = "class='btn btn-info'";
-    //     }
-        
-    //     if($class == 'btn btn-success'){
-    //         $classButton = "class='btn btn-success'";
-    //     }
-        
-    //     if($class == 'btn btn-secondary'){
-    //         $classButton = "class='btn btn-secondary'";
-    //     }
-        
-    //     if($class == 'btn btn-danger'){
-    //         $classButton = "class='btn btn-danger'";
-    //     }
-        
-    //     if($class == 'btn btn-solid'){
-    //         $classButton = "class='btn btn-solid'";
-    //     }
-        
-    //     $nameAndValue = '';
-    //     if(isset($name) && isset($value)){
-    //         $nameAndValue = "name='$name' value='$value'";
-    //     }
-        
-    //     $idAttr = '';
-    //     if(!empty($id)){
-    //         $idAttr = "id = '$id'";
-    //     }
-        
-        
-    //     $xhtml = '<button type="'.$type.'" '.$idAttr.' '.$nameButton.' '.$valueButton.' '.$classButton.' '.$nameAndValue.' >'.$textOutfit.'</button>';
-    //     return $xhtml;
-    // }
     
     public static function cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-info' , $textOutfit ,$name = null , $value = null, $id = null  ){
 
@@ -202,9 +152,8 @@ class Helper{
                         </div>
                       </div>';
             
-//             $strRequire = '<span class="text-danger">*</span>';
-//             $xhtml = "<label $option>".$lblName.$strRequire.'</label>'.$input;
         }
+        
         return $xhtml;
     }
     
@@ -384,5 +333,108 @@ class Helper{
 	    
 	    return $xhtml;
 	}
+	
+	// Create Image
+	public static function createImage($folder, $prefix, $pictureName, $attribute = null){
+	    
+	    $class	= !empty($attribute['class']) ? $attribute['class'] : '';
+	    $width	= !empty($attribute['width']) ? $attribute['width'] : '';
+	    $height	= !empty($attribute['height']) ? $attribute['height'] : '';
+	    $strAttribute	= "class='$class' width='$width' height='$height'";
+	    
+	    $picturePath	= UPLOAD_PATH . $folder . DS . $prefix . $pictureName;
+	    if(file_exists($picturePath)==true){
+	        $picture    = '<img  '.$strAttribute.' src="'.UPLOAD_URL . $folder . DS . $prefix . $pictureName.'">';
+	    }else{
+	        $picture	= '<img '.$strAttribute.' src="'.UPLOAD_URL . $folder . DS . $prefix . 'default.jpg' .'">';
+	    }
+	    
+	    return $picture;
+	}
+	
+	public static function createImageShort($folder,$pictureName,$attribute = null,$style = null){
+	    
+	    $pictureURL        = Helper::createImageURL($folder, $pictureName);
+	       
+	    $class	= !empty($attribute['class']) ? $attribute['class'] : '';
+	    
+	    $width      = '';
+	    if(isset($attribute['width'])){
+	        $width	= 'width='.$attribute['width'].'';
+	    }  
+	    $height	= '';
+	    if(isset($attribute['height'])){
+	        $height	= 'height='.$attribute['height'].'';
+	    }
+	    
+	    $strAttribute	= "class='$class' $width $height";
+	    
+	    $styleDisplay   = '';
+	    if(isset($style['display'])){
+	        $styleDisplay = 'style="display: '.$style['display'].';"';
+	    }
+	    
+	    $picture    = '<img  '.$strAttribute.' src="'.$pictureURL.'" '.$styleDisplay.'>';
+	    
+	    return $picture;
+	}
+	
+	public static function createImageURL($folder,$pictureName){
+	    $pictureURL          = UPLOAD_URL .$folder . DS . $pictureName;
+	    $strSpecial1       = '\\';
+	    $strSpecial2       = "/";
+	    $pictureURL          = str_replace($strSpecial1 ,$strSpecial2, $pictureURL); 
+	    return $pictureURL;
+	}
+	
+	public static function createImageATag($href,$attribute = null,$style = null,$picture,$tabindexValue = null,$altTag = null){
+	    
+	    $class	= !empty($attribute['class']) ? $attribute['class'] : '';
+	    $width	= !empty($attribute['width']) ? $attribute['width'] : '';
+	    $height	= !empty($attribute['height']) ? $attribute['height'] : '';
+	    $strAttribute	= "class='$class' width='$width' height='$height'";
+	    
+	    $background_image      = !empty($style['background-image']) ? $style['background-image'] : '';
+	    $background_size       = !empty($style['background-size']) ? $style['background-size'] : '';
+	    $background_position   = !empty($style['background-position']) ? $style['background-position'] : '';
+	    $display               = !empty($style['display']) ? $style['display'] : '';
+	    
+	    $strStyle   = 'background-image: url(&quot;'.$background_image.'&quot;); 
+                	   background-size: '.$background_size.'; 
+                	   background-position: '.$background_position.'; 
+                	   display: '.$display.';';
+	    
+	    $tabindex   = !empty($tabindexValue) ? $tabindexValue : '-1';
+	    $alt        = !empty($altTag) ? $altTag : 'Product';
+	    
+	    $aTagXhtml  = '<a href="'.$href.'" 
+                            '.$strAttribute.'    
+                    		style="'.$strStyle.'" 
+                    		tabindex="'.$tabindex.'"
+                            alt="'.$alt.'">
+                                '.$picture.'
+                       </a>';
+	    return $aTagXhtml;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -2,7 +2,6 @@
 
 // THIS IS FILTER AND SEARCH FOR ALL CONTROLLER
 
-
 //Filter
 $allItem      = @$this->_count['allStatus'];
 $activeItem   = @$this->_count['activeStatus'];
@@ -90,7 +89,7 @@ $formSearch        = '<div class="input-group">
                         </span>
                     </div>';
 
-// filter and search with Select Box
+// filter and search with Select Box 
 $selectBoxFilterSearch = '';
 
 /*---------group----------*/
@@ -122,6 +121,7 @@ if($this->arrParam['controller'] == 'user'){
     $selectBoxFilterSearch      = Helper::cmsSelectbox('selectGroup', 'form-control custom-select',$arrValue = $arrGroup , $keySelect = $selectGroupFirst, null,$id = 'selectGroup');
 }
 
+/*---------book----------*/
 if($this->arrParam['controller'] == 'book'){
     
     /* filter Category */

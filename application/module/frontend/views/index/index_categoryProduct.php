@@ -31,12 +31,24 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
     $xhtmlCategoryInfo .='<div id="tab-category-'.$keyCatList.'" class="tab-content '.$classActive.'">';
     $xhtmlCategoryInfo .=   '<div class="no-slider row tab-content-inside">';
     foreach ($this->bookCategoryProduct as $keyBookInCat=>$valueBookInCat){
-        $id               = $valueBookInCat['id'];  
-        $nameBook         = $valueBookInCat['name'];
-        $picture          = UPLOAD_URL .'book' . DS . $valueBookInCat['picture'];
-        $strSpecial1      = '\\';
-        $strSpecial2      = "/";
-        $picture          = str_replace($strSpecial1 ,$strSpecial2, $picture);
+        $id                 = $valueBookInCat['id'];  
+        $nameBook           = $valueBookInCat['name'];
+        $urlBookProductInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
+
+        //PICTURE
+        $pictureURL         = Helper::createImageURL('book', $valueBookInCat['picture']);
+        $picture            = Helper::createImageShort('book', $valueBookInCat['picture'],array('class'=>'img-fluid blur-up lazyload bg-img'),array('display'=>'none'));
+        
+        $attrAtagBookPic    = array('class'=>'bg-size blur-up lazyloaded');
+        $styleAtagBookPic   = array(
+            'background-image'      =>$pictureURL,
+            'background-size'       =>'cover',
+            'background-position'   =>' center center',
+            'display'               =>'block'
+        );
+        $tabIndex               = '-1';
+        
+        $aTagBookPictureProduct = Helper::createImageATag($urlBookProductInfo,$attrAtagBookPic,$styleAtagBookPic,$picture,$tabIndex,$alt='Product');
         
         $shortDescription = $valueBookInCat['shortDescription'];
         
@@ -56,8 +68,6 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
             $price          = number_format($price);
             $priceReal      = $price;
         }
-        
-        $urlBookProductInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
         
         // Quick View
         $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
@@ -86,9 +96,7 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
                                                 <span class="lable4 badge badge-danger"> -'.$sale_off.'%</span>
                                             </div>
                                             <div class="front">
-                                                <a href="'.$urlBookProductInfo.'">
-                                                    <img src="'.$picture.'" class="img-fluid blur-up lazyload bg-img" alt="product">
-                                                </a>
+                                                '.$aTagBookPictureProduct.'
                                             </div>
                                             <div class="cart-info cart-wrap">
                                                 <a href="#" onclick="ajaxOrder(\''.$linkOrderJSONProduct.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>
@@ -116,9 +124,9 @@ foreach ($arrCategoryList as $keyCatList=>$valueCatList){
     $xhtmlCategoryInfo .='</div>';
    
 }
-
+$AllBookList           = URL::createLink('frontend', 'book', 'list');
 $xhtmlCategoryInfo .=       '<div class="text-center">
-                			<a href="list.html" class="btn btn-solid">Xem tất cả</a>
+                			<a href="'.$AllBookList.'" class="btn btn-solid">Xem tất cả</a>
                 		</div>';
 $xhtmlCategoryInfo .= '</div>';
 

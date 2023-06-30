@@ -154,7 +154,7 @@ class UserModel extends Model
             $queryContent[] = "SELECT `id`,`username`,`books`,`prices`,`quantities`,`names`,`pictures`,`status`,`date`";
             $queryContent[] = "FROM `" . TBL_CART . "`";
             $queryContent[] = "WHERE `username` = '$username'";
-            $queryContent[] = "ORDER BY `date` ASC";
+            $queryContent[] = "ORDER BY `date` DESC";
             $queryContent   = implode(" ", $queryContent);
             
             $result = $this->fetchAll($queryContent);

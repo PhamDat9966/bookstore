@@ -13,23 +13,11 @@
     foreach ($dataSpecialBookBanner as $keyBook=>$valueBook){
         $id               = $valueBook['id'];
         $nameBook         = $valueBook['name'];
-        $urlBookSpecialInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
         
-        $pictureURL         = Helper::createImageURL('book', $valueBook['picture']);
-        $picture            = Helper::createImageShort('book', $valueBook['picture'],array('class'=>'img-fluid blur-up lazyload bg-img'),array('display'=>'none'));
-        
-        $urlBookInfo        = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
-        
-        $attrAtagBookPic    = array('class'=>'bg-size blur-up lazyloaded');
-        $styleAtagBookPic   = array(
-            'background-image'      =>$pictureURL,
-            'background-size'       =>'cover',
-            'background-position'   =>' center center',
-            'display'               =>'block'
-        );
-        $tabIndex               = '-1';
-        
-        $aTagBookPictureSpec    = Helper::createImageATag($urlBookSpecialInfo,$attrAtagBookPic,$styleAtagBookPic,$picture,$tabIndex,$alt = 'Special');
+        $picture          = UPLOAD_URL .'book' . DS . $valueBook['picture'];
+        $strSpecial1       = '\\';
+        $strSpecial2       = "/";
+        $picture          = str_replace($strSpecial1 ,$strSpecial2, $picture); 
         
         $shortDescription =  mb_strimwidth($valueBook['shortDescription'], 0, 100, "...");
         
@@ -47,6 +35,8 @@
             $priceReal      = $price;
             $price              = number_format($price);   
         }
+        
+        $urlBookSpecialInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
         
         /* Ajax Order*/
         $linkOrderSpecial          = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal,'quantity'=>1));
@@ -74,7 +64,10 @@
                                         <span class="lable4 badge badge-danger"> -'.$sale_off.'%</span>
                                     </div>
                                     <div class="front">
-                                        '.$aTagBookPictureSpec.'
+                                        <a href="'.$urlBookSpecialInfo.'">
+                                            <img src="'.$picture.'" class="img-fluid blur-up lazyload bg-img"
+                                                alt="product">
+                                        </a>
                                     </div>
                                     <div class="cart-info cart-wrap">
                                         <a href="#" onclick="ajaxOrder(\''.$linkOrderJSONSpecial.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>

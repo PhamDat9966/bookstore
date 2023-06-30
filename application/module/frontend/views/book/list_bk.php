@@ -37,22 +37,15 @@ foreach ($this->Items as $valueInfoBook){
     }
 
     //PICTURE
+    $picture            =  UPLOAD_URL .'book' . DS . $valueInfoBook['picture'];
+    $strSpecial1        = '\\';
+    $strSpecial2        = "/";
+    $picture            = str_replace($strSpecial1 ,$strSpecial2, $picture);
+    
     $pictureURL         = Helper::createImageURL('book', $valueInfoBook['picture']);
     $picture            = Helper::createImageShort('book', $valueInfoBook['picture'],array('class'=>'img-fluid blur-up lazyload bg-img'),array('display'=>'none'));
     
     $urlBookInfo        = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
-    
-    $attrAtagBookPic    = array('class'=>'bg-size blur-up lazyloaded');
-    $styleAtagBookPic   = array(
-                                    'background-image'      =>$pictureURL,
-                                    'background-size'       =>'cover',
-                                    'background-position'   =>' center center',
-                                    'display'               =>'block'
-                                );
-    $tabIndex           = '-1';
-    
-    $aTagBookPicture    = Helper::createImageATag($urlBookInfo,$attrAtagBookPic,$styleAtagBookPic,$picture,$tabIndex);
-    
     
     $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
     $arrQuickView       = array(
@@ -75,7 +68,9 @@ foreach ($this->Items as $valueInfoBook){
                                         '.$saleOff.'
                                     </div>
                                     <div class="front">
-                                        '.$aTagBookPicture.'
+                                        <a href="'.$urlBookInfo.'" class="bg-size blur-up lazyloaded" style="background-image: url(&quot;'.$pictureURL.'&quot;); background-size: cover; background-position: center center; display: block;">
+                                            '.$picture.'
+                                        </a>
                                     </div>
                                     <div class="cart-info cart-wrap">
                                         <a href="#" onclick="ajaxOrder(\''.$linkOrderJSONDetail.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>

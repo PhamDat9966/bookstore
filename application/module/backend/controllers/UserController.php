@@ -14,6 +14,7 @@ class UserController extends Controller
 
     public function listAction()
     {   
+
         ob_start();
 
         // Clear Search
@@ -103,7 +104,7 @@ class UserController extends Controller
         $this->_templateObj->setFileTemplate('user-list.php');
         $this->_templateObj->setFileConfig('template.ini');
         $this->_templateObj->load();
-
+        
         $this->_view->render('user/index', true);
         ob_end_flush();
     }

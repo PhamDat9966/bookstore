@@ -28,7 +28,7 @@ class Bootstrap{
         $actionName     = $this->_params['action'].'Action';
         
         if(method_exists($this->_controllerOject, $actionName) == true){
-
+            
             $module     = $this->_params['module'];
             $controller = $this->_params['controller'];
             $action     = $this->_params['action']; 
@@ -53,6 +53,7 @@ class Bootstrap{
                     
                     // Go backend: group_acp : Admin control Panel
                     if($userInfo['group_acp'] == 1){
+                        
                         //if(in_array($requestURL, $userInfo['info']['privilege']) == TRUE){
                             $this->_controllerOject->$actionName();
                         //}else {
@@ -60,12 +61,15 @@ class Bootstrap{
                         //}
                             
                     }else{
+                        
                         URL::redirect('frontend','index','notice',array('type'=>'not-permission'));
+                        
                     }
 
                 }else{
-                    
+
                     $this->callLoginAction($module);
+                    
                 }
             
             // MODULE FRONTEND
