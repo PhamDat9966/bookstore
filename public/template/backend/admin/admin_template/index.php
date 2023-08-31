@@ -13,7 +13,9 @@
     <div class="wrapper">
     
     	<!-- NAVBAR -->
-    		<?php include_once 'html/navbar.php';?>
+    		<?php 
+    		      include_once BLOCK_PATH . 'navbar-backend.php';
+    		?>
     	<!-- END NAVBAR -->
     	
     	<!-- MAIN-SIDEBAR -->

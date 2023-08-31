@@ -434,12 +434,21 @@ $(document).ready(function(){
 // BOOK
 $(document).ready(function(){
 	
+	// Sư kiện checkall
 	$('input[name=checkall-toggle]').change(function(){
 		var checkStatus = this.checked;
 		$('#book-list-form').find(':checkbox').each(function(){
 			this.checked = checkStatus;
 		});
 	})
+	
+	// text checkbox
+	var selectedCheck	= [];
+	$('#book-list-form input:checked').each(function() {
+		selectedCheck.push($(this).attr('name'));
+		
+	});
+	//end text
 	
 	$('#submit').click(function(){
 		$('#book-list-form').submit();
@@ -564,6 +573,11 @@ $(document).ready(function(){
     	    
 	})
 	
+	
+	// Ẩn box thừa notify
+	if(typeof $('.notifyjs-wrapper .notifyjs-hidable') != "undefined"){
+		$('.notifyjs-wrapper .notifyjs-hidable').hide();
+	}
 	
 })
 

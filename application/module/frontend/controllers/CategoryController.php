@@ -3,20 +3,25 @@
 class CategoryController extends Controller{
     
     public $_statusReturn;
-    protected  $_totalItemsPerPage = 5; //  Đặt số category xuất ra ở listCategory - Ở đây là 15, tạm thời là 5.Cần thêm vào csdl
+    protected  $_totalItemsPerPage = 5; 
     
     public function __construct($arrParams)
     {
         $arrParams['totalItemsPerPage'] = $this->_totalItemsPerPage;
         parent::__construct($arrParams);
         $this->setPaginationTotalItemsPerPage($arrParams);
+        
+        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
     }
       
     public  function indexAction(){
 
         $this->_view->_title    = "This is Category";
         
-        //Paginator
+        //Created Paginator
         $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
@@ -37,11 +42,6 @@ class CategoryController extends Controller{
         $this->_view->Pagination    = $this->_paginationResult;
         
         $this->_view->Items  = $this->_model->listItems($this->_arrParam);
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('category.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
         $this->_view->render('category/index', true);
     }
     

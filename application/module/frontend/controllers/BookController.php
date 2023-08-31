@@ -3,20 +3,26 @@
 class BookController extends Controller{
     
     public $_statusReturn;
-    protected  $_totalItemsPerPage = 12; //  Đặt số category xuất ra ở listCategory - Ở đây là 15, tạm thời là 5.Cần thêm vào csdl
+    protected  $_totalItemsPerPage = 12; 
     
     public function __construct($arrParams)
     {
         $arrParams['totalItemsPerPage'] = $this->_totalItemsPerPage;
         parent::__construct($arrParams);
         $this->setPaginationTotalItemsPerPage($arrParams);
+        
+        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
     }
       
     public  function indexAction(){
 
         $this->_view->_title    = "This is Category";
         
-        //Paginator
+        //Created Paginator
         $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
@@ -37,10 +43,6 @@ class BookController extends Controller{
         $this->_view->Pagination    = $this->_paginationResult;
         
         $this->_view->Items  = $this->_model->listItems($this->_arrParam);
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('category.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
         
         $this->_view->render('book/index', true);
     }
@@ -49,17 +51,11 @@ class BookController extends Controller{
         
         $this->_view->_title    = "This is Book";
         $this->_view->Book  = $this->_model->detailItem($this->_arrParam,array('task'=>'get-book-info'));
-        
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('detail.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
+
         $this->_view->render('book/detail', true);
     }
     
     public  function listAction(){
-
         $this->_view->_title    = "There are Books into one Category";
         
         //Paginator
@@ -69,8 +65,12 @@ class BookController extends Controller{
         
         $totalItems                = $this->_arrParam['count']['totalItem']; // Những sách có status = 1 mới được hiện ra ngoài
         if (isset($this->_arrParam['filter'])) {
-            if ($this->_arrParam['filter'] == 'active') $totalItems = $this->_arrParam['count']['activeStatus'];
-            if ($this->_arrParam['filter'] == 'inactive') $totalItems = $this->_arrParam['count']['inActiveStatus'];
+            
+            if($this->_arrParam['filter'] == 'active'){
+                $totalItems     = $this->_arrParam['count']['activeStatus'];
+            }else if($this->_arrParam['filter'] == 'inactive'){
+                $totalItems   = $this->_arrParam['count']['inActiveStatus'];
+            }
         }
         
         // CURRENT PAGE
@@ -91,13 +91,29 @@ class BookController extends Controller{
         if(isset($this->_arrParam['search'])){
             $this->_view->categoryName  = 'KẾT QUẢ TÌM KIẾM';
         }
-        
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('book_list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
+
         $this->_view->render('book/list', true);
+    }
+    
+    public function createPagination($totalItems){
+        //Paginator
+        $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
+        $this->_view->_count       = $this->_arrParam['count'];
+        $this->_model->_countParam = $this->_arrParam['count'];
+        
+        $totalItems                = $this->_arrParam['count']['totalItem']; // Những sách có status = 1 mới được hiện ra ngoài
+        if (isset($this->_arrParam['filter'])) {
+            if ($this->_arrParam['filter'] == 'active') $totalItems     = $this->_arrParam['count']['activeStatus'];
+            if ($this->_arrParam['filter'] == 'inactive') $totalItems   = $this->_arrParam['count']['inActiveStatus'];
+        }
+        
+        // CURRENT PAGE
+        if (isset($this->_arrParam['page'])) {
+            $this->_pagination['currentPage']   = $this->_arrParam['page'];
+        }
+        
+        $this->_paginationResult                = $this->_model->pagination($totalItems, $this->_pagination ,$arrParam = $this->_arrParam);
+        $this->_view->Pagination                = $this->_paginationResult;
     }
     
     public  function quickViewAction(){

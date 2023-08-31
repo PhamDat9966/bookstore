@@ -73,7 +73,7 @@ function changeStatus(link){
 					//"success");
 					$(element).removeClass(classRemove).addClass(classAdd);
 					$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
-					$('.card-body .table-responsive table tbody tr.odd td a#status-' + id).notify("Click me!",{position:"top center",className:"success",autoHideDelay: 55000});
+					$('#status-' + id).notify("Status đã được cập nhật!",{position:"top center",className:"success",autoHideDelay: 3000});
 				}
 		})
 	})	
@@ -115,7 +115,7 @@ function changeStatusUser(link){
 				//"success");
 				$(element).removeClass(classRemove).addClass(classAdd);
 				$(element + ' i').removeClass(iclassRemove).addClass(iclassAdd);
-				$('a#status-' + id).notify("Click me!",{position:"top center",className:"success",autoHideDelay: 55000});
+				$('a#status-' + id).notify("Status đã được cập nhật!",{position:"top center",className:"success",autoHideDelay: 3000});
 			}
 	})
 }
@@ -123,7 +123,11 @@ function changeStatusUser(link){
 
 // Ajax at SelectBox group for User.
 function changeGroupUser(jsonParam){
-
+	var groupUserOject = $.parseJSON(jsonParam);
+	console.log(groupUserOject);
+	var idBoxSelect = 	groupUserOject.id; 
+	console.log(idBoxSelect);
+	
 	$.ajax({
 		url		: 'index.php?module=backend&controller=user&action=selectGroupForUser',
 		type	: 'GET',
@@ -131,11 +135,15 @@ function changeGroupUser(jsonParam){
 		success	: function(data){
 
 				var jsonOject 	= $.parseJSON(data);
+
 				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>"+jsonOject[1].content+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
 				if($("#inAlert").length > 0){
 					$("#inAlert").remove();
 				}
 				$("#alert").prepend(element);
+				
+				var elementBoxSelectID	= "#selectGroupForUser-" + idBoxSelect;
+				$(elementBoxSelectID).notify("Group đã được cập nhật!",{position:"top center",className:"success",autoHideDelay: 3000});
 			}
 	})
 	
@@ -160,7 +168,7 @@ $(document).ready(function () {
     				
     				$(element).attr('value',jsonOject.ordering);
     				
-    				$(element).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
+    				$(element).notify("Ordering cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
     				console.log(element);
     			
     			}
@@ -187,11 +195,11 @@ $(document).ready(function () {
     				var modified    = jsonOject.modi.modified;
     				var modified_by = jsonOject.modi.modified_by;
     			    console.log(jsonOject);
-    				var element = '#category-list-form .card-body .table-responsive #category-ordering-' + jsonOject.id;	
+    				var element = '#category-ordering-' + jsonOject.id;	
     				
     				$(element).attr('value',jsonOject.ordering);
     				
-    				$(element).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
+    				$(element).notify("Ordering cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 3000});
     				//console.log(element);
     				
     				// Cập nhật lại modified
@@ -221,11 +229,7 @@ function changeCategoryForBook(jsonParam){
 				var modified_by = jsonOject.modi.modified_by;
 				var id 			= jsonOject.id;
 				
-				console.log(jsonOject);
-				console.log(modified);
-				console.log(modified_by);
-				
-				var bookCategoryID = '#book-list-form tr#book-id-'+id+' td#selectCategoryForBook #selectCategoryForBook-'+id;	
+				var bookCategoryID = '#selectCategoryForBookID-'+id;	
 				//var bookCategoryID = '#book-list-form #card-list .table-responsive #myTable tbody tr td#selectCategoryForBook #selectCategoryForBook-12';
 				
 				var element     = "<div id='inAlert' class='alert alert-success alert-dismissible'>"+jsonOject[1].content+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true' style='color:#FFFFFF;opacity: 1;'>×</button></div>";
@@ -234,8 +238,8 @@ function changeCategoryForBook(jsonParam){
 				}
 				$("#alert").prepend(element);
 				
-				$(bookCategoryID).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
-
+				//$(bookCategoryID).notify("Cập nhật thành công!",{position:"top center",className:"success",autoHideDelay: 55000});
+				$('#selectCategoryForBook-'+id).notify("Cập nhật thành công!",{ position:"top center", className:"success" });
 				// Cập nhật lại modified
 				var modifiedContent = '#book-list-form tr#book-id-'+id+' td#modified'; //Selector theo id
 				var textNew      	= '<p class="mb-0"><i class="far fa-user"></i>  '+modified_by+'<br><i class="far fa-clock"></i>  '+modified+'</p>';

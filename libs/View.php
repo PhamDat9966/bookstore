@@ -20,7 +20,6 @@ class View{
     public $_item;
     public $_tag;
     public $_arrParam;
-    //public $_count;
     
     public function __construct($moduleName){
         $this->_moduleName = $moduleName;

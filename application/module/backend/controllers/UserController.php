@@ -10,6 +10,11 @@ class UserController extends Controller
         parent::__construct($arrParams);
         $this->_view->_tag          = 'user'; //for Sidebar
         
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
     }
 
     public function listAction()
@@ -42,13 +47,13 @@ class UserController extends Controller
             
             if ($_GET['selectBoxUser'] == 'delete') {
                 URL::redirect('backend', 'user', 'deleteMult',NULL, $arrCid);
-            }
+            }else 
 
             if ($_GET['selectBoxUser'] == 'action') {
 
                 $strRequest = $arrCid.'&statusChoose=1';                
                 URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
-            }
+            }else
 
             if ($_GET['selectBoxUser'] == 'inactive') {
 
@@ -56,11 +61,6 @@ class UserController extends Controller
                 URL::redirect('backend', 'user', 'status', NULL ,$strRequest);
             }
         }
-
-        // filter and search
-//         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])) {
-//             $this->filterAndSearchAction();
-//         }
 
         // charge active, inactive userACB and status
         if (isset($this->_arrParam['id'])) {
@@ -74,7 +74,8 @@ class UserController extends Controller
             // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
         }
-
+        
+        //Pagination
         $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
@@ -89,7 +90,7 @@ class UserController extends Controller
         if (isset($this->_arrParam['page'])) {
             $this->_pagination['currentPage']           = $this->_arrParam['page'];
         }
-        
+
         $this->_paginationResult                         = $this->_model->pagination($totalItems, $this->_pagination ,$arrParam = $this->_arrParam);
         
         $this->_view->Pagination    = $this->_paginationResult;
@@ -100,11 +101,6 @@ class UserController extends Controller
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
 
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('user-list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
         $this->_view->render('user/index', true);
         ob_end_flush();
     }
@@ -121,37 +117,6 @@ class UserController extends Controller
     {
         $return = json_encode($this->_model->changeStatus($this->_arrParam, $option = array('task' => 'change-ajax-user-status')));
         echo $return;
-    }
-
-    public function filterAndSearchAction()
-    {
-
-        if (@$_GET['clear'] != '') {
-            Session::delete('search');
-            $_GET['search'] = '';
-        }
-        if (@$_GET['filter'] == 'all') {
-            Session::set('filter', '');
-        }
-
-        if (isset($_GET['search'])) {
-            $search  = trim($_GET['search']);
-            Session::set('search', $search);
-        }
-
-        if (isset($_GET['filter'])) {
-            $status  = trim($_GET['filter']);
-            Session::set('filter', $status);
-        }
-
-        if (isset($_GET['selectGroup'])) {
-            $status  = trim($_GET['selectGroup']);
-            Session::set('selectGroup', $status);
-            $this->_view->_arrParam = $this->_arrParam;
-            if ($_GET['selectGroup'] == 0) {
-                Session::delete('selectGroup');
-            }
-        }
     }
 
     public function clearAction()
@@ -263,11 +228,6 @@ class UserController extends Controller
         $this->_view->_tag          = 'user';
         $this->_view->arrParam      = $this->_arrParam;
 
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('user-form.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-
         $this->_view->render('user/form', true);
     }
 
@@ -276,10 +236,6 @@ class UserController extends Controller
 
         require_once LIBRARY_PATH . DS . "functions.php";
         $this->_arrParam['form']['password'] = randomString($length = 12);
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('user-form.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
 
         $this->_view->render('user/form', true);
     }
@@ -324,12 +280,6 @@ class UserController extends Controller
     }
     
     public function errorAction(){
-
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('error.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
         $this->_view->render('error/error', true);
     }
 }

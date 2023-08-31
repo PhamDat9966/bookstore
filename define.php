@@ -1,7 +1,7 @@
 <?php
     
     // ======================== PATH ================================//
-    define('DS'                 , DIRECTORY_SEPARATOR);
+    define('DS'                 , '/');
     define('ROOT_PATH'          , dirname(__FILE__));                         
     define('ROOT_URL'           , DS . 'bookstore');                     // Ä�á»‹nh nghÄ©a Ä‘Æ°á»�ng dáº«n Ä‘áº¿n thÆ° má»¥c gá»‘c
     
@@ -30,10 +30,6 @@
     define('DEFAULT_MODULE'         , 'backend');
     define('DEFAULT_CONTROLLER'     , 'index');
     define('DEFAULT_ACTION'         , 'login');
-    
-//     define('DEFAULT_MODULE'         , 'backend');
-//     define('DEFAULT_CONTROLLER'     , 'dashboard');
-//     define('DEFAULT_ACTION'         , 'index');
     
     // ======================== DATABASE ================================//
     define('DB_HOST'            , 'localhost');

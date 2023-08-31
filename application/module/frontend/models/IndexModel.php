@@ -69,7 +69,7 @@ class IndexModel extends Model
             $email   = $arrParam['form']['email'];
             $password   = $arrParam['form']['password'];
             
-            $query[]    =   "SELECT `u`.`id`,`u`.`username`,`u`.`fullname`,`u`.`email`,`u`.`group_id`, `g`.`group_acp`";
+            $query[]    =   "SELECT `u`.`id`,`u`.`username`,`u`.`fullname`,`u`.`email`,`u`.`status`,`u`.`group_id`, `g`.`group_acp`";
             $query[]    =   "FROM `user` AS `u` LEFT JOIN `group` AS `g` ON `u`.`group_id` = `g`.`id` ";
             $query[]    =   "WHERE `email` = '$email' AND `password` = '$password'";
             
@@ -79,25 +79,13 @@ class IndexModel extends Model
         }
     }
     
-//     public function quickViewItem($arrParam, $option = null){
-        
-//         $queryContent   = [];
-//         $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`";
-//         $queryContent[] = "FROM `".TBL_BOOK."`";
-//         $queryContent[] = "WHERE `id` = ".$arrParam['id']."";
-//         $queryContent = implode(" ", $queryContent);
-//         $result = $this->fetchRow($queryContent);
-//         return $result;
-        
-//     }
-    
     public function categoryShowHome($arrParam,$option = NULL){
         if($option == NULL){
             $queryContent   = [];
             $queryContent[] = "SELECT `id`,`name`";
             $queryContent[] = "FROM `".TBL_CATEGORY."`";
             $queryContent[] = "WHERE `status`  = 1 AND `showhome` = 1";
-            
+            $queryContent[]     = 'ORDER BY `ordering` ASC';
             $queryContent = implode(" ", $queryContent);
             $result = $this->fetchPairs($queryContent);
             return $result;

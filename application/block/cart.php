@@ -9,7 +9,7 @@ if(!empty($cart)){
     $totalPrice = array_sum($cart['price']); 
 }
 
-$cartLink  = URL::createLink('frontend', 'user', 'cart');
+$cartLink  = URL::createLink('frontend', 'user', 'cart', null, null, null, 'cart.html');
 
 ?>
 <li class="onhover-div mobile-cart">

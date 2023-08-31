@@ -30,9 +30,10 @@ class UserModel extends Model
         parent::__construct();
         $this->setTable($this->_tableName);
         
-        $userObj         = Session::get('user');
-        $this->_userInfo = $userObj['info'];
-        
+        if(isset($_SESSION['user'])){
+            $userObj         = Session::get('user');
+            $this->_userInfo = $userObj['info'];
+        }
     }
     
     public function infoItem($arrParam,$option = NULL){

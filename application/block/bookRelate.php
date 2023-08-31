@@ -5,10 +5,11 @@ $categoryID =  $this->Book['category_id'];
 require_once LIBRARY_PATH . 'Model.php';
 $modelRelate        = new Model();
 $queryContent       = [];
-$queryContent[]     = "SELECT `id`,`name`,`picture`,`price`,`sale_off`";
-$queryContent[]     = "FROM `".TBL_BOOK."`";
-$queryContent[]     = "WHERE `status` = 1 AND `category_id` = '".$categoryID."' AND `id` !='".$bookIdRelate."'";
-$queryContent[]     = 'ORDER BY `ordering` ASC';
+$queryContent[]     = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,(`b`.`price`-`b`.`price`*`b`.`sale_off`/100) AS `priceReal`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
+$queryContent[]     = "FROM `".TBL_BOOK."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
+$queryContent[]     = "WHERE `b`.`category_id` = `c`.`id`";
+$queryContent[]     = "AND `b`.`status` = 1 AND `b`.`category_id` = '".$categoryID."' AND `b`.`id` !='".$bookIdRelate."'";
+$queryContent[]     = 'ORDER BY `b`.`ordering` ASC';
 $queryContent[]     = 'LIMIT 0,6';
 
 $queryContent       = implode(" ", $queryContent);
@@ -19,12 +20,16 @@ $xhtmlRelate = '';
 foreach ($resulfRelate as $keyRel=>$valueRel){
     $id         = $valueRel['id'];
     $name       = $valueRel['name'];
-    $url        = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
     
-    $picture            = UPLOAD_URL .'book' . DS . $valueRel['picture'];
-    $strSpecial1        = '\\';
-    $strSpecial2        = "/";
-    $picture            = str_replace($strSpecial1 ,$strSpecial2, $picture);
+    $bookNameURL    = Helper::replaceSpecialChar($valueRel['name']);
+    $bookNameURL    = Helper::replaceNumberChar($bookNameURL);
+    $bookNameURL    = URL::filterURL($bookNameURL);
+    $catNameURL     = URL::filterURL($valueRel['category_name']);
+
+    $catID      = $valueRel['category_id'];
+
+    $url        = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id), null,null,"$catNameURL/$bookNameURL-$catID-$id.html");
+    $picture            = Helper::createImageURL('book',$valueRel['picture']);
     
     $sale_off           = $valueRel['sale_off'];
     $price              = $valueRel['price'];

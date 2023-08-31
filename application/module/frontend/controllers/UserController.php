@@ -8,16 +8,15 @@ class UserController extends Controller{
     {
         parent::__construct($arrParams);
         
+        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
     }
       
     public  function indexAction(){
         $this->_view->_title = "This is User: IndexAction";
-        
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('user-index.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
+
         $this->_view->render('user/index', true);
     }
     
@@ -38,11 +37,6 @@ class UserController extends Controller{
         Session::set('cart', $cart);
         
         $this->_view->Items = $this->_model->listItem($this->_arrParam,array('task'=>'book-in-cart'));
-        
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('user-cart.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
         
         $this->_view->render('user/cart', true);
     }
@@ -163,11 +157,6 @@ class UserController extends Controller{
         
         $this->_view->arrParam  =  $this->_arrParam;
         
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('profile.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
         $this->_view->render('user/profile', true);// views folder
         
     }
@@ -178,11 +167,6 @@ class UserController extends Controller{
         
         $this->_view->arrParam  =  $this->_arrParam;
         $this->_view->Items = $this->_model->listItem($this->_arrParam,array('task'=>'history-cart'));
-        
-        $this->_templateObj->setFolderTemplate('frontend/frontend_main/');
-        $this->_templateObj->setFileTemplate('index.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
         
         $this->_view->render('user/history', true);// views folder
         

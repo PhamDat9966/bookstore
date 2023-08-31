@@ -89,8 +89,7 @@ class Helper{
     
     // Select Group for one User from SelectBox
     public static function cmsSelectboxForUserSelectGroup($name,$class, $arrValue, $valueSelected = 'default', $style = null,$id = null, $option = null){
-        
-        
+          
         $xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" id="'.$id.'" '.$option.'>';
         foreach($arrValue as $key => $value){
             if($value == $valueSelected ){
@@ -354,7 +353,7 @@ class Helper{
 	
 	public static function createImageShort($folder,$pictureName,$attribute = null,$style = null){
 	    
-	    $pictureURL        = Helper::createImageURL($folder, $pictureName);
+	    $picturePath        = Helper::createImageURL($folder, $pictureName);
 	       
 	    $class	= !empty($attribute['class']) ? $attribute['class'] : '';
 	    
@@ -374,7 +373,7 @@ class Helper{
 	        $styleDisplay = 'style="display: '.$style['display'].';"';
 	    }
 	    
-	    $picture    = '<img  '.$strAttribute.' src="'.$pictureURL.'" '.$styleDisplay.'>';
+	    $picture    = '<img  '.$strAttribute.' src="'.$picturePath.'" '.$styleDisplay.'>';
 	    
 	    return $picture;
 	}
@@ -415,6 +414,120 @@ class Helper{
                                 '.$picture.'
                        </a>';
 	    return $aTagXhtml;
+	}
+	
+	public static function removeImage($folderUpload, $fileName){
+	    
+	    $fileName   =   UPLOAD_PATH . $folderUpload . DS . $fileName;
+	    @unlink($fileName);
+	}
+	
+	public static function replaceSpecialChar($str){
+	    $res = str_replace( array( '\'', '"',
+	        ',' , ';', '<', '>' ,':','/','|','\\','?','.','(',')','–' ), ' ', $str);
+	    
+	    return $res;
+	}
+	
+	public static function replaceNumberChar($str){
+	    
+	    $value      = $str;
+	    
+	    $characterA = '#(1)#imsU';
+	    $repaceA    = 'one';
+	    $value      = preg_replace($characterA, $repaceA, $value);
+	    
+	    $characterD = '#(2)#imsU';
+	    $repaceD    = 'two';
+	    $value      = preg_replace($characterD, $repaceD, $value);
+	    
+	    $characterE = '#(3)#imsU';
+	    $repaceE    = 'three';
+	    $value      = preg_replace($characterE, $repaceE, $value);
+	    
+	    $characterI = '#(4)#imsU';
+	    $repaceI    = 'four';
+	    $value      = preg_replace($characterI, $repaceI, $value);
+	    
+	    $characterO = '#(5)#imsU';
+	    $repaceO    = 'five';
+	    $value      = preg_replace($characterO, $repaceO, $value);
+	    
+	    $characterA = '#(6)#imsU';
+	    $repaceA    = 'six';
+	    $value      = preg_replace($characterA, $repaceA, $value);
+	    
+	    $characterD = '#(7)#imsU';
+	    $repaceD    = 'seven';
+	    $value      = preg_replace($characterD, $repaceD, $value);
+	    
+	    $characterE = '#(8)#imsU';
+	    $repaceE    = 'eight';
+	    $value      = preg_replace($characterE, $repaceE, $value);
+	    
+	    $characterI = '#(9)#imsU';
+	    $repaceI    = 'nine';
+	    $value      = preg_replace($characterI, $repaceI, $value);
+	    
+	    $characterO = '#(0)#imsU';
+	    $repaceO    = 'zero';
+	    $value      = preg_replace($characterO, $repaceO, $value);
+	    
+	    return $value;
+	}
+	
+	public static function check_email_exists($email) {
+	    
+	    // Kiểm tra xem email có hợp lệ hay không.
+	    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	        return false;
+	    }
+	    
+	    // Tách miền khỏi email.
+	    $domain = explode("@", $email)[1];
+	    
+	    // Kiểm tra xem miền có tồn tại trên máy chủ DNS hay không.
+	    $result = checkdnsrr($domain, "MX");
+	    
+	    // Nếu miền không tồn tại trên máy chủ DNS thì email không tồn tại.
+	    if (!$result) {
+	        return false;
+	    }
+	    
+	    // Email tồn tại.
+	    return true;
+	}
+	
+	public static function check_email_exists_with_google_api($email) {
+    
+	    require_once LIBRARY_PATH . 'google-api-php-client/vendor/autoload.php';
+	    //Composer 2.5.8
+	    // Tạo client.
+	    $client = new Google_Client();
+
+	    $client->setApplicationName('Kiem Tra Gmail');
+	    $client->setClientId('113379841975710140864');
+	    //$client->setClientSecret('YOUR_CLIENT_SECRET');
+	    //$client->setRedirectUri('YOUR_REDIRECT_URI');
+	    
+	    // Lấy token.
+	    $authUrl = $client->createAuthUrl();
+	    header('Location: ' . $authUrl);
+	    exit;
+	    
+	    // Xử lý phản hồi.
+	    if (isset($_GET['code'])) {
+	        $client->fetchAccessTokenWithAuthCode($_GET['code']);
+	    }
+	    
+	    // Kiểm tra xem địa chỉ email có tồn tại hay không.
+	    $service = new Google_Service_Gmail($client);
+	    $result = $service->users->messages->list('me', ['query' => "to:{$email}"]);
+	    if (isset($result['messages'])) {
+	        return true;
+	    } else {
+	        return false;
+	    }
 	}
 }
 

@@ -7,6 +7,11 @@ class CategoryController extends Controller
     {
         parent::__construct($arrParams);
         $this->_view->_tag          = 'category'; //for Sidebar
+        
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
 
     }
 
@@ -42,28 +47,21 @@ class CategoryController extends Controller
                     $arrCid .= "&cid[]=$valueCid";
                 }
             }
-
-            if ($this->_arrParam['selectBoxCatagory'] == 'delete') {
-                URL::redirect('backend', 'category', 'deleteMult', NULL , $arrCid);
-            }
-
-            if ($this->_arrParam['selectBoxCatagory'] == 'active') {
-                
-                $strRequest = $arrCid.'&statusChoose=1';
-                URL::redirect('backend', 'category', 'status', NULL ,$strRequest);
-                
-            }
-
-            if ($this->_arrParam['selectBoxCatagory'] == 'inactive') {
-                $strRequest = $arrCid.'&statusChoose=0';
-                URL::redirect('backend', 'category', 'status', NULL ,$strRequest);
+            
+            switch ($this->_arrParam['selectBoxCatagory']){
+                case 'delete':
+                    URL::redirect('backend', 'category', 'deleteMult', NULL , $arrCid);
+                    break;
+                case 'active':
+                    $strRequest = $arrCid.'&statusChoose=1';
+                    URL::redirect('backend', 'category', 'status', NULL ,$strRequest);
+                    break;
+                case 'inactive':
+                    $strRequest = $arrCid.'&statusChoose=0';
+                    URL::redirect('backend', 'category', 'status', NULL ,$strRequest);
+                    break;
             }
        }
-        
-        // filter and search
-//         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectCatagoryACP'])) {
-//             $this->filterAndSearchAction();
-//         }
 
         //Odering
         if (isset($_GET['order'])) {
@@ -96,11 +94,6 @@ class CategoryController extends Controller
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
 
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('category-list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-
         $this->_view->render('category/index', true);
         
         ob_end_flush();
@@ -129,30 +122,6 @@ class CategoryController extends Controller
          $return = json_encode($this->_model->changeOrdering($this->_arrParam, $option = array('task' => 'change-ajax-ordering')));
          echo $return;
     }
-    
-    public function filterAndSearchAction()
-    {
-
-        if (@$_GET['clear'] != '') {
-            Session::delete('search');
-            $_GET['search'] = '';
-        }
-        if (@$_GET['filter'] == 'all') {
-            Session::set('filter', '');
-        }
-
-        if (isset($_GET['search'])) {
-            $search  = trim($_GET['search']);
-            Session::set('search', $search);
-        }
-
-        if (isset($_GET['filter'])) {
-            $status  = trim($_GET['filter']);
-            Session::set('filter', $status);
-        }
-
-    }
-
 
     public function clearAction()
     {
@@ -251,7 +220,6 @@ class CategoryController extends Controller
 
         if (@$this->_arrParam['form']['token'] > 0) { 
             $this->_arrParam['form']['name'] = mysqli_real_escape_string($this->_model->connect,$this->_arrParam['form']['name']);
-            //$taskAction = 'add';
             $queryName  = "SELECT `id` FROM `" . TBL_CATEGORY . "` WHERE `name`   = '" . $this->_arrParam['form']['name'] . "'";
             
             if(isset($this->_arrParam['form']['id'])){
@@ -290,11 +258,6 @@ class CategoryController extends Controller
         }
 
         $this->_view->arrParam      = $this->_arrParam;
-
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('category-form.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
 
         $this->_view->render('category/form', true);
     }
@@ -341,12 +304,6 @@ class CategoryController extends Controller
     }
     
     public function errorAction(){
-        
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('error.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
         $this->_view->render('error/error', true);
     }
 }

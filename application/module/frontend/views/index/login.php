@@ -1,24 +1,24 @@
 <?php 
 
-    $linkAction     = URL::createLink('frontend', 'index', 'login');
-    $showErrors     = '';
-    if(!empty(@$this->errors)){
-        $showErrors     = '<div class="alert bg-danger alert-dismissible">
-                                '.$this->errors.'
-                           </div>';  
-    }
-    
-    $inputEmail    = Helper::cmsInput($type = 'email',  $name = 'form[email]'    ,  $value = "", $id = 'email'   , $class = 'form-control');
-    $inputPassword = Helper::cmsInput($type = 'text',   $name = 'form[password]' ,  $value = "", $id = 'password',  $class = 'form-control');
-    /*
-    <input type="hidden" id="form[token]" name="form[token]"
-        value="<?php echo time();?>">
-    */    
-    $inputToken    = Helper::cmsInput($type = 'hidden',$name = 'form[token]' ,  $value = time(), $id = 'form[token]', $class = '');
-    
-    $rowEmail      = Helper::cmsRow($lblName = 'Email'          , $input = $inputEmail    , $option = 'for="email"'     );
-    $rowPassword   = Helper::cmsRow($lblName = 'Mật Khẩu'       , $input = $inputPassword , $option = 'for="password"'  );
-    $buttonSubmit  = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-solid' , $textOutfit = 'Đăng Nhập' ,$name = "form[submit]" , $value = 'Đăng Nhập', $id = 'submit');
+$linkAction     = URL::createLink('frontend', 'index', 'login');
+$showErrors     = '';
+if(!empty(@$this->errors)){
+    $showErrors     = '<div class="alert bg-danger alert-dismissible">
+                            '.$this->errors.'
+                       </div>';  
+}
+
+$inputEmail    = Helper::cmsInput($type = 'email',  $name = 'form[email]'    ,  $value = "", $id = 'email'   , $class = 'form-control');
+$inputPassword = Helper::cmsInput($type = 'text',   $name = 'form[password]' ,  $value = "", $id = 'password',  $class = 'form-control');
+
+$inputToken    = Helper::cmsInput($type = 'hidden',$name = 'form[token]' ,  $value = time(), $id = 'form[token]', $class = '');
+
+$rowEmail      = Helper::cmsRow($lblName = 'Email'          , $input = $inputEmail    , $option = 'for="email"'     );
+$rowPassword   = Helper::cmsRow($lblName = 'Mật Khẩu'       , $input = $inputPassword , $option = 'for="password"'  );
+$buttonSubmit  = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-solid' , $textOutfit = 'Đăng Nhập' ,$name = "form[submit]" , $value = 'Đăng Nhập', $id = 'submit');
+
+$register      = URL::createLink('frontend', 'index', 'register'); 
+
 ?>
 <div class="breadcrumb-section">
 	<div class="container">
@@ -70,7 +70,7 @@
 					<p>Sign up for a free account at our store. Registration is quick
 						and easy. It allows you to be able to order from our shop. To
 						start shopping click register.</p>
-					<a href="register.html" class="btn btn-solid">Đăng ký</a>
+					<a href="<?php echo $register;?>" class="btn btn-solid">Đăng ký</a>
 				</div>
 			</div>
 		</div>

@@ -1,19 +1,32 @@
 <?php
 
-    $strSpecial1       = '\\';
-    $strSpecial2       = "/";
-    $imageURL          = str_replace($strSpecial1 ,$strSpecial2, $imageURL); 
+    $activeQuickViewModal   = '';
+    if(isset($_SESSION['user'])){
+        if($_SESSION['user']['login'] == 1){
+            // code này có trong thẻ mới hiện modal
+            $activeQuickViewModal = 'data-toggle="modal" data-target="#quick-view"';//data-target là id của modal
+        }
+    }
     
     $dataSpecialBookBanner = $this->bookSpecial;
-    /*Trộn mảng book Special*/
+    
+    /*Trộn mảng book Special để cho ra 1 sắp xếp ngẫu nhiên*/
     require_once LIBRARY_PATH . 'functions.php';
     $dataSpecialBookBanner = mixArray($dataSpecialBookBanner); 
     
     $xhtmlBookProduct = '';
     foreach ($dataSpecialBookBanner as $keyBook=>$valueBook){
+        
         $id               = $valueBook['id'];
         $nameBook         = $valueBook['name'];
-        $urlBookSpecialInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
+        $bookNameURL      = Helper::replaceSpecialChar($valueBook['name']); 
+        $bookNameURL      = Helper::replaceNumberChar($bookNameURL); 
+        $bookNameURL      = URL::filterURL($bookNameURL);
+        $catNameURL       = URL::filterURL($valueBook['category_name']);
+        
+        $catID      = $valueBook['category_id'];
+        
+        $urlBookSpecialInfo = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id),null,null,"$catNameURL/$bookNameURL-$catID-$id.html");
         
         $pictureURL         = Helper::createImageURL('book', $valueBook['picture']);
         $picture            = Helper::createImageShort('book', $valueBook['picture'],array('class'=>'img-fluid blur-up lazyload bg-img'),array('display'=>'none'));
@@ -53,16 +66,19 @@
         $linkOrderSpecial          = json_encode($linkOrderSpecial);
         $linkOrderJSONSpecial      = htmlentities($linkOrderSpecial);
         
+        $session_flag_stop         = FALSE; 
         /* Ajax Order Trường hợp chưa đăng nhập */
         if(!isset($_SESSION['user'])){
             $linkOrderJSONSpecial = Null;
+            $session_flag_stop    = TRUE;
         }
         
         // Quick View
         $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
         $arrQuickView       = array(
-            'book_id'=>$id,
-            'url'    =>$urlQuickView
+            'book_id'             =>$id,
+            'url'                 =>$urlQuickView,
+            'session_flag_stop'   =>$session_flag_stop
         );
         
         $jsonQuickView          = json_encode($arrQuickView);
@@ -78,7 +94,7 @@
                                     </div>
                                     <div class="cart-info cart-wrap">
                                         <a href="#" onclick="ajaxOrder(\''.$linkOrderJSONSpecial.'\')" title="Add to cart"><i class="ti-shopping-cart"></i></a>
-                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$jsonQuickViewSpecial.')"><i class="ti-search" data-toggle="modal" data-target="#quick-view"></i></a>
+                                        <a href="#" title="Quick View" id="quickView-'.$id.'" onclick="quickViewFunction('.$jsonQuickViewSpecial.')"><i class="ti-search" '.$activeQuickViewModal.'></i></a>
                                     </div>
                                 </div>
                                 <div class="product-detail">

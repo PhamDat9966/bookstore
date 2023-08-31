@@ -96,8 +96,7 @@ class BookModel extends Model
     
     public function countItemsPaginator($arrParam,$option = null)
     {
-        //$totalItemsCount = $arrParam['count']['allStatus'];
-        
+
         $queryContent   = [];
         $queryContent[] = "SELECT `id`,COUNT(`id`) AS `count`";
         $queryContent[] = "FROM `$this->_tableName`";
@@ -469,7 +468,14 @@ class BookModel extends Model
     
     public function deleteItem($id,$option = null)
     {
-        $this->delete([$id]);
+        $arrParam = array('id'=>$id);
+        $infoItem = $this->infoItem($arrParam);
+
+        if($this->delete([$id])){
+            
+            $fileName   =   UPLOAD_PATH . 'book' . DS . $infoItem['picture'];
+            unlink($fileName);
+        }
         Session::set('message', array('class' => 'success', 'content' => 'Xóa thành công!'));
     }
     
@@ -477,11 +483,26 @@ class BookModel extends Model
     {
         
         if($option == null){
+            
             if(!empty($arrParam['cid'])){
-                $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
-                $query		= "DELETE FROM `$this->table` WHERE `id` IN ($ids)";
-                $this->query($query);
-                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được xóa!'));
+                
+               $i=0;
+               foreach ($arrParam['cid'] as $elementDelete){
+
+                   $arrElementDelete    = array('id'=>$elementDelete);
+                   $infoElementDelete   = $this->infoItem($arrElementDelete);
+                   
+                   if($this->delete([$elementDelete])){
+                       
+                       $fileName   =   UPLOAD_PATH . 'book' . DS . $infoElementDelete['picture'];
+                       unlink($fileName);
+                       
+                       $i++;  
+                   }
+
+               }
+               Session::set('message', array('class' => 'success', 'content' => 'Có ' . $i . ' phần tử được xóa!'));
+               
             }else{
                 Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muốn xóa!'));
             }

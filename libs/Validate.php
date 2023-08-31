@@ -104,6 +104,9 @@ class Validate{
 					case 'extension':
 					    $this->validateExtension($element, $value['options']);
 					    break;
+					case 'ckeck-email':
+					    $this->validateCheckEmailExists($element, $value['options']);
+					    break;
 				}
 			}
 			if(!array_key_exists($element, $this->errors)) {
@@ -286,6 +289,23 @@ class Validate{
 	    }
 	}
 	
+	private function validateCheckEmailExists($element, $options) {
+
+	    // Kiểm tra xem email có hợp lệ hay không.
+	    if (!filter_var($options['email'], FILTER_VALIDATE_EMAIL)) {
+	        return false;
+	    }
+	    
+	    // Tách miền khỏi email.
+	    $domain = explode("@", $options['email'])[1];
+	    
+	    // Kiểm tra xem miền có tồn tại trên máy chủ DNS hay không.
+	    $return = checkdnsrr($domain, "MX");
+	    
+	    if($return == false){
+	        $this->setError($element, 'Extension does not fit');
+	    }
+	}
 }
 
 

@@ -7,7 +7,12 @@ $xhtmlQuickView     = '';
 foreach ($this->Items as $valueInfoBook){
     
     $id                 = $valueInfoBook['id'];
-    //$nameBook           = $valueInfoBook['name'];
+    $catID              = $valueInfoBook['category_id'];
+    
+    $bookNameURL        = Helper::replaceSpecialChar($valueInfoBook['name']); 
+    $bookNameURL        = Helper::replaceNumberChar($bookNameURL); 
+    $bookNameURL        = URL::filterURL($bookNameURL);
+    $catNameURL         = URL::filterURL($valueInfoBook['category_name']);    
     
     require_once LIBRARY_EXT_PATH .'highlight.php';
     $highLight          = new Highlighter();
@@ -40,7 +45,7 @@ foreach ($this->Items as $valueInfoBook){
     $pictureURL         = Helper::createImageURL('book', $valueInfoBook['picture']);
     $picture            = Helper::createImageShort('book', $valueInfoBook['picture'],array('class'=>'img-fluid blur-up lazyload bg-img'),array('display'=>'none'));
     
-    $urlBookInfo        = URL::createLink('frontend', 'book', 'detail',array('book_id'=>$id));
+    $urlBookInfo        = URL::createLink('frontend', 'book', 'detail',array('category_id'=>$catID,'book_id'=>$id), null, null,"$catNameURL/$bookNameURL-$catID-$id.html");
     
     $attrAtagBookPic    = array('class'=>'bg-size blur-up lazyloaded');
     $styleAtagBookPic   = array(
@@ -53,20 +58,30 @@ foreach ($this->Items as $valueInfoBook){
     
     $aTagBookPicture    = Helper::createImageATag($urlBookInfo,$attrAtagBookPic,$styleAtagBookPic,$picture,$tabIndex);
     
+    /* Ajax Order add cart*/
+    $linkOrderJSONDetail      = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal,'quantity'=>1));
+    $linkOrderJSONDetail      = json_encode($linkOrderJSONDetail);
+    $linkOrderJSONDetail      = htmlentities($linkOrderJSONDetail);
+    
+    $session_flag_stop         = FALSE;
+    /* Ajax Order Trường hợp chưa đăng nhập */
+    if(!isset($_SESSION['user'])){
+        $linkOrderJSONDetail  = Null;
+        $session_flag_stop    = TRUE;
+    }
+    
     
     $urlQuickView       = URL::createLink('frontend', 'book', 'quickView');
     $arrQuickView       = array(
                                 'book_id'=>$id,
-                                'url'=>$urlQuickView
+                                'url'=>$urlQuickView,
+                                'session_flag_stop' => $session_flag_stop
                           );
     
     $jsonQuickView      = json_encode($arrQuickView);
     $jsonQuickView      = htmlentities($jsonQuickView);
     
-    /* Ajax Order add cart*/
-    $linkOrderJSONDetail      = URL::createLink('frontend', 'user', 'ajaxOrder',array('book_id'=>$id,'price'=>$priceReal,'quantity'=>1));
-    $linkOrderJSONDetail      = json_encode($linkOrderJSONDetail);
-    $linkOrderJSONDetail      = htmlentities($linkOrderJSONDetail);
+
     
     $xhtmlInfoCategory .='<div class="col-xl-3 col-6 col-grid-box">
                             <div class="product-box">
@@ -90,7 +105,7 @@ foreach ($this->Items as $valueInfoBook){
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                     </div>
-                                    <a href="item.html" title="'.$nameBook.'">
+                                    <a href="'.$urlBookInfo.'" title="'.$nameBook.'">
                                         <h6>'.$nameBook.'</h6>
                                     </a>
                                     <p>'.$shortDescription.'</p>
@@ -128,8 +143,15 @@ $navigation   = $this->Pagination['paginationHTML'];
 	</div>
 </div>
 <?php 
-//LEFT MENU
-$listCategoryMenu = $this->category_menu; //Từ header_navigation
+
+//LEFT MENU CATEGORY
+//$listCategoryMenu = $this->category_menu; //Từ header_navigation
+
+// lấy danh sách category  tu modul
+$modul              = new Model();
+$query              = 'SELECT `id`,`name` FROM `category` WHERE `status`= 1 ORDER BY `ordering` ASC';
+$listCategoryMenu   = $modul->fetchPairs($query);
+
 $categoryID       = '';
 if(isset($this->arrParam['category_id'])){
     $categoryID       = $this->arrParam['category_id'];
@@ -139,8 +161,12 @@ $activeMenu       = '';
 
 $xhtmlCategoryList = '';
 foreach ($listCategoryMenu as $keyCategory=>$valueCategory){
-    $linkCategory   = URL::createLink('frontend', 'book', 'list', array('category_id'=>$keyCategory));
-    $activeMenu     = ($categoryID == $keyCategory)? 'my-text-primary' : 'text-dark';
+    $idCat              = $keyCategory;
+    $nameCat            = $valueCategory;
+    $nameCatURL         = URL::filterURL($nameCat);
+    
+    $linkCategory       = URL::createLink('frontend', 'book', 'list', array('category_id'=>$keyCategory), null , null , "$nameCatURL-$idCat.html");
+    $activeMenu         = ($categoryID == $keyCategory)? 'my-text-primary' : 'text-dark';
     $xhtmlCategoryList .= '<div
 							class="custom-control custom-checkbox collection-filter-checkbox pl-0 category-item">
 							<a class="'.$activeMenu.'" href="'.$linkCategory.'">'.$valueCategory.'</a>
@@ -148,6 +174,7 @@ foreach ($listCategoryMenu as $keyCategory=>$valueCategory){
 }
 
 ?>
+
 <section class="section-b-space j-box ratio_asos">
 	<div class="collection-wrapper">
 		<div class="container">
@@ -188,10 +215,8 @@ foreach ($listCategoryMenu as $keyCategory=>$valueCategory){
 $arrDocking = array(2,3,4,6);
 $xhtmlDocking = '';
 foreach ($arrDocking as $valueDocking){
-    $icon         = UPLOAD_URL . 'icon' . DS . $valueDocking.'.png';
-    $strSpecial1       = '\\';
-    $strSpecial2       = "/";
-    $icon         = str_replace($strSpecial1 ,$strSpecial2, $icon);
+    
+    $icon          = Helper::createImageURL('icon', $valueDocking.'.png');
     $xhtmlDocking .= '<li class="my-layout-view" data-number="'.$valueDocking.'">
                         <img src="'.$icon.'" alt="" class="product-'.$valueDocking.'-layout-view">
                     </li>';

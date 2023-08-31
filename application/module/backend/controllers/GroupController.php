@@ -7,7 +7,11 @@ class GroupController extends Controller
     {
         parent::__construct($arrParams);
         $this->_view->_tag          = 'group'; //for Sidebar
-
+        
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
     }
 
     public function listAction()
@@ -37,13 +41,13 @@ class GroupController extends Controller
 
             if ($this->_arrParam['selectBox'] == 'delete') {
                 URL::redirect('backend', 'group', 'deleteMult',NULL, $arrCid);
-            }
+            }else
             
             if ($this->_arrParam['selectBox'] == 'action') {
                 
                 $strRequest = $arrCid.'&statusChoose=1';
                 URL::redirect('backend', 'group', 'status', NULL ,$strRequest);
-            }
+            }else
             
             if ($this->_arrParam['selectBox'] == 'inactive') {
                 
@@ -52,11 +56,6 @@ class GroupController extends Controller
             }
 
         }
-
-        // filter and search
-//         if (isset($this->_arrParam['filter']) || isset($this->_arrParam['search']) || isset($this->_arrParam['clear']) || isset($this->_arrParam['selectGroupACP'])) {
-//             //$this->filterAndSearchAction();  
-//         }        
 
         if(isset($this->_arrParam['selectGroupACP'])){
             if($this->_arrParam['selectGroupACP'] == 'groupACP'){
@@ -112,11 +111,6 @@ class GroupController extends Controller
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
 
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('group-list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-
         $this->_view->render('group/index', true);
         
         ob_end_flush();
@@ -157,35 +151,6 @@ class GroupController extends Controller
         $return = json_encode($this->_model->changeStatus($this->_arrParam, $option = array('task' => 'change-ajax-status')));
         echo $return;
     }
-
-    public function filterAndSearchAction()
-    {
-
-        if (@$_GET['clear'] != '') {
-            Session::delete('search');
-            $_GET['search'] = '';
-        }
-        if (@$_GET['filter'] == 'all') {
-            Session::set('filter', '');
-        }
-
-        if (isset($_GET['search'])) {
-            $search  = trim($_GET['search']);
-            Session::set('search', $search);
-        }
-
-        if (isset($_GET['filter'])) {
-            $status  = trim($_GET['filter']);
-            Session::set('filter', $status);
-        }
-
-        if (isset($_GET['selectGroupACP'])) {
-            $status  = trim($_GET['selectGroupACP']);
-            Session::set('selectGroupACP', $status);
-            $this->_view->_arrParam = $this->_arrParam;
-        }
-    }
-
 
     public function clearAction()
     {
@@ -255,11 +220,6 @@ class GroupController extends Controller
         $this->_view->_tag          = 'group';
         $this->_view->arrParam      = $this->_arrParam;
 
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('group-form.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-
         $this->_view->render('group/form', true);
     }
 
@@ -280,12 +240,6 @@ class GroupController extends Controller
     }
     
     public function errorAction(){
-        
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('error.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-        
         $this->_view->render('error/error', true);
     }
 }

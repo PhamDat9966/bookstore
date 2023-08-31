@@ -18,7 +18,7 @@
     $buttonSubmit  = Helper::cmsButtonSubmitPUBLIC($type = 'submit', $class = 'btn btn-solid' , $textOutfit = 'Tạo tài khoản' ,$name = "form[submit]" , $value = 'Tạo tài khoảng', $id = 'submit');
     $inputToken    = Helper::cmsInput($type = 'hidden', $name = '[form]token',  $value = time(),$id = 'token');
     
-    $registerLink  = URL::createLink($module = 'frontend', $controller = 'user', $action = 'register');
+    $registerLink  = URL::createLink($module = 'frontend', $controller = 'index', $action = 'register');
 
 ?>
 <div class="breadcrumb-section">
@@ -41,7 +41,7 @@
 				<div class="theme-card">
 					<!-- Form -->
 <!-- 					<form action="#" method="get" id="admin-form" class="theme-form"> -->
-					<form action="<?php echo $registerLink;?>" method="post" id="admin-form" class="theme-form">
+					<form action="" method="post" id="admin-form" class="theme-form">
 						<div class="form-row">
 							<!-- module controller action typeSave -->
 							<?php //echo $module . $controller . $action;?>

@@ -9,6 +9,12 @@
     
     $userUrl   = URL::createLink('backend', 'user', 'list');
     $userLink  = Helper::cmsButton($url = $userUrl, $class = "small-box-footer", $textOufit = 'More info <i class="fas fa-arrow-circle-right"></i>');
+    
+    $categoryUrl   = URL::createLink('backend', 'category', 'list');
+    $categoryLink  = Helper::cmsButton($url = $categoryUrl, $class = "small-box-footer", $textOufit = 'More info <i class="fas fa-arrow-circle-right"></i>');
+    
+    $bookUrl   = URL::createLink('backend', 'book', 'list');
+    $bookLink  = Helper::cmsButton($url = $bookUrl, $class = "small-box-footer", $textOufit = 'More info <i class="fas fa-arrow-circle-right"></i>');
 ?>
 <div class="row">
 		<div class="col-lg-3 col-6">
@@ -60,8 +66,9 @@
 				<div class="icon">
 					<i class="ion ion-ios-folder"></i>
 				</div>
-				<a href="#" class="small-box-footer">More info <i
-					class="fas fa-arrow-circle-right"></i></a>
+				<?php
+				    echo $categoryLink;
+				?>
 			</div>
 		</div>
 
@@ -76,8 +83,9 @@
 				<div class="icon">
 					<i class="ion ion-ios-book"></i>
 				</div>
-				<a href="#" class="small-box-footer">More info <i
-					class="fas fa-arrow-circle-right"></i></a>
+				<?php 
+				    echo $bookLink;
+				?>
 			</div>
 		</div>
 

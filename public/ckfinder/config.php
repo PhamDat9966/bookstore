@@ -32,8 +32,8 @@ $config['authentication'] = function () {
 /*============================ License Key ============================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_licenseKey
 
-$config['licenseName'] = '';
-$config['licenseKey']  = '';
+$config['licenseName'] = 'localhost';
+$config['licenseKey']  = '5TYTC8VHDK33EE9SPG5A4TEPW9FHC';
 
 /*============================ CKFinder Internal Directory ============================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_privateDir
@@ -66,7 +66,8 @@ $config['images'] = array(
 $config['backends'][] = array(
     'name'         => 'default',
     'adapter'      => 'local',
-    'baseUrl'      => '/ckfinder/userfiles/',
+    //'baseUrl'      => '/ckfinder/userfiles/',
+    'baseUrl'      => 'http://localhost/bookstore/public/files/ckfinder/', // image's location
 //  'root'         => '', // Can be used to explicitly set the CKFinder user files directory.
     'chmodFiles'   => 0777,
     'chmodFolders' => 0755,

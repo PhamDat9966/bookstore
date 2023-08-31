@@ -3,7 +3,7 @@
 $bookComp     = $this->Book;
 $bookNameComp = $bookComp['name'];
 $pictureComp  = UPLOAD_URL .'book' . DS . $bookComp['picture'];
-$cartLink     = URL::createLink('frontend', 'user', 'cart');
+$cartLink     = URL::createLink('frontend', 'user', 'cart', null, null, null, 'cart.html');
 
 ?>
 <div class="modal fade bd-example-modal-lg theme-modal" id="quick-view-complete-order" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">

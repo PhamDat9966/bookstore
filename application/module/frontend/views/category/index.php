@@ -1,19 +1,16 @@
 <?php 
-// $imageURL           = $this->_urlImg;
-// $strSpecial1        = '\\';
-// $strSpecial2        = "/";
-// $imageURL           = str_replace($strSpecial1 ,$strSpecial2, $imageURL);
-
 
 $xhtml = '';
 
 foreach ($this->Items as $keyCats=>$valueCats){
-    $imgURL =  UPLOAD_URL .'category' . DS . $valueCats['picture'];
-    $strSpecial1        = '\\';
-    $strSpecial2        = "/";
-    $imgURL           = str_replace($strSpecial1 ,$strSpecial2, $imgURL);
     
-    $urlCategory      = URL::createLink('frontend', 'book', 'list', array('category_id'=>$valueCats['id']));  
+    $id         = $valueCats['id'];                             
+    $imgURL           = Helper::createImageURL('category', $valueCats['picture']);
+    
+    $name             = $valueCats['name'];
+    $nameURL          = URL::filterURL($name);
+    
+    $urlCategory      = URL::createLink('frontend', 'book', 'list', array('category_id'=>$valueCats['id']), null,null,"$nameURL-$id.html");  
     
     $xhtml .= '<div class="product-box">
                     <div class="img-wrapper">

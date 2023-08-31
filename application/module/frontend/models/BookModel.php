@@ -2,12 +2,12 @@
 
 class BookModel extends Model
 {
-    public $_arrParam;
-    public $_saveParam = [];
-    protected $_tableName = TBL_BOOK;
-    public    $_cunrrentPage      = 1;
-    private $_userInfo;
-    private $_columns = array('id','name','picture','created','created_by','modified','modified_by','status','ordering');
+    public      $_arrParam;
+    public      $_saveParam = [];
+    protected   $_tableName = TBL_BOOK;
+    public      $_cunrrentPage      = 1;
+    private     $_userInfo;
+    private     $_columns = array('id','name','picture','created','created_by','modified','modified_by','status','ordering');
                             
     
     public function __construct()
@@ -23,7 +23,8 @@ class BookModel extends Model
             $queryContent   = [];
             $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`b`.`shortDescription`,`b`.`picture`,`b`.`price`,`b`.`sale_off`,(`b`.`price`-`b`.`price`*`b`.`sale_off`/100) AS `priceReal`,`b`.`category_id`,`b`.`created`,`b`.`created_by`,`b`.`modified`,`b`.`modified_by`,`b`.`status`,`b`.`special`,`b`.`ordering`,`c`.`name` AS `category_name`";
             $queryContent[] = "FROM `".$this->_tableName."` AS `b` LEFT JOIN `".TBL_CATEGORY."` AS `c` ON `b`.`category_id` = `c`.`id`";
-            $queryContent[] = "WHERE `b`.`status` = 1";
+            $queryContent[] = "WHERE `b`.`category_id` = `c`.`id`";
+            $queryContent[] = "AND `b`.`status` = 1";
             
             if(isset($arrParam['category_id'])){
                 $queryContent[] = "AND `b`.`category_id` = ".$arrParam['category_id']."";
@@ -38,8 +39,7 @@ class BookModel extends Model
             }
             
             if(isset($arrParam['sort'])){
-                //$priceReal  =                  
-                
+
                 if($arrParam['sort'] == 'price_asc'){
                     $queryContent[]     = 'ORDER BY `priceReal` ASC';
                 } elseif ($arrParam['sort'] == 'price_desc'){
@@ -115,9 +115,12 @@ class BookModel extends Model
         
         if($option['task'] == 'get-book-info'){
             $queryContent   = [];
-            $queryContent[] = "SELECT `id`,`name`,`shortDescription`,`description`,`picture`,`sale_off`,`price`,`category_id`";
-            $queryContent[] = "FROM `$this->_tableName`";
-            $queryContent[] = "WHERE `id` = ".$arrParam['book_id']."";
+            $queryContent[] = "SELECT `b`.`id`,`b`.`name`,`c`.`name` AS category_name,`b`.`shortDescription`,`b`.`description`,`b`.`picture`,`b`.`sale_off`,`b`.`price`,`b`.`category_id`";
+            $queryContent[] = "FROM `$this->_tableName` AS `b`,`".TBL_CATEGORY."` AS `c`";
+            $queryContent[] = "WHERE `b`.`category_id` = `c`.`id`";
+            $queryContent[] = "AND `b`.`id` = ".$arrParam['book_id']."";
+            $queryContent[] = "AND `b`.`category_id` = ".$arrParam['category_id']."";
+            $queryContent[] = "AND `b`.`status` = 1";
             $queryContent   = implode(" ", $queryContent);
             $result         = $this->fetchRow($queryContent);
             return $result;
@@ -126,7 +129,7 @@ class BookModel extends Model
         if($option['task'] == 'get-cat-name'){
             
             $queryContent   = [];
-            $queryContent[] = "SELECT `name`";
+            $queryContent[] = "SELECT `id`,`name`";
             $queryContent[] = "FROM `".TBL_CATEGORY."`";
             $queryContent[] = "WHERE `id` = ".$arrParam['category_id']."";
             $queryContent   = implode(" ", $queryContent);
@@ -148,7 +151,7 @@ class BookModel extends Model
         $queryContent[] = "WHERE `status` = 1";
         
         if(!empty($arrParam['search'])){
-            $keyword                    = '"%'.$arrParam['search'].'%"';
+            $keyword           = '"%'.$arrParam['search'].'%"';
             $queryContent[]    = "AND (`name` LIKE $keyword)";
         }
         

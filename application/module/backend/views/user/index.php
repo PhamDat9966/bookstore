@@ -73,7 +73,7 @@ if(!empty($this->Items)){
             $k++;
         }
 
-        $selectGroupForUser     = Helper::cmsSelectboxForUserSelectGroup($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectGroupForUser,$keySelect = $value['group_name'], $style = null,$idSelectBox = "selectGroupForUser",$option = 'onchange=\'changeGroupUser(this.value)\'');
+        $selectGroupForUser     = Helper::cmsSelectboxForUserSelectGroup($name="selectGroupForUser", $class="form-control custom-select w-auto", $arrValue = $jsonArrSelectGroupForUser,$keySelect = $value['group_name'], $style = null,$idSelectBox = "selectGroupForUser-$id",$option = 'onchange=\'changeGroupUser(this.value)\'');
         
         $jsonArrSelectGroupForUser = '';
         $row                = ($i % 2 == 0) ? 'odd' : 'even';

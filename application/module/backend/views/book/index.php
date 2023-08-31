@@ -9,7 +9,8 @@ $selectCategory = $this->slbCategory;
 $listUserWithGroupACP = $this->listUserGroupACP;
 
 // Bulk Action
-$arrSelectBox       = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
+//$arrSelectBox       = ['0'=>'Bulk Action','delete'=>'Delete','action'=>'Active','inactive'=>'Inactive'];
+$arrSelectBox       = ['0'=>'Bulk Action','delete'=>'Delete','active'=>'Active','inactive'=>'Inactive'];
 $selection          = Helper::cmsSelectbox('selectBoxBook', 'form-control custom-select', $arrSelectBox, '0', null,$id = 'selectBoxBook');
 $buttonSelection    = Helper::cmsButtonSubmit($type ="submit", $class = 'btn btn-info' ,$textOutfit = "Apply", $name = "bulk" , $value = "bulk" , $id = 'bulkApplyUser');
 
@@ -96,19 +97,11 @@ if(!empty($this->Items)){
         
         $created            = '<i class="far fa-user"></i>  '.$created_by.'<br/>';
         $created           .='<i class="far fa-clock"></i>  '.$arrCreatedTime[1].' '.Helper::formatDate('d-m-Y', $arrCreatedTime[0]);
-        
-        //MODIFIED
-        // Time modified
-//         $arrModifiedTime    = explode(' ', $value['modified']);
-//         $modified           = '<i class="far fa-user"></i>  '.$modified_by.'<br/>';
-//         $modified          .='<i class="far fa-clock"></i>  '.$arrModifiedTime[1].' '.Helper::formatDate('d-m-Y', $arrModifiedTime[0]);
-        
-        //$editAction         = Helper::showItemAction('backend', 'user', 'form', $id, 'edit');
+
         $editBookLink   = URL::createLink('backend', 'book', 'form', $parram = array('task'=>'edit','id'=>$id));
         $editBook       = Helper::cmsButton($url = $editBookLink, $class = 'btn btn-sm btn-info rounded-circle', $textOufit = '<i class="fas fa-pen"></i>');
         
         $deleteAction       = Helper::showItemAction('backend', 'book', 'delete', $id, $statusAction ='delete');
-
         
         $listBook     .=
         '<tr id="book-id-'.$id.'">
@@ -118,7 +111,7 @@ if(!empty($this->Items)){
             <td>'.$picture.'</td>
             <td>'.$price.'</td>
             <td>'.$saleOff.'</td>
-            <td id="selectCategoryForBook">'.$selectCategoryForBook.'</td>
+            <td id="selectCategoryForBookID-'.$id.'">'.$selectCategoryForBook.'</td>
             <td>'.$status.'</td>
             <td>'.$special.'</td>
             <td id="td-oder-'.$id.'">'.$ordering.'</td>    
@@ -136,7 +129,6 @@ if(!empty($this->Items)){
 
 $addNewUrl    = URL::createLink('backend', 'book', 'form');
 $addNewButton = Helper::cmsButton($url = $addNewUrl, $class = 'btn btn-info', $textOufit = '<i class="fas fa-plus"></i> Add New');
-
 
 ?>
 <!-- Main content -->

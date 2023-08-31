@@ -124,25 +124,28 @@ class CategoryModel extends Model
     
     public function deleteMultItem($arrParam,$option = null)
     {
+        
         if($option == null){
+            
             if(!empty($arrParam['cid'])){
-                $ids		= $this->createWhereDeleteSQL($arrParam['cid']);
                 
-                //Remove Images
-                $queryImg   = "SELECT `id`,`picture` AS `name` FROM `$this->_tableName` WHERE `id` IN ($ids)";
-                $arrImage   = $this->fetchPairs($queryImg);
-                
-                require_once LIBRARY_EXT_PATH . 'Upload.php';
-                $uploadObj = new Upload();
-                
-                foreach ($arrImage as $value){
-                    $uploadObj->removeFile('category', $value);
+                $i=0;
+                foreach ($arrParam['cid'] as $elementDelete){
+                    
+                    $arrElementDelete    = array('id'=>$elementDelete);
+                    $infoElementDelete   = $this->infoItem($arrElementDelete);
+
+                    if($this->delete([$elementDelete])){
+                        
+                        $fileName   =   UPLOAD_PATH . 'category' . DS . $infoElementDelete['picture'];
+                        unlink($fileName);
+                        
+                        $i++;
+                    }
+                    
                 }
+                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $i . ' phần tử được xóa!'));
                 
-                // Delete from Database
-                $query		= "DELETE FROM `$this->table` WHERE `id` IN ($ids)";
-                $this->query($query);
-                Session::set('message', array('class' => 'success', 'content' => 'Có ' . $this->affectedRows(). ' phần tử được xóa!'));
             }else{
                 Session::set('message', array('class' => 'error', 'content' => 'Vui lòng chọn vào phần tử muốn xóa!'));
             }

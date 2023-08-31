@@ -17,27 +17,26 @@ $hiddenSearch           = '';
 $hiddenSelectGroupACP   = '';
 
 //filterSearch
-
 if(isset($this->arrParam['filter'])){
-    if($this->arrParam['filter'] == 'active'){
-        
-        $hiddenFilter = '<input type="hidden" name="filter" value="active">';
-        $allButtonClass         = 'btn btn-secondary';
-        $activeButtonClass      = 'btn btn-info';
-        $inactiveButtonClass    = 'btn btn-secondary';
-    }
-    if($this->arrParam['filter'] == 'inactive'){
-        $hiddenFilter = '<input type="hidden" name="filter" value="inactive">';
-        $allButtonClass         = 'btn btn-secondary';
-        $activeButtonClass      = 'btn btn-secondary';
-        $inactiveButtonClass    = 'btn btn-info';
-    }
-    if($this->arrParam['filter'] == 'all'){
-        $hiddenFilter = '<input type="hidden" name="filter value="all">';
+    
+    switch ($this->arrParam['filter']){
+        case 'active':
+            $hiddenFilter = '<input type="hidden" name="filter" value="active">';
+            $allButtonClass         = 'btn btn-secondary';
+            $activeButtonClass      = 'btn btn-info';
+            $inactiveButtonClass    = 'btn btn-secondary';
+            break;
+        case 'inactive':
+            $hiddenFilter = '<input type="hidden" name="filter" value="inactive">';
+            $allButtonClass         = 'btn btn-secondary';
+            $activeButtonClass      = 'btn btn-secondary';
+            $inactiveButtonClass    = 'btn btn-info';
+            break;
+        case 'all':
+            $hiddenFilter = '<input type="hidden" name="filter value="all">';
+            break;
     }
 }
-
-//if(isset($this->arrParam['search'])) $hiddenSearch = '<input type="hidden" name="search" value="'.$this->arrParam['search'].'">';
 
 $buttonSubmit = Helper::cmsButtonSubmit($type='submit',$class='btn btn-info', $textOufit='Search');
 
@@ -46,7 +45,7 @@ $textSpanIconAll  = 'All <span class="badge badge-pill badge-light">'.$allItem.'
 $buttonAll = Helper::cmsButtonSubmit($type='submit',$class = $allButtonClass, $textOufit = $textSpanIconAll, $name='filter', $value='all');
 
 //Active
-//<a href="#" class="btn btn-secondary">Active <span class="badge badge-pill badge-light">3</span></a>
+
 $textSpanIconActive  = 'Active <span class="badge badge-pill badge-light">'.$activeItem.'</span>';
 $buttonActive    = Helper::cmsButtonSubmit($type='submit',$class = $activeButtonClass, $textOufit = $textSpanIconActive,$name='filter',$value='active');
 
@@ -78,7 +77,7 @@ if($inactiveItem  == 0)  {
 }
 
 //FILTER
-$filterButton          = $hiddenFilter.' '. $buttonAll.' '.$buttonActive.' '.$buttonInactive;
+$filterButton      = $hiddenFilter.' '. $buttonAll.' '.$buttonActive.' '.$buttonInactive;
                    
 //SEARCH
 $formSearch        = '<div class="input-group">
@@ -100,7 +99,7 @@ if($this->arrParam['controller'] == 'group'){
     }
     $arrGroupACP        = ['groupACP'=>'- Select Group ACP -','0'=>'No','1'=>'Yes'];
     $selectBoxFilterSearch     = Helper::cmsSelectbox('selectGroupACP', 'form-control custom-select', $arrGroupACP , $selectGroupACP, null,$id = 'selectGroupACP');
-}
+}else 
 
 /*---------user----------*/
 if($this->arrParam['controller'] == 'user'){
@@ -119,7 +118,7 @@ if($this->arrParam['controller'] == 'user'){
         $arrGroup[$keyGroup] = $valueGroup;
     }
     $selectBoxFilterSearch      = Helper::cmsSelectbox('selectGroup', 'form-control custom-select',$arrValue = $arrGroup , $keySelect = $selectGroupFirst, null,$id = 'selectGroup');
-}
+}else 
 
 /*---------book----------*/
 if($this->arrParam['controller'] == 'book'){

@@ -10,12 +10,18 @@ class BookController extends Controller
         parent::__construct($arrParams);
         $this->_view->_tag          = 'book'; //for Sidebar
         
+        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
+        $this->_templateObj->setFileTemplate('index.php');
+        $this->_templateObj->setFileConfig('template.ini');
+        $this->_templateObj->load();
+        
     }
 
     public function listAction()
     {            
+
         ob_start();
-            
+        
         // Clear Search
         if(isset($this->_arrParam['clear'])) {
             
@@ -28,8 +34,6 @@ class BookController extends Controller
         $this->_view->slbCategory          = $this->_model->categoryInSelectbox($this->_arrParam, $numberGroup = null);
         // For created_by modufied_by
         $this->_view->listUserGroupACP     = $this->_model->listUserGroupACP($this->_arrParam);
-        // Dành cho Ajax modified, modified_by
-        //$this->_model->listUserGroupACP    = $this->_model->listUserGroupACP($this->_arrParam);  
 
         //Bulk Action
         if (isset($this->_arrParam['selectBoxBook'])) {
@@ -41,27 +45,20 @@ class BookController extends Controller
                 }
             }
             
-            if ($this->_arrParam['selectBoxBook'] == 'delete') {
-                URL::redirect('backend', 'book', 'deleteMult',NULL, $arrCid);
-            }
-
-            if ($this->_arrParam['selectBoxBook'] == 'action') {
-
-                $strRequest = $arrCid.'&statusChoose=1';                
-                URL::redirect('backend', 'book', 'status', NULL ,$strRequest);
-            }
-
-            if ($this->_arrParam['selectBoxBook'] == 'inactive') {
-
-                $strRequest = $arrCid.'&statusChoose=0';
-                URL::redirect('backend', 'book', 'status', NULL ,$strRequest);
+            switch ($this->_arrParam['selectBoxBook']){
+                case 'delete':
+                    URL::redirect('backend', 'book', 'deleteMult',NULL, $arrCid);
+                    break;
+                case 'active':
+                    $strRequest = $arrCid.'&statusChoose=1';
+                    URL::redirect('backend', 'book', 'status', NULL ,$strRequest);
+                    break;
+                case 'inactive': 
+                    $strRequest = $arrCid.'&statusChoose=0';
+                    URL::redirect('backend', 'book', 'status', NULL ,$strRequest);
+                    break;
             }
         }
-
-        // filter and search
-//         if (isset($_GET['filter']) || isset($_GET['search']) || isset($_GET['clear']) || isset($_GET['selectGroup'])) {
-//             $this->filterAndSearchAction();
-//         }
 
         // charge active, inactive userACB and status
         if (isset($this->_arrParam['id'])) {
@@ -71,8 +68,7 @@ class BookController extends Controller
             if (isset($this->_arrParam['status'])) {
                 $this->statusAction();
             }
-
-            // áº¨n url biáº¿n get cá»§a groupACB vÃ  Status báº±ng cÃ¡ch gá»�i láº¡i liÃªn káº¿t          
+      
             $this->redirec($this->_arrParam['module'], $this->_arrParam['controller'], $this->_arrParam['action'], $this->_arrParam['page']);
         }
         
@@ -83,7 +79,7 @@ class BookController extends Controller
             }
         }
         
-        //Paginator
+        //Created Paginator
         $this->_arrParam['count']  = $this->_model->countFilterSearch($this->_arrParam);
         $this->_view->_count       = $this->_arrParam['count'];
         $this->_model->_countParam = $this->_arrParam['count'];
@@ -109,13 +105,17 @@ class BookController extends Controller
         $this->_view->Items         = $this->_model->listItems($this->_arrParam);
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
 
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('book-list.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-
         $this->_view->render('book/index', true);
         ob_end_flush();
+    }
+    
+    
+    public function deleteMultAction(){
+        
+        $this->_model->deleteMultItem($this->_arrParam);
+        $this->redirec('backend', 'book', 'list');
+        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
+        
     }
     
     public function ajaxOrderingAction()
@@ -144,37 +144,6 @@ class BookController extends Controller
         echo $return;
     }
 
-    public function filterAndSearchAction()
-    {
-
-        if (@$_GET['clear'] != '') {
-            Session::delete('search');
-            $_GET['search'] = '';
-        }
-        if (@$_GET['filter'] == 'all') {
-            Session::set('filter', '');
-        }
-
-        if (isset($_GET['search'])) {
-            $search  = trim($_GET['search']);
-            Session::set('search', $search);
-        }
-
-        if (isset($_GET['filter'])) {
-            $status  = trim($_GET['filter']);
-            Session::set('filter', $status);
-        }
-
-        if (isset($_GET['selectGroup'])) {
-            $status  = trim($_GET['selectGroup']);
-            Session::set('selectGroup', $status);
-            $this->_view->_arrParam = $this->_arrParam;
-            if ($_GET['selectGroup'] == 0) {
-                Session::delete('selectGroup');
-            }
-        }
-    }
-
     public function clearAction()
     {
         $this->_view->_tag          = 'group';
@@ -182,6 +151,7 @@ class BookController extends Controller
         Session::set('status', '');
     }
     
+    /*--Hàm kiểm tra ckeditor và ckfinder--*/
     public function gdfixAction()
     {
         
@@ -203,12 +173,23 @@ class BookController extends Controller
             echo ' [OK] Fileinfo extension is enabled.';
         }
         
-        /* Hàm gdfixAction() trên để kiểm tra php.ini cho ckeditor và ckfinder nếu trường hợp không run được
+        /* Hàm gdfixAction() để kiểm tra php.ini cho ckeditor và ckfinder nếu trường hợp không run được
          * Nếu có báo "[ERROR] GD extension is NOT enabled"
          *  
-         *  Vào php.ini file
+         *  Vào C:\xampp\php\php.ini file
             tìm cụm ;extension=gd
-            xóa ; rồi restart lại Apachi
+            xóa dấu ";" rồi restart lại Apachi
+            
+            (Nguyên văn): https://ckeditor.com/docs/ckfinder/ckfinder3-php/quickstart.html
+            
+            By default the Fileinfo extension is disabled on XAMPP server (checked on version 5.6.3). In order to enable it, please proceed as follows:
+
+                1.Open C:\xampp\php\php.ini (or another path adequate for the location where XAMPP was installed).
+                2.Find the following line: ;extension=php_fileinfo.dll.
+                3.Uncomment it by removing ; from the beginning.
+                4.Restart Apache.
+                5.Result: The Fileinfo extension should be active now.
+                
          */
     }
     
@@ -239,8 +220,7 @@ class BookController extends Controller
             }
             //Load cho Input trong trường hợp đã Submit trước đó nhưng không thành công do lôĩ vào các biến tạm
             if(isset($this->_arrParam['form']['name'])){
-                //$this->_arrParam['form']['name'] = mysqli_real_escape_string($this->_model->connect,$this->_arrParam['form']['name']);
-                $name                            = $this->_arrParam['form']['name'];
+                $name               = $this->_arrParam['form']['name'];
             }
             
             if(isset($this->_arrParam['form']['shortDescription'])){
@@ -286,7 +266,7 @@ class BookController extends Controller
             $this->_arrParam['form'] = $this->_model->infoItem($this->_arrParam);
             $this->_arrParam['form']['picture_old'] = $this->_arrParam['form']['picture'];
             
-            // CallBack lại trường hợp có biến tạm
+            // Gọi lại trường hợp có biến tạm
             if(!empty($picture)){
                 $this->_arrParam['form']['picture'] = $picture;
             }
@@ -296,7 +276,7 @@ class BookController extends Controller
                 $this->_arrParam['form']['picture_temp'] = $pictureTemp;
             }
             
-            /* --- Reload lại những giá trị đã nhập trên input trong trường hợp đã submit trước đó--- */
+            /* --- Reload lại những giá trị đã nhập trên input trong trường hợp đã submit không thành công trước đó--- */
             if(isset($name))             $this->_arrParam['form']['name']             = $name;
             if(isset($shortDescription)) $this->_arrParam['form']['shortDescription'] = $shortDescription;
             if(isset($description))      $this->_arrParam['form']['description']      = $description;
@@ -379,13 +359,8 @@ class BookController extends Controller
 
         $this->_view->_tag          = 'book';
         $this->_view->arrParam      = $this->_arrParam;
-
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('book-form.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
-
         $this->_view->render('book/form', true);
+        
         ob_end_flush();
     }
     
@@ -410,18 +385,11 @@ class BookController extends Controller
     public function deleteAction()
     {
 
-        if (isset($_GET['id'])) $this->_model->deleteItem($_GET['id']);
-        $this->redirec('backend', 'group', 'list');
+        if (isset($this->_arrParam['id'])) $this->_model->deleteItem($this->_arrParam['id']);
+        $this->redirec('backend', 'book', 'list');
         $this->_view->_currentPage  = $this->_model->_cunrrentPage;
     }
 
-    public function deleteMultAction(){
-        
-        $this->_model->deleteMultItem($this->_arrParam);
-        $this->redirec('backend', 'user', 'list');
-        $this->_view->_currentPage  = $this->_model->_cunrrentPage;
-        
-    }
     
     public function generateRandomString($length = 10)
     {
@@ -446,11 +414,6 @@ class BookController extends Controller
     }
     
     public function errorAction(){
-
-        $this->_templateObj->setFolderTemplate('backend/admin/admin_template/');
-        $this->_templateObj->setFileTemplate('error.php');
-        $this->_templateObj->setFileConfig('template.ini');
-        $this->_templateObj->load();
         
         $this->_view->render('error/error', true);
     }

@@ -3,25 +3,37 @@ function getUrlVar(key){
 	return result && unescape(result[1]) || ""; 
 }
 
-$(document).ready(function(){
-	var controller 	= (getUrlVar('controller') == '' ) ? 'index' : getUrlVar('controller');
-	var action 		= (getUrlVar('action') == '' ) ? 'index' : getUrlVar('action');
-	var classSelect = controller + '-' + action;
-
-	$('ul#main-menu li.' + classSelect + ' a').addClass('my-menu-link active');
-});
+//Active menu
+//$(document).ready(function(){
+//	var controller 	= (getUrlVar('controller') == '' ) ? 'index' : getUrlVar('controller');
+//	var action 		= (getUrlVar('action') == '' ) ? 'index' : getUrlVar('action');
+//	var classSelect = controller + '-' + action;
+//
+//	$('ul#main-menu li.' + classSelect + ' a').addClass('my-menu-link active');
+//});
 
 function quickViewFunction(htmlentitiesJSON){
+	
 	console.log(htmlentitiesJSON);
 	var ObjectJSON  = htmlentitiesJSON;
 	var book_id		= ObjectJSON.book_id;
 	var link		= ObjectJSON.url;
-
+	var flag_stop   = ObjectJSON.session_flag_stop;
+	
+	if(flag_stop == true){
+		$('#quick-view-login').modal('show'); 
+		//window.location = "index.php?module=frontend&controller=index&action=login";
+		window.setTimeout(function(){
+	        window.location.href = "index.php?module=frontend&controller=index&action=login";
+	    }, 3000);
+	}
+	
 	$.ajax({
 		url		: link,
 		type	: 'GET',
 		data	: {book_id:book_id},
 		success	: function(data){	
+			
 				var dataOject 		 = JSON.parse(data);
 				console.log(dataOject);
 				var name     		 = dataOject.name;
@@ -115,8 +127,10 @@ function quickViewFunction(htmlentitiesJSON){
 //ODER AJAX
 function ajaxOrder($linkOrderJSON){
 	if($linkOrderJSON == ''){
-		alert('Vui lòng đăng nhập để tiến hành mua hàng');
-		window.location = "index.php?module=frontend&controller=index&action=login";
+		$('#quick-view-login').modal('show'); 
+		window.setTimeout(function(){
+	        window.location.href = "index.php?module=frontend&controller=index&action=login";
+	    }, 3000);
 	}
 	
 	var quantity = $("#input-quantity").val();	// Số lượng lấy tại <input id="input-quantity"  type="text" name="quantity" class="form-control input-number" value="1">
